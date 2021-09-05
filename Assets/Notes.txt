@@ -1,0 +1,40 @@
+﻿ook the dante-wreckerman sprites and put together first basic black spartan unarmed animations. There are 5
+1. Running
+2. Punching
+3. Kicking
+4. A Grab Kick Combo 
+5. A Death Animation
+
+I added the head and arms to the main body. I also finished transparenting the tilemaps and sliced them as well. There are currently:
+1. City Grey
+2. City Tan
+3. Grassland
+4. Mountain
+5. Snow Mountain
+6. Temple
+
+The original unsliced images have been placed under images > environment > mothertiles
+the rule tiles are under Tilemaps&Tiles > Tiles withing their respective folders
+
+The slopes were the trickiest part, figuring out the rules. I can now make basic levels of the 6 environments, with background to accompany a few of them. 
+I don't have any background images yet. The scales have been figure out.
+
+
+TODO:
+
+Priorities:
+
+1. Make a jump/fall animation for the player
+2. Whiten the player so it can be more easily recolored
+3. Animate the player within unity
+
+Secondary: 
+
+1. Make covenant and army environments and finish adding all the decorative pieces
+
+
+Distant Goals:
+1. Animate, compile, and import the other spartans
+2. Weapons
+3. comb through dante wreckman's stuff
+4. vehicles

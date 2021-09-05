@@ -1,0 +1,219 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1419778234488091418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1419778234488091417}
+  - component: {fileID: 1419778234488091413}
+  - component: {fileID: 1419778234488091414}
+  - component: {fileID: 1419778234488091415}
+  - component: {fileID: 1419778234488091416}
+  m_Layer: 13
+  m_Name: Sniper Rifle
+  m_TagString: Weapon
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1419778234488091417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419778234488091418}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 32.08, y: -9.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &1419778234488091413
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419778234488091418}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 447239203
+  m_SortingLayer: 5
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: ad4b183928c938948acd48d16d34ed0d, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 10, y: 10}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!50 &1419778234488091414
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419778234488091418}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!60 &1419778234488091415
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419778234488091418}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.75, y: 8.75}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -1.8622456, y: 0.49651432}
+      - {x: -1.8659267, y: 0.36586}
+      - {x: -1.6256084, y: 0.3715353}
+      - {x: -1.631422, y: 0.7452421}
+      - {x: -1.4952221, y: 0.8698273}
+      - {x: -0.6273346, y: 0.87843513}
+      - {x: -0.6220112, y: 0.9989071}
+      - {x: -0.51146317, y: 0.999526}
+      - {x: -0.50147057, y: 0.8765049}
+      - {x: -0.2557602, y: 0.8766985}
+      - {x: -0.12516212, y: 0.7493315}
+      - {x: -0.117305756, y: 0.38430595}
+      - {x: 0.008979797, y: 0.73309994}
+      - {x: 0.12831497, y: 0.8740206}
+      - {x: 0.24821472, y: 0.8768225}
+      - {x: 0.24818802, y: 0.7515135}
+      - {x: 0.37013245, y: 0.75263786}
+      - {x: 0.37532043, y: 0.38091564}
+      - {x: 1.0016937, y: 0.38007832}
+      - {x: 1.0000114, y: 0.4981022}
+      - {x: 1.2515068, y: 0.498991}
+      - {x: 1.2524681, y: 0.37498093}
+      - {x: 2.3789024, y: 0.38795567}
+      - {x: 2.3740044, y: 0.50187683}
+      - {x: 2.8669548, y: 0.4997034}
+      - {x: 2.9866982, y: 0.37082005}
+      - {x: 2.9993782, y: 0.00992012}
+      - {x: 2.8776398, y: -0.12275028}
+      - {x: 1.6245537, y: -0.12176514}
+      - {x: 1.2535706, y: -0.4955511}
+      - {x: 1.6175575, y: -0.5036249}
+      - {x: 1.6233711, y: -0.38483143}
+      - {x: 1.7485695, y: -0.38719368}
+      - {x: 1.8789635, y: -0.5075655}
+      - {x: 1.8796806, y: -0.60424995}
+      - {x: 1.5059128, y: -0.9975376}
+      - {x: 1.376873, y: -0.9910221}
+      - {x: 1.3656082, y: -0.87424374}
+      - {x: 1.130249, y: -0.86959076}
+      - {x: 1.1278152, y: -0.746459}
+      - {x: 0.62169266, y: -0.744771}
+      - {x: 0.6177101, y: -0.62942505}
+      - {x: 0.37144852, y: -0.6297264}
+      - {x: 0.37714767, y: -0.7456703}
+      - {x: -0.0047912598, y: -0.7518387}
+      - {x: -0.00015258789, y: -0.62891006}
+      - {x: -0.5055523, y: -0.6300192}
+      - {x: -0.49624252, y: -0.8707886}
+      - {x: -0.7595787, y: -0.9982548}
+      - {x: -0.8603363, y: -0.9950075}
+      - {x: -1.2327156, y: -0.99707985}
+      - {x: -1.3711052, y: -0.8675413}
+      - {x: -1.3816223, y: -0.62380886}
+      - {x: -1.6274395, y: -0.6331358}
+      - {x: -1.8801537, y: -0.8716326}
+      - {x: -2.5011673, y: -0.8732519}
+      - {x: -3.0021152, y: -0.7626543}
+      - {x: -3.1228714, y: -0.6178994}
+      - {x: -3.1274738, y: 0.24939108}
+      - {x: -2.6120777, y: 0.49625874}
+--- !u!114 &1419778234488091416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419778234488091418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRange: 8
+  faction: 0
+  firingDelay: 0
+  salvoDelay: 1.5
+  shotsPerSalvo: 1
+  instability: 0
+  projectileTemplate: {fileID: -5604932223983771090, guid: bd0d6bbd9f1c8c948bbbf13658c448b2,
+    type: 3}
+  projectileDamage: 5
+  projectileSpeed: 500
+  piercing: 0
+  magazinesLeft: 8
+  magazineSize: 6
+  reloadTime: 3
+  reloading: 0

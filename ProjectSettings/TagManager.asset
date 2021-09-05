@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Weapon
+  - Projectile
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Ground
+  - Platform
+  - Objects
+  - Knockback
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - Dead Projectiles
+  - Team 1 Projectile
+  - Team 2 Projectile
+  - Team 3 Projectile
+  - Team 4 Projectile
+  - Team 1
+  - Team 2
+  - Team 3
+  - Team 4
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background Wallpaper
+    uniqueID: 4249564633
+    locked: 0
+  - name: Background
+    uniqueID: 127399781
+    locked: 0
+  - name: Decorative
+    uniqueID: 2241678775
+    locked: 0
+  - name: Foreground
+    uniqueID: 2245305635
+    locked: 0
+  - name: Players
+    uniqueID: 3687076719
+    locked: 0
+  - name: NPCs
+    uniqueID: 1957348743
+    locked: 0
+  - name: Objects
+    uniqueID: 447239203
+    locked: 0
+  - name: Projectiles
+    uniqueID: 2488050739
+    locked: 0
+  - name: Effects
+    uniqueID: 936593139
+    locked: 0
