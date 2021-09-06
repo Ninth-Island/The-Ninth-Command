@@ -38,7 +38,7 @@ public class Knockback : MonoBehaviour{
         Vector2 otherPos = other.transform.position;
         float xDist = otherPos.x - pos.x;
         float yDist = otherPos.y - pos.y;
-        other.attachedRigidbody.velocity = new Vector2((Math.Sign(xDist) * 10 - xDist) * xScale, (Math.Sign(yDist) * 10 - yDist)) * yScale;
+        other.attachedRigidbody.velocity = new Vector2((Math.Sign(xDist) * 10 - xDist) * xScale, (Math.Sign(yDist) * 10 - yDist) * yScale);
         // do some damage logic here
     }
 

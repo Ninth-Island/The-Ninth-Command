@@ -30,7 +30,8 @@ public class Character : MonoBehaviour{
     protected bool Knocked = false;
     protected bool InputsFrozen = false;
 
-
+    protected AudioManager AudioManager;
+    
     protected string DeathAnimationName;
 
 
@@ -39,6 +40,8 @@ public class Character : MonoBehaviour{
         Body = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
 
+        AudioManager = GetComponent<AudioManager>();
+        
         foreach (Weapon weapon in GetComponentsInChildren<Weapon>()){
             weapon.SetWielder(this);
         }
@@ -90,7 +93,15 @@ public class Character : MonoBehaviour{
     }
     
     public void SetKnocked(bool setKnockedState){
-        Knocked = setKnockedState;
+        Knocked = setKnockedState; 
+        // do some knocked stuff
+        // rework animations;
+    }
+    
+    private void OnCollisionEnter2D(Collision2D other){
+        if (other.gameObject.CompareTag("Ground")){
+            AudioManager.PlayFromList(2);
+        }
     }
 
 }

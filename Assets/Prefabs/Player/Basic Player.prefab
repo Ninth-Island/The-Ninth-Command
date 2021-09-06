@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 2580403686972779802}
   - component: {fileID: 2580403686972779806}
   - component: {fileID: 2580403686972779777}
+  - component: {fileID: 342394936}
   m_Layer: 28
   m_Name: Basic Player
   m_TagString: Player
@@ -259,7 +260,7 @@ MonoBehaviour:
   moveSpeed: 15
   primaryWeapon: {fileID: 2580403685723203921}
   secondaryWeapon: {fileID: 227464146398236855}
-  jumpPower: 20
+  jumpPower: 30
   jetPower: 0
 --- !u!114 &2580403686972779777
 MonoBehaviour:
@@ -281,6 +282,79 @@ MonoBehaviour:
   magCounter: {fileID: 0}
   energyCounter: {fileID: 0}
   heatCounter: {fileID: 0}
+--- !u!114 &342394936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580403686972779803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: Metal Run
+    soundsList:
+    - {fileID: 8300000, guid: 0f1301f0864f31d45a34a6139636e0e1, type: 3}
+    - {fileID: 8300000, guid: 80359d0df294f1d4cae27815deb406dc, type: 3}
+    - {fileID: 8300000, guid: 835a422884378fc4e954ae8f12c67608, type: 3}
+    - {fileID: 8300000, guid: 079cc09182bede14b9a8cd0d27793443, type: 3}
+    - {fileID: 8300000, guid: 9bc565c397fe4364a9949286406d1f35, type: 3}
+    - {fileID: 8300000, guid: 12b6d9f61c8b54b49920997c361ffd64, type: 3}
+    - {fileID: 8300000, guid: 58666d5cb309b764ba9da17c1b11c812, type: 3}
+    - {fileID: 8300000, guid: f20612b5c11f11d458a1f008878bd6c5, type: 3}
+    - {fileID: 8300000, guid: 2bdefba935cafc24d86fde016d0b66bc, type: 3}
+    - {fileID: 8300000, guid: e224a2ad491cdab4f95ac3550e16c230, type: 3}
+    - {fileID: 8300000, guid: 02447f324bb5e7648af2bba9b4ae26fd, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Metal Jump
+    soundsList:
+    - {fileID: 8300000, guid: 65ef8d705db8a15469ccc7735d6f410d, type: 3}
+    - {fileID: 8300000, guid: d19b1298fb7b68a4db8e5ae0e50636bd, type: 3}
+    - {fileID: 8300000, guid: e5b8389b4b965214c88262f2680656dd, type: 3}
+    - {fileID: 8300000, guid: 3dcfbb9a76450eb4cb99d0ce53aa8f29, type: 3}
+    - {fileID: 8300000, guid: bc128f1ab35fea44597b6d9f3189a7e7, type: 3}
+    - {fileID: 8300000, guid: 9bbf75c97d1fb0a4eb318951b786a051, type: 3}
+    - {fileID: 8300000, guid: 0c0399bfa984aa94abec6fb7ce60f1d3, type: 3}
+    - {fileID: 8300000, guid: 603d01dc867365f48873db0a6d0f0be9, type: 3}
+    - {fileID: 8300000, guid: 3d1e4d20faf31c348bc3a4f11ca6750e, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Metal Land
+    soundsList:
+    - {fileID: 8300000, guid: ed60bf0cf9c1b41449dafe29245ac318, type: 3}
+    - {fileID: 8300000, guid: 6dfdbf93e64eac2488aacc1ebe1f75e3, type: 3}
+    - {fileID: 8300000, guid: cc65844c6ad9d464fbe00755153ea655, type: 3}
+    - {fileID: 8300000, guid: 985e5891e8a0be94795d135ce0dba82c, type: 3}
+    - {fileID: 8300000, guid: 4359c8c1f26684f44829d632be851d26, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  sounds:
+  - clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0.4
+    loop: 0
+    source: {fileID: 0}
 --- !u!1 &7526910818936589780
 GameObject:
   m_ObjectHideFlags: 0

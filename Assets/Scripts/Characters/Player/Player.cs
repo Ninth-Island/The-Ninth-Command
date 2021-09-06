@@ -10,7 +10,7 @@ public class Player : Character{
 * ================================================================================================================
 *                                               Player
 *
- * contains all player logic. Movement, weapons, swapping weapons, animation, and additional foot collider
+ * contains all player logic. Movement, weapons, swapping weapons, animation, sounds, and additional foot collider
 *
 * 
 * ================================================================================================================
@@ -27,6 +27,8 @@ public class Player : Character{
 
 
     private PlayerControl _playerControl;
+
+    
     
 
     private string running = "Running";
@@ -42,20 +44,20 @@ public class Player : Character{
         base.Start();
 
         DeathAnimationName = "Dead";
-        
         _playerControl = GetComponent<PlayerControl>();
-
         _feetCollider = transform.GetChild(2).GetComponent<BoxCollider2D>();
+        
     }
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
         Move();
-        Jump();
+        CheckJetpack();
     }
 
     protected override void Update(){
         base.Update();
+        Jump();
         CheckSwap();
         primaryWeapon.CheckReload();
     }
@@ -70,18 +72,16 @@ public class Player : Character{
         float input = Input.GetAxis("Horizontal");
         Animator.SetBool(running, input != 0);
         if (input != 0 && !InputsFrozen && !Knocked){
-            Body.velocity = new Vector2(moveSpeed * Math.Sign(input), Body.velocity.y);
-            Animator.SetBool(runningBackwards, Math.Sign(input) != Mathf.Sign(transform.localScale.x));
+            Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
+            Animator.SetBool(runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
+            
+            
         }
      
     }
 
     private void Jump(){
         Animator.SetBool(jumping, Airborne);
-        Airborne = true;
-        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Team 1", "Team 2", "Team 3", "Team 4"))){
-            Airborne = false;
-        }
         
         if (Input.GetKey(KeyCode.W)){
             Vector2 velocity = Body.velocity;
@@ -90,10 +90,19 @@ public class Player : Character{
                 Airborne = true;
                 Animator.SetBool(jumping, true);
                 Body.velocity = new Vector2(velocity.x, jumpPower);
+                AudioManager.PlayFromList(1);
+
             }
-            else{
-                Body.velocity = new Vector2(velocity.x, velocity.y + jetPower);
-            }
+        }
+    }
+
+    private void CheckJetpack(){
+        Airborne = true;
+        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Team 1", "Team 2", "Team 3", "Team 4"))){
+            Airborne = false;
+        }
+        if (Input.GetKey(KeyCode.W) && Airborne){
+            Body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
         }
     }
     
@@ -130,6 +139,7 @@ public class Player : Character{
     *                                               Other
     * ================================================================================================================
     */
+
 
     public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){
         if (Math.Abs(pos1.x - pos2.x) < xAffordance && Math.Abs(pos1.y - pos2.y) < yAffordance){
