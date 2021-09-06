@@ -49,9 +49,15 @@ public class BulletWeapon : ProjectileWeapon{
     
     public IEnumerator Reload(){
         if (magazinesLeft > 0){
+            
             PlayerPickupController.ammoCounter.SetText("Reloading...");
+            
             reloading = true;
+            AudioManager.PlayFromList(1);
             yield return new WaitForSeconds(reloadTime);
+            AudioManager.PlayFromList(2);
+            
+            
             _bulletsLeft = magazineSize;
             reloading = false;
             magazinesLeft--;
@@ -78,17 +84,20 @@ public class BulletWeapon : ProjectileWeapon{
     }
 
     public override void CheckReload(){
+        base.CheckReload();
         if (Input.GetKeyDown(KeyCode.R) && magazineSize != _bulletsLeft && !reloading){
             StartReloading();
         }
     }
 
     public override void SetLoadingState(){
+        base.SetLoadingState();
         StopReloading();
         reloading = false;
     }
 
     protected override void Subtract(){
+        base.Subtract();
         _bulletsLeft--;
     }
     

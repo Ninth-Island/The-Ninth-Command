@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 272140532128219919}
   - component: {fileID: 272140532128219918}
   - component: {fileID: 272140532128219954}
+  - component: {fileID: -1522665250973982014}
   m_Layer: 13
   m_Name: Assault Rifle
   m_TagString: Weapon
@@ -174,3 +175,68 @@ MonoBehaviour:
   magazineSize: 32
   reloadTime: 3
   reloading: 0
+--- !u!114 &-1522665250973982014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272140532128219913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: Fire
+    soundsList:
+    - {fileID: 8300000, guid: 6c7843ecb8bb1884c838b23167ab456e, type: 3}
+    - {fileID: 8300000, guid: 205479096883067488a60cb7cbfcca98, type: 3}
+    - {fileID: 8300000, guid: 4b470fc6a9b5376468be1dc8f39790eb, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Reload
+    soundsList:
+    - {fileID: 8300000, guid: ec1bf10813f66de4f803bfe014f104a6, type: 3}
+    - {fileID: 8300000, guid: 28987a2ffbfccd14b8716d6173be1d57, type: 3}
+    - {fileID: 8300000, guid: 90e36991c7e7e7642b18050c0a0be405, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Pick Up
+    soundsList:
+    - {fileID: 8300000, guid: 713bb3f3d3ed63c4886cb8e93a862533, type: 3}
+    - {fileID: 8300000, guid: f87b591a4d650ac46b635fc0ad2fc230, type: 3}
+    - {fileID: 8300000, guid: e6f04acc0406f104792956621028b4d6, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Melee
+    soundsList:
+    - {fileID: 8300000, guid: aa8d5fb7e8d3c6144b8755eda5dfa583, type: 3}
+    - {fileID: 8300000, guid: a63bd2c17e391354ab432d41a73efff1, type: 3}
+    - {fileID: 8300000, guid: 9c2ff47e0d36a164ca4f8c582f227930, type: 3}
+    - {fileID: 8300000, guid: b2821efef70e700468eb4485f4913144, type: 3}
+    - {fileID: 8300000, guid: 82898183c9d50794fb0413f3062811b5, type: 3}
+    - {fileID: 8300000, guid: 15bb7b8e5c600414eaa5351f511c6443, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  sounds: []

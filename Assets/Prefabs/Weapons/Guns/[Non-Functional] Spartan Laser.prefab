@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8546548626594045354}
   - component: {fileID: 8546548626594045355}
   - component: {fileID: 8546548626594045352}
+  - component: {fileID: 7469975935137330819}
   m_Layer: 13
   m_Name: '[Non-Functional] Spartan Laser'
   m_TagString: Weapon
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7d3721ad58bdf3545b42d03b2bc965f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -178,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRange: 8
-  faction: 0
+  wielder: {fileID: 0}
   firingDelay: 0
   salvoDelay: 0
   shotsPerSalvo: 1
@@ -194,3 +195,53 @@ MonoBehaviour:
   energy: 100
   heat: 0
   coolingDown: 0
+--- !u!114 &7469975935137330819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546548626594045350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: 
+    soundsList: []
+    volume: 0
+    pitch: 0
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 0
+    source: {fileID: 0}
+  - name: 
+    soundsList: []
+    volume: 0
+    pitch: 0
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 0
+    source: {fileID: 0}
+  - name: 
+    soundsList: []
+    volume: 0
+    pitch: 0
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 0
+    source: {fileID: 0}
+  - name: 
+    soundsList: []
+    volume: 0
+    pitch: 0
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 0
+    source: {fileID: 0}
+  sounds: []

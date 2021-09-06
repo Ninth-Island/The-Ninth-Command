@@ -62,6 +62,7 @@ public class EnergyWeapon : ProjectileWeapon{
     public override void CheckReload(){
         if (Input.GetKey(KeyCode.R)){
             _cooling += coolingCooldownAcceleration;
+            AudioManager.PlayFromList(1);
         }
     }
     

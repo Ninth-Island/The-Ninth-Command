@@ -20,8 +20,8 @@ public class Weapon : MonoBehaviour{
     [Header("Weapon")]
     [SerializeField] private float pickupRange;
     [SerializeField] protected Character wielder;
-    
-    
+
+    protected AudioManager AudioManager;
     
     protected SpriteRenderer SpriteRenderer;
     protected PolygonCollider2D Collider;
@@ -38,6 +38,8 @@ public class Weapon : MonoBehaviour{
 
         Player = FindObjectOfType<Player>();
         PlayerPickupController = FindObjectOfType<WeaponPickup>();
+
+        AudioManager = GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -54,7 +56,8 @@ public class Weapon : MonoBehaviour{
         wielder = pickedUpBy;
         Body.simulated = false;
         transform.parent = Player.gameObject.transform;
-            PlayerPickupController.SetText("Picked Up " + name);
+        PlayerPickupController.SetText("Picked Up " + name);
+        AudioManager.PlayFromList(2);
     }
 
     protected virtual void Drop(){

@@ -35,6 +35,7 @@ public class ChargingWeapon : ProjectileWeapon
     protected override void CheckFire(){
         if (energy > 0 && heat < 100 && !Firing && !coolingDown){
             heat += chargePerFrame;
+            
             if (heat >= 100){
                 StartCoroutine(Fire());
             }
@@ -54,6 +55,7 @@ public class ChargingWeapon : ProjectileWeapon
         heat -= cooldownSpeed;
         if (!coolingDown){
             heat -= cooldownSpeed;
+            AudioManager.PlayClip(0);
         }
         if (heat < 0){
             coolingDown = false;

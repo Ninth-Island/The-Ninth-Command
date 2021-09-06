@@ -10,16 +10,12 @@ public class AudioManager : MonoBehaviour{
 
     [Tooltip("For Many Sounds Representing same action such as walking")]
     public ListOfSounds[] soundsFromList;
-    public ListNamesIndexes ListNames;
 
     [Tooltip("For a single sound representing the same action such as voice lines")]
     public List<Sound> sounds;
-    public ClipNamesIndexes ClipNames;
 
 
     private void Awake(){
-        ListNames = new ListNamesIndexes();
-        ClipNames = new ClipNamesIndexes();
         foreach (Sound sound in sounds){
             
             sound.source = gameObject.AddComponent<AudioSource>();
@@ -58,16 +54,5 @@ public class AudioManager : MonoBehaviour{
         if (clip.source.isPlaying && clip.source.time >= clip.waitTillNext || !clip.source.isPlaying){
             clip.source.Play();
         }
-    }
-
-
-
-    public class ListNamesIndexes{
-        public int MetalRun = 0;
-        public int MetalJump = 1;
-        public int MetalLand = 2;
-    }
-
-    public class ClipNamesIndexes{
     }
 }

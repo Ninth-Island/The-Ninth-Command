@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3296336755945427862}
   - component: {fileID: 7071584738771005635}
   m_Layer: 14
-  m_Name: Explosion
+  m_Name: Explosion Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,8 +119,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDamage: 0
   minDamage: 0
-  yScale: 4
-  xScale: 1
+  yScale: 7
+  xScale: 4
 --- !u!58 &3296336755945427862
 CircleCollider2D:
   m_ObjectHideFlags: 0

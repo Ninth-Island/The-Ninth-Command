@@ -74,8 +74,6 @@ public class Player : Character{
         if (input != 0 && !InputsFrozen && !Knocked){
             Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
             Animator.SetBool(runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
-            
-            
         }
      
     }
@@ -98,9 +96,14 @@ public class Player : Character{
 
     private void CheckJetpack(){
         Airborne = true;
-        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Team 1", "Team 2", "Team 3", "Team 4"))){
+        RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
+            LayerMask.GetMask("Ground", "Platform"));
+        
+        if (clampScan.collider){
             Airborne = false;
+            
         }
+        
         if (Input.GetKey(KeyCode.W) && Airborne){
             Body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
         }
