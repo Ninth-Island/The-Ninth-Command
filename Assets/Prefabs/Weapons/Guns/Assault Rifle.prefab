@@ -190,9 +190,9 @@ MonoBehaviour:
   soundsFromList:
   - name: Fire
     soundsList:
-    - {fileID: 8300000, guid: 6c7843ecb8bb1884c838b23167ab456e, type: 3}
-    - {fileID: 8300000, guid: 205479096883067488a60cb7cbfcca98, type: 3}
-    - {fileID: 8300000, guid: 4b470fc6a9b5376468be1dc8f39790eb, type: 3}
+    - {fileID: 8300000, guid: 8dfb8eb5d9d071f40a26bfae5b25c868, type: 3}
+    - {fileID: 8300000, guid: 295704e9dc3b5d6488236cac57f32cab, type: 3}
+    - {fileID: 8300000, guid: c5b126721adf5bc44802ae9492683c55, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0

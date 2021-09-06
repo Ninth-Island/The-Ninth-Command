@@ -21,7 +21,8 @@ public class BasicWeapon : Weapon{
 
     protected Coroutine Coroutine;
     
-    
+    public bool looping;
+
     
     
     protected override void Start(){
@@ -41,9 +42,11 @@ public class BasicWeapon : Weapon{
         if (Player.primaryWeapon == this){
             Flip();
             if (Input.GetKey(KeyCode.Mouse0)){
+                
                 CheckFire();
             }
         }
+
     }
 
     public override void PickUp(Character pickedUpBy){

@@ -60,14 +60,27 @@ public class EnergyWeapon : ProjectileWeapon{
     }
     
     public override void CheckReload(){
+        base.CheckReload();
         if (Input.GetKey(KeyCode.R)){
             _cooling += coolingCooldownAcceleration;
-            AudioManager.PlayFromList(1);
+            if (!AudioManager.soundsFromList[1].source.isPlaying){
+                AudioManager.PlayFromList(1);
+            }
+        }
+        if (_heat <= 0){
+            AudioManager.soundsFromList[1].source.Stop();
+            AudioManager.soundsFromList[4].source.Stop();
+        }
+        else{
+            if (AudioManager.soundsFromList[1].source.time >= 2.6f){
+                AudioManager.PlayFromList(4);
+            }
         }
     }
     
 
     protected override void Subtract(){
+        base.Subtract();
         _energy -= percentagePerShot;
         _heat += heatPerShot;
     }

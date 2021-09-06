@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8609765344648067618}
   - component: {fileID: 8609765344648067619}
   - component: {fileID: 8609765344648067616}
+  - component: {fileID: -7570404451717712117}
   m_Layer: 13
   m_Name: SMG
   m_TagString: Weapon
@@ -169,6 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 5
   wielder: {fileID: 0}
+  looping: 1
   firingDelay: 0
   salvoDelay: 0.1
   shotsPerSalvo: 1
@@ -182,3 +184,65 @@ MonoBehaviour:
   magazineSize: 60
   reloadTime: 3
   reloading: 0
+--- !u!114 &-7570404451717712117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609765344648067622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: Fire
+    soundsList:
+    - {fileID: 8300000, guid: 3782f5fb9c6d29b40bcf7e5cb6fe003b, type: 3}
+    - {fileID: 8300000, guid: 6a014f8f590c22142866dc2b1d854ce9, type: 3}
+    - {fileID: 8300000, guid: 58146c3ecdea2fc4d912ab4e7dbe6b8a, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Reload
+    soundsList:
+    - {fileID: 8300000, guid: bd2f4c7d0be640946a15248748ad610c, type: 3}
+    - {fileID: 8300000, guid: 0dd23b172d3e4f3489f85c4a20b32c6f, type: 3}
+    - {fileID: 8300000, guid: f774360f2c71a8b42b7e8e0fe847920a, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Pick Up
+    soundsList:
+    - {fileID: 8300000, guid: 7c96807e6e927d94888bfd33cd0c2905, type: 3}
+    - {fileID: 8300000, guid: ef2760da1ce37794f966207ced6ca21b, type: 3}
+    - {fileID: 8300000, guid: e1253239c22eb7f46b1d2b49a3031466, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Melee
+    soundsList:
+    - {fileID: 8300000, guid: b401670fab756c34fa15640e241a8eb1, type: 3}
+    - {fileID: 8300000, guid: a3be70c0fc4d04d409ff727b76365e5b, type: 3}
+    - {fileID: 8300000, guid: c09d486e55b206c41b7299aaa754ab04, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  sounds: []

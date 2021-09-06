@@ -50,9 +50,7 @@ public class AudioManager : MonoBehaviour{
     }
 
     public void PlayClip(int clipIndex){
-        Sound clip = sounds[clipIndex];
-        if (clip.source.isPlaying && clip.source.time >= clip.waitTillNext || !clip.source.isPlaying){
-            clip.source.Play();
-        }
+        sounds[clipIndex].source.Play();
+        
     }
 }

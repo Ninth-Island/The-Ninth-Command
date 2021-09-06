@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4506013158996176213}
   - component: {fileID: 4506013158996176212}
   - component: {fileID: 4506013158996176203}
+  - component: {fileID: -5509028141593329034}
   m_Layer: 13
   m_Name: DMR
   m_TagString: Weapon
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5904717d97f7a0f4a8a9c53bf834ca3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRange: 8
-  faction: 0
+  wielder: {fileID: 0}
   firingDelay: 0
   salvoDelay: 0.8
   shotsPerSalvo: 1
@@ -196,3 +197,71 @@ MonoBehaviour:
   magazineSize: 15
   reloadTime: 3
   reloading: 0
+--- !u!114 &-5509028141593329034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4506013158996176201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: Fire
+    soundsList:
+    - {fileID: 8300000, guid: 2e617925c7f973c488270e19766715ec, type: 3}
+    - {fileID: 8300000, guid: d357d6e4117bc644ebb9ff56a53dc3a8, type: 3}
+    - {fileID: 8300000, guid: 11158423b97290447a0066fd50a3ac9f, type: 3}
+    - {fileID: 8300000, guid: 711cb1bc2e9a1cd44aa51422e2c0965f, type: 3}
+    - {fileID: 8300000, guid: 2861024d31c2e414681533cea9aa40cd, type: 3}
+    - {fileID: 8300000, guid: df87bca1f46e34f46a3246f3b49d9dc2, type: 3}
+    - {fileID: 8300000, guid: e91e982b077b85f4fb598c8253fa40b5, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Reload
+    soundsList:
+    - {fileID: 8300000, guid: eba8b9c93c9a95742b128745dcae9ca9, type: 3}
+    - {fileID: 8300000, guid: 412cf415ecca3574eb6e6500745926a9, type: 3}
+    - {fileID: 8300000, guid: b1641c46ce70f4e42a0ca40896501478, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Pick Up
+    soundsList:
+    - {fileID: 8300000, guid: 2ace53c9d80f4894cb0e1d02ada89fa0, type: 3}
+    - {fileID: 8300000, guid: f3ced21816bc5814ba5de806e1bffd28, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  - name: Melee
+    soundsList:
+    - {fileID: 8300000, guid: b908d61edeb82064083fa97aa1df4fde, type: 3}
+    - {fileID: 8300000, guid: 41ccd4b1037c64446aaec81417643387, type: 3}
+    - {fileID: 8300000, guid: e09f5ddcd05b6954fb43b608cf80f51c, type: 3}
+    - {fileID: 8300000, guid: 3e15de69e229a4a409f54852e4a6d530, type: 3}
+    - {fileID: 8300000, guid: 508baecc5af5a564fb0105661ca723f8, type: 3}
+    - {fileID: 8300000, guid: 9ccc33aa7c63e5d47867b1d74ca26613, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  sounds: []

@@ -18,8 +18,7 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private int magazinesLeft;
     [SerializeField] private int magazineSize;
     [SerializeField] private float reloadTime;
-    
-    
+
     
     public bool reloading;
     private int _bulletsLeft;

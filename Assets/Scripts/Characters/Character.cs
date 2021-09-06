@@ -36,6 +36,8 @@ public class Character : MonoBehaviour{
 
 
     protected virtual void Start(){
+
+        
         Collider = GetComponent<BoxCollider2D>();
         Body = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
