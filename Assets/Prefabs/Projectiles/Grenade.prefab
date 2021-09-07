@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5345319634674317829}
   - component: {fileID: 5345319634674317828}
   - component: {fileID: 5345319634674317827}
+  - component: {fileID: 6000292455546948785}
   m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8b595fb9f930a5b4ba0fad35009b6d6a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -134,9 +135,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sticky: 0
-  faction: 0
   lifetime: 10
+  _live: 1
   fuseTimer: 2
-  knockbackPrefab: {fileID: 1699022908102386561, guid: bb302d6aa61920a4c946f237276a5200,
+  knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}
   impactGrenade: 0
+--- !u!114 &6000292455546948785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345319634674317825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: Explode
+    soundsList:
+    - {fileID: 8300000, guid: 1f80d5e80b94f9b4ab5b72329355d677, type: 3}
+    - {fileID: 8300000, guid: a8632e5d470186e4e9cfd43ab5c425f7, type: 3}
+    - {fileID: 8300000, guid: 9369b9986d3bcb04f8e635113ba8bd0e, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 1
+    source: {fileID: 0}
+  sounds: []

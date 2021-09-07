@@ -88,6 +88,7 @@ public class BasicWeapon : Weapon{
     
     protected virtual void Subtract(){
         AudioManager.PlayFromList(0);
+
     }
 
     

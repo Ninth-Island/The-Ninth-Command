@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8440634332580792013}
   - component: {fileID: 5345319634674317829}
   - component: {fileID: 5345319634674317827}
+  - component: {fileID: -8156854511448159046}
   m_Layer: 0
   m_Name: Railgun Bolt
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bd31e1df759e4e546a8c73ffbc8f88d0, type: 3}
   m_Color: {r: 0, g: 0.34753323, b: 1, a: 1}
@@ -146,6 +147,33 @@ MonoBehaviour:
   sticky: 1
   lifetime: 10
   fuseTimer: 2
-  knockbackPrefab: {fileID: 1699022908102386561, guid: bb302d6aa61920a4c946f237276a5200,
+  knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}
   impactGrenade: 0
+--- !u!114 &-8156854511448159046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345319634674317825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsFromList:
+  - name: Explode
+    soundsList:
+    - {fileID: 8300000, guid: 9f4c2651bdd16364787082d51ffe28cc, type: 3}
+    - {fileID: 8300000, guid: 9895b642912332546981dd0ee8ecc9a5, type: 3}
+    - {fileID: 8300000, guid: aba299973feb27a40bcd591461a3667c, type: 3}
+    - {fileID: 8300000, guid: 64581240e5a7ce54c9b9ca490cc305cd, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    waitTillNext: 0
+    loop: 0
+    random: 0
+    source: {fileID: 0}
+  sounds: []

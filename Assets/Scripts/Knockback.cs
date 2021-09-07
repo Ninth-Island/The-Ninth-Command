@@ -22,6 +22,7 @@ public class Knockback : MonoBehaviour{
     
     public float yScale = 4;
     public float xScale = 1;
+
     // Start is called before the first frame update
     void Start(){
         Destroy(gameObject, 0.6f);

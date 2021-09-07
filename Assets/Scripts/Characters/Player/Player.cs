@@ -10,7 +10,7 @@ public class Player : Character{
 * ================================================================================================================
 *                                               Player
 *
- * contains all player logic. Movement, weapons, swapping weapons, animation, sounds, and additional foot collider
+ * contains all player logic. Movement, weapons, grenades, swapping weapons, animation, sounds, and additional foot collider
 *
 * 
 * ================================================================================================================

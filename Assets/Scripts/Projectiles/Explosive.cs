@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -20,6 +21,12 @@ public class Explosive : Projectile{
     [SerializeField] private float fuseTimer;
     [SerializeField] private Knockback knockbackPrefab;
     [SerializeField] private bool impactGrenade;
+    [SerializeField] private bool propulsion = false;
+    [SerializeField] private float acceleration;
+    private float _speed;
+    
+    private AudioManager _audioManager;
+
     
     
     private SpriteRenderer _spriteRenderer;
@@ -27,15 +34,32 @@ public class Explosive : Projectile{
     // Start is called before the first frame update
     void Start(){
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        StartCoroutine(Fuse());
+        _audioManager = GetComponent<AudioManager>();
+        if (_live){
+            StartCoroutine(Fuse());
+        }
+
+        if (propulsion){
+            Body.velocity *= 0.01f;
+        }
+
     }
-    
-    
+
+    private void FixedUpdate(){
+        if (propulsion && _spriteRenderer.enabled){ // if propulsion rocket and active
+            if (Body.velocity.magnitude <= 150){
+                Body.velocity *= acceleration;
+            }
+        }
+    }
+
+
     public void Explode(){
+        _audioManager.PlayFromList(0);
         _spriteRenderer.enabled = false;
         Body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
-        Destroy(gameObject, 0.7f);
+        Destroy(gameObject, 1f);
     }
 
     /*
@@ -47,6 +71,7 @@ public class Explosive : Projectile{
         Body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         gameObject.layer = LayerMask.NameToLayer("Ground");
         yield return new WaitForSeconds(fuseTimer);
+        
         Explode();
     }
     
@@ -54,6 +79,9 @@ public class Explosive : Projectile{
         fuseTimer = setFuseTimer;
     }
 
+    public void StartFuse(){
+        StartCoroutine(Fuse());
+    }
     
 /*
      * ================================================================================================================

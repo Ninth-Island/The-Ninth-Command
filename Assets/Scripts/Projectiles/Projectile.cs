@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour{
     private int _damage;
     private bool _piercing;
 
-    private bool _live = true;
+    [SerializeField] protected bool _live = true;
     
     // Start is called before the first frame update
     
@@ -40,7 +40,9 @@ public class Projectile : MonoBehaviour{
     public void Awake(){
         Body = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
-        Destroy(gameObject, lifetime);
+        if (_live){
+            Destroy(gameObject, lifetime);
+        }
     }
     /*
      * ================================================================================================================

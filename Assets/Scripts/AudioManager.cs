@@ -32,6 +32,7 @@ public class AudioManager : MonoBehaviour{
             listOfSounds.source.pitch = listOfSounds.pitch;
             listOfSounds.source.loop = listOfSounds.loop;
             listOfSounds.source.spatialBlend = listOfSounds.spacialBlend;
+            listOfSounds.source.priority = listOfSounds.priority;
         }
     
     }
@@ -39,14 +40,11 @@ public class AudioManager : MonoBehaviour{
 
     public void PlayFromList(int listIndex){
         ListOfSounds list = soundsFromList[listIndex];
-        if (list.random == true){
-            AudioClip clip = list.soundsList[Random.Range(0, list.soundsList.Length)];
-            list.source.clip = clip;
-            list.source.Play();
-        }
-        else{
-            
-        }
+       
+        AudioClip clip = list.soundsList[Random.Range(0, list.soundsList.Length)];
+        list.source.clip = clip;
+        list.source.Play();
+       
     }
 
     public void PlayClip(int clipIndex){
