@@ -23,7 +23,7 @@ public class Explosive : Projectile{
     [SerializeField] private bool impactGrenade;
     [SerializeField] private bool propulsion = false;
     [SerializeField] private float acceleration;
-    private float _speed;
+  
     
     private AudioManager _audioManager;
 
@@ -47,6 +47,7 @@ public class Explosive : Projectile{
 
     private void FixedUpdate(){
         if (propulsion && _spriteRenderer.enabled){ // if propulsion rocket and active
+            
             if (Body.velocity.magnitude <= 150){
                 Body.velocity *= acceleration;
             }

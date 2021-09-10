@@ -351,74 +351,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf26ae51b8c864c42b13c51f3e4cb236, type: 3}
---- !u!1 &1494634933 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2151614292814215012, guid: e345ad05263733541986df36eb47d4c3,
-    type: 3}
-  m_PrefabInstance: {fileID: 2151614293418416746}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1494634939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1494634933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundsFromList:
-  - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: 7db61d84cd00c604ba34cc7b1150b4ad, type: 3}
-    - {fileID: 8300000, guid: 624fc460e4d8f6145a0ae7643bdb752f, type: 3}
-    - {fileID: 8300000, guid: 683dc95759d7f8a4083d7a28cbd234df, type: 3}
-    - {fileID: 8300000, guid: 1285302600112c9439daf64d5937921a, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    waitTillNext: 0
-    loop: 0
-    random: 1
-    source: {fileID: 0}
-  - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: 09eebc37802869b459a57a691c5ac3a1, type: 3}
-    - {fileID: 8300000, guid: 462368f567e8cf44eb2cfd35c88ba44f, type: 3}
-    - {fileID: 8300000, guid: fd53bd00e08eb264b81ce4259ec44bb4, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    waitTillNext: 0
-    loop: 0
-    random: 1
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: a50b931ae0012f94489ee4a0bb014765, type: 3}
-    - {fileID: 8300000, guid: b690733a7398cbe499e52c2156cba379, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    waitTillNext: 0
-    loop: 0
-    random: 1
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: 6eefb720c74ecd046b8aa981f187ce26, type: 3}
-    - {fileID: 8300000, guid: 63b1a93b6059b9849a798bb9269e6a79, type: 3}
-    - {fileID: 8300000, guid: 5544e8da27c9a69498bb51ca146c2038, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    waitTillNext: 0
-    loop: 0
-    random: 1
-    source: {fileID: 0}
-  sounds: []
 --- !u!114 &1831286413 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7588223601177283001, guid: cf26ae51b8c864c42b13c51f3e4cb236,
@@ -457,11 +389,6 @@ PrefabInstance:
     - target: {fileID: 1284300819, guid: e345ad05263733541986df36eb47d4c3, type: 3}
       propertyPath: m_ChildCameras.Array.size
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2151614292814215012, guid: e345ad05263733541986df36eb47d4c3,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2151614293843287592, guid: e345ad05263733541986df36eb47d4c3,
         type: 3}
