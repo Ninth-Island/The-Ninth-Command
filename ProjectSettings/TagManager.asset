@@ -50,17 +50,17 @@ TagManager:
   - name: Background
     uniqueID: 127399781
     locked: 0
+  - name: NPCs
+    uniqueID: 1957348743
+    locked: 0
+  - name: Players
+    uniqueID: 3687076719
+    locked: 0
   - name: Decorative
     uniqueID: 2241678775
     locked: 0
   - name: Foreground
     uniqueID: 2245305635
-    locked: 0
-  - name: Players
-    uniqueID: 3687076719
-    locked: 0
-  - name: NPCs
-    uniqueID: 1957348743
     locked: 0
   - name: Objects
     uniqueID: 447239203
