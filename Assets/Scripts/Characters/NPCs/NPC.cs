@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 
 public class NPC : Character{
@@ -12,40 +13,30 @@ public class NPC : Character{
 
     private GameObject _target;
 
+
+
     private void FindNearestTarget(){
-
         _target = null;
+        int mask = LayerMask.GetMask("Team 1", "Team 2", "Team 3", "Team 4");
+        mask = mask & ~(1 << gameObject.layer); // some bit shifting magic that excludes the layer of the object doing the scan
 
-        
-        // Gets all characters within the sight radius
-        RaycastHit2D[] results = Physics2D.CircleCastAll(transform.position, sightRange, new Vector2(0, 0), 0, LayerMask.GetMask("Team 1", "Team 2", "Team 3", "Team 4"));
-        
-        
-        // for every character within radius....
-        foreach (RaycastHit2D raycastHit in results){
-            
-            // check for null and to make sure it hasn't caught itself,
-            if (raycastHit && raycastHit.collider.gameObject.layer != gameObject.layer){
-                Vector2 potentialTarget = raycastHit.collider.transform.position;
-                
-                // and if that's true, then make sure the character is in line of sight (not being blocked by a wall)
-                RaycastHit2D lineOfSightCheck = Physics2D.Raycast(transform.position, new Vector2(potentialTarget.x - transform.position.x, potentialTarget.y - transform.position.x), sightRange, LayerMask.GetMask("Team 1", "Team 2", "Team 3", "Team 4", "Ground"));
-                if (!lineOfSightCheck.collider.CompareTag("Ground")){
-                    Debug.Log(lineOfSightCheck.collider.gameObject);
-                    // Check to see if there isn't already a target
-                    if (_target is null){
-                        _target = raycastHit.collider.gameObject;
-                    }
-                    else{
-                        // Finally, if there is already a current target, check to see if this target is closer. If it is, this is the new target
-                        if (Vector2.Distance(transform.position, raycastHit.collider.transform.position) < Vector2.Distance(transform.position, _target.transform.position)){
-                            _target = raycastHit.collider.gameObject;
-                        }
-                    }
-                }
+        RaycastHit2D[] potentialTargets = Physics2D.CircleCastAll(transform.position, sightRange, new Vector2(0, 0), 0, mask);
+        foreach (RaycastHit2D potentialTarget in potentialTargets){
+            LineOfSightCheck(potentialTarget, mask);
+        }
+    }
+
+    private void LineOfSightCheck(RaycastHit2D potentialTarget, int mask){
+        mask = mask | (1 << LayerMask.NameToLayer("Ground"));
+        RaycastHit2D losc = Physics2D.Linecast(transform.position, potentialTarget.transform.position, mask);  // losc is short for Line Of Sight Check
+        if (losc.collider.gameObject.layer != LayerMask.NameToLayer("Ground")){
+            _target = losc.collider.gameObject;
+            if (_target.transform.parent){
+                _target = _target.transform.parent.gameObject;
             }
         }
     }
+    
 
 
     protected override void OnCollisionEnter2D(Collision2D other){
@@ -62,7 +53,7 @@ public class NPC : Character{
         base.Update();
         if (_target){
             Debug.DrawLine(transform.position, _target.transform.position);
-//            Debug.Log(_target);
+            Debug.Log(_target);
         }
     }
 

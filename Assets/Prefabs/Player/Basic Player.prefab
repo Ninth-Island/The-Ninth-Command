@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2580403686972779805}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2580403685755308817
 SpriteRenderer:
@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -607890577
-  m_SortingLayer: 5
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -4335222134116007343, guid: cf1016be71bea42419ec071d34f080a4,
     type: 3}
@@ -111,7 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2580403686972779805}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2580403685814433088
 BoxCollider2D:
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.102674484, y: -2.097476}
+  m_Offset: {x: 0, y: -2.097476}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -172,7 +172,8 @@ Transform:
   m_LocalPosition: {x: 26, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 5834944218835862550}
+  - {fileID: 227464146398236854}
+  - {fileID: 2580403685723203950}
   - {fileID: 2580403685755308846}
   - {fileID: 2580403685814433089}
   m_Father: {fileID: 0}
@@ -261,7 +262,7 @@ MonoBehaviour:
   primaryWeapon: {fileID: 2580403685723203921}
   secondaryWeapon: {fileID: 227464146398236855}
   jumpPower: 30
-  jetPower: 0
+  jetPower: 2
 --- !u!114 &2580403686972779777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,9 +312,9 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 128
     waitTillNext: 0
     loop: 0
-    random: 1
     source: {fileID: 0}
   - name: Metal Jump
     soundsList:
@@ -329,9 +330,9 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 128
     waitTillNext: 0
     loop: 0
-    random: 1
     source: {fileID: 0}
   - name: Metal Land
     soundsList:
@@ -343,9 +344,9 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 128
     waitTillNext: 0
     loop: 0
-    random: 1
     source: {fileID: 0}
   sounds:
   - clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
@@ -355,44 +356,12 @@ MonoBehaviour:
     waitTillNext: 0.4
     loop: 0
     source: {fileID: 0}
---- !u!1 &7526910818936589780
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5834944218835862550}
-  m_Layer: 28
-  m_Name: Weapons
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5834944218835862550
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7526910818936589780}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2580403685723203950}
-  - {fileID: 227464146398236854}
-  m_Father: {fileID: 2580403686972779805}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2308579849530174051
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5834944218835862550}
+    m_TransformParent: {fileID: 2580403686972779805}
     m_Modifications:
     - target: {fileID: 272140532128219913, guid: 5182bae11f7ee56488b75156107145e0,
         type: 3}
@@ -402,17 +371,17 @@ PrefabInstance:
     - target: {fileID: 272140532128219913, guid: 5182bae11f7ee56488b75156107145e0,
         type: 3}
       propertyPath: m_Layer
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 272140532128219917, guid: 5182bae11f7ee56488b75156107145e0,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 272140532128219917, guid: 5182bae11f7ee56488b75156107145e0,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 272140532128219917, guid: 5182bae11f7ee56488b75156107145e0,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8
+      value: 0.79999924
       objectReference: {fileID: 0}
     - target: {fileID: 272140532128219917, guid: 5182bae11f7ee56488b75156107145e0,
         type: 3}
@@ -484,7 +453,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 5834944218835862550}
+    m_TransformParent: {fileID: 2580403686972779805}
     m_Modifications:
     - target: {fileID: 8529665086193386054, guid: 39f0ac7b484275441b2c1bb13454c675,
         type: 3}
@@ -494,27 +463,22 @@ PrefabInstance:
     - target: {fileID: 8529665086193386054, guid: 39f0ac7b484275441b2c1bb13454c675,
         type: 3}
       propertyPath: m_Layer
-      value: 28
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8529665086193386104, guid: 39f0ac7b484275441b2c1bb13454c675,
         type: 3}
       propertyPath: m_Simulated
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8529665086193386105, guid: 39f0ac7b484275441b2c1bb13454c675,
+    - target: {fileID: 8529665086193386106, guid: 39f0ac7b484275441b2c1bb13454c675,
         type: 3}
-      propertyPath: m_Enabled
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8529665086193386106, guid: 39f0ac7b484275441b2c1bb13454c675,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8529665086193386106, guid: 39f0ac7b484275441b2c1bb13454c675,
-        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.8
+      value: 0.79999924
       objectReference: {fileID: 0}
     - target: {fileID: 8529665086193386106, guid: 39f0ac7b484275441b2c1bb13454c675,
         type: 3}
