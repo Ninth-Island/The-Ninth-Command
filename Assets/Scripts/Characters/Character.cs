@@ -67,7 +67,6 @@ public class Character : MonoBehaviour{
         health -= damage;
         if (health <= 0){
             Animator.SetBool(DeathAnimationName, true);
-            gameObject.layer = LayerMask.NameToLayer("Objects");
             InputsFrozen = true;
             Destroy(gameObject, 3f);
         }
