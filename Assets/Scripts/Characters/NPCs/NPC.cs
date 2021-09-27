@@ -9,9 +9,22 @@ using Vector2 = UnityEngine.Vector2;
 
 public class NPC : Character{
 
+    
+    [Header("AI")]
     [SerializeField] float sightRange;
-
+    [SerializeField] private float aiType = 0;
+    // 0 = guard
+    // 1 = attacker
+    [SerializeField] private int idleType = 0;
+    // 0 == stand still
+    // 1 = back and forth
+    [SerializeField] private Vector2 pointOfInterest = new Vector2(0.1f, 0.1f);
+    // either a guard point or a capture zone
     private GameObject _target;
+
+
+    private BoxCollider2D wallDetector;
+    private BoxCollider2D groundDetector;
 
 
 
@@ -36,29 +49,63 @@ public class NPC : Character{
             }
         }
     }
-    
+
+
+    private void SortAiBehavior(){
+        
+        if (aiType == 0f){ // if you're a guard...
+            if (idleType == 1){
+                Patrol();
+            }
+        }
+
+        if (aiType == 1f){ // if you're an attacker...
+            if (_target){
+                // go attack target!
+            }
+            else if (pointOfInterest != new Vector2(0.1f, 0.1f)){ // there's no target and there IS an attack point
+                // go take the capture point!
+            }
+            else{ // there's no target and there's no capture point
+                Patrol();
+            }
+        }
+    }
+
+    private void Patrol(){
+        if (!InputsFrozen && !Knocked){
+            Body.velocity = new Vector2(moveSpeed * transform.localScale.x, Body.velocity.y);
+        }
+    }
+
+    private void Move(){
+        
+    }
 
 
     protected override void OnCollisionEnter2D(Collision2D other){
        
     }
 
+
     protected override void Start(){
         base.Start();
+
+        wallDetector = transform.GetChild(2).GetComponent<BoxCollider2D>();
+        groundDetector = transform.GetChild(3).GetComponent<BoxCollider2D>();
+        
         
         InvokeRepeating(nameof(FindNearestTarget), 0, 1f);
     }
 
     protected override void Update(){
         base.Update();
-        if (_target){
-            Debug.DrawLine(transform.position, _target.transform.position);
-            Debug.Log(_target);
-        }
+        
     }
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
+        SortAiBehavior();
     }
     
 }

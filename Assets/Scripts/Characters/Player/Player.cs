@@ -45,7 +45,7 @@ public class Player : Character{
 
         DeathAnimationName = "Dead";
         _playerControl = GetComponent<PlayerControl>();
-        _feetCollider = transform.GetChild(2).GetComponent<BoxCollider2D>();
+        _feetCollider = transform.GetChild(3).GetComponent<BoxCollider2D>();
         
     }
 
