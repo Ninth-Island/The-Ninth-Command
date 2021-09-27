@@ -15,11 +15,10 @@ public class WallDetector : MonoBehaviour{
     private void FixedUpdate(){
         if (!wallDetector){
             RaycastHit2D groundCast = Physics2D.Raycast(transform.position, Vector2.down, 4, LayerMask.GetMask("Ground"));
-            
-            Debug.DrawRay(transform.position, Vector3.down * 4);
+            Debug.DrawLine(transform.position, new Vector3(transform.position.x, transform.position.y - 4));
             if (!groundCast){
-                transform.parent.transform.localScale = new Vector3(transform.parent.transform.localScale.x * -1, 1);
-            }
+                transform.parent.transform.localScale = new Vector3(transform.parent.transform.localScale.x * -1, 1);            
+            } 
         }
     }
 

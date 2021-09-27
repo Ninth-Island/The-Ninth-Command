@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -6561620518062900878}
   m_Layer: 13
   m_Name: Frag Grenade
-  m_TagString: Weapon
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,6 +141,8 @@ MonoBehaviour:
   knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}
   impactGrenade: 0
+  propulsion: 0
+  acceleration: 0
 --- !u!114 &-6561620518062900878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,8 +175,8 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 128
     waitTillNext: 0
     loop: 0
-    random: 1
     source: {fileID: 0}
   sounds: []

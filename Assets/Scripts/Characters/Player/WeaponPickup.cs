@@ -18,10 +18,10 @@ public class WeaponPickup : PlayerControl{
 
     private void CheckUpdates(){
         Vector2 mousePos = GetMousePosition();
-        RaycastHit2D weaponScan = Physics2D.Linecast(transform.position, mousePos, LayerMask.GetMask("Objects"));
+        RaycastHit2D weaponScan = Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects"));
 
         if (weaponScan && weaponScan.collider.gameObject.CompareTag("Weapon")){
-            var nearestWeapon = weaponScan.collider.gameObject;
+            GameObject nearestWeapon = weaponScan.collider.gameObject;
             pickupText.transform.localPosition = Input.mousePosition - HUD.transform.localPosition;
             pickupText.SetText(nearestWeapon.name);
             BasicWeapon weapon = _allBasicWeapons[nearestWeapon].Key;
