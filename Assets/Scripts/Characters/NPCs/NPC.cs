@@ -5,6 +5,7 @@ using System.Numerics;
 using UnityEngine;
 using Pathfinding;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 
 public class NPC : Character{
@@ -20,6 +21,9 @@ public class NPC : Character{
     // 1 = back and forth
     [SerializeField] private Vector2 pointOfInterest = new Vector2(0.1f, 0.1f);
     // either a guard point or a capture zone
+
+    [SerializeField] private float optimalFiringDistance;
+    [SerializeField] private float randomRange;
     private GameObject _target;
 
 
@@ -61,13 +65,15 @@ public class NPC : Character{
 
         if (aiType == 1f){ // if you're an attacker...
             if (_target){
-                // go attack target!
+                MoveToPoint(_target.transform.position);
             }
             else if (pointOfInterest != new Vector2(0.1f, 0.1f)){ // there's no target and there IS an attack point
-                // go take the capture point!
+                MoveToPoint(pointOfInterest);
             }
             else{ // there's no target and there's no capture point
-                Patrol();
+                if (idleType == 1){
+                    Patrol();
+                }
             }
         }
     }
@@ -78,8 +84,21 @@ public class NPC : Character{
         }
     }
 
-    private void Move(){
+    private void MoveToPoint(Vector2 destination){
         
+        float x = transform.position.x;
+        float y = transform.position.y;
+        int direction = 0;
+        
+        
+        if (x + optimalFiringDistance < destination.x){
+            direction = 1;
+        }
+        else if (x - optimalFiringDistance > destination.x){
+            direction = -1;
+        }
+        
+        Body.velocity = new Vector2(moveSpeed * direction, Body.velocity.y);
     }
 
 
@@ -93,6 +112,8 @@ public class NPC : Character{
 
         wallDetector = transform.GetChild(2).GetComponent<BoxCollider2D>();
         groundDetector = transform.GetChild(3).GetComponent<BoxCollider2D>();
+
+        optimalFiringDistance += Random.Range(-randomRange, randomRange);
         
         
         InvokeRepeating(nameof(FindNearestTarget), 0, 1f);
