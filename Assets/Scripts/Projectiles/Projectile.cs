@@ -76,7 +76,7 @@ public class Projectile : MonoBehaviour{
     public void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         _damage = damage;
         gameObject.name = name + " " + gameObject;
-        SetLayer(firedLayer);
+        gameObject.layer = firedLayer - 4;
         Body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         _piercing = piercing;
@@ -87,22 +87,7 @@ public class Projectile : MonoBehaviour{
       *                                        Other
      * ================================================================================================================
      */
-
-
-    private void SetLayer(int firedLayer){
-        if (firedLayer == LayerMask.NameToLayer("Team 1")){
-            gameObject.layer = LayerMask.NameToLayer("Team 1 Projectile");
-        }
-        if (firedLayer == LayerMask.NameToLayer("Team 2")){
-            gameObject.layer = LayerMask.NameToLayer("Team 2 Projectile");
-        }
-        if (firedLayer == LayerMask.NameToLayer("Team 3")){
-            gameObject.layer = LayerMask.NameToLayer("Team 3 Projectile");
-        }
-        if (firedLayer == LayerMask.NameToLayer("Team 4")){
-            gameObject.layer = LayerMask.NameToLayer("Team 4 Projectile");
-        }
-    }
+    
     
     public Collider2D GetCollider(){
         return _collider;

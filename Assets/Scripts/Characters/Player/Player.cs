@@ -23,30 +23,38 @@ public class Player : Character{
     [SerializeField] private float jumpPower;
     [SerializeField] private float jetPower;
 
+    [SerializeField] private GameObject spritesParent;
+
     private BoxCollider2D _feetCollider;
 
+    private bool _isCrouching;
 
     private PlayerControl _playerControl;
 
-    
-    
+    private ANames _aNames = new ANames();
+    private Color[] _colors = new Color[3];
+    private GameObject[] sprites = new GameObject[6];
 
-    private string running = "Running";
-    private string runningBackwards = "RunningBackwards";
-    private string jumping = "Jumping";
-    //private string falling = "Falling";
-    /*private string kicking = "Kicking";
-    private string punching = "Punching";
-    private string comboing = "Comboing";
-    private string dead = "Dead";*/
+    private class ANames{
+        public readonly string running = "Running";
+        public readonly  string runningBackwards = "RunningBackward";
+        public readonly  string crouching = "Crouching";
+        public readonly  string jumping = "Jumping";
+        public readonly  string punching = "Punch";
+        public readonly  string dying = "Dying";
+    }
+
+
     
     protected override void Start(){
         base.Start();
 
         DeathAnimationName = "Dead";
         _playerControl = GetComponent<PlayerControl>();
-        _feetCollider = transform.GetChild(3).GetComponent<BoxCollider2D>();
-        
+        _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        for (int i = 0; i < spritesParent.transform.childCount; i++){
+            sprites[i] = spritesParent.transform.GetChild(i).gameObject;
+        }
     }
 
     protected override void FixedUpdate(){
@@ -60,6 +68,11 @@ public class Player : Character{
         Jump();
         CheckSwap();
         primaryWeapon.CheckReload();
+        
+        if (Input.GetKeyDown(KeyCode.S)){
+            _isCrouching = !_isCrouching;
+            Animator.SetBool(_aNames.crouching, _isCrouching);
+        }
     }
 
     /*
@@ -70,28 +83,34 @@ public class Player : Character{
 
     private void Move(){
         float input = Input.GetAxis("Horizontal");
-        Animator.SetBool(running, input != 0);
+        
+        Animator.SetBool(_aNames.running, input != 0);
+        
         if (input != 0 && !InputsFrozen && !Knocked){
             Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
-            Animator.SetBool(runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
+            
+            Animator.SetBool(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
         }
-     
+
+        
+
     }
 
     private void Jump(){
-        Animator.SetBool(jumping, Airborne);
         
         if (Input.GetKey(KeyCode.W)){
             Vector2 velocity = Body.velocity;
             
             if (!Airborne){
                 Airborne = true;
-                Animator.SetBool(jumping, true);
+                //Animator.SetBool(jumping, true);
                 Body.velocity = new Vector2(velocity.x, jumpPower);
                 AudioManager.PlayFromList(1);
 
             }
         }
+        
+        Animator.SetBool(_aNames.jumping, Airborne);
     }
 
     private void CheckJetpack(){

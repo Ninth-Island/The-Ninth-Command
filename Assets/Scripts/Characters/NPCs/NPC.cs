@@ -30,8 +30,12 @@ public class NPC : Character{
     private BoxCollider2D wallDetector;
     private BoxCollider2D groundDetector;
 
-
-
+    /*
+     ================================================================================================================
+                                        Target Finding
+     ================================================================================================================
+     */
+    
     private void FindNearestTarget(){
         _target = null;
         int mask = LayerMask.GetMask("Team 1", "Team 2", "Team 3", "Team 4");
@@ -79,8 +83,8 @@ public class NPC : Character{
     }
 
     private void Patrol(){
-        if (!InputsFrozen && !Knocked){
-            Body.velocity = new Vector2(moveSpeed * transform.localScale.x, Body.velocity.y);
+        if (!InputsFrozen && !Knocked && !_target){
+            Body.velocity = new Vector2(moveSpeed * transform.localScale.x * 0.3f, Body.velocity.y);
         }
     }
 
