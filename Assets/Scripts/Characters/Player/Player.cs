@@ -25,6 +25,13 @@ public class Player : Character{
 
     [SerializeField] private GameObject spritesParent;
 
+    [SerializeField] private Sprite[] ArmTypes;
+
+    private Transform _arm;
+    private Transform _helmet;
+
+    private SpriteRenderer _armRenderer;
+
     private BoxCollider2D _feetCollider;
 
     private bool _isCrouching;
@@ -33,7 +40,7 @@ public class Player : Character{
 
     private ANames _aNames = new ANames();
     private Color[] _colors = new Color[3];
-    private GameObject[] sprites = new GameObject[6];
+    private GameObject[] sprites = new GameObject[7];
 
     private class ANames{
         public readonly string running = "Running";
@@ -52,6 +59,12 @@ public class Player : Character{
         DeathAnimationName = "Dead";
         _playerControl = GetComponent<PlayerControl>();
         _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+
+        _arm = transform.GetChild(1).transform.GetChild(6);
+        _helmet = transform.GetChild(1).transform.GetChild(5);
+
+        _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
+        
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
         }
@@ -68,6 +81,7 @@ public class Player : Character{
         Jump();
         CheckSwap();
         primaryWeapon.CheckReload();
+        RotateArm();
         
         if (Input.GetKeyDown(KeyCode.S)){
             _isCrouching = !_isCrouching;
@@ -143,15 +157,18 @@ public class Player : Character{
 
     private void CheckSwap(){
         if (Input.GetKeyDown(KeyCode.Mouse1)){
-            primaryWeapon.SetSpriteRenderer(false);
-            secondaryWeapon.SetSpriteRenderer(true);
+            if (primaryWeapon != null){
+                primaryWeapon.SetSpriteRenderer(false);
+            }
+
+            if (secondaryWeapon != null){
+                secondaryWeapon.SetSpriteRenderer(true);
+            }
 
             primaryWeapon.SetLoadingState();
 
-            BasicWeapon temp = primaryWeapon;
-            primaryWeapon = secondaryWeapon;
-            secondaryWeapon = temp;
-            
+            (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
+
             primaryWeapon.RefreshText();
         }
     }
@@ -161,6 +178,28 @@ public class Player : Character{
     *                                               Other
     * ================================================================================================================
     */
+    
+    
+    private void RotateArm(){
+        float rotation = _playerControl.GetPlayerToMouseRotation();
+        _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        _arm.transform.localScale = new Vector3(1, 1);
+        
+        _helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        _helmet.transform.localScale = new Vector3(1, 1);
+
+        
+        transform.localScale = new Vector3(1, 1);
+        if (rotation > 90 && rotation < 270){
+            _arm.transform.localScale = new Vector3(-1, -1);
+            _helmet.transform.localScale = new Vector3(-1, -1);
+            transform.localScale = new Vector3(-1, 1);
+        }
+    }
+
+    public void SetArmType(int armType){
+        _armRenderer.sprite = ArmTypes[armType];
+    }
 
 
     public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){

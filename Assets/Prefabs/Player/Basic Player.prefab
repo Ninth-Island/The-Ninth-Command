@@ -265,6 +265,13 @@ MonoBehaviour:
   jumpPower: 30
   jetPower: 2
   spritesParent: {fileID: 0}
+  ArmTypes:
+  - {fileID: -7887873344414462056, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  - {fileID: 987900064741833492, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  - {fileID: -7378385645948591141, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  - {fileID: -5643868179137935686, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  - {fileID: 7364606866421688543, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  - {fileID: 2415256495891508668, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
 --- !u!114 &2580403686972779777
 MonoBehaviour:
   m_ObjectHideFlags: 0

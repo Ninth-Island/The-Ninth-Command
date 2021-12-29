@@ -9,8 +9,11 @@ public class ColorTransferer : MonoBehaviour
     
     [SerializeField] public SpriteRenderer visorRenderer;
     [SerializeField] public SpriteRenderer helmetRenderer;
-    [SerializeField] public SpriteRenderer BodyRenderer;
-    [SerializeField] public SpriteRenderer ArmsRenderer;
+    [SerializeField] public SpriteRenderer bodyRenderer;
+    [SerializeField] public SpriteRenderer armsRenderer;
+    [SerializeField] public SpriteRenderer bottomRenderer;
+    [SerializeField] public Transform helmetTransform;
+    [SerializeField] public Transform armTransform;
     
     
     private GameObject pauseMenu;

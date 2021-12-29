@@ -1147,8 +1147,11 @@ MonoBehaviour:
     type: 3}
   visorRenderer: {fileID: 0}
   helmetRenderer: {fileID: 0}
-  BodyRenderer: {fileID: 0}
-  ArmsRenderer: {fileID: 0}
+  bodyRenderer: {fileID: 0}
+  armsRenderer: {fileID: 0}
+  bottomRenderer: {fileID: 0}
+  helmetTransform: {fileID: 0}
+  armTransform: {fileID: 0}
 --- !u!1 &7588223601969952703
 GameObject:
   m_ObjectHideFlags: 0

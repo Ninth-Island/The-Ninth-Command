@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class BasicWeapon : Weapon{
@@ -22,7 +24,8 @@ public class BasicWeapon : Weapon{
     
     public bool looping;
 
-    
+    [SerializeField] private Vector2 offset = new Vector2(1.69f, -0.42f);
+    [SerializeField] private int armType = 0;
     
     protected override void Start(){
         base.Start();
@@ -39,13 +42,10 @@ public class BasicWeapon : Weapon{
     
     protected virtual void Update(){
         if (Player.primaryWeapon == this){
-            Flip();
             if (Input.GetKey(KeyCode.Mouse0)){
-                
                 CheckFire();
             }
         }
-
     }
 
     public override void PickUp(Character pickedUpBy){
@@ -56,8 +56,11 @@ public class BasicWeapon : Weapon{
 
             base.PickUp(pickedUpBy);
             Player.primaryWeapon.Drop();
-            transform.localPosition = new Vector3(0.8f, 1);
+            transform.localPosition = offset;
+            transform.localRotation = new Quaternion(0f, 0f, 0f, 0);
+            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
             Player.primaryWeapon = this;
+            Player.SetArmType(armType);
         }
     }
 
@@ -67,16 +70,7 @@ public class BasicWeapon : Weapon{
     }
     
     
-    private void Flip(){
-        float rotation = PlayerPickupController.GetPlayerToMouseRotation();
-        transform.rotation = Quaternion.Euler(0, 0, rotation);
-        transform.localScale = new Vector3(1, 1);
-        Player.transform.localScale = new Vector3(1, 1);
-        if (rotation > 90 && rotation < 270){
-            transform.localScale = new Vector3(-1, -1);
-            Player.transform.localScale = new Vector3(-1, 1);
-        }
-    }
+   
     
     /*
      * ================================================================================================================

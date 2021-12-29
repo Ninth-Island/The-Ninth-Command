@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour{
     public virtual void PickUp(Character pickedUpBy){
         wielder = pickedUpBy;
         Body.simulated = false;
-        transform.parent = Player.gameObject.transform;
+        transform.parent = Player.gameObject.transform.GetChild(1).transform.GetChild(6);
         PlayerPickupController.SetText("Picked Up " + name);
         AudioManager.PlayFromList(2);
     }
