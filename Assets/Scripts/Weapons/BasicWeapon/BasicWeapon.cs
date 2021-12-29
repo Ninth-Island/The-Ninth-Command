@@ -25,7 +25,7 @@ public class BasicWeapon : Weapon{
     public bool looping;
 
     [SerializeField] private Vector2 offset = new Vector2(1.69f, -0.42f);
-    [SerializeField] private int armType = 0;
+    [SerializeField] public int armType = 0;
     
     protected override void Start(){
         base.Start();

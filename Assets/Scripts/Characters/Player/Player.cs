@@ -170,6 +170,7 @@ public class Player : Character{
             (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
             primaryWeapon.RefreshText();
+            SetArmType(primaryWeapon.armType);
         }
     }
     
