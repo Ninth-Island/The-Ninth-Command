@@ -78,6 +78,9 @@ public partial class Player : Character{
                 SetColor(0, 0, 0, _notificationText.color.a - fadeSpeed);
             }
         }
+
+        pickupText.transform.position = Input.mousePosition;
+        
     }
 
 

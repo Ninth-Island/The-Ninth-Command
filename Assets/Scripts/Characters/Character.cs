@@ -83,7 +83,7 @@ public class Character : MonoBehaviour{
 
     public void SetInputFrozen(bool setInputFrozenState, float unfreezeTime){
         InputsFrozen = setInputFrozenState;
-        if (setInputFrozenState){
+        if (setInputFrozenState && unfreezeTime > 0){
             StartCoroutine(UnFreeze(unfreezeTime));
         }
     }

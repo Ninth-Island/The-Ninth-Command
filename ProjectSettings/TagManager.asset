@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Ground
   - Vehicle
+  - Cursor
   layers:
   - Default
   - TransparentFX
@@ -15,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Cursor
   - 
   - 
   - 
@@ -71,4 +72,7 @@ TagManager:
     locked: 0
   - name: Effects
     uniqueID: 936593139
+    locked: 0
+  - name: Cursor
+    uniqueID: 2999708103
     locked: 0

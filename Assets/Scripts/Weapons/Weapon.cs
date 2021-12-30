@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour{
         AudioManager.PlayFromList(2);
     }
 
-    protected virtual void Drop(){
+    public virtual void Drop(){
         Body.simulated = true;
         gameObject.layer = LayerMask.NameToLayer("Objects");
         transform.parent = null;

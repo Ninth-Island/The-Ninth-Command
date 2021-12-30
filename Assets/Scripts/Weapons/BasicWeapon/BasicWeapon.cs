@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Unity.Mathematics;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -33,6 +34,7 @@ public class BasicWeapon : Weapon{
     protected override void Start(){
         base.Start();
         _cursorControl = FindObjectOfType<CursorControl>();
+        Player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, Body)));
     }
 
     
@@ -53,23 +55,16 @@ public class BasicWeapon : Weapon{
     }
 
 
-    private void OnMouseOver(){
-        Player.pickupText.SetText("(G) " + name);
-
-        if (Input.GetKeyDown(KeyCode.G)){
-            RefreshText();
-
-            base.PickUp(Player);
-            Player.primaryWeapon.Drop();
-            transform.localPosition = offset;
-            transform.localRotation = new Quaternion(0f, 0f, 0f, 0);
-            transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
-            Player.primaryWeapon = this;
-            Player.SetArmType(armType);
-        }
+    public override void PickUp(Character character){
+        base.PickUp(character);
+        transform.localPosition = offset;
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
+        Player.SetArmType(armType);
+        RefreshText();
     }
+    
 
-    protected override void Drop(){
+    public override void Drop(){
         base.Drop();
         
     }

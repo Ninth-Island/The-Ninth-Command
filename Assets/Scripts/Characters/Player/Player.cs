@@ -35,6 +35,8 @@ public partial class Player : Character{
     private BoxCollider2D _feetCollider;
 
     private bool _isCrouching;
+    
+    
 
 
     private ANames _aNames = new ANames();
@@ -89,6 +91,7 @@ public partial class Player : Character{
         }
         
         Update2();
+        CheckForPickup();
     }
 
     /*
@@ -183,6 +186,30 @@ public partial class Player : Character{
     */
     
     
+    private void CheckForPickup(){
+        Vector2 mousePos = GetMousePosition();
+        RaycastHit2D weaponScan = Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects"));
+
+        pickupText.SetText("");
+        
+        if (weaponScan && weaponScan.collider.gameObject.CompareTag("Weapon")){
+            GameObject nearestWeapon = weaponScan.collider.gameObject;
+            pickupText.transform.localPosition = Input.mousePosition - HUD.transform.localPosition;
+            pickupText.SetText(nearestWeapon.name);
+            BasicWeapon weapon = _allBasicWeapons[nearestWeapon].Key;
+            
+            if (IsTouching(transform.position, weaponScan.collider.gameObject.transform.position, weapon.GetPickupRange(), weapon.GetPickupRange())){
+                pickupText.SetText("(G) " + weapon.name);
+                if (Input.GetKeyDown(KeyCode.G)){
+                    primaryWeapon.Drop();
+                    weapon.PickUp(this);
+                    primaryWeapon = weapon;
+                }
+            }
+        }
+    }
+    
+    
     private void RotateArm(){
         float rotation = GetPlayerToMouseRotation();
         _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
@@ -212,6 +239,11 @@ public partial class Player : Character{
         return false;
     }
     
+    public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
+        _allBasicWeapons.Add(weapon.Key, weapon.Value);
+    }
+    public Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> _allBasicWeapons = new Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>();
+
     protected override void TakeDamage(int damage){
         base.TakeDamage(damage);
     }
