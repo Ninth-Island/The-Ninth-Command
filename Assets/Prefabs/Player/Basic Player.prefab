@@ -153,7 +153,6 @@ GameObject:
   - component: {fileID: 2580403686972779807}
   - component: {fileID: 2580403686972779802}
   - component: {fileID: 2580403686972779806}
-  - component: {fileID: 2580403686972779777}
   - component: {fileID: 342394936}
   m_Layer: 28
   m_Name: Basic Player
@@ -272,19 +271,6 @@ MonoBehaviour:
   - {fileID: -5643868179137935686, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   - {fileID: 7364606866421688543, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   - {fileID: 2415256495891508668, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
---- !u!114 &2580403686972779777
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2580403686972779803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75c81e38b41b3e74c812cb2669c00c27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 2580403686972779806}
   HUD: {fileID: 0}
   pickupText: {fileID: 0}
   WeaponImage: {fileID: 0}

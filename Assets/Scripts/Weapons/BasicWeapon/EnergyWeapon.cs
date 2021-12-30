@@ -93,10 +93,10 @@ public class EnergyWeapon : ProjectileWeapon{
     
     public override void RefreshText(){
         base.RefreshText();
-        PlayerPickupController.ammoCounter.SetText("");
-        PlayerPickupController.magCounter.SetText("");
-        PlayerPickupController.energyCounter.SetText("" + Mathf.RoundToInt(_energy));
-        PlayerPickupController.heatCounter.SetText(Mathf.RoundToInt(_heat) + "% / 100%");
+        Player.ammoCounter.SetText("");
+        Player.magCounter.SetText("");
+        Player.energyCounter.SetText("" + Mathf.RoundToInt(_energy));
+        Player.heatCounter.SetText(Mathf.RoundToInt(_heat) + "% / 100%");
     }
     
     protected override void Start(){

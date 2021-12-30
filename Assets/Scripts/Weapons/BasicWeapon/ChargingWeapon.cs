@@ -105,10 +105,10 @@ public class ChargingWeapon : ProjectileWeapon
     
     public override void RefreshText(){
         base.RefreshText();
-        PlayerPickupController.ammoCounter.SetText("");
-        PlayerPickupController.magCounter.SetText("");
-        PlayerPickupController.energyCounter.SetText("" + Mathf.RoundToInt(energy));
-        PlayerPickupController.heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
+        Player.ammoCounter.SetText("");
+        Player.magCounter.SetText("");
+        Player.energyCounter.SetText("" + Mathf.RoundToInt(energy));
+        Player.heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
     }
     
     protected override void Start(){

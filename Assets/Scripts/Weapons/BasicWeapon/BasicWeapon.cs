@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class BasicWeapon : Weapon{
@@ -26,15 +27,18 @@ public class BasicWeapon : Weapon{
 
     [SerializeField] private Vector2 offset = new Vector2(1.69f, -0.42f);
     [SerializeField] public int armType = 0;
-    
+    [SerializeField] private int cursorType = 0;
+    private CursorControl _cursorControl;
+
     protected override void Start(){
         base.Start();
-        PlayerPickupController.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, GetComponent<Rigidbody2D>())));
+        _cursorControl = FindObjectOfType<CursorControl>();
     }
-    
-    
 
+    
+    
     /*
+     * 
      * ================================================================================================================
      *                                               Pickup and Flipping
      * ================================================================================================================
@@ -48,13 +52,14 @@ public class BasicWeapon : Weapon{
         }
     }
 
-    public override void PickUp(Character pickedUpBy){
-        PlayerPickupController.pickupText.SetText("(G) " + name);
+
+    private void OnMouseOver(){
+        Player.pickupText.SetText("(G) " + name);
 
         if (Input.GetKeyDown(KeyCode.G)){
             RefreshText();
 
-            base.PickUp(pickedUpBy);
+            base.PickUp(Player);
             Player.primaryWeapon.Drop();
             transform.localPosition = offset;
             transform.localRotation = new Quaternion(0f, 0f, 0f, 0);
@@ -88,7 +93,9 @@ public class BasicWeapon : Weapon{
         
     }
     public virtual void RefreshText(){
-        PlayerPickupController.WeaponImage.sprite = SpriteRenderer.sprite;
+        Player.WeaponImage.sprite = SpriteRenderer.sprite;
+        _cursorControl.SetCursorType(cursorType);
+        
     }
     
     /*

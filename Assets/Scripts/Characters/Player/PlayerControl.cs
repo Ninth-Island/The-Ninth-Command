@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerControl : MonoBehaviour{
+public partial class Player : Character{
     
     /*
 * ================================================================================================================
@@ -19,7 +19,6 @@ public class PlayerControl : MonoBehaviour{
 * ================================================================================================================
 */
     
-    [SerializeField] protected Player player;
     [SerializeField] protected Canvas HUD;
     
 
@@ -41,7 +40,7 @@ public class PlayerControl : MonoBehaviour{
 
 
     // Start is called before the first frame update
-    protected virtual void Start(){
+    protected virtual void Start2(){
 
         WeaponImage = HUD.transform.GetChild(2).GetComponent<Image>();
         ammoCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -69,9 +68,7 @@ public class PlayerControl : MonoBehaviour{
 * ================================================================================================================
 */
     // Update is called once per frame
-    protected virtual void Update(){
-        
-        pickupText.SetText("");
+    protected virtual void Update2(){
         if (_fadeTimer > 0){
             _fadeTimer --;   
         }
@@ -81,7 +78,6 @@ public class PlayerControl : MonoBehaviour{
                 SetColor(0, 0, 0, _notificationText.color.a - fadeSpeed);
             }
         }
-
     }
 
 
@@ -102,9 +98,12 @@ public class PlayerControl : MonoBehaviour{
         Color color = _notificationText.color;
         _notificationText.color = new Color(color.r + r, color.g + g, color.b + b, a);
     }
-    public void SetText(string setText){
+    public void SetNotifText(string setText){
         _notificationText.SetText(setText);
         SetColor(0, 0, 0, 1);
         _fadeTimer = fadeDelay;
+    }
+    public void SetPickupText(string setText){
+        pickupText.SetText(setText);
     }
 }

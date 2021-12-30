@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class Player : Character{
+public partial class Player : Character{
     
     /*
 * ================================================================================================================
@@ -36,7 +36,6 @@ public class Player : Character{
 
     private bool _isCrouching;
 
-    private PlayerControl _playerControl;
 
     private ANames _aNames = new ANames();
     private Color[] _colors = new Color[3];
@@ -57,7 +56,6 @@ public class Player : Character{
         base.Start();
 
         DeathAnimationName = "Dead";
-        _playerControl = GetComponent<PlayerControl>();
         _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
 
         _arm = transform.GetChild(1).transform.GetChild(6);
@@ -68,6 +66,8 @@ public class Player : Character{
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
         }
+        
+        Start2();
     }
 
     protected override void FixedUpdate(){
@@ -87,6 +87,8 @@ public class Player : Character{
             _isCrouching = !_isCrouching;
             Animator.SetBool(_aNames.crouching, _isCrouching);
         }
+        
+        Update2();
     }
 
     /*
@@ -130,7 +132,7 @@ public class Player : Character{
     private void CheckJetpack(){
         Airborne = true;
         RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
-            LayerMask.GetMask("Ground", "Platform"));
+            LayerMask.GetMask("Ground", "Platform", "Vehicle"));
         
         if (clampScan.collider){
             Airborne = false;
@@ -182,7 +184,7 @@ public class Player : Character{
     
     
     private void RotateArm(){
-        float rotation = _playerControl.GetPlayerToMouseRotation();
+        float rotation = GetPlayerToMouseRotation();
         _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
         _arm.transform.localScale = new Vector3(1, 1);
         

@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour{
     */
     
     [Header("Weapon")]
-    [SerializeField] private float pickupRange;
+    [SerializeField] protected float pickupRange;
     [SerializeField] protected Character wielder;
 
     protected AudioManager AudioManager;
@@ -28,7 +28,6 @@ public class Weapon : MonoBehaviour{
     protected Rigidbody2D Body;
 
     protected Player Player;
-    protected WeaponPickup PlayerPickupController;
     
     // Start is called before the first frame update
     protected virtual void Start(){
@@ -37,7 +36,6 @@ public class Weapon : MonoBehaviour{
         Body = GetComponent<Rigidbody2D>();
 
         Player = FindObjectOfType<Player>();
-        PlayerPickupController = FindObjectOfType<WeaponPickup>();
 
         AudioManager = GetComponent<AudioManager>();
     }
@@ -56,7 +54,7 @@ public class Weapon : MonoBehaviour{
         wielder = pickedUpBy;
         Body.simulated = false;
         transform.parent = Player.gameObject.transform.GetChild(1).transform.GetChild(6);
-        PlayerPickupController.SetText("Picked Up " + name);
+        Player.SetNotifText("Picked Up " + name);
         AudioManager.PlayFromList(2);
     }
 

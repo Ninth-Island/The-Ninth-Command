@@ -172,6 +172,7 @@ MonoBehaviour:
   looping: 0
   offset: {x: 2.08, y: -0.15}
   armType: 0
+  cursorType: 19
   firingDelay: 0
   salvoDelay: 0
   shotsPerSalvo: 1

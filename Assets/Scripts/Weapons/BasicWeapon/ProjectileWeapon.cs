@@ -54,7 +54,7 @@ public class ProjectileWeapon : BasicWeapon{
         Projectile projectile = Instantiate(projectileTemplate, transform.position, Quaternion.identity);
         Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetCollider()); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetFeetCollider());
-        projectile.SetValues(projectileDamage, projectileSpeed, PlayerPickupController.GetPlayerToMouseRotation() * Mathf.Deg2Rad + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
+        projectile.SetValues(projectileDamage, projectileSpeed, Player.GetPlayerToMouseRotation() * Mathf.Deg2Rad + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
     }
     
     private IEnumerator SalvoDelay(){

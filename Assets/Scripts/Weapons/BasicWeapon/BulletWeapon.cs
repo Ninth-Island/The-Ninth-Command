@@ -49,7 +49,7 @@ public class BulletWeapon : ProjectileWeapon{
     public IEnumerator Reload(){
         if (magazinesLeft > 0){
             
-            PlayerPickupController.ammoCounter.SetText("Reloading...");
+            Player.ammoCounter.SetText("Reloading...");
             
             reloading = true;
             AudioManager.PlayFromList(1);
@@ -108,10 +108,10 @@ public class BulletWeapon : ProjectileWeapon{
     
     public override void RefreshText(){
         base.RefreshText();
-        PlayerPickupController.energyCounter.SetText("");
-        PlayerPickupController.heatCounter.SetText("");
-        PlayerPickupController.ammoCounter.SetText(_bulletsLeft + "/" + magazineSize);
-        PlayerPickupController.magCounter.SetText(("" + magazinesLeft));
+        Player.energyCounter.SetText("");
+        Player.heatCounter.SetText("");
+        Player.ammoCounter.SetText(_bulletsLeft + "/" + magazineSize);
+        Player.magCounter.SetText(("" + magazinesLeft));
     }
     // Update is called once per frame
     protected override void Update(){
