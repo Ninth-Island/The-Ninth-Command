@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 5374961542717239266}
   - component: {fileID: 5374961542717239265}
   - component: {fileID: 5374961542717239264}
-  - component: {fileID: -5604932223983771090}
-  m_Layer: 0
-  m_Name: High Velocity Bullet
+  m_Layer: 23
+  m_Name: Dead Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5374961542717239271}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 0.2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 936593139
   m_SortingLayer: 9
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: bd31e1df759e4e546a8c73ffbc8f88d0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a85f98ae4f93f284888011f4b07a4d6b, type: 3}
   m_Color: {r: 1, g: 0.85065913, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,18 +97,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0072771013, y: 0.0002695229}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.46875, y: 0.15625}
     newSize: {x: 0.2, y: 0.2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.1, y: 0.1}
+  m_Size: {x: 0.42288768, y: 0.12533508}
   m_EdgeRadius: 0
 --- !u!50 &5374961542717239264
 Rigidbody2D:
@@ -123,29 +122,12 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_GravityScale: 1
+  m_Material: {fileID: 6200000, guid: 8fa6a021cc2c93b40ba82baa7c16f71c, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &-5604932223983771090
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5374961542717239271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa5a0ed9fe16dbf439a7675e9d0b47e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sticky: 0
-  lifetime: 10
-  _live: 1
-  deadBullet: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
-    type: 3}

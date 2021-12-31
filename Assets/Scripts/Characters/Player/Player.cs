@@ -57,7 +57,6 @@ public partial class Player : Character{
     protected override void Start(){
         base.Start();
 
-        DeathAnimationName = "Dead";
         _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
 
         _arm = transform.GetChild(1).transform.GetChild(6);
@@ -82,13 +81,12 @@ public partial class Player : Character{
         base.Update();
         Jump();
         CheckSwap();
+        
+        CheckCrouch();
         primaryWeapon.CheckReload();
         RotateArm();
         
-        if (Input.GetKeyDown(KeyCode.S)){
-            _isCrouching = !_isCrouching;
-            Animator.SetBool(_aNames.crouching, _isCrouching);
-        }
+        
         
         Update2();
         CheckForPickup();
@@ -105,7 +103,7 @@ public partial class Player : Character{
         
         Animator.SetBool(_aNames.running, input != 0);
         
-        if (input != 0 && !InputsFrozen && !Knocked){
+        if (input != 0 && !InputsFrozen && !FallingKnocked){
             Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
             
             Animator.SetBool(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
@@ -148,9 +146,16 @@ public partial class Player : Character{
     }
     
     private void Transform(float x){
-            Vector2 pos = transform.position;
-            transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
+        Vector2 pos = transform.position;
+        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
+    }
+
+    private void CheckCrouch(){
+        if (Input.GetKeyDown(KeyCode.S)){
+            _isCrouching = !_isCrouching;
+            Animator.SetBool(_aNames.crouching, _isCrouching);
         }
+    }
 
     
     /*

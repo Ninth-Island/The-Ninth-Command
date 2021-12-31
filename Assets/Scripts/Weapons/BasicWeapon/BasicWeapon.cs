@@ -59,6 +59,7 @@ public class BasicWeapon : Weapon{
         base.PickUp(character);
         transform.localPosition = offset;
         transform.localRotation = new Quaternion(0, 0, 0, 0);
+        transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
         Player.SetArmType(armType);
         RefreshText();
     }

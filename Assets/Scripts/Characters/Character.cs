@@ -27,12 +27,11 @@ public class Character : MonoBehaviour{
     protected Animator Animator;
 
     protected bool Airborne = true;
-    protected bool Knocked = false;
+    protected bool FallingKnocked = false;
     protected bool InputsFrozen = false;
 
     protected AudioManager AudioManager;
     
-    protected string DeathAnimationName;
 
 
     protected virtual void Start(){
@@ -53,9 +52,9 @@ public class Character : MonoBehaviour{
         
     }
     protected virtual void FixedUpdate(){
-        Knocked = true;
+        FallingKnocked = true;
         if (Math.Abs(Body.velocity.x) < moveSpeed * 1.2){
-            Knocked = false;
+            FallingKnocked = false;
         }
     }
 
@@ -66,7 +65,6 @@ public class Character : MonoBehaviour{
     protected virtual void TakeDamage(int damage){
         health -= damage;
         if (health <= 0){
-            Animator.SetBool(DeathAnimationName, true);
             InputsFrozen = true;
             Destroy(gameObject, 3f);
         }
@@ -94,7 +92,7 @@ public class Character : MonoBehaviour{
     }
     
     public void SetKnocked(bool setKnockedState){
-        Knocked = setKnockedState; 
+        FallingKnocked = setKnockedState; 
         // do some knocked stuff
         // rework animations;
     }

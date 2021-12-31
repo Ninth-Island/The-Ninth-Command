@@ -18,7 +18,7 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private int magazinesLeft;
     [SerializeField] private int magazineSize;
     [SerializeField] private float reloadTime;
-
+    [SerializeField] private GameObject bulletShell;
     
     public bool reloading;
     private int _bulletsLeft;
@@ -39,6 +39,9 @@ public class BulletWeapon : ProjectileWeapon{
     protected override void CheckFire(){
         if (_bulletsLeft > 0 && !reloading && !Firing){
             StartCoroutine(Fire());
+            if (bulletShell){
+                Destroy(Instantiate(bulletShell, transform.position, transform.rotation), 1f);
+            } 
         }
         else if (!reloading && _bulletsLeft <= 0){
             StartReloading();

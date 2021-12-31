@@ -83,7 +83,7 @@ public class NPC : Character{
     }
 
     private void Patrol(){
-        if (!InputsFrozen && !Knocked && !_target){
+        if (!InputsFrozen && !FallingKnocked && !_target){
             Body.velocity = new Vector2(moveSpeed * transform.localScale.x * 0.3f, Body.velocity.y);
         }
     }

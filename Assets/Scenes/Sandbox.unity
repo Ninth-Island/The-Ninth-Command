@@ -3695,6 +3695,7 @@ MonoBehaviour:
   magazinesLeft: 5
   magazineSize: 32
   reloadTime: 3
+  bulletShell: {fileID: 0}
   reloading: 0
 --- !u!212 &4802091276977555568
 SpriteRenderer:

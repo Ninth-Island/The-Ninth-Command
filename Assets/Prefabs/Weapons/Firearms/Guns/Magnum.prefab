@@ -185,6 +185,8 @@ MonoBehaviour:
   magazinesLeft: 8
   magazineSize: 16
   reloadTime: 3
+  bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
+    type: 3}
   reloading: 0
 --- !u!114 &7988521113704876517
 MonoBehaviour:
