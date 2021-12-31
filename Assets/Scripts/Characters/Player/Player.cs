@@ -189,32 +189,69 @@ public partial class Player : Character{
     *                                               Other
     * ================================================================================================================
     */
-    
-    
+
+
     private void CheckForPickup(){
         Vector2 mousePos = GetMousePosition();
-        RaycastHit2D weaponScan = Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects"));
-
-        pickupText.SetText("");
+        RaycastHit2D objectScan =
+            Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects", "Vehicle"));
         
-        if (weaponScan && weaponScan.collider.gameObject.CompareTag("Weapon")){
-            GameObject nearestWeapon = weaponScan.collider.gameObject;
+        pickupText.SetText("");
+        if (objectScan){
+            GameObject nearestObject = objectScan.collider.gameObject;
             pickupText.transform.localPosition = Input.mousePosition - HUD.transform.localPosition;
-            pickupText.SetText(nearestWeapon.name);
-            BasicWeapon weapon = _allBasicWeapons[nearestWeapon].Key;
-            
-            if (IsTouching(transform.position, weaponScan.collider.gameObject.transform.position, weapon.GetPickupRange(), weapon.GetPickupRange())){
-                pickupText.SetText("(G) " + weapon.name);
-                if (Input.GetKeyDown(KeyCode.G)){
-                    primaryWeapon.Drop();
-                    weapon.PickUp(this);
-                    primaryWeapon = weapon;
-                }
+            pickupText.SetText(nearestObject.name);
+
+            if (nearestObject.CompareTag("Weapon")){
+                WeaponPickup(nearestObject);
+            }
+
+            if (nearestObject.CompareTag("Vehicle")){
+                VehicleEmbark(nearestObject);
             }
         }
     }
+
+    private void WeaponPickup(GameObject nearestObject){
+        BasicWeapon weapon = _allBasicWeapons[nearestObject].Key;
+
+        if (IsTouching(transform.position, nearestObject.transform.position,
+            weapon.GetPickupRange(), weapon.GetPickupRange())){
+            pickupText.SetText("(G) " + weapon.name);
+            if (Input.GetKeyDown(KeyCode.G)){
+                primaryWeapon.Drop();
+                weapon.PickUp(this);
+                primaryWeapon = weapon;
+            }
+        }
     
-    
+    }
+
+    private void VehicleEmbark(GameObject nearestObject){
+        Vehicle vehicle = _allVehicles[nearestObject];
+        if (IsTouching(transform.position, nearestObject.transform.position, vehicle.GetEmbarkRange(),
+            vehicle.GetEmbarkRange())){
+            pickupText.SetText("(G) " + nearestObject.name);
+            if (Input.GetKeyDown(KeyCode.G)){
+                SetNotifText("Embarked " + gameObject.name);
+                gameObject.SetActive(false);
+
+                SpriteRenderer driver = vehicle.GetDriver();
+                SpriteRenderer driverVisor = vehicle.GetDriverVisor();
+                driver.enabled = true;
+                driverVisor.enabled = true;
+
+                Transform helmet = transform.GetChild(1).GetChild(5);
+                driver.color = helmet.GetChild(0).GetComponent<SpriteRenderer>().color;
+                driverVisor.color = helmet.GetChild(2).GetComponent<SpriteRenderer>().color;
+            
+               
+                //AudioManager.PlayFromList(2);
+                        
+            }
+        }
+    }
+
     private void RotateArm(){
         float rotation = GetPlayerToMouseRotation();
         _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
@@ -247,7 +284,11 @@ public partial class Player : Character{
     public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
         _allBasicWeapons.Add(weapon.Key, weapon.Value);
     }
+    public void AddVehicle(KeyValuePair<GameObject, Vehicle> vehicle){
+        _allVehicles.Add(vehicle.Key, vehicle.Value);
+    }
     public Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> _allBasicWeapons = new Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>();
+    public Dictionary<GameObject, Vehicle> _allVehicles = new Dictionary<GameObject, Vehicle>();
 
     protected override void TakeDamage(int damage){
         base.TakeDamage(damage);

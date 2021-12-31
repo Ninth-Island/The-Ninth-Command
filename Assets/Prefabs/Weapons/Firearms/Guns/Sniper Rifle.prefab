@@ -225,7 +225,7 @@ MonoBehaviour:
   reloadTime: 3
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
-  reloading: 1
+  reloading: 0
 --- !u!114 &653092041280103006
 MonoBehaviour:
   m_ObjectHideFlags: 0
