@@ -185,12 +185,12 @@ MonoBehaviour:
   salvoDelay: 0
   shotsPerSalvo: 10
   instability: 0.5
-  projectileTemplate: {fileID: -5604932223983771090, guid: 3f403f78382a8b4418e2110793032e62,
+  projectileTemplate: {fileID: -5604932223983771090, guid: 923d37021f28fd641968c6f282acd0ce,
     type: 3}
   projectileDamage: 5
   projectileSpeed: 100
   piercing: 0
-  magazinesLeft: 30
+  magazinesLeft: 74
   magazineSize: 10
   reloadTime: 0.5
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,

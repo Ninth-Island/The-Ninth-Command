@@ -54,7 +54,7 @@ public class BasicWeapon : Weapon{
         }
     }
 
-
+ 
     public override void PickUp(Character character){
         base.PickUp(character);
         transform.localPosition = offset;
