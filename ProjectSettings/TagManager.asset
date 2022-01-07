@@ -55,9 +55,6 @@ TagManager:
   - name: NPCs
     uniqueID: 1957348743
     locked: 0
-  - name: Players
-    uniqueID: 3687076719
-    locked: 0
   - name: Decorative
     uniqueID: 2241678775
     locked: 0
@@ -66,6 +63,9 @@ TagManager:
     locked: 0
   - name: Objects
     uniqueID: 447239203
+    locked: 0
+  - name: Players
+    uniqueID: 3687076719
     locked: 0
   - name: Projectiles
     uniqueID: 2488050739
