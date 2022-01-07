@@ -59,8 +59,8 @@ public partial class Player : Character{
 
         _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
 
-        _arm = transform.GetChild(1).transform.GetChild(6);
-        _helmet = transform.GetChild(1).transform.GetChild(5);
+        _arm = transform.GetChild(1).transform.GetChild(5);
+        _helmet = transform.GetChild(1).transform.GetChild(4);
 
         _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
         

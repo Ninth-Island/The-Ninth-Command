@@ -273,12 +273,6 @@ SpriteRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 3208046358186692563}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &211192667 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 3208046357126856562, guid: 75c82abd1998fe8449bac6b6751fb637,
-    type: 3}
-  m_PrefabInstance: {fileID: 3208046358186692563}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &399805418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -567,7 +561,7 @@ PrefabInstance:
     - target: {fileID: 1735707114, guid: cf26ae51b8c864c42b13c51f3e4cb236, type: 3}
       propertyPath: bottomRenderer
       value: 
-      objectReference: {fileID: 211192667}
+      objectReference: {fileID: 0}
     - target: {fileID: 1735707114, guid: cf26ae51b8c864c42b13c51f3e4cb236, type: 3}
       propertyPath: helmetRenderer
       value: 
@@ -1093,6 +1087,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 519420032, guid: e345ad05263733541986df36eb47d4c3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 61.96
+      objectReference: {fileID: 0}
     - target: {fileID: 626165736, guid: e345ad05263733541986df36eb47d4c3, type: 3}
       propertyPath: m_Follow
       value: 

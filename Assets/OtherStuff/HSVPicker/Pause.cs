@@ -42,7 +42,6 @@ public class Pause : MonoBehaviour{
     public void SetHelmetColor(Color color){
         if (colorTransferer != null){
             colorTransferer.helmetRenderer.color = color;
-            colorTransferer.bottomRenderer.color = color;
             colorTransferer.helmetTransform.GetChild(0).GetComponent<SpriteRenderer>().color = color;
 
         }

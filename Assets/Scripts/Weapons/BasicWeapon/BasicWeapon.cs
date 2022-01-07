@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Unity.Mathematics;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class BasicWeapon : Weapon{
