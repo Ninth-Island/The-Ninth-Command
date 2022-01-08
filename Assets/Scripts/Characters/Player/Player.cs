@@ -121,7 +121,8 @@ public partial class Player : Character{
             if (!Airborne){
                 Airborne = true;
                 //Animator.SetBool(jumping, true);
-                Body.velocity = new Vector2(velocity.x, jumpPower);
+                Body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
+                
                 AudioManager.PlayFromList(1);
 
             }
@@ -192,7 +193,7 @@ public partial class Player : Character{
 
 
     private void CheckForPickup(){
-        Vector2 mousePos = GetMousePosition();
+        Vector2 mousePos = _cursorControl.GetMousePosition();
         RaycastHit2D objectScan =
             Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects", "Vehicle"));
         

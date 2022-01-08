@@ -37,6 +37,8 @@ public partial class Player : Character{
     public TextMeshProUGUI energyCounter;
     public TextMeshProUGUI heatCounter;
 
+    private CursorControl _cursorControl;
+
 
 
     // Start is called before the first frame update
@@ -56,6 +58,7 @@ public partial class Player : Character{
         pickupText.SetText("");
         
         _mainCamera = Camera.main;
+        _cursorControl = FindObjectOfType<CursorControl>();
     }
 
     /*
@@ -85,12 +88,10 @@ public partial class Player : Character{
 
 
     
-    public Vector2 GetMousePosition(){
-        return _mainCamera.ScreenToWorldPoint(Input.mousePosition);
-    }
+    
 
     public float GetPlayerToMouseRotation(){
-        float ang = (float) Math.Atan2(GetMousePosition().y - transform.position.y, GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
+        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;
         }

@@ -1,31 +1,25 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Vector3 = UnityEngine.Vector3;
 
 public class CursorControl : MonoBehaviour{
     
-    [SerializeField] private Sprite[] Sprites;
+    [SerializeField] private Texture2D[] Images;
 
-    private SpriteRenderer imageRenderer;
     
     private Camera mainCam;
+    
 
-    private void Start(){/*
-        Cursor.visible = false;*/
+    private void Start(){
         mainCam = Camera.main;
-        imageRenderer = GetComponent<SpriteRenderer>();
-        imageRenderer.sprite = Sprites[0];
     }
 
-    private void Update(){
-        Vector3 pos = transform.position;
-        pos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        pos = new Vector3(pos.x, pos.y, 0);
-        transform.position = pos;
+    public void SetCursorType(int type){ ;
+        Cursor.SetCursor(Images[type], new Vector2(32, 32), CursorMode.ForceSoftware);
     }
-
-    public void SetCursorType(int type){
-        imageRenderer.sprite = Sprites[type];
+    public Vector2 GetMousePosition(){
+        return mainCam.ScreenToWorldPoint(Input.mousePosition);
     }
 }

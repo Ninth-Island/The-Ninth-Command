@@ -77,6 +77,7 @@ public class Projectile : MonoBehaviour{
         _damage = damage;
         gameObject.name = name + " " + gameObject;
         gameObject.layer = firedLayer - 4;
+        //Body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
         Body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         _piercing = piercing;
