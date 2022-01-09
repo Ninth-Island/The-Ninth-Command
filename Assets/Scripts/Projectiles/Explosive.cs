@@ -70,7 +70,7 @@ public class Explosive : Projectile{
      */
     IEnumerator Fuse(){
         Body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        gameObject.layer = LayerMask.NameToLayer("Ground");
+        gameObject.layer = _firedLayer - 4;
         yield return new WaitForSeconds(fuseTimer);
         
         Explode();

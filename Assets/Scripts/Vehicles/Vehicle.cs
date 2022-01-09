@@ -6,12 +6,17 @@ using UnityEngine;
 public class Vehicle : MonoBehaviour{
 
     [SerializeField] private float embarkRange;
+    [SerializeField] private float speed;
 
     private Player _player;
     private CursorControl _cursorControl;
 
     private SpriteRenderer driverVisor;
     private SpriteRenderer driver;
+
+    private Player _driverReference;
+
+    private bool _hasDriver;
     
     public float GetEmbarkRange(){
         return embarkRange;
@@ -27,8 +32,23 @@ public class Vehicle : MonoBehaviour{
         _player.AddVehicle(new KeyValuePair<GameObject, Vehicle>(gameObject, this));
     }
 
+    private void Update(){
+        if (Input.GetKeyDown(KeyCode.G) && _hasDriver){
+            _hasDriver = false;
+            _driverReference.transform.position = transform.position + new Vector3(0, 10);
+            _driverReference.gameObject.SetActive(true);
+
+            driver.enabled = false;
+            driverVisor.enabled = false;
+        }
+    }
 
 
+    public void SetDriver(Player player){
+        _driverReference = player;
+        _hasDriver = true;
+    }
+    
     public SpriteRenderer GetDriver(){
         return driver;
     }

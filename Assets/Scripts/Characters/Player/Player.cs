@@ -237,6 +237,7 @@ public partial class Player : Character{
                 SetNotifText("Embarked " + gameObject.name);
                 gameObject.SetActive(false);
 
+                vehicle.SetDriver(this);
                 SpriteRenderer driver = vehicle.GetDriver();
                 SpriteRenderer driverVisor = vehicle.GetDriverVisor();
                 driver.enabled = true;

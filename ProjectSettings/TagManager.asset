@@ -61,11 +61,11 @@ TagManager:
   - name: Foreground
     uniqueID: 2245305635
     locked: 0
-  - name: Objects
-    uniqueID: 447239203
-    locked: 0
   - name: Players
     uniqueID: 3687076719
+    locked: 0
+  - name: Objects
+    uniqueID: 447239203
     locked: 0
   - name: Projectiles
     uniqueID: 2488050739
