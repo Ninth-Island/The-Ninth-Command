@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
-  m_Name: Shallow Slope
+  m_Name: LeftShallow
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -1524530340255669013, guid: 80187ae38e1e22145a995ade3f1ee953,
     type: 3}
@@ -31,7 +31,7 @@ MonoBehaviour:
     m_NeighborPositions:
     - {x: -1, y: 0, z: 0}
     - {x: 0, y: 1, z: 0}
-    m_RuleTransform: 2
+    m_RuleTransform: 0
   - m_Id: 1
     m_Sprites:
     - {fileID: -1958087668495093950, guid: 80187ae38e1e22145a995ade3f1ee953, type: 3}
@@ -47,7 +47,7 @@ MonoBehaviour:
     - {x: 0, y: 1, z: 0}
     - {x: -1, y: 0, z: 0}
     - {x: -2, y: 0, z: 0}
-    m_RuleTransform: 2
+    m_RuleTransform: 0
   - m_Id: 4
     m_Sprites:
     - {fileID: 5678152100498453161, guid: 80187ae38e1e22145a995ade3f1ee953, type: 3}
@@ -62,4 +62,4 @@ MonoBehaviour:
     m_NeighborPositions:
     - {x: 0, y: 1, z: 0}
     - {x: -1, y: 0, z: 0}
-    m_RuleTransform: 2
+    m_RuleTransform: 0
