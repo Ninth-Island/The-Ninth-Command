@@ -63,7 +63,7 @@ public class EnergyWeapon : ProjectileWeapon{
         base.CheckReload();
         if (Input.GetKey(KeyCode.R)){
             _cooling += coolingCooldownAcceleration;
-            if (!AudioManager.soundsFromList[1].source.isPlaying){
+            /*if (!AudioManager.soundsFromList[1].source.isPlaying){
                 AudioManager.PlayFromList(1);
             }
         }
@@ -74,7 +74,7 @@ public class EnergyWeapon : ProjectileWeapon{
         else{
             if (AudioManager.soundsFromList[1].source.time >= 2.6f){
                 AudioManager.PlayFromList(4);
-            }
+            }*/
         }
     }
     

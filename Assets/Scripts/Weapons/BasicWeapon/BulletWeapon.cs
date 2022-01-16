@@ -55,9 +55,9 @@ public class BulletWeapon : ProjectileWeapon{
             Player.ammoCounter.SetText("Reloading...");
             
             reloading = true;
-            AudioManager.PlayFromList(1);
+            //AudioManager.PlayFromList(1);
             yield return new WaitForSeconds(reloadTime);
-            AudioManager.PlayFromList(2);
+            //AudioManager.PlayFromList(2);
             
             
             _bulletsLeft = magazineSize;

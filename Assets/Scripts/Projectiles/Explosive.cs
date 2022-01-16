@@ -56,7 +56,7 @@ public class Explosive : Projectile{
 
 
     public void Explode(){
-        _audioManager.PlayFromList(0);
+       // _audioManager.PlayFromList(0);
         _spriteRenderer.enabled = false;
         Body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));

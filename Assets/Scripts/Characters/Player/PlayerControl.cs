@@ -111,3 +111,4 @@ public partial class Player : Character{
         pickupText.SetText(setText);
     }
 }
+

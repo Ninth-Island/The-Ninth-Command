@@ -55,7 +55,7 @@ public class Weapon : MonoBehaviour{
         Body.simulated = false;
         transform.parent = Player.gameObject.transform.GetChild(1).transform.GetChild(5);
         Player.SetNotifText("Picked Up " + name);
-        AudioManager.PlayFromList(2);
+       // AudioManager.PlayFromList(2);
     }
 
     public virtual void Drop(){

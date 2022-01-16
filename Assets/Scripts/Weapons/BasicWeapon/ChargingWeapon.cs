@@ -39,14 +39,14 @@ public class ChargingWeapon : ProjectileWeapon
         if (energy > 0 && heat < 100 && !Firing && !coolingDown){
             heat += chargePerFrame;
             
-            AudioManager.sounds[0].source.mute = false;        
-            AudioManager.sounds[1].source.Stop();
+        //    AudioManager.sounds[0].source.mute = false;        
+          //  AudioManager.sounds[1].source.Stop();
             
-            AudioManager.sounds[0].source.time = heat / chargeSoundLengthDivider;
-            AudioManager.sounds[0].source.Play();
-            if (!AudioManager.sounds[0].source.isPlaying){ // currently being actively charged so charge it
+            //AudioManager.sounds[0].source.time = heat / chargeSoundLengthDivider;
+            //AudioManager.sounds[0].source.Play();
+            //if (!AudioManager.sounds[0].source.isPlaying){ // currently being actively charged so charge it
                 
-            }
+            //}
             if (heat >= 100){
                 StartCoroutine(Fire());
             }
@@ -63,15 +63,15 @@ public class ChargingWeapon : ProjectileWeapon
     
     
     protected override void Update(){
-        AudioManager.sounds[0].source.mute = true;
+//        AudioManager.sounds[0].source.mute = true;
         base.Update();
         
         heat -= cooldownSpeed;
         if (!coolingDown){ // so that after firing it cools down slower than before firing
             heat -= cooldownSpeed;
-            if (heat > 0 && !AudioManager.sounds[1].source.isPlaying && !AudioManager.sounds[0].source.isPlaying){
-                AudioManager.sounds[1].source.Play();
-            }
+           // if (heat > 0 && !AudioManager.sounds[1].source.isPlaying && !AudioManager.sounds[0].source.isPlaying){
+             //   AudioManager.sounds[1].source.Play();
+           // }
 
         }
         if (heat <= 0){

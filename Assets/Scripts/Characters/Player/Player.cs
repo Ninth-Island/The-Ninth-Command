@@ -123,7 +123,7 @@ public partial class Player : Character{
                 //Animator.SetBool(jumping, true);
                 Body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
                 
-                AudioManager.PlayFromList(1);
+               // AudioManager.PlayFromList(1);
 
             }
         }

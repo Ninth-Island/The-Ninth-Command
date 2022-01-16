@@ -99,7 +99,7 @@ public class Character : MonoBehaviour{
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
         if (other.gameObject.CompareTag("Ground")){
-            AudioManager.PlayFromList(2);
+           // AudioManager.PlayFromList(2);
         }
     }
 
