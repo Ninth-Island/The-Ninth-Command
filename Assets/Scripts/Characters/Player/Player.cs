@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -32,9 +33,10 @@ public partial class Player : Character{
 
     private SpriteRenderer _armRenderer;
 
-    private BoxCollider2D _feetCollider;
+
 
     private bool _isCrouching;
+
     
     
 
@@ -53,16 +55,23 @@ public partial class Player : Character{
     }
 
 
-    
+    #region Start And Update
+
+    /*
+    * ================================================================================================================
+    *                                               Start and update
+    * ================================================================================================================
+    */
+
     protected override void Start(){
         base.Start();
 
-        _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
 
         _arm = transform.GetChild(1).transform.GetChild(5);
         _helmet = transform.GetChild(1).transform.GetChild(4);
 
         _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
+
         
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
@@ -74,12 +83,12 @@ public partial class Player : Character{
     protected override void FixedUpdate(){
         base.FixedUpdate();
         Move();
-        CheckJetpack();
+        Jump();
     }
 
     protected override void Update(){
         base.Update();
-        Jump();
+        
         CheckSwap();
         
         CheckCrouch();
@@ -91,7 +100,9 @@ public partial class Player : Character{
         Update2();
         CheckForPickup();
     }
+    #endregion
 
+    #region Movement
     /*
     * ================================================================================================================
     *                                               Movement
@@ -100,31 +111,38 @@ public partial class Player : Character{
 
     private void Move(){
         float input = Input.GetAxis("Horizontal");
-        
         Animator.SetBool(_aNames.running, input != 0);
-        
+
         if (input != 0 && !InputsFrozen && !FallingKnocked){
-            Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
-            
+
             Animator.SetBool(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
+            
+            if (_isCrouching){
+                Body.velocity = new Vector2(moveSpeed / 2 * input, Body.velocity.y);
+                SortSound(2);
+            }
+            else{
+                Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
+                SortSound(1);
+            }
+            
         }
-
         
-
+        //CheckJetpack();
     }
 
     private void Jump(){
         
+        
         if (Input.GetKey(KeyCode.W)){
             Vector2 velocity = Body.velocity;
             
-            if (!Airborne){
+            // can't use airborne because the player is considered not airborne a few seconds before and after jumping
+            if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
                 Airborne = true;
-                //Animator.SetBool(jumping, true);
                 Body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
                 
-               // AudioManager.PlayFromList(1);
-
+                SortSound(0);
             }
         }
         
@@ -132,24 +150,12 @@ public partial class Player : Character{
     }
 
     private void CheckJetpack(){
-        Airborne = true;
-        RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
-            LayerMask.GetMask("Ground", "Platform", "Vehicle"));
-        
-        if (clampScan.collider){
-            Airborne = false;
-            
-        }
-        
         if (Input.GetKey(KeyCode.W) && Airborne){
             Body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
         }
     }
     
-    private void Transform(float x){
-        Vector2 pos = transform.position;
-        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
-    }
+    
 
     private void CheckCrouch(){
         if (Input.GetKeyDown(KeyCode.S)){
@@ -158,14 +164,20 @@ public partial class Player : Character{
         }
     }
 
+    private void Transform(float x){ 
+        Vector2 pos = transform.position;
+        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
+    }
     
+    #endregion
+
+    #region Weapon and Vehicle
     /*
     * ================================================================================================================
-    *                                               Firing/Attacking
+    *                                               Weapon and Vehicle
     * ================================================================================================================
     */
-   
-
+    
     private void CheckSwap(){
         if (Input.GetKeyDown(KeyCode.Mouse1)){
             if (primaryWeapon != null){
@@ -185,13 +197,6 @@ public partial class Player : Character{
         }
     }
     
-    /*
-    * ================================================================================================================
-    *                                               Other
-    * ================================================================================================================
-    */
-
-
     private void CheckForPickup(){
         Vector2 mousePos = _cursorControl.GetMousePosition();
         RaycastHit2D objectScan =
@@ -246,9 +251,7 @@ public partial class Player : Character{
                 Transform helmet = transform.GetChild(1).GetChild(5);
                 driver.color = helmet.GetChild(0).GetComponent<SpriteRenderer>().color;
                 driverVisor.color = helmet.GetChild(2).GetComponent<SpriteRenderer>().color;
-            
-               
-                //AudioManager.PlayFromList(2);
+                
                         
             }
         }
@@ -274,14 +277,6 @@ public partial class Player : Character{
     public void SetArmType(int armType){
         _armRenderer.sprite = ArmTypes[armType];
     }
-
-
-    public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){
-        if (Math.Abs(pos1.x - pos2.x) < xAffordance && Math.Abs(pos1.y - pos2.y) < yAffordance){
-            return true;
-        }
-        return false;
-    }
     
     public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
         _allBasicWeapons.Add(weapon.Key, weapon.Value);
@@ -289,16 +284,56 @@ public partial class Player : Character{
     public void AddVehicle(KeyValuePair<GameObject, Vehicle> vehicle){
         _allVehicles.Add(vehicle.Key, vehicle.Value);
     }
+    
     public Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> _allBasicWeapons = new Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>();
     public Dictionary<GameObject, Vehicle> _allVehicles = new Dictionary<GameObject, Vehicle>();
+
+    
+    #endregion
+
+    #region Sound
+    /*
+    * ================================================================================================================
+    *                                               Sound
+    * ================================================================================================================
+    */
+    
+    
+   
+    #endregion
+    
+    #region Other
+    /*
+    * ================================================================================================================
+    *                                               Other
+    * ================================================================================================================
+    */
+   
+    
+
+    
+    public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){
+        if (Math.Abs(pos1.x - pos2.x) < xAffordance && Math.Abs(pos1.y - pos2.y) < yAffordance){
+            return true;
+        }
+        return false;
+    }
+    
+    
+    public BoxCollider2D GetFeetCollider(){
+        return FeetCollider;
+    }
+    
 
     protected override void TakeDamage(int damage){
         base.TakeDamage(damage);
     }
 
+    #endregion
+    
 
-    public BoxCollider2D GetFeetCollider(){
-        return _feetCollider;
-    }
+
+    
+
     
 }

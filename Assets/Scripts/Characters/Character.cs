@@ -21,16 +21,25 @@ public class Character : MonoBehaviour{
     
     [SerializeField] protected int health;
     [SerializeField] protected float moveSpeed;
+    
+    [SerializeField] private PhysicsMaterial2D[] materials;
+
 
     protected BoxCollider2D Collider;
+    
+    protected BoxCollider2D FeetCollider;
+
+    
     protected Rigidbody2D Body;
     protected Animator Animator;
 
+    
     protected bool Airborne = true;
     protected bool FallingKnocked = false;
     protected bool InputsFrozen = false;
 
     protected AudioManager AudioManager;
+    
     
 
 
@@ -38,6 +47,8 @@ public class Character : MonoBehaviour{
         
         
         Collider = GetComponent<BoxCollider2D>();
+        FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+
         Body = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
 
@@ -55,6 +66,15 @@ public class Character : MonoBehaviour{
         FallingKnocked = true;
         if (Math.Abs(Body.velocity.x) < moveSpeed * 1.2){
             FallingKnocked = false;
+        }
+        
+        Airborne = true;
+        RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
+            LayerMask.GetMask("Ground", "Platform", "Vehicle"));
+        
+        if (clampScan.collider){
+            Airborne = false;
+            
         }
     }
 
@@ -99,8 +119,46 @@ public class Character : MonoBehaviour{
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
         if (other.gameObject.CompareTag("Ground")){
-           // AudioManager.PlayFromList(2);
+            if (Math.Abs(Body.velocity.y) > 20){
+                SortSound(4);
+            }
+            else{
+                SortSound(3);
+            }
         }
+    }
+    
+    protected void SortSound(int type){
+
+        PhysicsMaterial2D materialTouching = GetMaterialTouching();
+        
+        if (materialTouching != null){
+            int soundIndex = 0;
+            for (int i = 0; i < materials.Length; i++){
+                PhysicsMaterial2D material = materials[i];
+                if (material == materialTouching){
+                    soundIndex = i * 5;
+                }
+            }
+
+            soundIndex += type;
+            AudioManager.PlaySound(soundIndex);
+        }
+    } 
+    private PhysicsMaterial2D GetMaterialTouching(){
+        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+            Collider2D[] output = new Collider2D[1];
+            
+            ContactFilter2D filter = new ContactFilter2D();
+            filter.SetLayerMask(LayerMask.GetMask("Ground", "Platform"));
+            
+            FeetCollider.OverlapCollider(filter, output);
+            if (output[0] != null){
+                return output[0].attachedRigidbody.sharedMaterial;
+            }
+        }
+
+        return null;
     }
 
 }

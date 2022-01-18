@@ -919,6 +919,7 @@ GameObject:
   - component: {fileID: 3757039344788581447}
   - component: {fileID: 3757039344788581443}
   - component: {fileID: 1723963982361676133}
+  - component: {fileID: 1838690149}
   m_Layer: 28
   m_Name: Player Color
   m_TagString: Player
@@ -1023,10 +1024,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moveSpeed: 15
+  materials:
+  - {fileID: 6200000, guid: 3d166540dc9af644ba0c3177793833f5, type: 2}
+  - {fileID: 6200000, guid: 01c9ac2c2a68ec5469f41f40987b1703, type: 2}
+  - {fileID: 6200000, guid: 4a9d23ed61bc2ee4d9bb280431b6c169, type: 2}
+  - {fileID: 6200000, guid: 721799b3543ddcd43a5eba3b5613cd36, type: 2}
   primaryWeapon: {fileID: 6412611949876825548}
   secondaryWeapon: {fileID: 3366574980827617874}
-  jumpPower: 10
-  jetPower: 2
+  jumpPower: 18
+  jetPower: 0
   spritesParent: {fileID: 3208046358017332010}
   ArmTypes:
   - {fileID: -7887873344414462056, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
@@ -1054,67 +1060,434 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsFromList:
-  - name: Metal Run
-    soundsList:
-    - {fileID: 8300000, guid: 0f1301f0864f31d45a34a6139636e0e1, type: 3}
-    - {fileID: 8300000, guid: 80359d0df294f1d4cae27815deb406dc, type: 3}
-    - {fileID: 8300000, guid: 835a422884378fc4e954ae8f12c67608, type: 3}
-    - {fileID: 8300000, guid: 079cc09182bede14b9a8cd0d27793443, type: 3}
-    - {fileID: 8300000, guid: 9bc565c397fe4364a9949286406d1f35, type: 3}
-    - {fileID: 8300000, guid: 12b6d9f61c8b54b49920997c361ffd64, type: 3}
-    - {fileID: 8300000, guid: 58666d5cb309b764ba9da17c1b11c812, type: 3}
-    - {fileID: 8300000, guid: f20612b5c11f11d458a1f008878bd6c5, type: 3}
-    - {fileID: 8300000, guid: 2bdefba935cafc24d86fde016d0b66bc, type: 3}
-    - {fileID: 8300000, guid: e224a2ad491cdab4f95ac3550e16c230, type: 3}
-    - {fileID: 8300000, guid: 02447f324bb5e7648af2bba9b4ae26fd, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Metal Jump
-    soundsList:
-    - {fileID: 8300000, guid: 65ef8d705db8a15469ccc7735d6f410d, type: 3}
-    - {fileID: 8300000, guid: d19b1298fb7b68a4db8e5ae0e50636bd, type: 3}
-    - {fileID: 8300000, guid: e5b8389b4b965214c88262f2680656dd, type: 3}
-    - {fileID: 8300000, guid: 3dcfbb9a76450eb4cb99d0ce53aa8f29, type: 3}
-    - {fileID: 8300000, guid: bc128f1ab35fea44597b6d9f3189a7e7, type: 3}
-    - {fileID: 8300000, guid: 9bbf75c97d1fb0a4eb318951b786a051, type: 3}
-    - {fileID: 8300000, guid: 0c0399bfa984aa94abec6fb7ce60f1d3, type: 3}
-    - {fileID: 8300000, guid: 603d01dc867365f48873db0a6d0f0be9, type: 3}
-    - {fileID: 8300000, guid: 3d1e4d20faf31c348bc3a4f11ca6750e, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Metal Land
-    soundsList:
-    - {fileID: 8300000, guid: ed60bf0cf9c1b41449dafe29245ac318, type: 3}
-    - {fileID: 8300000, guid: 6dfdbf93e64eac2488aacc1ebe1f75e3, type: 3}
-    - {fileID: 8300000, guid: cc65844c6ad9d464fbe00755153ea655, type: 3}
-    - {fileID: 8300000, guid: 985e5891e8a0be94795d135ce0dba82c, type: 3}
-    - {fileID: 8300000, guid: 4359c8c1f26684f44829d632be851d26, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
   sounds:
-  - clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+  - name: Grass Jump
+    clipsList:
+    - {fileID: 8300000, guid: ea59f2ca3d1206a4184aaeafe46326aa, type: 3}
+    - {fileID: 8300000, guid: 5a2077ae962d19942aca1f9d859709d3, type: 3}
+    - {fileID: 8300000, guid: 97ac2caadd7ba4c41a4a3123ba208b80, type: 3}
+    - {fileID: 8300000, guid: 61dac61d947e1ea4aae48eea1eb2fed6, type: 3}
+    - {fileID: 8300000, guid: de1572518d2cbe64a9b9315cfb6c8f10, type: 3}
+    - {fileID: 8300000, guid: 61ad428a619cc674da29b91c0ba2b2e3, type: 3}
+    - {fileID: 8300000, guid: eb997b926bd3dc948acf1ff5b7775f9f, type: 3}
+    - {fileID: 8300000, guid: e86815adaf77b8f4d933c5cc6e852868, type: 3}
+    - {fileID: 8300000, guid: 55b5d6d5d38b28a4a8b1a6a84e71fddf, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Grass Run
+    clipsList:
+    - {fileID: 8300000, guid: ae9fe99357527c444b650abdd3a7bd44, type: 3}
+    - {fileID: 8300000, guid: 1b56957246965454a905ecf44878dd5c, type: 3}
+    - {fileID: 8300000, guid: a74515364cf56ce40b15c942226ade95, type: 3}
+    - {fileID: 8300000, guid: da508a90270032f47b4ce1ba6dacf800, type: 3}
+    - {fileID: 8300000, guid: 2c3de841869e4d64db1ac202aaec5f7b, type: 3}
+    - {fileID: 8300000, guid: aba2ddd42a479c14c8efd5308a1d36ca, type: 3}
+    - {fileID: 8300000, guid: cf6da0346820d1448a21edeb39c169c5, type: 3}
+    - {fileID: 8300000, guid: 09a75d2433ac67a4587b68f8a73e66e7, type: 3}
+    - {fileID: 8300000, guid: 8b6009f3703ce7742b3a0440b27a7245, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Grass Shuffle
+    clipsList:
+    - {fileID: 8300000, guid: 40b0fb21493190841a6dc8572fdb9887, type: 3}
+    - {fileID: 8300000, guid: 38d72c5a0514ee54fa28423ee4c4b865, type: 3}
+    - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
+    - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
+    - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 0.2
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Grass Land
+    clipsList:
+    - {fileID: 8300000, guid: 40b0fb21493190841a6dc8572fdb9887, type: 3}
+    - {fileID: 8300000, guid: 38d72c5a0514ee54fa28423ee4c4b865, type: 3}
+    - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
+    - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
+    - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Grass Land Hard
+    clipsList:
+    - {fileID: 8300000, guid: 40b0fb21493190841a6dc8572fdb9887, type: 3}
+    - {fileID: 8300000, guid: 38d72c5a0514ee54fa28423ee4c4b865, type: 3}
+    - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
+    - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
+    - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
     waitTillNext: 0.4
     loop: 0
-    source: {fileID: 0}
+  - name: Metal Jump
+    clipsList:
+    - {fileID: 8300000, guid: ea59f2ca3d1206a4184aaeafe46326aa, type: 3}
+    - {fileID: 8300000, guid: 5a2077ae962d19942aca1f9d859709d3, type: 3}
+    - {fileID: 8300000, guid: 97ac2caadd7ba4c41a4a3123ba208b80, type: 3}
+    - {fileID: 8300000, guid: 61dac61d947e1ea4aae48eea1eb2fed6, type: 3}
+    - {fileID: 8300000, guid: de1572518d2cbe64a9b9315cfb6c8f10, type: 3}
+    - {fileID: 8300000, guid: 61ad428a619cc674da29b91c0ba2b2e3, type: 3}
+    - {fileID: 8300000, guid: eb997b926bd3dc948acf1ff5b7775f9f, type: 3}
+    - {fileID: 8300000, guid: e86815adaf77b8f4d933c5cc6e852868, type: 3}
+    - {fileID: 8300000, guid: 55b5d6d5d38b28a4a8b1a6a84e71fddf, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Metal Run
+    clipsList:
+    - {fileID: 8300000, guid: 807abf98386f04f41826311798890ea2, type: 3}
+    - {fileID: 8300000, guid: 860de762e8f43a043b322548a08936ea, type: 3}
+    - {fileID: 8300000, guid: 9f4862a84238b65469f322db89ae8752, type: 3}
+    - {fileID: 8300000, guid: 04fb4df685b6efd4a9920e1a5313aa24, type: 3}
+    - {fileID: 8300000, guid: 7625be4173240bb4fa57ed04a266d4dc, type: 3}
+    - {fileID: 8300000, guid: e80031e6b06effd4eb8b1fc41d55a372, type: 3}
+    - {fileID: 8300000, guid: 8b66889d68df11b4d93293d5b92dd48c, type: 3}
+    - {fileID: 8300000, guid: e68a60ef23b56e64c9f32affb48949db, type: 3}
+    - {fileID: 8300000, guid: 33d87b437863def4d9dc2b7c51222eb3, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 0.3
+    loop: 0
+  - name: Metal Shuffle
+    clipsList:
+    - {fileID: 8300000, guid: 1c45a58917226e3409f36319c9a6f732, type: 3}
+    - {fileID: 8300000, guid: 545dae713874fc04d96a183107071253, type: 3}
+    - {fileID: 8300000, guid: 50c3cfd4e2172f948b508110235a80e4, type: 3}
+    - {fileID: 8300000, guid: e18f28c7609a9f8418c5f1fc296c0e8b, type: 3}
+    - {fileID: 8300000, guid: 50ffa7034e593be4d986b4b6e068f06d, type: 3}
+    - {fileID: 8300000, guid: 7f83879d52511ea4088dfb752a5b82be, type: 3}
+    - {fileID: 8300000, guid: 1fe7764575652c54fa1cf2368c44ad2c, type: 3}
+    - {fileID: 8300000, guid: 6d4cca66d8d930744a9fe43cef9dee51, type: 3}
+    - {fileID: 8300000, guid: a379f17b4c59e9d458be93122966076b, type: 3}
+    - {fileID: 8300000, guid: 086c9c65bcc4e6a4bac6e58d599378db, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 0.2
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Metal Land
+    clipsList:
+    - {fileID: 8300000, guid: ee68ea518d1c2644babb7e08dd607673, type: 3}
+    - {fileID: 8300000, guid: 11550812620fc7d49b4fcce523ca517b, type: 3}
+    - {fileID: 8300000, guid: b1838351383d3b8488da6243106ffcf6, type: 3}
+    - {fileID: 8300000, guid: a5b6af97286c58a47b322f7484b53ad6, type: 3}
+    - {fileID: 8300000, guid: fa4fa8a485087e84c87095d9003f6526, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Metal Land Hard
+    clipsList:
+    - {fileID: 8300000, guid: 39644eda74d174340adfdb039e150069, type: 3}
+    - {fileID: 8300000, guid: b5c3d77e2d34bbe4f9266e311462207e, type: 3}
+    - {fileID: 8300000, guid: f3031c3385904ce4ab1dcc13a175cb28, type: 3}
+    - {fileID: 8300000, guid: 8422f968a42e5da489c832a7c4f786cb, type: 3}
+    - {fileID: 8300000, guid: e4df2ce90957de943928eb344209d8f3, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Rock Jump
+    clipsList:
+    - {fileID: 8300000, guid: 098885b03884b3444bf359eeb541d674, type: 3}
+    - {fileID: 8300000, guid: 97795651639c95941950fc1f17ea492f, type: 3}
+    - {fileID: 8300000, guid: bfd0920948e99b04aacc608b06e2806a, type: 3}
+    - {fileID: 8300000, guid: e5051685b851bda489b2907eb3dad147, type: 3}
+    - {fileID: 8300000, guid: 91dedcf101a2c5a4db8976292280d479, type: 3}
+    - {fileID: 8300000, guid: b703ebf336964ee48b5a90659585de22, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Rock Run
+    clipsList:
+    - {fileID: 8300000, guid: fc872141ab3be0c4384a0c87fd02343e, type: 3}
+    - {fileID: 8300000, guid: e36b908380996c6448774704d17551ac, type: 3}
+    - {fileID: 8300000, guid: f75095816ab5ae64a8fdd1e6e08b8336, type: 3}
+    - {fileID: 8300000, guid: d015c9039e24d654abd34f8504b146c5, type: 3}
+    - {fileID: 8300000, guid: 266a13edb719bee40845e9238797cb62, type: 3}
+    - {fileID: 8300000, guid: 9896909ca0b509c4fbb2c0c3e5785e50, type: 3}
+    - {fileID: 8300000, guid: d3a8e7a4aac14bc4199a69f4d10e83af, type: 3}
+    - {fileID: 8300000, guid: 742400520438392408d89ed4e2e14ffe, type: 3}
+    - {fileID: 8300000, guid: 25fffcfda1fe9a74ea2350a42859d4e0, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Rock Shuffle
+    clipsList:
+    - {fileID: 8300000, guid: 55558c0a5750fe2438350ed61041b480, type: 3}
+    - {fileID: 8300000, guid: 6444db114ba228441b39a859adf80f7a, type: 3}
+    - {fileID: 8300000, guid: af3378a5884aa474e95c2eb0d1ca923c, type: 3}
+    - {fileID: 8300000, guid: 8203907f1482fab49aa302e0d0cebd25, type: 3}
+    - {fileID: 8300000, guid: 4f0b7a7dc0ae9154d8ee287bec04f80c, type: 3}
+    - {fileID: 8300000, guid: c3987e4fcfd29c645a17bedbd289fe92, type: 3}
+    - {fileID: 8300000, guid: 574544b7bfd0f1540a630b6db80ee213, type: 3}
+    - {fileID: 8300000, guid: a0697c0830633a242a6826d3447d1977, type: 3}
+    - {fileID: 8300000, guid: 3e540337510c4b947ba0e4e2ce261a3b, type: 3}
+    - {fileID: 8300000, guid: a4b2656e257c03c458ab63acdd1006ea, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 0.2
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Rock Land
+    clipsList:
+    - {fileID: 8300000, guid: 59e26a49e1974c74694e38472412e4c3, type: 3}
+    - {fileID: 8300000, guid: 104fdcf6f82a3144bbddbcc5b231308e, type: 3}
+    - {fileID: 8300000, guid: 87c23492c52dbc5429d9ebca6fc3ac24, type: 3}
+    - {fileID: 8300000, guid: 8db63d1d5ef9389498b59dd407352e47, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.4
+    loop: 0
+  - name: Rock Land Hard
+    clipsList:
+    - {fileID: 8300000, guid: e4df2ce90957de943928eb344209d8f3, type: 3}
+    - {fileID: 8300000, guid: 39644eda74d174340adfdb039e150069, type: 3}
+    - {fileID: 8300000, guid: b5c3d77e2d34bbe4f9266e311462207e, type: 3}
+    - {fileID: 8300000, guid: f3031c3385904ce4ab1dcc13a175cb28, type: 3}
+    - {fileID: 8300000, guid: 8422f968a42e5da489c832a7c4f786cb, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.4
+    loop: 0
+  - name: Snow Jump
+    clipsList:
+    - {fileID: 8300000, guid: 87167a0da0bb3204f9329018acdda442, type: 3}
+    - {fileID: 8300000, guid: adc6442cb9bbbfc42bc88c3c748cc1c2, type: 3}
+    - {fileID: 8300000, guid: 59ca10fda6f1eec41b90bcf68ec603b3, type: 3}
+    - {fileID: 8300000, guid: 976e8e67c3a01d24d8de91edaeba71dc, type: 3}
+    - {fileID: 8300000, guid: dbfbd3bc8fa295f418fdbd8d13da4b8c, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  - name: Snow Run
+    clipsList:
+    - {fileID: 8300000, guid: 67c85d7c6706d3a4db826b9879f3bd28, type: 3}
+    - {fileID: 8300000, guid: f58983453f7a7204b9cb43495d3872e2, type: 3}
+    - {fileID: 8300000, guid: b457fe1079443014da147bdf08cdba40, type: 3}
+    - {fileID: 8300000, guid: 0657fcd566979824d85bbe6d08124419, type: 3}
+    - {fileID: 8300000, guid: aac945b3757c2b248ba655bef5f7feb6, type: 3}
+    - {fileID: 8300000, guid: f0a8a2e64eceb3b479a9a48832e87073, type: 3}
+    - {fileID: 8300000, guid: ece6c7e8e8936df45a31966217b3ce89, type: 3}
+    - {fileID: 8300000, guid: 307e9e953b152f14ea9eb03b4cdb81ea, type: 3}
+    - {fileID: 8300000, guid: e8d27adba7ecd8547be296334705af7c, type: 3}
+    - {fileID: 8300000, guid: 324b3e56c7848f14bb6d29a8847f99e0, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 0.2
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Snow Shuffle
+    clipsList:
+    - {fileID: 8300000, guid: d3152cce71d746e43a7f80c315cc78a6, type: 3}
+    - {fileID: 8300000, guid: be4592d3a8a7c024081158b97ba02682, type: 3}
+    - {fileID: 8300000, guid: c70e844136b207d439faf36ea16fbe85, type: 3}
+    - {fileID: 8300000, guid: adb5e1d3bc96959498c42a7591f9e130, type: 3}
+    - {fileID: 8300000, guid: 452e3bbb73b34924d84cd8e056ed58e2, type: 3}
+    - {fileID: 8300000, guid: 0231ad230d384c343b835d68c7fb6d71, type: 3}
+    - {fileID: 8300000, guid: 7480e9e48a767ff4d93e1638031efbbd, type: 3}
+    - {fileID: 8300000, guid: fd773daec5ee3544d9ff48d86c8f81c6, type: 3}
+    - {fileID: 8300000, guid: fdcc2e0bf27c0bc4c973ebd3022ee312, type: 3}
+    - {fileID: 8300000, guid: d7c28e1fd0f8afd428a0afb6813a5ad3, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 0.2
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.3
+    loop: 0
+  - name: Snow Land
+    clipsList:
+    - {fileID: 8300000, guid: 483b656b26fe39149b2e6c6178b747d0, type: 3}
+    - {fileID: 8300000, guid: e00cfedc4ee4ed44ba8c109b5f10a43f, type: 3}
+    - {fileID: 8300000, guid: 98c658c687ae7104ca1471437ae0676e, type: 3}
+    - {fileID: 8300000, guid: a6f51be176584a848b54abf4fcb5168f, type: 3}
+    - {fileID: 8300000, guid: 1d3964e75dcee5b4dae2c153c78974e2, type: 3}
+    - {fileID: 8300000, guid: d6c79b1ace1a3d646b00ee1ef78d86a5, type: 3}
+    - {fileID: 8300000, guid: 0a8b2806ec5aa244aa47dfaf974d9609, type: 3}
+    - {fileID: 8300000, guid: 1c30af4b85343ea4a93406151e3674d9, type: 3}
+    - {fileID: 8300000, guid: fb816dd5584727e4da12809a6365cdb0, type: 3}
+    - {fileID: 8300000, guid: 35ef2eda4e22cf54f9bd757ee434d37e, type: 3}
+    - {fileID: 8300000, guid: d9729d89b36488c47816be0ada9b20f7, type: 3}
+    - {fileID: 8300000, guid: 44b1a7b7ae2cfa5419b096d6cc4bd564, type: 3}
+    - {fileID: 8300000, guid: fdac2dbba8504224f87d183b424f1f0c, type: 3}
+    - {fileID: 8300000, guid: 254af4bea07accf488d00de70cbf5a27, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.4
+    loop: 0
+  - name: Snow Land Hard
+    clipsList:
+    - {fileID: 8300000, guid: 6d4dc6ebfaaca674b8968909b6dd498b, type: 3}
+    - {fileID: 8300000, guid: 4656be41706022f4abaf68231b9c3f11, type: 3}
+    - {fileID: 8300000, guid: 9e7c92fc78e510f438a7b43dcfa79d71, type: 3}
+    - {fileID: 8300000, guid: 059ec46069d3c7b42a6e45f3254ace02, type: 3}
+    - {fileID: 8300000, guid: 0e583de51bc96b14faa80810265f246c, type: 3}
+    - {fileID: 8300000, guid: df2c0590bb65225438feaeedc3df26a2, type: 3}
+    - {fileID: 8300000, guid: feef31f0c52a5824b9bff9426bd3d09d, type: 3}
+    clip: {fileID: 8300000, guid: afd8960a0ff63eb4cbcf8fb3ef825111, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.4
+    loop: 0
+--- !u!82 &1838690149
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757039344788581446}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5694035300610408356
 GameObject:
   m_ObjectHideFlags: 0
