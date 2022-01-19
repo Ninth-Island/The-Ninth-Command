@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2203350304549672337}
   - component: {fileID: 2203350304549672365}
   - component: {fileID: 8614085602533373021}
+  - component: {fileID: 5600530962651610085}
   m_Layer: 13
   m_Name: Spiker
   m_TagString: Weapon
@@ -29,9 +30,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2203350304549672342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.28, y: 12.02, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 9130888280539496437}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 7
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 35eb146afadc8ff4683b938d79bf11a9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -166,8 +168,9 @@ MonoBehaviour:
   offset: {x: 1.932, y: -0.22}
   armType: 0
   cursorType: 0
+  audioRepeating: 0
   firingDelay: 0
-  salvoDelay: 0.05
+  salvoDelay: 0.1
   shotsPerSalvo: 1
   instability: 0.1
   projectileTemplate: {fileID: -5604932223983771090, guid: bd0d6bbd9f1c8c948bbbf13658c448b2,
@@ -175,6 +178,7 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 100
   piercing: 0
+  zoom: 0
   magazinesLeft: 5
   magazineSize: 32
   reloadTime: 3
@@ -192,56 +196,176 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsFromList:
+  sounds:
   - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: 8dfb8eb5d9d071f40a26bfae5b25c868, type: 3}
-    - {fileID: 8300000, guid: 295704e9dc3b5d6488236cac57f32cab, type: 3}
-    - {fileID: 8300000, guid: c5b126721adf5bc44802ae9492683c55, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: d5ec268dc1272774cb7e2e44713cc3ba, type: 3}
+    - {fileID: 8300000, guid: 272eef8d542b3284d8b428abd0c77505, type: 3}
+    - {fileID: 8300000, guid: 2a669957846eb0e498dbb4af77acc143, type: 3}
+    - {fileID: 8300000, guid: d58866dab5b0a69449423faa08d057f1, type: 3}
+    - {fileID: 8300000, guid: 99dbc0d54724de2428b2d701a9185985, type: 3}
+    - {fileID: 8300000, guid: e0b26d7ca3ca592408f9c3341436b9c6, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 256
+    priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
   - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: ec1bf10813f66de4f803bfe014f104a6, type: 3}
-    - {fileID: 8300000, guid: 28987a2ffbfccd14b8716d6173be1d57, type: 3}
-    - {fileID: 8300000, guid: 90e36991c7e7e7642b18050c0a0be405, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: c9399a08466a495448141b742698f5e5, type: 3}
+    - {fileID: 8300000, guid: 08969c9a441d87045ab46865c0a39073, type: 3}
+    - {fileID: 8300000, guid: 5809b160b096c7d45ae2287ddec61f83, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: 713bb3f3d3ed63c4886cb8e93a862533, type: 3}
-    - {fileID: 8300000, guid: f87b591a4d650ac46b635fc0ad2fc230, type: 3}
-    - {fileID: 8300000, guid: e6f04acc0406f104792956621028b4d6, type: 3}
+  - name: Ready
+    clipsList:
+    - {fileID: 8300000, guid: 088f730e55ad5e242b41aedfd862e5f8, type: 3}
+    - {fileID: 8300000, guid: 903c5bdb6889470419ab2b0b89329e00, type: 3}
+    - {fileID: 8300000, guid: 2ffed76d89ce7a74fa1dbf1d0b6cfbcf, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: aa8d5fb7e8d3c6144b8755eda5dfa583, type: 3}
-    - {fileID: 8300000, guid: a63bd2c17e391354ab432d41a73efff1, type: 3}
-    - {fileID: 8300000, guid: 9c2ff47e0d36a164ca4f8c582f227930, type: 3}
-    - {fileID: 8300000, guid: b2821efef70e700468eb4485f4913144, type: 3}
-    - {fileID: 8300000, guid: 82898183c9d50794fb0413f3062811b5, type: 3}
-    - {fileID: 8300000, guid: 15bb7b8e5c600414eaa5351f511c6443, type: 3}
+  - name: Dry Fire
+    clipsList:
+    - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0
+    waitTillNext: 0.1
     loop: 0
-    source: {fileID: 0}
-  sounds: []
+  source: {fileID: 0}
+--- !u!82 &5600530962651610085
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203350304549672342}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &8895824527871176808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9130888280539496437}
+  m_Layer: 13
+  m_Name: FiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9130888280539496437
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8895824527871176808}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.1, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2203350304549672338}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

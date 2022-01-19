@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4362735226756037685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2845809631481835918}
+  m_Layer: 13
+  m_Name: FiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2845809631481835918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4362735226756037685}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.8, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4506013158996176202}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4506013158996176201
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,6 +44,7 @@ GameObject:
   - component: {fileID: 4506013158996176212}
   - component: {fileID: 4506013158996176203}
   - component: {fileID: 7920543007619545138}
+  - component: {fileID: 1710343724834172659}
   m_Layer: 13
   m_Name: Battle Rifle
   m_TagString: Weapon
@@ -31,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2845809631481835918}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 7
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 92336439061b91d47a46c06c4d19e1f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -186,6 +218,7 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 300
   piercing: 0
+  zoom: 0
   magazinesLeft: 98
   magazineSize: 15
   reloadTime: 3
@@ -204,58 +237,163 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsFromList:
+  sounds:
   - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: 6c7843ecb8bb1884c838b23167ab456e, type: 3}
-    - {fileID: 8300000, guid: 205479096883067488a60cb7cbfcca98, type: 3}
-    - {fileID: 8300000, guid: 4b470fc6a9b5376468be1dc8f39790eb, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: 8fd09e54fa5496e4e87f5d453cc652be, type: 3}
+    - {fileID: 8300000, guid: 1204af4723c599b48ac5df334f3d613a, type: 3}
+    - {fileID: 8300000, guid: 012e9ee23c31c694aa9f8786260e497e, type: 3}
+    - {fileID: 8300000, guid: 0207694ee8184164aadcde04c5b314ad, type: 3}
+    - {fileID: 8300000, guid: 7533a38f8694435478420d180ac828ac, type: 3}
+    - {fileID: 8300000, guid: e4129119bb6400846af41b9965ac5942, type: 3}
+    - {fileID: 8300000, guid: 5dc195b682758f449a59c3b620403d89, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 256
+    priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
   - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: 042d1c92f2e055544a0d9a4ad55ad9db, type: 3}
-    - {fileID: 8300000, guid: a867bafe2b41bce4f81a6c60ba9b8368, type: 3}
-    - {fileID: 8300000, guid: 3cc4db2e6bc02dc43b3a4b8437dfecbb, type: 3}
-    - {fileID: 8300000, guid: a78b4f14559a66d42aea8477b464cc53, type: 3}
-    - {fileID: 8300000, guid: 4a3401e883b97044f8991091536112a2, type: 3}
-    - {fileID: 8300000, guid: 838b061ecd124014088cff93e8e4bfb0, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: e701d2314c421544291f2855cf340383, type: 3}
+    - {fileID: 8300000, guid: eb1a157c5d5b87e4f846b5b9b6d0002d, type: 3}
+    - {fileID: 8300000, guid: 34a54bca14fb9ce46a3d599f92c49299, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: 4726ffd06018d0b4f9786221c9941554, type: 3}
-    - {fileID: 8300000, guid: 967c8a1afb0821b4ea04355abbac78ac, type: 3}
+  - name: Ready
+    clipsList:
+    - {fileID: 8300000, guid: 5a03e7a0f7aced74ea5e86c060e8787c, type: 3}
+    - {fileID: 8300000, guid: b33cdc5cea6349648959aeb62f90e1a1, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: 3ba78ae8725445b4085fc50deec6a0de, type: 3}
-    - {fileID: 8300000, guid: 019f577f026754b4a862f886e12332b6, type: 3}
-    - {fileID: 8300000, guid: d79999d3cac02254aa8e0407f61d58ff, type: 3}
-    - {fileID: 8300000, guid: 42d5d0b48ed950743a3cbedeb602e52b, type: 3}
-    - {fileID: 8300000, guid: 6a0145549e0e49c4d8d7a7b1503719e0, type: 3}
-    - {fileID: 8300000, guid: 439063703b6086145bdf1b4ce481fae0, type: 3}
+  - name: Dry Fire
+    clipsList:
+    - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0.5
+    loop: 0
+  - name: Zoom In
+    clipsList:
+    - {fileID: 8300000, guid: dd03a370f0170a4499293d75f0d0a1a3, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  sounds: []
+  - name: Zoom Out
+    clipsList:
+    - {fileID: 8300000, guid: 21fd01b4201db5445b8e75ac7d2a3650, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+--- !u!82 &1710343724834172659
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4506013158996176201}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 986607691338267663}
   - component: {fileID: 986607691338267662}
   - component: {fileID: 5004192726719082808}
+  - component: {fileID: 997877508244943859}
   m_Layer: 13
   m_Name: Plasma Pistol
   m_TagString: Weapon
@@ -29,9 +30,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 986607691338267660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 124.82028, y: -1.7196305, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2055175209179292095}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 7
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4270d17eeb10e964fa2c8e9d107349db, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -157,6 +159,7 @@ MonoBehaviour:
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 0
+  audioRepeating: 0
   firingDelay: 0
   salvoDelay: 0.3
   shotsPerSalvo: 1
@@ -166,6 +169,7 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 80
   piercing: 0
+  zoom: 0
   percentagePerShot: 10
   heatPerShot: 3
   defaultCooldownAcceleration: 0.0001
@@ -185,65 +189,176 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsFromList:
+  sounds:
   - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: e2af33e4c844a404da5a811a9ac1a722, type: 3}
-    - {fileID: 8300000, guid: 93e8ac5659ddeeb499e6240682b7e816, type: 3}
-    - {fileID: 8300000, guid: add415b6f5bbf6b40a0b7e396f1e75ba, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: f16382833b0c3314db4063bd067be3df, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 128
+    priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: b8075e000e9b1e04394de8e505c70bac, type: 3}
-    - {fileID: 8300000, guid: 6828245b62c46af4c8b87e0b41852fc1, type: 3}
-    - {fileID: 8300000, guid: 02229b747cfe17e44a145a717b9e3e43, type: 3}
+  - name: Overheat
+    clipsList:
+    - {fileID: 8300000, guid: be7eb1185154b2e43a079fdef36d86e0, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 128
+    priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: 036370bcbd65e074f860b60b2187bb6f, type: 3}
-    - {fileID: 8300000, guid: 4fcf13349c4b1c94e9f29d989d6d0049, type: 3}
-    - {fileID: 8300000, guid: 0d114b3fd60620147a874dee4265412b, type: 3}
+  - name: Ready
+    clipsList:
+    - {fileID: 8300000, guid: 8f5f7e8c34daaf548a68b5e3e858eb2b, type: 3}
+    - {fileID: 8300000, guid: 161463382e2f92f4da7fcc2865c77fa0, type: 3}
+    - {fileID: 8300000, guid: 2a65b4e4355bab646b83f822b5e8eeeb, type: 3}
+    - {fileID: 8300000, guid: 0ac7c2f4020b0cf40a0b7e7bfe693689, type: 3}
+    - {fileID: 8300000, guid: 8a601ae44f0d8dd4a87a6b3d42aafa97, type: 3}
+    - {fileID: 8300000, guid: d7ee8da67213b80449f4a87f9b192504, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 128
+    priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: 5a634615e2ae7464a99bb26d93e2b4e4, type: 3}
-    - {fileID: 8300000, guid: 50b1dd186392de74780143d96890c9f1, type: 3}
-    - {fileID: 8300000, guid: 1f5975ccf62f4c04f95958743edcf10a, type: 3}
+  - name: DryFire
+    clipsList:
+    - {fileID: 8300000, guid: 4f5c90361cb33f3479c9568933074e7b, type: 3}
+    - {fileID: 8300000, guid: ba753678238a4c24d9c96b965b11e216, type: 3}
+    - {fileID: 8300000, guid: 3eae6aad8a86c0d42bbfd46fa7ee03ae, type: 3}
+    - {fileID: 8300000, guid: bf2c69a6ec834564cbee7f6fa9c604f5, type: 3}
+    - {fileID: 8300000, guid: 9403b038cf343da4e9f3c911396850db, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 128
+    priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Overheat Loop
-    soundsList:
-    - {fileID: 8300000, guid: 27624071cfe739c4fb41d4a19e0e47a5, type: 3}
-    - {fileID: 8300000, guid: c51d008c87ad4574791d6f8abc2c26ff, type: 3}
-    - {fileID: 8300000, guid: 33273814bcbd4e5469f7d5e726ba2b39, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  sounds: []
+  source: {fileID: 0}
+--- !u!82 &997877508244943859
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986607691338267660}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!1 &6646759087941469859
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2055175209179292095}
+  m_Layer: 13
+  m_Name: FiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2055175209179292095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6646759087941469859}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 986607691338267661}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

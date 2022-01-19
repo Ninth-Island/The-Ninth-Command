@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &260268077479279340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346084435273528887}
+  m_Layer: 13
+  m_Name: FiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &346084435273528887
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260268077479279340}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2, y: 0.2, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_Children: []
+  m_Father: {fileID: 6288424266931365014}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6288424266931365015
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,7 +44,7 @@ GameObject:
   - component: {fileID: 6288424266931365032}
   - component: {fileID: 6288424266931365033}
   - component: {fileID: -8056927485497439948}
-  - component: {fileID: 1892648397}
+  - component: {fileID: 3389138475720532645}
   m_Layer: 13
   m_Name: Shotgun
   m_TagString: Weapon
@@ -32,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
-  m_Children: []
+  m_Children:
+  - {fileID: 346084435273528887}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -74,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 7
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 33b382d10ff0ce243914c8848ffeb661, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -181,6 +212,7 @@ MonoBehaviour:
   offset: {x: 2.04, y: -0.22}
   armType: 0
   cursorType: 2
+  audioRepeating: 1
   firingDelay: 0
   salvoDelay: 0
   shotsPerSalvo: 10
@@ -190,6 +222,7 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 100
   piercing: 0
+  zoom: 0
   magazinesLeft: 74
   magazineSize: 10
   reloadTime: 0.5
@@ -208,131 +241,148 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsFromList:
+  sounds:
   - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: 3f32aae22504a6e45976fb460bc35f73, type: 3}
-    - {fileID: 8300000, guid: 5e82694b5cb60e74aba10f75f4f947df, type: 3}
-    - {fileID: 8300000, guid: bd173543c6081df4dae38e35efe034c9, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: c971db3807703d44f80e0b1b21b170b5, type: 3}
+    - {fileID: 8300000, guid: cf8aed41eb597a3469877ec65274fe70, type: 3}
+    - {fileID: 8300000, guid: 710c62d3916fdac4dafa9de274039854, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
-    priority: 256
-    waitTillNext: 0
+    priority: 0
+    waitTillNext: 0.5
     loop: 0
-    source: {fileID: 0}
   - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: fd85fe05ec8958543a95fab254046f61, type: 3}
-    - {fileID: 8300000, guid: d6a0b7d583d391e4fb2676fa32237244, type: 3}
-    - {fileID: 8300000, guid: 0d125e40d767da942a98cf8fd3aeadf8, type: 3}
-    - {fileID: 8300000, guid: d436ff320e2033641a8215137f1d6bf7, type: 3}
-    - {fileID: 8300000, guid: 0eaca803cc9cf1e43b6098330ff229e3, type: 3}
-    - {fileID: 8300000, guid: c5446d13ea4708d4f967b59f4b7ecd29, type: 3}
-    - {fileID: 8300000, guid: 67ff8263b58af0b44b20086ddf88ffb5, type: 3}
-    - {fileID: 8300000, guid: a5052f8fe6a706b43a15854b1141df68, type: 3}
+    clipsList:
+    - {fileID: 8300000, guid: 95d6b0bc56fa72747aaf78ee574bdc99, type: 3}
+    - {fileID: 8300000, guid: c9f18b9393a31a348b8a3e751c5ed96b, type: 3}
+    - {fileID: 8300000, guid: 8bca6b8fcc944fe4b99a00270e673b36, type: 3}
+    - {fileID: 8300000, guid: 1827e2cdd22137c40bf874ab5ea4b433, type: 3}
+    - {fileID: 8300000, guid: c12b7c849d269ec4f9d3d89c6922e5f6, type: 3}
+    - {fileID: 8300000, guid: 34547fceb5aceb34c8d1d865ddb7e46e, type: 3}
+    - {fileID: 8300000, guid: edd193fda785d7a4188941e743145e6b, type: 3}
+    - {fileID: 8300000, guid: 6f3d440ad9f73874aad5f94f09feb6b2, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: bb7b6e1e0a1ce8b498381c3027cfe0d8, type: 3}
-    - {fileID: 8300000, guid: b9fe2034348cba645b5b7068ac67c35f, type: 3}
-    - {fileID: 8300000, guid: 324af87283911a3489cdf08445f8b0a3, type: 3}
+  - name: Ready
+    clipsList:
+    - {fileID: 8300000, guid: 2976de0971d92f048a0be535296d95db, type: 3}
+    - {fileID: 8300000, guid: da0aeb3c521f4fb4abd197dd5d0c8f2f, type: 3}
+    - {fileID: 8300000, guid: 3cb09dee4858fee4e9b8f4ab7b11e3a6, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: 231d41ce6d2bdc44aafe356d1670ffd8, type: 3}
-    - {fileID: 8300000, guid: 325928762992c9a4ea72c278d2aaf226, type: 3}
-    - {fileID: 8300000, guid: fbe9a0110399a04478710d6f202f5c95, type: 3}
-    - {fileID: 8300000, guid: 91d64aa3ed569be4aac3ad4ac6034b63, type: 3}
-    - {fileID: 8300000, guid: 48c528d0080299a47b952152ffb3b4c9, type: 3}
-    - {fileID: 8300000, guid: 245a3cc325ddf3e40ae5ecf6d8a51937, type: 3}
+  - name: Dry Fire
+    clipsList:
+    - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0
+    waitTillNext: 0.5
     loop: 0
-    source: {fileID: 0}
-  sounds: []
---- !u!114 &1892648397
-MonoBehaviour:
+  source: {fileID: 0}
+--- !u!82 &3389138475720532645
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6288424266931365015}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  soundsFromList:
-  - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: 3f32aae22504a6e45976fb460bc35f73, type: 3}
-    - {fileID: 8300000, guid: 5e82694b5cb60e74aba10f75f4f947df, type: 3}
-    - {fileID: 8300000, guid: bd173543c6081df4dae38e35efe034c9, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: fd85fe05ec8958543a95fab254046f61, type: 3}
-    - {fileID: 8300000, guid: d6a0b7d583d391e4fb2676fa32237244, type: 3}
-    - {fileID: 8300000, guid: 0d125e40d767da942a98cf8fd3aeadf8, type: 3}
-    - {fileID: 8300000, guid: d436ff320e2033641a8215137f1d6bf7, type: 3}
-    - {fileID: 8300000, guid: 0eaca803cc9cf1e43b6098330ff229e3, type: 3}
-    - {fileID: 8300000, guid: c5446d13ea4708d4f967b59f4b7ecd29, type: 3}
-    - {fileID: 8300000, guid: 67ff8263b58af0b44b20086ddf88ffb5, type: 3}
-    - {fileID: 8300000, guid: a5052f8fe6a706b43a15854b1141df68, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: bb7b6e1e0a1ce8b498381c3027cfe0d8, type: 3}
-    - {fileID: 8300000, guid: b9fe2034348cba645b5b7068ac67c35f, type: 3}
-    - {fileID: 8300000, guid: 324af87283911a3489cdf08445f8b0a3, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: 231d41ce6d2bdc44aafe356d1670ffd8, type: 3}
-    - {fileID: 8300000, guid: 325928762992c9a4ea72c278d2aaf226, type: 3}
-    - {fileID: 8300000, guid: fbe9a0110399a04478710d6f202f5c95, type: 3}
-    - {fileID: 8300000, guid: 91d64aa3ed569be4aac3ad4ac6034b63, type: 3}
-    - {fileID: 8300000, guid: 48c528d0080299a47b952152ffb3b4c9, type: 3}
-    - {fileID: 8300000, guid: 245a3cc325ddf3e40ae5ecf6d8a51937, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  sounds: []
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

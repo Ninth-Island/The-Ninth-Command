@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,8 @@ public class EnergyWeapon : ProjectileWeapon{
     public float _energy = 100;
     public float _heat = 0;
     public float _cooling = 0;
+
+    private bool _isCooling;
     
     
     /*
@@ -32,7 +35,7 @@ public class EnergyWeapon : ProjectileWeapon{
      */
     
     protected override void CheckFire(){
-        if (_energy > 0 && _heat < 100 && !Firing){
+        if (_energy > 0 && _heat + heatPerShot <= 100 && !Firing){
             StartCoroutine(Fire());
             _cooling = 0;
         }
@@ -48,33 +51,31 @@ public class EnergyWeapon : ProjectileWeapon{
     
     protected override void Update(){
         base.Update();
-        _cooling += defaultCooldownAcceleration;
-        _heat -= _cooling;
-        if (_heat < 0){
-            _heat = 0;
-        }
+        RefreshText();
+    }
 
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
         if (Player.primaryWeapon == this){
-            RefreshText();
+
+            _cooling += defaultCooldownAcceleration;
+            _heat -= _cooling;
+            if (_heat <= 0 && _isCooling){
+                _heat = 0;
+
+                _isCooling = false;
+                AudioManager.PlaySound(2, false, 0);
+            }
         }
     }
-    
+
     public override void CheckReload(){
         base.CheckReload();
         if (Input.GetKey(KeyCode.R)){
             _cooling += coolingCooldownAcceleration;
-            /*if (!AudioManager.soundsFromList[1].source.isPlaying){
-                AudioManager.PlayFromList(1);
-            }
-        }
-        if (_heat <= 0){
-            AudioManager.soundsFromList[1].source.Stop();
-            AudioManager.soundsFromList[4].source.Stop();
-        }
-        else{
-            if (AudioManager.soundsFromList[1].source.time >= 2.6f){
-                AudioManager.PlayFromList(4);
-            }*/
+            
+            AudioManager.source.Stop();
+            AudioManager.PlaySound(1, true, 0);
         }
     }
     
@@ -83,22 +84,68 @@ public class EnergyWeapon : ProjectileWeapon{
         base.Subtract();
         _energy -= percentagePerShot;
         _heat += heatPerShot;
+
+        if (_heat >= 100){
+            _heat = 99.9f;
+            AudioManager.source.Stop();
+            AudioManager.PlaySound(1, false, 0);
+            _isCooling = true;
+        }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    
+    
+    I think everything works now.... Except energy weapons are broen and reen reowkr. Also readd explosion noises
+    
+    
+    
+    
+     */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     /*
     * ================================================================================================================
     *                                               Other
     * ================================================================================================================
     */
-    
+
     public override void RefreshText(){
-        base.RefreshText();
-        Player.ammoCounter.SetText("");
-        Player.magCounter.SetText("");
-        Player.energyCounter.SetText("" + Mathf.RoundToInt(_energy));
-        Player.heatCounter.SetText(Mathf.RoundToInt(_heat) + "% / 100%");
+        if (Player.primaryWeapon == this){
+            base.RefreshText();
+            Player.ammoCounter.SetText("");
+            Player.magCounter.SetText("");
+            Player.energyCounter.SetText("" + Mathf.RoundToInt(_energy));
+            Player.heatCounter.SetText(Mathf.RoundToInt(_heat) + "% / 100%");
+        }
     }
-    
+
     protected override void Start(){
         base.Start();
     }

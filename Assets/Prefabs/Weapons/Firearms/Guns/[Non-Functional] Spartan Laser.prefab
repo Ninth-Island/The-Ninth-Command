@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7876317795075444915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7749246487177832564}
+  m_Layer: 13
+  m_Name: FiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7749246487177832564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7876317795075444915}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8546548626594045353}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8546548626594045350
 GameObject:
   m_ObjectHideFlags: 0
@@ -14,6 +44,7 @@ GameObject:
   - component: {fileID: 8546548626594045355}
   - component: {fileID: 8546548626594045352}
   - component: {fileID: 7469975935137330819}
+  - component: {fileID: 3384590040524449548}
   m_Layer: 13
   m_Name: '[Non-Functional] Spartan Laser'
   m_TagString: Weapon
@@ -31,7 +62,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7749246487177832564}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +105,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 447239203
-  m_SortingLayer: 7
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7d3721ad58bdf3545b42d03b2bc965f8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -185,6 +217,7 @@ MonoBehaviour:
   offset: {x: 1.15, y: 0.6136}
   armType: 5
   cursorType: 14
+  audioRepeating: 0
   firingDelay: 0
   salvoDelay: 0
   shotsPerSalvo: 1
@@ -194,11 +227,12 @@ MonoBehaviour:
   projectileDamage: 0
   projectileSpeed: 100
   piercing: 0
-  chargePerFrame: 1
-  cooldownSpeed: 0.3
+  zoom: 0
+  chargePerFrame: 1.8
+  cooldownSpeed: 0.5
   percentagePerShot: 20
   energy: 100
-  chargeSoundLengthDivider: 38.47
+  chargeSoundLengthDivider: 36.74
   heat: 0
   coolingDown: 0
 --- !u!114 &7469975935137330819
@@ -213,67 +247,186 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsFromList:
-  - name: Fire
-    soundsList:
-    - {fileID: 8300000, guid: dd9475e02e23757458d4de68d86d78eb, type: 3}
-    - {fileID: 8300000, guid: 8709806a00151c94795ca3c0ce7c94d4, type: 3}
-    - {fileID: 8300000, guid: 74c6a98ceff23684b9f57bc7cdc4865e, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 256
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Reload
-    soundsList:
-    - {fileID: 8300000, guid: d087e8fcbb58e9b4e99aec292ad5e7c0, type: 3}
-    - {fileID: 8300000, guid: 11ed6762a1a213645baeeaac03f455da, type: 3}
-    - {fileID: 8300000, guid: 2c163542f76821c4a842d209552d620c, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Pick Up
-    soundsList:
-    - {fileID: 8300000, guid: 8535fa584434d51409070d841244ea0c, type: 3}
-    - {fileID: 8300000, guid: b732abd4b61281548b9d56554f41e59f, type: 3}
-    - {fileID: 8300000, guid: 188866bcbe5d2384494f5cedf060d2e8, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
-  - name: Melee
-    soundsList:
-    - {fileID: 8300000, guid: e7e3192cf87187b4480e2749b13998ae, type: 3}
-    - {fileID: 8300000, guid: c98d535befa834e48ad66ee2ceabd805, type: 3}
-    - {fileID: 8300000, guid: 88dd5002b88fe7f41b7c026e6000bedf, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 0
-    source: {fileID: 0}
   sounds:
-  - clip: {fileID: 8300000, guid: 2b99beb983216ec418ff44dbb9ab681a, type: 3}
+  - name: Fire
+    clipsList:
+    - {fileID: 8300000, guid: e3ff451f3cc7b9a4b923b15d05f49cf8, type: 3}
+    - {fileID: 8300000, guid: 1f4d7931204df944183915ae0d909f3a, type: 3}
+    - {fileID: 8300000, guid: 0f58f31e40d8c5246af20f30f3ddf70e, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 128
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: 48bbd2a4f3610fd4f88c44da37fa35fb, type: 3}
+  - name: Overheat
+    clipsList:
+    - {fileID: 8300000, guid: c7e427238b06bf74da45d241bf6ddcc8, type: 3}
+    - {fileID: 8300000, guid: c9559272cdfc9c94ebe8096bae71a035, type: 3}
+    - {fileID: 8300000, guid: 3ddfdf298ada473499fdaba2c690b722, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
+    priority: 128
     waitTillNext: 0
     loop: 0
-    source: {fileID: 0}
+  - name: Ready
+    clipsList:
+    - {fileID: 8300000, guid: 00d09e19cc4aca14f80f46ba4a444079, type: 3}
+    - {fileID: 8300000, guid: d1bedecbe7411744b9fbc50f75501d81, type: 3}
+    - {fileID: 8300000, guid: 52d2ae74ae7151244b38766057b05d5f, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Dry Fire
+    clipsList:
+    - {fileID: 8300000, guid: 9413c25ad050bab40b615fe31f90584b, type: 3}
+    - {fileID: 8300000, guid: ba3d3f278483c3b49921eb98e5ac67da, type: 3}
+    - {fileID: 8300000, guid: 09c2f44eb4abd9f4299fa0b581c987a3, type: 3}
+    - {fileID: 8300000, guid: 57de6f36885ccb74f809dc6e8bcb0bb3, type: 3}
+    - {fileID: 8300000, guid: 46f260785081b5f43bea3ff09fd63ddc, type: 3}
+    - {fileID: 8300000, guid: 536cee64ecff049499f5a62a5955fad0, type: 3}
+    - {fileID: 8300000, guid: fe36b47c376ef2140910d0f2ad986b7c, type: 3}
+    - {fileID: 8300000, guid: e0d3541275e4fbc4f9818876e29a5470, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 1
+    loop: 0
+  - name: Zoom In
+    clipsList:
+    - {fileID: 8300000, guid: 57b487d0c5cc6b84a870c1374cdecf71, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Zoom Out
+    clipsList:
+    - {fileID: 8300000, guid: dc645fc9b4138164d9c3a6b12e07ecd6, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Charge In
+    clipsList:
+    - {fileID: 8300000, guid: 65cb9f252634ded4a92b1867334eaf7c, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Charge Out
+    clipsList:
+    - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  source: {fileID: 0}
+--- !u!82 &3384590040524449548
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546548626594045350}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

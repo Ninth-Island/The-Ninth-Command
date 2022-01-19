@@ -27,7 +27,10 @@ public class ProjectileWeapon : BasicWeapon{
     [SerializeField] protected float projectileSpeed;
     [SerializeField] protected bool piercing;
 
-    
+    [SerializeField] private float zoom;
+
+    private Transform _firingPoint;
+
     
     protected bool ReadyToFire = true;
     protected bool Firing = false;
@@ -52,7 +55,7 @@ public class ProjectileWeapon : BasicWeapon{
     private void CreateProjectile(){
         Subtract();
         RefreshText();
-        Projectile projectile = Instantiate(projectileTemplate, transform.position, Quaternion.identity);
+        Projectile projectile = Instantiate(projectileTemplate, _firingPoint.position, Quaternion.identity);
         Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetCollider()); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetFeetCollider());
         projectile.GetComponent<Rigidbody2D>().velocity = Player.GetBody().velocity;
@@ -67,5 +70,7 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void Start(){
         base.Start();
+        _firingPoint = transform.GetChild(0);
+
     }
 }

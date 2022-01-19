@@ -38,16 +38,11 @@ public class ChargingWeapon : ProjectileWeapon
     protected override void CheckFire(){
         if (energy > 0 && heat < 100 && !Firing && !coolingDown){
             heat += chargePerFrame;
-            
-        //    AudioManager.sounds[0].source.mute = false;        
-          //  AudioManager.sounds[1].source.Stop();
-            
-            //AudioManager.sounds[0].source.time = heat / chargeSoundLengthDivider;
-            //AudioManager.sounds[0].source.Play();
-            //if (!AudioManager.sounds[0].source.isPlaying){ // currently being actively charged so charge it
-                
-            //}
+            AudioManager.source.Stop();
+            AudioManager.PlaySound(6, true, heat / chargeSoundLengthDivider);
+           
             if (heat >= 100){
+                AudioManager.PlaySound(1, false, 0);
                 StartCoroutine(Fire());
             }
         }
@@ -60,31 +55,45 @@ public class ChargingWeapon : ProjectileWeapon
      *                                               Cooling
      * ================================================================================================================
      */
-    
-    
+
+
     protected override void Update(){
-//        AudioManager.sounds[0].source.mute = true;
         base.Update();
-        
-        heat -= cooldownSpeed;
-        if (!coolingDown){ // so that after firing it cools down slower than before firing
-            heat -= cooldownSpeed;
-           // if (heat > 0 && !AudioManager.sounds[1].source.isPlaying && !AudioManager.sounds[0].source.isPlaying){
-             //   AudioManager.sounds[1].source.Play();
-           // }
+        RefreshText();
+    }
 
-        }
-        if (heat <= 0){
-            coolingDown = false;
-            heat = 0;
-        }
-        
+    protected override void FixedUpdate(){
 
+        base.FixedUpdate();
+        
         if (Player.primaryWeapon == this){
-            RefreshText();
+            
+
+            if (Input.GetKey(KeyCode.Mouse0)){
+                CheckFire();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Mouse0) && !coolingDown){
+                AudioManager.source.Stop();
+                AudioManager.PlaySound(7, false, 0);
+            }
+            heat -= cooldownSpeed;
+
+            if (!coolingDown){ // so that after firing it cools down slower than before firing
+                heat -= cooldownSpeed;
+
+
+            }
+
+            if (heat <= 0){
+                coolingDown = false;
+                heat = 0;
+            }
+
+
         }
     }
-    
+
     public override void CheckReload(){
         base.CheckReload();
     }
@@ -102,15 +111,17 @@ public class ChargingWeapon : ProjectileWeapon
     *                                               Other
     * ================================================================================================================
     */
-    
+
     public override void RefreshText(){
-        base.RefreshText();
-        Player.ammoCounter.SetText("");
-        Player.magCounter.SetText("");
-        Player.energyCounter.SetText("" + Mathf.RoundToInt(energy));
-        Player.heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
+        if (Player.primaryWeapon == this){
+            base.RefreshText();
+            Player.ammoCounter.SetText("");
+            Player.magCounter.SetText("");
+            Player.energyCounter.SetText("" + Mathf.RoundToInt(energy));
+            Player.heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
+        }
     }
-    
+
     protected override void Start(){
         base.Start();
     }

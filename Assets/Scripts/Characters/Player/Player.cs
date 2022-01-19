@@ -226,8 +226,9 @@ public partial class Player : Character{
             pickupText.SetText("(G) " + weapon.name);
             if (Input.GetKeyDown(KeyCode.G)){
                 primaryWeapon.Drop();
-                weapon.PickUp(this);
+                
                 primaryWeapon = weapon;
+                weapon.PickUp(this);
             }
         }
     

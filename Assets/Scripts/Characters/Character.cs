@@ -142,7 +142,7 @@ public class Character : MonoBehaviour{
             }
 
             soundIndex += type;
-            AudioManager.PlaySound(soundIndex);
+            AudioManager.PlaySound(soundIndex, true, 0);
         }
     } 
     private PhysicsMaterial2D GetMaterialTouching(){

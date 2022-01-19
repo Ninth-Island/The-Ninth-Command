@@ -36,6 +36,11 @@ public class BulletWeapon : ProjectileWeapon{
     }
 
 
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
+    }
+
+
     protected override void CheckFire(){
         if (_bulletsLeft > 0 && !reloading && !Firing){
             StartCoroutine(Fire());
@@ -44,7 +49,12 @@ public class BulletWeapon : ProjectileWeapon{
             } 
         }
         else if (!reloading && _bulletsLeft <= 0){
-            StartReloading();
+            if (magazinesLeft > 0){
+                StartReloading();
+            }
+            else{
+                AudioManager.PlaySound(3, false, 0);
+            }
         }
     }
 
@@ -52,12 +62,14 @@ public class BulletWeapon : ProjectileWeapon{
     public IEnumerator Reload(){
         if (magazinesLeft > 0){
             
+            
             Player.ammoCounter.SetText("Reloading...");
             
+            
             reloading = true;
-            //AudioManager.PlayFromList(1);
+            AudioManager.PlaySound(1, false, 0);
             yield return new WaitForSeconds(reloadTime);
-            //AudioManager.PlayFromList(2);
+            AudioManager.PlaySound(2, false, 0);
             
             
             _bulletsLeft = magazineSize;
@@ -108,18 +120,17 @@ public class BulletWeapon : ProjectileWeapon{
     *                                               Other
     * ================================================================================================================
     */
-    
+
     public override void RefreshText(){
-        base.RefreshText();
-        Player.energyCounter.SetText("");
-        Player.heatCounter.SetText("");
-        Player.ammoCounter.SetText(_bulletsLeft + "/" + magazineSize);
-        Player.magCounter.SetText(("" + magazinesLeft));
+        if (Player.primaryWeapon == this){
+            base.RefreshText();
+            Player.energyCounter.SetText("");
+            Player.heatCounter.SetText("");
+            Player.ammoCounter.SetText(_bulletsLeft + "/" + magazineSize);
+            Player.magCounter.SetText(("" + magazinesLeft));
+        }
     }
-    // Update is called once per frame
-    protected override void Update(){
-        base.Update();
-    }
+
     /*
    * ================================================================================================================
    *                                               Getters and Setters

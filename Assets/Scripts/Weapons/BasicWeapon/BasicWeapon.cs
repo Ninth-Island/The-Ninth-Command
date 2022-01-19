@@ -28,7 +28,9 @@ public class BasicWeapon : Weapon{
     [SerializeField] private Vector2 offset = new Vector2(1.69f, -0.42f);
     [SerializeField] public int armType = 0;
     [SerializeField] private int cursorType = 0;
+    [SerializeField] private bool audioRepeating = false;
     private CursorControl _cursorControl;
+
 
     protected override void Start(){
         base.Start();
@@ -44,8 +46,8 @@ public class BasicWeapon : Weapon{
      *                                               Pickup and Flipping
      * ================================================================================================================
      */
-    
-    protected virtual void Update(){
+
+    protected virtual void FixedUpdate(){
         if (Player.primaryWeapon == this){
             if (Input.GetKey(KeyCode.Mouse0)){
                 CheckFire();
@@ -53,9 +55,11 @@ public class BasicWeapon : Weapon{
         }
     }
 
- 
     public override void PickUp(Character character){
         base.PickUp(character);
+        
+        AudioManager.PlaySound(2, false, 0);
+        
         transform.localPosition = offset;
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
@@ -80,7 +84,7 @@ public class BasicWeapon : Weapon{
     
     
     protected virtual void Subtract(){
-       // AudioManager.PlayFromList(0);
+        AudioManager.PlaySound(0, audioRepeating, 0);
     }
 
     
@@ -109,6 +113,10 @@ public class BasicWeapon : Weapon{
     
     public void SetSpriteRenderer(bool setEnabled){
         SpriteRenderer.enabled = setEnabled;
+    }
+
+    protected virtual void Update(){
+        
     }
     
     

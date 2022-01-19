@@ -1,8 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using UnityEngine.Audio;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using Random = UnityEngine.Random;
 
 
@@ -11,45 +11,42 @@ public class AudioManager : MonoBehaviour{
 
     [SerializeField] private List<Sound> sounds;
 
-    private AudioSource _primarySource;
+    public AudioSource source;
 
-    
+
     private void Awake(){
-        _primarySource = GetComponent<AudioSource>();
+        source = GetComponent<AudioSource>();
     }
 
 
-    public void PlaySound(int index){
-        Play(index, _primarySource);
-    }
-
-    public void PlaySoundFromSource(int index, AudioSource source){
-        Play(index, source);
-    }
-    private void Play(int index, AudioSource source){
-
-        Sound sound = sounds[index];
-        
+    private void PlayRepeating(Sound sound, float time){
         if (source.time >= sound.waitTillNext || !source.isPlaying){
-                        
+            source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
+
+            source.Play();
+            source.time = time;
+
+
+        }
+    }
+
+    public void PlaySound(int index, bool repeating, float time){
+        Sound sound = sounds[index];
+
+        if (repeating){
+
+            PlayRepeating(sound, time);
+        }
+        else{
             source.volume = sound.volume;
             source.pitch = sound.pitch;
             source.loop = sound.loop;
             source.priority = sound.priority;
             source.spatialBlend = sound.spacialBlend;
 
-            if (sound.clip != null){
-                source.clip = sound.clip;
-            }
-            else{
-                source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
-            }
-            
-            source.Play();
+            source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)]);
         }
-
     }
+    
 
-    
-    
 }
