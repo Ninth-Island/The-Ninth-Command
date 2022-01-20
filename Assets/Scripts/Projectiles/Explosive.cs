@@ -23,6 +23,7 @@ public class Explosive : Projectile{
     [SerializeField] private bool impactGrenade;
     [SerializeField] private bool propulsion = false;
     [SerializeField] private float acceleration;
+    [SerializeField] private bool cat;
   
     
     private AudioManager _audioManager;
@@ -56,7 +57,7 @@ public class Explosive : Projectile{
 
 
     public void Explode(){
-       // _audioManager.PlayFromList(0);
+       _audioManager.PlaySound(0, false, 0);
         _spriteRenderer.enabled = false;
         Body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
@@ -89,10 +90,25 @@ public class Explosive : Projectile{
       *                                        For impact explosives
      * ================================================================================================================
      */
+
+
+
+
+
     protected override void OnCollisionEnter2D(Collision2D other){
-        base.OnCollisionEnter2D(other);
-        if (impactGrenade){
-            Explode();
+        if (cat){
+            PhysicsMaterial2D material = new PhysicsMaterial2D();
+            material.bounciness = Body.sharedMaterial.bounciness * 1.1f;
+            Body.sharedMaterial = material;
+            
+            // don't uncomment this. Don't you dare.
+            //_audioManager.PlaySound(0, false, 0);
+        }
+        else{
+            base.OnCollisionEnter2D(other);
+            if (impactGrenade){
+                Explode();
+            }
         }
     }
 

@@ -17,13 +17,11 @@ public class EnergyWeapon : ProjectileWeapon{
     [Header("Energy Weapon")] 
     [SerializeField] private float percentagePerShot;
     [SerializeField] private float heatPerShot;
-    [SerializeField] private float defaultCooldownAcceleration;
-    [SerializeField] private float coolingCooldownAcceleration;
+    [SerializeField] private float coolDown;
     
     //max is 100
     public float _energy = 100;
     public float _heat = 0;
-    public float _cooling = 0;
 
     private bool _isCooling;
     
@@ -35,9 +33,8 @@ public class EnergyWeapon : ProjectileWeapon{
      */
     
     protected override void CheckFire(){
-        if (_energy > 0 && _heat + heatPerShot <= 100 && !Firing){
+        if (_energy > 0 && _heat < 100 && !Firing && !_isCooling){
             StartCoroutine(Fire());
-            _cooling = 0;
         }
     }
 
@@ -56,25 +53,28 @@ public class EnergyWeapon : ProjectileWeapon{
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
-        if (Player.primaryWeapon == this){
 
-            _cooling += defaultCooldownAcceleration;
-            _heat -= _cooling;
-            if (_heat <= 0 && _isCooling){
-                _heat = 0;
 
-                _isCooling = false;
-                AudioManager.PlaySound(2, false, 0);
-            }
+        if (_heat > 0){
+            _heat -= coolDown;
         }
+
+        if (_heat <= 0 && _isCooling){
+            _heat = 0;
+
+            _isCooling = false;
+            AudioManager.PlaySound(2, false, 0);
+        }
+        
     }
 
     public override void CheckReload(){
         base.CheckReload();
-        if (Input.GetKey(KeyCode.R)){
-            _cooling += coolingCooldownAcceleration;
+        if (Input.GetKeyDown(KeyCode.R) && !_isCooling && _heat > 10){
+            _isCooling = true;
             
             AudioManager.source.Stop();
+            AudioManager.source.pitch = 1;
             AudioManager.PlaySound(1, true, 0);
         }
     }
@@ -82,12 +82,15 @@ public class EnergyWeapon : ProjectileWeapon{
 
     protected override void Subtract(){
         base.Subtract();
+        
+        AudioManager.source.pitch = 1 + (_heat / 75);
         _energy -= percentagePerShot;
         _heat += heatPerShot;
 
         if (_heat >= 100){
             _heat = 99.9f;
             AudioManager.source.Stop();
+            AudioManager.source.pitch = 1;
             AudioManager.PlaySound(1, false, 0);
             _isCooling = true;
         }
@@ -112,7 +115,7 @@ public class EnergyWeapon : ProjectileWeapon{
     I think everything works now.... Except energy weapons are broen and reen reowkr. Also readd explosion noises
     
     
-    
+    makes scope a seperate component
     
      */
     

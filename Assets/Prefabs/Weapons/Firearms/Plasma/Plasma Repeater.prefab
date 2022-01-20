@@ -162,7 +162,7 @@ MonoBehaviour:
   cursorType: 0
   audioRepeating: 0
   firingDelay: 0
-  salvoDelay: 0.03
+  salvoDelay: 0.1
   shotsPerSalvo: 1
   instability: 0.2
   projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
@@ -171,13 +171,11 @@ MonoBehaviour:
   projectileSpeed: 80
   piercing: 0
   zoom: 0
-  percentagePerShot: 1
-  heatPerShot: 3
-  defaultCooldownAcceleration: 0.0001
-  coolingCooldownAcceleration: 0.001
-  _energy: 100
+  percentagePerShot: 50
+  heatPerShot: 10
+  coolDown: 1
+  _energy: 9976449
   _heat: 0
-  _cooling: 0.014399983
 --- !u!114 &8110699800682194371
 MonoBehaviour:
   m_ObjectHideFlags: 0
