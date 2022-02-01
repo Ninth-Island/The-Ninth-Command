@@ -197,7 +197,7 @@ MonoBehaviour:
   looping: 0
   offset: {x: 1.69, y: -0.42}
   armType: 0
-  cursorType: 0
+  cursorType: 6
   audioRepeating: 0
   firingDelay: 0
   salvoDelay: 0.05
@@ -211,11 +211,9 @@ MonoBehaviour:
   zoom: 0
   percentagePerShot: 0.5
   heatPerShot: 2
-  defaultCooldownAcceleration: 0.0001
-  coolingCooldownAcceleration: 0.001
+  coolDown: 0
   _energy: 100
   _heat: 0
-  _cooling: 0
 --- !u!114 &255060029528992109
 MonoBehaviour:
   m_ObjectHideFlags: 0

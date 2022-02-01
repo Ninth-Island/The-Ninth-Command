@@ -167,7 +167,7 @@ MonoBehaviour:
   looping: 0
   offset: {x: 1.932, y: -0.22}
   armType: 0
-  cursorType: 0
+  cursorType: 9
   audioRepeating: 0
   firingDelay: 0
   salvoDelay: 0.1
@@ -179,7 +179,7 @@ MonoBehaviour:
   projectileSpeed: 100
   piercing: 0
   zoom: 0
-  magazinesLeft: 5
+  magazinesLeft: 2
   magazineSize: 32
   reloadTime: 3
   bulletShell: {fileID: 0}

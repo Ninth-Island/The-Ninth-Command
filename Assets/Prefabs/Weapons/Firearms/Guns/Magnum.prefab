@@ -205,6 +205,7 @@ MonoBehaviour:
   offset: {x: 1.91, y: -0.1}
   armType: 4
   cursorType: 4
+  audioRepeating: 0
   firingDelay: 0
   salvoDelay: 0.4
   shotsPerSalvo: 1
@@ -212,9 +213,10 @@ MonoBehaviour:
   projectileTemplate: {fileID: -5604932223983771090, guid: 31cb229e9234b7c46a2f98a62f5d917a,
     type: 3}
   projectileDamage: 5
-  projectileSpeed: 200
+  projectileSpeed: 400
   piercing: 0
-  zoom: 0
+  zoomLevel: 1
+  zoomRange: 10
   magazinesLeft: 2
   magazineSize: 16
   reloadTime: 3
@@ -276,6 +278,7 @@ MonoBehaviour:
     priority: 0
     waitTillNext: 0.4
     loop: 0
+  source: {fileID: 0}
 --- !u!82 &3122630002302744672
 AudioSource:
   m_ObjectHideFlags: 0

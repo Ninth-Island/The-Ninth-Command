@@ -53,7 +53,7 @@ public class BulletWeapon : ProjectileWeapon{
                 StartReloading();
             }
             else{
-                AudioManager.PlaySound(3, false, 0);
+                AudioManager.PlaySound(3, true, 0);
             }
         }
     }

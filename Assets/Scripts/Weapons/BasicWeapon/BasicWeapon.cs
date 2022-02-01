@@ -58,6 +58,10 @@ public class BasicWeapon : Weapon{
     public override void PickUp(Character character){
         base.PickUp(character);
         
+        
+        Player.WeaponImage.sprite = SpriteRenderer.sprite;
+        _cursorControl.SetCursorType(cursorType);
+        
         AudioManager.PlaySound(2, false, 0);
         
         transform.localPosition = offset;
@@ -66,6 +70,8 @@ public class BasicWeapon : Weapon{
         Player.SetArmType(armType);
         RefreshText();
     }
+
+    
     
 
     public override void Drop(){
@@ -92,8 +98,6 @@ public class BasicWeapon : Weapon{
         
     }
     public virtual void RefreshText(){
-        Player.WeaponImage.sprite = SpriteRenderer.sprite;
-        _cursorControl.SetCursorType(cursorType);
         
     }
     

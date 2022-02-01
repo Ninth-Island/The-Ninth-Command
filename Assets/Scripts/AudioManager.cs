@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 public class AudioManager : MonoBehaviour{
 
 
-    [SerializeField] private List<Sound> sounds;
+    [SerializeField] public List<Sound> sounds;
 
     public AudioSource source;
 
@@ -24,7 +24,9 @@ public class AudioManager : MonoBehaviour{
             source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
 
             source.Play();
+
             source.time = time;
+
 
 
         }

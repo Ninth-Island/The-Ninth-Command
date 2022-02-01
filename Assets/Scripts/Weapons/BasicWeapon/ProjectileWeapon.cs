@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using UnityEditor;
 using UnityEngine;
 
 public class ProjectileWeapon : BasicWeapon{
@@ -27,8 +29,13 @@ public class ProjectileWeapon : BasicWeapon{
     [SerializeField] protected float projectileSpeed;
     [SerializeField] protected bool piercing;
 
-    [SerializeField] private float zoom;
+    [SerializeField] private int zoomLevel;
+    [SerializeField] private float zoomRange;
+    [SerializeField] private float zoomLength;
+    [SerializeField] private float zoomArc;
 
+    private CursorControl _cursorControl;
+    
     private Transform _firingPoint;
 
     
@@ -68,9 +75,27 @@ public class ProjectileWeapon : BasicWeapon{
         Firing = false;
     }
 
+    private void CheckZoom(){
+        _cursorControl.ResetCamera();
+        if (Input.GetKey(KeyCode.Mouse1)){
+            if (zoomLevel > 0){
+                _cursorControl.CameraFollow(zoomLevel, zoomRange);
+            }
+        }
+    }
+
     protected override void Start(){
         base.Start();
         _firingPoint = transform.GetChild(0);
+        
+        _cursorControl = FindObjectOfType<CursorControl>();
 
+    }
+
+    protected override void Update(){
+        if (Player.primaryWeapon == this){
+            base.Update();
+            CheckZoom();
+        }
     }
 }

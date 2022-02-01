@@ -158,7 +158,7 @@ MonoBehaviour:
   looping: 0
   offset: {x: 1.69, y: -0.42}
   armType: 0
-  cursorType: 0
+  cursorType: 20
   audioRepeating: 0
   firingDelay: 0
   salvoDelay: 0.3

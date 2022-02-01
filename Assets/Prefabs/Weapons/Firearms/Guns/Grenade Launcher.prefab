@@ -189,6 +189,7 @@ MonoBehaviour:
   offset: {x: 2.16, y: 0.01}
   armType: 0
   cursorType: 24
+  audioRepeating: 0
   firingDelay: 0
   salvoDelay: 1
   shotsPerSalvo: 1
@@ -199,7 +200,7 @@ MonoBehaviour:
   projectileSpeed: 70
   piercing: 0
   zoom: 0
-  magazinesLeft: 8
+  magazinesLeft: 2
   magazineSize: 1
   reloadTime: 1.5
   bulletShell: {fileID: 0}
@@ -266,6 +267,7 @@ MonoBehaviour:
     priority: 0
     waitTillNext: 1
     loop: 0
+  source: {fileID: 0}
 --- !u!82 &5734551658049564774
 AudioSource:
   m_ObjectHideFlags: 0

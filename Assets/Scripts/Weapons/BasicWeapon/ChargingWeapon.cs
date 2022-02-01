@@ -24,7 +24,6 @@ public class ChargingWeapon : ProjectileWeapon
 
     [SerializeField] protected float energy;
 
-    [SerializeField] private float chargeSoundLengthDivider;
     public float heat = 0;
     public bool coolingDown;
     
@@ -39,7 +38,8 @@ public class ChargingWeapon : ProjectileWeapon
         if (energy > 0 && heat < 100 && !Firing && !coolingDown){
             heat += chargePerFrame;
             AudioManager.source.Stop();
-            AudioManager.PlaySound(6, true, heat / chargeSoundLengthDivider);
+            
+            //AudioManager.PlaySound(6, true, AudioManager.sounds[6].clipsList[0].length);
            
             if (heat >= 100){
                 AudioManager.PlaySound(1, false, 0);
@@ -117,6 +117,7 @@ public class ChargingWeapon : ProjectileWeapon
             base.RefreshText();
             Player.ammoCounter.SetText("");
             Player.magCounter.SetText("");
+            
             Player.energyCounter.SetText("" + Mathf.RoundToInt(energy));
             Player.heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
         }

@@ -88,7 +88,7 @@ public partial class Player : Character{
 
     protected override void Update(){
         base.Update();
-        
+
         CheckSwap();
         
         CheckCrouch();
@@ -179,7 +179,7 @@ public partial class Player : Character{
     */
     
     private void CheckSwap(){
-        if (Input.GetKeyDown(KeyCode.Mouse1)){
+        if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0){
             if (primaryWeapon != null){
                 primaryWeapon.SetSpriteRenderer(false);
             }
@@ -192,7 +192,7 @@ public partial class Player : Character{
 
             (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
-            primaryWeapon.RefreshText();
+            primaryWeapon.PickUp(this);
             SetArmType(primaryWeapon.armType);
         }
     }

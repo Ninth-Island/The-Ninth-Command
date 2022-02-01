@@ -112,7 +112,7 @@ public class EnergyWeapon : ProjectileWeapon{
     /*
     
     
-    I think everything works now.... Except energy weapons are broen and reen reowkr. Also readd explosion noises
+    I think everything works now.... charging wepons are broken
     
     
     makes scope a seperate component
@@ -144,6 +144,7 @@ public class EnergyWeapon : ProjectileWeapon{
             base.RefreshText();
             Player.ammoCounter.SetText("");
             Player.magCounter.SetText("");
+            
             Player.energyCounter.SetText("" + Mathf.RoundToInt(_energy));
             Player.heatCounter.SetText(Mathf.RoundToInt(_heat) + "% / 100%");
         }

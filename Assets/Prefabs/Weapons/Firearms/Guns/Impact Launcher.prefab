@@ -231,7 +231,7 @@ MonoBehaviour:
   projectileSpeed: 100
   piercing: 0
   zoom: 0
-  magazinesLeft: 8
+  magazinesLeft: 2
   magazineSize: 2
   reloadTime: 3
   bulletShell: {fileID: 0}

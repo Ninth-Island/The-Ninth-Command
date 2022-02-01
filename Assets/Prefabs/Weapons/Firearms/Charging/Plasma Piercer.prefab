@@ -192,7 +192,7 @@ MonoBehaviour:
   looping: 0
   offset: {x: 1.69, y: -0.42}
   armType: 0
-  cursorType: 0
+  cursorType: 37
   audioRepeating: 0
   firingDelay: 0
   salvoDelay: 1
@@ -207,8 +207,7 @@ MonoBehaviour:
   chargePerFrame: 10
   cooldownSpeed: 1
   percentagePerShot: 1
-  energy: 0
-  chargeSoundLengthDivider: 0
+  energy: 100
   heat: 0
   coolingDown: 0
 --- !u!114 &7220625419050319207
@@ -225,16 +224,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: Fire
-    clipsList: []
+    clipsList:
+    - {fileID: 8300000, guid: 71e3732231ea6764380a22e259fb58c1, type: 3}
+    - {fileID: 8300000, guid: 719e5538a7a24de46ab37350480bc117, type: 3}
+    - {fileID: 8300000, guid: 25f91f7e293e6324ebce60d7f886f390, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 128
     waitTillNext: 0
     loop: 0
-  - name: Charge
+  - name: Overheat
     clipsList:
-    - {fileID: 8300000, guid: 439fad89f5324c8409ac79099a863d43, type: 3}
+    - {fileID: 8300000, guid: d83e5353d31d9bc479a193dca27b31b6, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
@@ -255,6 +257,40 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 66a1aa689d3fc6f439d25e97c9a740a7, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 1
+    loop: 0
+  - name: Zoom In
+    clipsList: []
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 1
+    loop: 0
+  - name: Zoom Out
+    clipsList: []
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 1
+    loop: 0
+  - name: Charge In
+    clipsList:
+    - {fileID: 8300000, guid: 439fad89f5324c8409ac79099a863d43, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 0
+    priority: 128
+    waitTillNext: 1
+    loop: 0
+  - name: Charge Out
+    clipsList:
+    - {fileID: 8300000, guid: 6d1a59313bc54d04291385a316d66355, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0

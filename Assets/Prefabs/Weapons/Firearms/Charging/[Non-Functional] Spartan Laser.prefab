@@ -228,11 +228,10 @@ MonoBehaviour:
   projectileSpeed: 100
   piercing: 0
   zoom: 0
-  chargePerFrame: 1.8
+  chargePerFrame: 0.8
   cooldownSpeed: 0.5
   percentagePerShot: 20
   energy: 100
-  chargeSoundLengthDivider: 36.74
   heat: 0
   coolingDown: 0
 --- !u!114 &7469975935137330819
