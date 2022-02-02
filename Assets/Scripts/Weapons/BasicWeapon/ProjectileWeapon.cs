@@ -36,7 +36,7 @@ public class ProjectileWeapon : BasicWeapon{
 
     private CursorControl _cursorControl;
     
-    private Transform _firingPoint;
+    public Transform firingPoint;
 
     
     protected bool ReadyToFire = true;
@@ -62,7 +62,7 @@ public class ProjectileWeapon : BasicWeapon{
     private void CreateProjectile(){
         Subtract();
         RefreshText();
-        Projectile projectile = Instantiate(projectileTemplate, _firingPoint.position, Quaternion.identity);
+        Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
         Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetCollider()); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetFeetCollider());
         projectile.GetComponent<Rigidbody2D>().velocity = Player.GetBody().velocity;
@@ -86,7 +86,7 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void Start(){
         base.Start();
-        _firingPoint = transform.GetChild(0);
+        firingPoint = transform.GetChild(0);
         
         _cursorControl = FindObjectOfType<CursorControl>();
 

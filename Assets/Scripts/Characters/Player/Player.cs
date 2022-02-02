@@ -29,7 +29,7 @@ public partial class Player : Character{
     [SerializeField] private Sprite[] ArmTypes;
 
     private Transform _arm;
-    private Transform _helmet;
+    public Transform Helmet;
 
     private SpriteRenderer _armRenderer;
 
@@ -68,7 +68,7 @@ public partial class Player : Character{
 
 
         _arm = transform.GetChild(1).transform.GetChild(5);
-        _helmet = transform.GetChild(1).transform.GetChild(4);
+        Helmet = transform.GetChild(1).transform.GetChild(4);
 
         _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
 
@@ -263,14 +263,14 @@ public partial class Player : Character{
         _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
         _arm.transform.localScale = new Vector3(1, 1);
         
-        _helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
-        _helmet.transform.localScale = new Vector3(1, 1);
+        Helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        Helmet.transform.localScale = new Vector3(1, 1);
 
         
         transform.localScale = new Vector3(1, 1);
         if (rotation > 90 && rotation < 270){
             _arm.transform.localScale = new Vector3(-1, -1);
-            _helmet.transform.localScale = new Vector3(-1, -1);
+            Helmet.transform.localScale = new Vector3(-1, -1);
             transform.localScale = new Vector3(-1, 1);
         }
     }

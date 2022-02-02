@@ -34,6 +34,7 @@ public class BasicWeapon : Weapon{
 
     protected override void Start(){
         base.Start();
+        
         _cursorControl = FindObjectOfType<CursorControl>();
         Player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, Body)));
     }
