@@ -179,7 +179,8 @@ public partial class Player : Character{
     */
     
     private void CheckSwap(){
-        if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0){
+
+        if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1)){
             if (primaryWeapon != null){
                 primaryWeapon.SetSpriteRenderer(false);
             }

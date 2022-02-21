@@ -27,14 +27,15 @@ public class CursorControl : MonoBehaviour{
 
     }
 
-    public void CameraFollow(int zoomLevel, float zoomRange){
+    public void CameraFollow(float multiplier, float zoomRange){
         Vector2 playerPos = _player.transform.position;
-        zoomRange *= zoomLevel;
+        zoomRange *= multiplier;
         float x = Mathf.Clamp(GetMousePosition().x, playerPos.x - zoomRange, playerPos.x + zoomRange);
         float y = Mathf.Clamp(GetMousePosition().y, playerPos.y - zoomRange, playerPos.y + zoomRange);
         Vector2 pos = new Vector2(x, y);
         transform.position = pos;
         vc.Follow = transform;
+
     }
 
     public void ResetCamera(){

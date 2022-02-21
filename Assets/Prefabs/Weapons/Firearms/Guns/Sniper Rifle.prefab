@@ -222,7 +222,9 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 1000
   piercing: 0
-  zoom: 0
+  zoomIncrements: 10
+  zoomRange: 100
+  firingPoint: {fileID: 0}
   magazinesLeft: 2
   magazineSize: 6
   reloadTime: 3
