@@ -178,7 +178,9 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 300
   piercing: 0
-  zoom: 0
+  zoomIncrements: 5
+  zoomRange: 100
+  firingPoint: {fileID: 0}
   percentagePerShot: 5
   heatPerShot: 50
   coolDown: 0.5

@@ -214,12 +214,14 @@ MonoBehaviour:
   projectileDamage: 0
   projectileSpeed: 200
   piercing: 0
-  zoom: 0
-  chargePerFrame: 5
+  zoomIncrements: 1
+  zoomRange: 50
+  firingPoint: {fileID: 0}
+  chargePerFrame: 1.8
   cooldownSpeed: 1
   percentagePerShot: 6.67
   energy: 100
-  chargeSoundLengthDivider: 60
+  earlyCutoff: 0
   heat: 0
   coolingDown: 0
 --- !u!114 &2052354345

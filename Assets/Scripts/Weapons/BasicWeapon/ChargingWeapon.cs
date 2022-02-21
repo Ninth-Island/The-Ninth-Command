@@ -23,6 +23,7 @@ public class ChargingWeapon : ProjectileWeapon
     [SerializeField] float percentagePerShot;
 
     [SerializeField] protected float energy;
+    [SerializeField] private float earlyCutoff;
 
     public float heat = 0;
     public bool coolingDown;
@@ -39,8 +40,9 @@ public class ChargingWeapon : ProjectileWeapon
             heat += chargePerFrame;
             AudioManager.source.Stop();
             
-            //AudioManager.PlaySound(6, true, AudioManager.sounds[6].clipsList[0].length);
+            AudioManager.PlaySound(6, true, (AudioManager.sounds[6].clipsList[0].length - earlyCutoff) / 105 * heat);
            
+            
             if (heat >= 100){
                 AudioManager.PlaySound(1, false, 0);
                 StartCoroutine(Fire());
@@ -59,6 +61,11 @@ public class ChargingWeapon : ProjectileWeapon
 
     protected override void Update(){
         base.Update();
+        
+        if (Input.GetKeyUp(KeyCode.Mouse0) && Player.primaryWeapon == this && !coolingDown){
+            AudioManager.source.Stop();
+            AudioManager.PlaySound(7, false, 0);
+        }
         RefreshText();
     }
 
@@ -73,10 +80,7 @@ public class ChargingWeapon : ProjectileWeapon
                 CheckFire();
             }
 
-            if (Input.GetKeyUp(KeyCode.Mouse0) && !coolingDown){
-                AudioManager.source.Stop();
-                AudioManager.PlaySound(7, false, 0);
-            }
+            
             heat -= cooldownSpeed;
 
             if (!coolingDown){ // so that after firing it cools down slower than before firing
