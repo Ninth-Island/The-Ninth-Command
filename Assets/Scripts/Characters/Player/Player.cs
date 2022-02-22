@@ -37,8 +37,8 @@ public partial class Player : Character{
 
     private bool _isCrouching;
 
-    
-    
+
+    private bool _armOverride;
 
 
     private ANames _aNames = new ANames();
@@ -195,6 +195,7 @@ public partial class Player : Character{
 
             primaryWeapon.PickUp(this);
             SetArmType(primaryWeapon.armType);
+            _armOverride = false;
         }
     }
     
@@ -261,9 +262,12 @@ public partial class Player : Character{
 
     private void RotateArm(){
         float rotation = GetPlayerToMouseRotation();
-        _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
-        _arm.transform.localScale = new Vector3(1, 1);
-        
+
+        if (_armOverride == false){
+            _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            _arm.transform.localScale = new Vector3(1, 1);
+        }
+
         Helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
         Helmet.transform.localScale = new Vector3(1, 1);
 
@@ -279,6 +283,17 @@ public partial class Player : Character{
     public void SetArmType(int armType){
         _armRenderer.sprite = ArmTypes[armType];
     }
+
+    public void SetArmRotation(Vector2 restingSwinging){ // for melee weapons
+        _armOverride = true;
+        _arm.transform.rotation = Quaternion.Euler(0, 0, restingSwinging.x);
+        if (Mathf.Sign(transform.localScale.x) == -1){
+            _arm.transform.rotation = Quaternion.Euler(0, 0, restingSwinging.y);
+
+        }
+        _arm.transform.localScale = new Vector3(1, 1);
+    }
+    
     
     public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
         _allBasicWeapons.Add(weapon.Key, weapon.Value);

@@ -20,7 +20,7 @@ public class Character : MonoBehaviour{
 */
     
     [SerializeField] protected int health;
-    [SerializeField] protected float moveSpeed;
+    [SerializeField] public float moveSpeed;
     
     [SerializeField] private PhysicsMaterial2D[] materials;
 

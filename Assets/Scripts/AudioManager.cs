@@ -49,6 +49,10 @@ public class AudioManager : MonoBehaviour{
             source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)]);
         }
     }
+
+    public void PlayAtPoint(int index){
+        AudioSource.PlayClipAtPoint(sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)], transform.position);
+    }
     
 
 }

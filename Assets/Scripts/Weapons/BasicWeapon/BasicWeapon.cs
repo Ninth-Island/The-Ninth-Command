@@ -29,13 +29,14 @@ public class BasicWeapon : Weapon{
     [SerializeField] public int armType = 0;
     [SerializeField] private int cursorType = 0;
     [SerializeField] private bool audioRepeating = false;
-    private CursorControl _cursorControl;
+    protected CursorControl CursorControl;
 
 
     protected override void Start(){
         base.Start();
-        
-        _cursorControl = FindObjectOfType<CursorControl>();
+    
+        CursorControl = FindObjectOfType<CursorControl>();
+      
         Player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, Body)));
     }
 
@@ -61,7 +62,7 @@ public class BasicWeapon : Weapon{
         
         
         Player.WeaponImage.sprite = SpriteRenderer.sprite;
-        _cursorControl.SetCursorType(cursorType);
+        CursorControl.SetCursorType(cursorType);
         
         AudioManager.PlaySound(2, false, 0);
         

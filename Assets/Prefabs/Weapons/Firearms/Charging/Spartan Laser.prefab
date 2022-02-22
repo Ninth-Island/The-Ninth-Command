@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 7469975935137330819}
   - component: {fileID: 3384590040524449548}
   m_Layer: 13
-  m_Name: '[Non-Functional] Spartan Laser'
+  m_Name: Spartan Laser
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -225,7 +225,7 @@ MonoBehaviour:
   projectileTemplate: {fileID: 5302949600237173417, guid: 3a422bbb78e19fa41abf443be52aedc4,
     type: 3}
   projectileDamage: 0
-  projectileSpeed: 100
+  projectileSpeed: 400
   piercing: 0
   zoomIncrements: 2
   zoomRange: 80
@@ -233,7 +233,7 @@ MonoBehaviour:
   chargePerFrame: 1
   cooldownSpeed: 0.5
   percentagePerShot: 20
-  energy: 100
+  energy: 999079
   earlyCutoff: 2
   heat: 0
   coolingDown: 0

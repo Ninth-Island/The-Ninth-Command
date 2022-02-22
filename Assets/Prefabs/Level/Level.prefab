@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 329079670}
   m_Layer: 0
-  m_Name: Firearms
+  m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,6 +48,7 @@ Transform:
   - {fileID: 8844038081817583517}
   - {fileID: 2707150467005630865}
   - {fileID: 3386150358860656735}
+  - {fileID: 4865206129169826474}
   m_Father: {fileID: 636611151}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32577,6 +32578,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2121412993837453777, guid: 437307c02a382654280a2fbb6e29d28d,
+        type: 3}
+      propertyPath: projectileSpeed
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 2121412993837453779, guid: 437307c02a382654280a2fbb6e29d28d,
         type: 3}
       propertyPath: m_Name
@@ -33180,8 +33186,13 @@ PrefabInstance:
     - target: {fileID: 8546548626594045350, guid: ed1810f6f09d7a347baa4a37385093f1,
         type: 3}
       propertyPath: m_Name
-      value: Spartan Laser (Non-functional)
+      value: Spartan Laser
       objectReference: {fileID: 0}
+    - target: {fileID: 8546548626594045352, guid: ed1810f6f09d7a347baa4a37385093f1,
+        type: 3}
+      propertyPath: firingPoint
+      value: 
+      objectReference: {fileID: 8527226505186207299}
     - target: {fileID: 8546548626594045353, guid: ed1810f6f09d7a347baa4a37385093f1,
         type: 3}
       propertyPath: m_RootOrder
@@ -33239,6 +33250,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed1810f6f09d7a347baa4a37385093f1, type: 3}
+--- !u!4 &8527226505186207299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7749246487177832564, guid: ed1810f6f09d7a347baa4a37385093f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2151614292964068919}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7730254475012297630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8546548626594045353, guid: ed1810f6f09d7a347baa4a37385093f1,
@@ -33399,15 +33416,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10088a89e838baf4d822fda5e60b5453, type: 3}
---- !u!4 &8784483567410357893 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7220625419050319208, guid: 10088a89e838baf4d822fda5e60b5453,
-    type: 3}
-  m_PrefabInstance: {fileID: 2151614293276515309}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5174196629911363904 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6490357384886991533, guid: 10088a89e838baf4d822fda5e60b5453,
+    type: 3}
+  m_PrefabInstance: {fileID: 2151614293276515309}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8784483567410357893 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7220625419050319208, guid: 10088a89e838baf4d822fda5e60b5453,
     type: 3}
   m_PrefabInstance: {fileID: 2151614293276515309}
   m_PrefabAsset: {fileID: 0}
@@ -35019,6 +35036,81 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5930552260682622738}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6287102039026895363
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 329079670}
+    m_Modifications:
+    - target: {fileID: 1496579141962401941, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_Name
+      value: Energy Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 41.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3467a872d08d2d047860df431af5f1b9, type: 3}
+--- !u!4 &4865206129169826474 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1496579141962401961, guid: 3467a872d08d2d047860df431af5f1b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6287102039026895363}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6597645758259256426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35109,12 +35201,12 @@ PrefabInstance:
     - target: {fileID: 5424993723957404760, guid: dd9baa4cd0593f544bb0bf19cc92b465,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 87
       objectReference: {fileID: 0}
     - target: {fileID: 5424993723957404760, guid: dd9baa4cd0593f544bb0bf19cc92b465,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.1
       objectReference: {fileID: 0}
     - target: {fileID: 5424993723957404760, guid: dd9baa4cd0593f544bb0bf19cc92b465,
         type: 3}
@@ -35159,7 +35251,12 @@ PrefabInstance:
     - target: {fileID: 5424993723957404761, guid: dd9baa4cd0593f544bb0bf19cc92b465,
         type: 3}
       propertyPath: m_Name
-      value: Storm Rifle
+      value: Storm Rifle (unused cuz of plasma rifle)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5424993723957404761, guid: dd9baa4cd0593f544bb0bf19cc92b465,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9baa4cd0593f544bb0bf19cc92b465, type: 3}
