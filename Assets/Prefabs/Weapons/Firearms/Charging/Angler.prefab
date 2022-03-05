@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3368344160014734497
+--- !u!1 &291966965325126517
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6490357384886991533}
+  - component: {fileID: 3117667432633647728}
   m_Layer: 13
   m_Name: FiringPoint
   m_TagString: Untagged
@@ -16,21 +16,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6490357384886991533
+--- !u!4 &3117667432633647728
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3368344160014734497}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 291966965325126517}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 0.1, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children: []
-  m_Father: {fileID: 7220625419050319208}
+  m_Father: {fileID: 2121412993837453776}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7220625419050319213
+--- !u!1 &2121412993837453779
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -38,42 +38,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7220625419050319208}
-  - component: {fileID: 7220625419050319209}
-  - component: {fileID: 7220625419050319210}
-  - component: {fileID: 7220625419050319211}
-  - component: {fileID: 7220625419050319212}
-  - component: {fileID: 7220625419050319207}
-  - component: {fileID: 4541617281276091613}
+  - component: {fileID: 2121412993837453776}
+  - component: {fileID: 2121412993837453780}
+  - component: {fileID: 2121412993837453783}
+  - component: {fileID: 2121412993837453782}
+  - component: {fileID: 2121412993837453777}
+  - component: {fileID: 2052354345}
+  - component: {fileID: 2613044583457648136}
   m_Layer: 13
-  m_Name: Shredder
+  m_Name: Angler
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7220625419050319208
+--- !u!4 &2121412993837453776
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
+  m_GameObject: {fileID: 2121412993837453779}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children:
-  - {fileID: 6490357384886991533}
+  - {fileID: 3117667432633647728}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &7220625419050319209
+--- !u!212 &2121412993837453780
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
+  m_GameObject: {fileID: 2121412993837453779}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -107,61 +107,25 @@ SpriteRenderer:
   m_SortingLayerID: 447239203
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 93cad5ae5d34cc546a8d143046271a51, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b00c5cf3aff47fd4fa89f66d5a57a3bf, type: 3}
+  m_Color: {r: 0.16987538, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 7.5, y: 6.25}
+  m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &7220625419050319210
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.5, y: 6.25}
-    newSize: {x: 7.5, y: 6.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -1.7669754, y: 1.0025587}
-      - {x: -1.7486649, y: -0.24238157}
-      - {x: -2.256401, y: -0.095406055}
-      - {x: -2.6512985, y: -0.4302001}
-      - {x: -2.2177277, y: -1}
-      - {x: 0.01953125, y: -0.74738455}
-      - {x: 0.043899536, y: -0.6313963}
-      - {x: 2.1262817, y: -0.47936082}
-      - {x: 2.5025635, y: -0.034768105}
-      - {x: 2.1082, y: 0.49744177}
-      - {x: -0.16255188, y: 0.9922676}
---- !u!50 &7220625419050319211
+--- !u!50 &2121412993837453783
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
+  m_GameObject: {fileID: 2121412993837453779}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -173,15 +137,62 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &7220625419050319212
+--- !u!60 &2121412993837453782
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121412993837453779}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.75, y: 8.75}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -2.110598, y: 0.62018204}
+      - {x: -1.6306787, y: 0.6236043}
+      - {x: -1.2527218, y: 0.62336314}
+      - {x: -0.8732195, y: 1.0006967}
+      - {x: 0.0059194565, y: 1.0025607}
+      - {x: 0.010335445, y: 0.87778324}
+      - {x: 2.3593938, y: 0.8735775}
+      - {x: 2.4854562, y: 0.74937916}
+      - {x: 2.5093458, y: -0.36602533}
+      - {x: 2.2454383, y: -0.61098886}
+      - {x: 0.24930048, y: -0.62726676}
+      - {x: 0.25290012, y: -0.50050867}
+      - {x: -0.6264882, y: -0.5025326}
+      - {x: -0.62104654, y: -0.63121617}
+      - {x: -0.8699355, y: -0.6257404}
+      - {x: -0.87276316, y: -0.7512063}
+      - {x: -1.1329646, y: -0.99455273}
+      - {x: -1.3655505, y: -1.0020732}
+      - {x: -2.1086578, y: -0.75729096}
+      - {x: -2.3765426, y: -0.49400127}
+      - {x: -2.501144, y: -0.122027874}
+      - {x: -2.509519, y: 0.24359822}
+--- !u!114 &2121412993837453777
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
+  m_GameObject: {fileID: 2121412993837453779}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a17de3c158fe7b4f904c6e8ab41a81f, type: 3}
@@ -190,36 +201,36 @@ MonoBehaviour:
   pickupRange: 8
   wielder: {fileID: 0}
   looping: 0
-  offset: {x: 1.69, y: -0.42}
+  offset: {x: 2.08, y: -0.15}
   armType: 0
-  cursorType: 37
+  cursorType: 19
   audioRepeating: 0
-  firingDelay: 0.07
-  salvoDelay: 1
-  shotsPerSalvo: 20
-  instability: 0.1
-  projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
+  firingDelay: 0
+  salvoDelay: 0
+  shotsPerSalvo: 1
+  instability: 0
+  projectileTemplate: {fileID: 5345319634674317827, guid: 203d132244d00ae489e3c060dad9bbad,
     type: 3}
-  projectileDamage: 100
+  projectileDamage: 0
   projectileSpeed: 400
-  piercing: 1
+  piercing: 0
   zoomIncrements: 1
   zoomRange: 50
   firingPoint: {fileID: 0}
-  chargePerFrame: 1.25
+  chargePerFrame: 1.8
   cooldownSpeed: 1
-  percentagePerShot: 1
+  percentagePerShot: 6.67
   energy: 100
   earlyCutoff: 0
   heat: 0
   coolingDown: 0
---- !u!114 &7220625419050319207
+--- !u!114 &2052354345
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
+  m_GameObject: {fileID: 2121412993837453779}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
@@ -228,9 +239,10 @@ MonoBehaviour:
   sounds:
   - name: Fire
     clipsList:
-    - {fileID: 8300000, guid: f16382833b0c3314db4063bd067be3df, type: 3}
-    - {fileID: 8300000, guid: f43c706e0d7900848a0d762c953fe8a8, type: 3}
-    - {fileID: 8300000, guid: b3ef502c45e4e5147a56851570be680f, type: 3}
+    - {fileID: 8300000, guid: 6f09ec15fa21a6b49add20ea410c02e7, type: 3}
+    - {fileID: 8300000, guid: ea3aa8a2268359f4ca0d54f56fa04416, type: 3}
+    - {fileID: 8300000, guid: bf721d970fb44d14b82a7cd98423b0fd, type: 3}
+    - {fileID: 8300000, guid: 9db5ed8e3515e6a41ad295ae398ee4c8, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
@@ -239,7 +251,10 @@ MonoBehaviour:
     loop: 0
   - name: Overheat
     clipsList:
-    - {fileID: 8300000, guid: d83e5353d31d9bc479a193dca27b31b6, type: 3}
+    - {fileID: 8300000, guid: 1377b6c6b4820084982df6d04a1250bd, type: 3}
+    - {fileID: 8300000, guid: b345dfcd3b1b4434eb2cca63d163bcec, type: 3}
+    - {fileID: 8300000, guid: 4c194917e48460a46a0f7d492171c5f9, type: 3}
+    - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
@@ -248,9 +263,10 @@ MonoBehaviour:
     loop: 0
   - name: Ready
     clipsList:
-    - {fileID: 8300000, guid: 41b100021388ef44b804bd07a2d4ca22, type: 3}
-    - {fileID: 8300000, guid: 4345bba6c7524094089ba47999c2a4c3, type: 3}
-    - {fileID: 8300000, guid: 4f3bce67d2621f34998e7caa62876d33, type: 3}
+    - {fileID: 8300000, guid: 1377b6c6b4820084982df6d04a1250bd, type: 3}
+    - {fileID: 8300000, guid: b345dfcd3b1b4434eb2cca63d163bcec, type: 3}
+    - {fileID: 8300000, guid: 4c194917e48460a46a0f7d492171c5f9, type: 3}
+    - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
@@ -259,7 +275,7 @@ MonoBehaviour:
     loop: 0
   - name: Dry Fire
     clipsList:
-    - {fileID: 8300000, guid: 66a1aa689d3fc6f439d25e97c9a740a7, type: 3}
+    - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
@@ -267,47 +283,49 @@ MonoBehaviour:
     waitTillNext: 1
     loop: 0
   - name: Zoom In
-    clipsList: []
+    clipsList:
+    - {fileID: 8300000, guid: 57b487d0c5cc6b84a870c1374cdecf71, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 128
-    waitTillNext: 1
+    waitTillNext: 0
     loop: 0
   - name: Zoom Out
-    clipsList: []
+    clipsList:
+    - {fileID: 8300000, guid: dc645fc9b4138164d9c3a6b12e07ecd6, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 128
-    waitTillNext: 1
+    waitTillNext: 0
     loop: 0
   - name: Charge In
     clipsList:
-    - {fileID: 8300000, guid: 439fad89f5324c8409ac79099a863d43, type: 3}
+    - {fileID: 8300000, guid: a19282be1537f7c468764490b0a0841b, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 128
-    waitTillNext: 1
+    waitTillNext: 0
     loop: 0
   - name: Charge Out
     clipsList:
-    - {fileID: 8300000, guid: 6d1a59313bc54d04291385a316d66355, type: 3}
+    - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 0
     priority: 128
-    waitTillNext: 1
+    waitTillNext: 0
     loop: 0
   source: {fileID: 0}
---- !u!82 &4541617281276091613
+--- !u!82 &2613044583457648136
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7220625419050319213}
+  m_GameObject: {fileID: 2121412993837453779}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}

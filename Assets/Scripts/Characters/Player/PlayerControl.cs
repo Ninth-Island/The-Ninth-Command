@@ -59,7 +59,21 @@ public partial class Player : Character{
         
         _mainCamera = Camera.main;
         _cursorControl = FindObjectOfType<CursorControl>();
+
+        Transform energyGauge = HUD.transform.GetChild(5);
+        _energySlider = energyGauge.GetChild(2).GetComponent<Slider>();
+        _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
+
+        _energySlider.value = 0.5f;
     }
+    
+    
+    /*Advanced Movement and HUD Reference*/
+
+    private Slider _energySlider;
+    private Slider _overflowSlider;
+    
+    
 
     /*
 * ================================================================================================================
