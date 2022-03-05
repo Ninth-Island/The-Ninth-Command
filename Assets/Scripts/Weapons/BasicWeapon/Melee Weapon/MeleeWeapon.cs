@@ -39,22 +39,6 @@ public class MeleeWeapon : BasicWeapon{
      * 
      */
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     protected override void FixedUpdate(){
         base.FixedUpdate();
         if (_coolDownLeft > 0){

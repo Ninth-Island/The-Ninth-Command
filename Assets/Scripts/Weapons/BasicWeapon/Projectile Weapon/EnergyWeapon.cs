@@ -97,42 +97,6 @@ public class EnergyWeapon : ProjectileWeapon{
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    
-    
-    I think everything works now.... charging wepons are broken
-    
-    
-    makes scope a seperate component
-    
-     */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     /*
     * ================================================================================================================
     *                                               Other

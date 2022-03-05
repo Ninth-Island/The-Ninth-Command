@@ -112,9 +112,4 @@ public class Explosive : Projectile{
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

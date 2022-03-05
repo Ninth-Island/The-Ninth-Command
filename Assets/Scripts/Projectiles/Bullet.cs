@@ -15,11 +15,7 @@ public class Bullet : Projectile
 */
 
     [SerializeField] private GameObject deadBullet;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  
 
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
@@ -29,9 +25,4 @@ public class Bullet : Projectile
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

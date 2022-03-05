@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Vehicle : MonoBehaviour{
+public class Vehicle : CustomObject{
 
     [SerializeField] private float embarkRange;
     [SerializeField] private float speed;

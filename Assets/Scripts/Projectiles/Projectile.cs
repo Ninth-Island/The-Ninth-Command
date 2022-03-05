@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Projectile : MonoBehaviour{
+public class Projectile : CustomObject{
     
     /*
  * ================================================================================================================

@@ -29,14 +29,8 @@ public class ProjectileWeapon : BasicWeapon{
     [SerializeField] protected float projectileSpeed;
     [SerializeField] protected bool piercing;
 
-    [SerializeField] private int zoomIncrements;
-    [SerializeField] private float zoomRange;
 
-    
-    
-    private float _multiplier = 1;
-    private float _incrementSize;
-    
+
     public Transform firingPoint;
 
     
@@ -76,37 +70,20 @@ public class ProjectileWeapon : BasicWeapon{
         Firing = false;
     }
 
-    private void CheckZoom(){
-        CursorControl.ResetCamera();
-        if (Input.GetKeyUp(KeyCode.Mouse1)){
-            _multiplier = _incrementSize / zoomRange;
-        }
-        if (Input.GetKey(KeyCode.Mouse1)){
-
-            float wheelInput = Input.GetAxis("Mouse ScrollWheel");
-            if (zoomIncrements > 0 && Input.GetKey(KeyCode.Mouse1) && wheelInput != 0){
-                
-                _multiplier = Mathf.Clamp(_multiplier + (Mathf.Sign(wheelInput) * _incrementSize / zoomRange), 0, 1);
-            }
-            
-            CursorControl.CameraFollow(_multiplier, zoomRange);
-        }
-    }
+    
 
     protected override void Start(){
         base.Start();
         firingPoint = transform.GetChild(0);
         CursorControl = FindObjectOfType<CursorControl>();
         
-        _incrementSize = zoomRange / zoomIncrements;
-        _multiplier = _incrementSize / zoomRange;
+        
 
     }
 
     protected override void Update(){
         if (Player.primaryWeapon == this){
             base.Update();
-            CheckZoom();
         }
     }
 }

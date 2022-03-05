@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1419778234488091414}
   - component: {fileID: 1419778234488091415}
   - component: {fileID: 1419778234488091416}
+  - component: {fileID: 8058654597914843358}
   - component: {fileID: 653092041280103006}
   - component: {fileID: 1648808416316894929}
   m_Layer: 13
@@ -231,6 +232,21 @@ MonoBehaviour:
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
   reloading: 0
+--- !u!114 &8058654597914843358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419778234488091418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08c3fe5ff1f7814caef6759baa2f70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forcedOn: 1
+  zoomIncrements: 10
+  zoomRange: 100
 --- !u!114 &653092041280103006
 MonoBehaviour:
   m_ObjectHideFlags: 0
