@@ -18,3 +18,15 @@ public class ActiveMod : WeaponMod{
         IsReady = _player.primaryWeapon == WeaponAttachedTo;
     }
 }
+
+
+/*Ideas:
+ 
+    Grappling Hook
+    Mounted Energy Shield
+    Repulse
+    Weapon Lock
+    
+    
+    extra fire:
+        micro missiles*/

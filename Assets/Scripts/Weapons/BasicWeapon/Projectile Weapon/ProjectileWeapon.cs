@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ProjectileWeapon : BasicWeapon{
     
@@ -74,11 +76,11 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void Start(){
         base.Start();
-        firingPoint = transform.GetChild(0);
         CursorControl = FindObjectOfType<CursorControl>();
-        
-        
+    }
 
+    private void Awake(){
+        firingPoint = transform.GetChild(0);
     }
 
     protected override void Update(){
