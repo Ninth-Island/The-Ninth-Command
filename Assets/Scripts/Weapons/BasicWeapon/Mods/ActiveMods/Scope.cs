@@ -9,6 +9,7 @@ public class Scope : ActiveMod{
     [SerializeField] private float zoomRange;
 
     private CursorControl _cursorControl;
+
     
     private float _multiplier = 1;
     private float _incrementSize;
@@ -20,13 +21,14 @@ public class Scope : ActiveMod{
         
         _incrementSize = zoomRange / zoomIncrements;
         _multiplier = _incrementSize / zoomRange;
+        
+        
     }
 
     protected override void Update(){
         base.Update();
         
         if (IsReady){
-            base.Update();
             CheckZoom();
         }
     }
@@ -40,8 +42,17 @@ public class Scope : ActiveMod{
 
             float wheelInput = Input.GetAxis("Mouse ScrollWheel");
             if (zoomIncrements > 0 && Input.GetKey(KeyCode.Mouse1) && wheelInput != 0){
+
+                float sign = Mathf.Sign(wheelInput);
+
+                _multiplier = Mathf.Clamp(_multiplier + (sign * _incrementSize / zoomRange), 0, 1);
                 
-                _multiplier = Mathf.Clamp(_multiplier + (Mathf.Sign(wheelInput) * _incrementSize / zoomRange), 0, 1);
+                if (sign > 0){
+                    AudioManager.PlaySound(0, false, 0);
+                }
+                else if (sign < 0){
+                    AudioManager.PlaySound(1, false, 0);
+                }
             }
             
             _cursorControl.CameraFollow(_multiplier, zoomRange);

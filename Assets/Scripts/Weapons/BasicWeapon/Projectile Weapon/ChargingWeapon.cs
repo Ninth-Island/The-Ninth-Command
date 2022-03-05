@@ -40,7 +40,7 @@ public class ChargingWeapon : ProjectileWeapon
             heat += chargePerFrame;
             AudioManager.source.Stop();
             
-            AudioManager.PlaySound(6, true, (AudioManager.sounds[6].clipsList[0].length - earlyCutoff) / 105 * heat);
+            AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
            
             
             if (heat >= 100){
@@ -64,7 +64,7 @@ public class ChargingWeapon : ProjectileWeapon
         
         if (Input.GetKeyUp(KeyCode.Mouse0) && Player.primaryWeapon == this && !coolingDown){
             AudioManager.source.Stop();
-            AudioManager.PlaySound(7, false, 0);
+            AudioManager.PlaySound(5, false, 0);
         }
         RefreshText();
     }

@@ -202,8 +202,6 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 50
   piercing: 0
-  zoomIncrements: 0
-  zoomRange: 0
   firingPoint: {fileID: 0}
   magazinesLeft: 2
   magazineSize: 24
@@ -245,7 +243,7 @@ MonoBehaviour:
     priority: 0
     waitTillNext: 0
     loop: 0
-  - name: 
+  - name: Ready
     clipsList:
     - {fileID: 8300000, guid: a72e0dc4eb3d3294694489c291839b33, type: 3}
     - {fileID: 8300000, guid: e16d13a4afabd8e4b8ad8cd6e5502840, type: 3}

@@ -7,10 +7,13 @@ public class WeaponMod : CustomObject{
     [SerializeField] protected bool forcedOn = false;
     
     protected BasicWeapon WeaponAttachedTo;
-    
+    protected AudioManager AudioManager;
+
     
     protected virtual void Start(){
-        WeaponAttachedTo = GetComponent<BasicWeapon>();
+        WeaponAttachedTo = transform.parent.GetComponent<BasicWeapon>();
+        AudioManager = GetComponent<AudioManager>();
+        
     }
 
     protected virtual void Update(){
