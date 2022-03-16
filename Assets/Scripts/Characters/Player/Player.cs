@@ -21,7 +21,6 @@ public partial class Player : Character{
     [SerializeField] public BasicWeapon secondaryWeapon;
 
     
-    [SerializeField] private float jumpPower;
     [SerializeField] private float jetPower;
 
     [SerializeField] private GameObject spritesParent;

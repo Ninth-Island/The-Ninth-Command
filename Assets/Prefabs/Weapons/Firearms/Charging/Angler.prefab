@@ -212,7 +212,7 @@ MonoBehaviour:
   instability: 0
   projectileTemplate: {fileID: 5345319634674317827, guid: 203d132244d00ae489e3c060dad9bbad,
     type: 3}
-  projectileDamage: 0
+  projectileDamage: 1
   projectileSpeed: 400
   piercing: 0
   firingPoint: {fileID: 0}

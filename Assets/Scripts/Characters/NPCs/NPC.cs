@@ -1,137 +1,150 @@
-﻿using System;
+﻿
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using UnityEngine;
 using Pathfinding;
-using UnityEngine.UI;
-using Random = UnityEngine.Random;
-using Vector2 = UnityEngine.Vector2;
+using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class NPC : Character{
 
-    
-    [Header("AI")]
-    [SerializeField] float sightRange;
-    [SerializeField] private float aiType = 0;
-    // 0 = guard
-    // 1 = attacker
-    [SerializeField] private int idleType = 0;
-    // 0 == stand still
-    // 1 = back and forth
-    [SerializeField] private Vector2 pointOfInterest = new Vector2(0.1f, 0.1f);
-    // either a guard point or a capture zone
+    public Transform target;
+    public float nextWayPointDistance = 3;
+    private Path _path;
+    private int _currentWaypoint;
+    private bool _reachedEndOfPath = false;
 
-    [SerializeField] private float optimalFiringDistance;
-    [SerializeField] private float randomRange;
-    private GameObject _target;
-
+    private Seeker _seeker;
 
     private BoxCollider2D wallDetector;
     private BoxCollider2D groundDetector;
 
-    /*
-     ================================================================================================================
-                                        Target Finding
-     ================================================================================================================
-     */
+    private GameObject healthBG;
+    private GameObject healthFill;
+
+    private Coroutine HealthRoutine;
     
-    private void FindNearestTarget(){
-        _target = null;
-        int mask = LayerMask.GetMask("Team 1", "Team 2", "Team 3", "Team 4");
-        mask = mask & ~(1 << gameObject.layer); // some bit shifting magic that excludes the layer of the object doing the scan
-
-        RaycastHit2D[] potentialTargets = Physics2D.CircleCastAll(transform.position, sightRange, new Vector2(0, 0), 0, mask);
-        foreach (RaycastHit2D potentialTarget in potentialTargets){
-            LineOfSightCheck(potentialTarget, mask);
-        }
-    }
-
-    private void LineOfSightCheck(RaycastHit2D potentialTarget, int mask){
-        mask = mask | (1 << LayerMask.NameToLayer("Ground"));
-        RaycastHit2D losc = Physics2D.Linecast(transform.position, potentialTarget.transform.position, mask);  // losc is short for Line Of Sight Check
-        if (losc.collider.gameObject.layer != LayerMask.NameToLayer("Ground")){
-            _target = losc.collider.gameObject;
-            if (_target.transform.parent){
-                _target = _target.transform.parent.gameObject;
-            }
-        }
-    }
-
-
-    private void SortAiBehavior(){
-        
-        if (aiType == 0f){ // if you're a guard...
-            if (idleType == 1){
-                Patrol();
-            }
-        }
-
-        if (aiType == 1f){ // if you're an attacker...
-            if (_target){
-                MoveToPoint(_target.transform.position);
-            }
-            else if (pointOfInterest != new Vector2(0.1f, 0.1f)){ // there's no target and there IS an attack point
-                MoveToPoint(pointOfInterest);
-            }
-            else{ // there's no target and there's no capture point
-                if (idleType == 1){
-                    Patrol();
-                }
-            }
-        }
-    }
-
-    private void Patrol(){
-        if (!InputsFrozen && !FallingKnocked && !_target){
-            Body.velocity = new Vector2(moveSpeed * transform.localScale.x * 0.3f, Body.velocity.y);
-        }
-    }
-
-    private void MoveToPoint(Vector2 destination){
-        
-        float x = transform.position.x;
-        float y = transform.position.y;
-        int direction = 0;
-        
-        
-        if (x + optimalFiringDistance < destination.x){
-            direction = 1;
-        }
-        else if (x - optimalFiringDistance > destination.x){
-            direction = -1;
-        }
-        
-        Body.velocity = new Vector2(moveSpeed * direction, Body.velocity.y);
-    }
-
-
-    protected override void OnCollisionEnter2D(Collision2D other){
-       
-    }
 
 
     protected override void Start(){
         base.Start();
 
+        _seeker = GetComponent<Seeker>();
+        InvokeRepeating(nameof(UpdatePath), 0f, 0.5f);
+        
+        // remove later
+        target = FindObjectOfType<Player>().transform;
+        
         wallDetector = transform.GetChild(2).GetComponent<BoxCollider2D>();
         groundDetector = transform.GetChild(3).GetComponent<BoxCollider2D>();
 
-        optimalFiringDistance += Random.Range(-randomRange, randomRange);
-        
-        
-        InvokeRepeating(nameof(FindNearestTarget), 0, 1f);
+        healthBG = transform.GetChild(4).gameObject;
+        healthFill = transform.GetChild(5).gameObject;
+
     }
 
     protected override void Update(){
         base.Update();
         
     }
-
+    
     protected override void FixedUpdate(){
         base.FixedUpdate();
-        SortAiBehavior();
+
+
+        Navigate();
     }
+    
+    protected override void TakeDamage(int damage){
+        base.TakeDamage(damage);
+        
+        if (HealthRoutine != null){
+            StopCoroutine(HealthRoutine);
+        }
+        
+        HealthRoutine = StartCoroutine(ShowHealthBar());
+    }
+
+    private IEnumerator ShowHealthBar(){
+        healthBG.SetActive(true);
+        healthFill.SetActive(true);
+
+        Vector3 scale = healthFill.transform.localScale;
+        Vector3 pos = healthFill.transform.localPosition;
+        
+        float newScale = (float) health / maxhealth;
+        float newPos = 2 - newScale * 2;
+        
+        healthFill.transform.localScale = new Vector3(newScale * 4, scale.y, scale.x);
+        healthFill.transform.localPosition = new Vector3(newPos, pos.y, pos.z);
+        
+
+        yield return new WaitForSeconds(3);
+
+        healthBG.SetActive(false);
+        healthFill.SetActive(false);
+    }
+
+
+    #region Pathfinding
+
+    
+    private void Navigate(){
+        if (_path == null){
+            return;
+        }
+
+        if (_currentWaypoint >= _path.vectorPath.Count){
+            _reachedEndOfPath = true;
+            return;
+        }
+        else{
+            _reachedEndOfPath = false;
+        }
+
+        Vector2 direction = (_path.vectorPath[_currentWaypoint] - transform.position).normalized;
+        Vector2 force = direction * moveSpeed * Time.deltaTime;
+        
+        Move(force);
+
+        float distance = Vector2.Distance(transform.position, _path.vectorPath[_currentWaypoint]);
+        if (distance < nextWayPointDistance){
+            _currentWaypoint++;
+        }
+    }
+    
+    private void OnPathComplete(Path path){
+        if (!path.error){
+            _path = path;
+            _currentWaypoint = 0;
+        }
+    }
+
+    void UpdatePath(){
+        if (_seeker.IsDone()){
+            _seeker.StartPath(transform.position, target.position, OnPathComplete);
+        }
+    }
+    
+    private void Move(Vector2 force){
+        float forceX = Mathf.Sign(force.x) * moveSpeed;
+        float forceY = 0;
+
+        RaycastHit2D raycastHit = Physics2D.Raycast(FeetCollider.transform.position,
+            new Vector2(transform.localScale.x, 0), 3.5f, LayerMask.GetMask("Ground", "Vehicle Outer"));
+
+        if (raycastHit.collider != null){
+            Debug.Log(raycastHit.collider.gameObject);
+            Debug.DrawRay(FeetCollider.transform.position,
+                new Vector2(transform.localScale.x, 0) * 3.5f);
+            forceY = jumpPower;
+        }
+        
+        Body.velocity = new Vector2(forceX, forceY);
+        transform.localScale = new Vector3(Mathf.Sign(forceX), 1);
+    }
+
+    #endregion
+
+    
     
 }
     

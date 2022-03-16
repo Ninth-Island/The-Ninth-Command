@@ -166,11 +166,9 @@ MonoBehaviour:
   instability: 0.5
   projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
     type: 3}
-  projectileDamage: 5
+  projectileDamage: 1
   projectileSpeed: 80
   piercing: 0
-  zoomIncrements: 1
-  zoomRange: 10
   firingPoint: {fileID: 0}
   percentagePerShot: 3
   heatPerShot: 25

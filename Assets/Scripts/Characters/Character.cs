@@ -21,8 +21,12 @@ public class Character : MonoBehaviour{
     
     [SerializeField] protected int health;
     [SerializeField] public float moveSpeed;
+    [SerializeField] protected float jumpPower = 18;
+
     
     [SerializeField] private PhysicsMaterial2D[] materials;
+
+    protected int maxhealth;
 
 
     protected BoxCollider2D Collider;
@@ -44,7 +48,8 @@ public class Character : MonoBehaviour{
 
 
     protected virtual void Start(){
-        
+
+        maxhealth = health;
         
         Collider = GetComponent<BoxCollider2D>();
         FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
@@ -86,7 +91,7 @@ public class Character : MonoBehaviour{
         health -= damage;
         if (health <= 0){
             InputsFrozen = true;
-            Destroy(gameObject, 3f);
+            Destroy(gameObject);
         }
     }
     
@@ -127,24 +132,28 @@ public class Character : MonoBehaviour{
             }
         }
     }
-    
+
     protected void SortSound(int type){
 
-        PhysicsMaterial2D materialTouching = GetMaterialTouching();
-        
-        if (materialTouching != null){
-            int soundIndex = 0;
-            for (int i = 0; i < materials.Length; i++){
-                PhysicsMaterial2D material = materials[i];
-                if (material == materialTouching){
-                    soundIndex = i * 5;
-                }
-            }
+        if (AudioManager){
+            PhysicsMaterial2D materialTouching = GetMaterialTouching();
 
-            soundIndex += type;
-            AudioManager.PlaySound(soundIndex, true, 0);
+            if (materialTouching != null){
+                int soundIndex = 0;
+                for (int i = 0; i < materials.Length; i++){
+                    PhysicsMaterial2D material = materials[i];
+                    if (material == materialTouching){
+                        soundIndex = i * 5;
+                    }
+                }
+
+                soundIndex += type;
+                AudioManager.PlaySound(soundIndex, true, 0);
+            }
         }
-    } 
+    }
+    
+
     private PhysicsMaterial2D GetMaterialTouching(){
         if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
             Collider2D[] output = new Collider2D[1];

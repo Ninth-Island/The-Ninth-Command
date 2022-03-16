@@ -219,13 +219,11 @@ MonoBehaviour:
   instability: 0.5
   projectileTemplate: {fileID: -5604932223983771090, guid: 923d37021f28fd641968c6f282acd0ce,
     type: 3}
-  projectileDamage: 5
+  projectileDamage: 1
   projectileSpeed: 100
   piercing: 0
-  zoomIncrements: 0
-  zoomRange: 0
   firingPoint: {fileID: 0}
-  magazinesLeft: 2
+  magazinesLeft: 200
   magazineSize: 10
   reloadTime: 0.5
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
