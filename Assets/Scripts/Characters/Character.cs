@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour{
+public class Character : CustomObject{
     
     /*
 * ================================================================================================================
@@ -34,7 +34,6 @@ public class Character : MonoBehaviour{
     protected BoxCollider2D FeetCollider;
 
     
-    protected Rigidbody2D Body;
     protected Animator Animator;
 
     
@@ -47,14 +46,14 @@ public class Character : MonoBehaviour{
     
 
 
-    protected virtual void Start(){
+    protected override void Start(){
+        base.Start();
 
         maxhealth = health;
         
         Collider = GetComponent<BoxCollider2D>();
         FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
 
-        Body = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
 
         AudioManager = GetComponent<AudioManager>();
@@ -64,10 +63,12 @@ public class Character : MonoBehaviour{
         }
     }
 
-    protected virtual void Update(){
-        
+    protected override void Update(){
+        base.Update();
     }
-    protected virtual void FixedUpdate(){
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
+        
         FallingKnocked = true;
         if (Math.Abs(Body.velocity.x) < moveSpeed * 1.2){
             FallingKnocked = false;

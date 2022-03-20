@@ -25,15 +25,16 @@ public class Weapon : CustomObject{
     
     protected SpriteRenderer SpriteRenderer;
     protected PolygonCollider2D Collider;
-    protected Rigidbody2D Body;
+
 
     protected Player Player;
     
     // Start is called before the first frame update
-    protected virtual void Start(){
+    protected override void Start(){
+        base.Start();
+        
         SpriteRenderer = GetComponent<SpriteRenderer>();
         Collider = GetComponent<PolygonCollider2D>();
-        Body = GetComponent<Rigidbody2D>();
 
         Player = FindObjectOfType<Player>();
 
@@ -41,9 +42,8 @@ public class Weapon : CustomObject{
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    protected override void Update(){
+        base.Update();
     }
 
     public float GetPickupRange(){

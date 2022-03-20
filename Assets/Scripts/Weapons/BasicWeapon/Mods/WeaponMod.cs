@@ -10,13 +10,13 @@ public class WeaponMod : CustomObject{
     protected AudioManager AudioManager;
 
     
-    protected virtual void Start(){
+    protected override void Start(){
         WeaponAttachedTo = transform.parent.GetComponent<ProjectileWeapon>();
         AudioManager = GetComponent<AudioManager>();
         
     }
 
-    protected virtual void Update(){
+    protected override void Update(){
         
     }
 

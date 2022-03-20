@@ -22,7 +22,9 @@ public class Vehicle : CustomObject{
         return embarkRange;
     }
 
-    private void Start(){
+    protected override void Start(){
+        base.Start();
+        
         _player = FindObjectOfType<Player>();
         _cursorControl = FindObjectOfType<CursorControl>();
 
@@ -32,7 +34,9 @@ public class Vehicle : CustomObject{
         _player.AddVehicle(new KeyValuePair<GameObject, Vehicle>(gameObject, this));
     }
 
-    private void Update(){
+    protected override void Update(){
+        base.Update();
+        
         if (Input.GetKeyDown(KeyCode.G) && _hasDriver){
             _hasDriver = false;
             _driverReference.transform.position = transform.position + new Vector3(0, 10);

@@ -49,7 +49,7 @@ public class BasicWeapon : Weapon{
      * ================================================================================================================
      */
 
-    protected virtual void FixedUpdate(){
+    protected override void FixedUpdate(){
         if (Player.primaryWeapon == this){
             if (Input.GetKey(KeyCode.Mouse0)){
                 CheckFire();
@@ -121,8 +121,8 @@ public class BasicWeapon : Weapon{
         SpriteRenderer.enabled = setEnabled;
     }
 
-    protected virtual void Update(){
-        
+    protected override void Update(){
+        base.Update();
     }
     
     

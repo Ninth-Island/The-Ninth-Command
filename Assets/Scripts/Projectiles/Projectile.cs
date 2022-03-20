@@ -22,7 +22,6 @@ public class Projectile : CustomObject{
     [SerializeField] private bool sticky;
     [SerializeField] private float lifetime = 10f;
     
-    protected Rigidbody2D Body;
     private Collider2D _collider;
     private int _damage;
     private bool _piercing;
@@ -31,17 +30,21 @@ public class Projectile : CustomObject{
 
     [SerializeField] protected bool _live = true;
     
-    // Start is called before the first frame update
+    
     
 
     // Update is called once per frame
-    void Update(){
+    protected override void Update(){
         
     }
 
-    public void Awake(){
-        Body = GetComponent<Rigidbody2D>();
+    protected override void Start(){
+        base.Start();
+    }
+
+    protected void Awake(){
         _collider = GetComponent<Collider2D>();
+        Start();
         if (_live){
             Destroy(gameObject, lifetime);
         }
@@ -64,6 +67,7 @@ public class Projectile : CustomObject{
         if (character && _live){
             character.Hit(this);
         }
+        
         Body.mass = 1;
         _live = false;
         gameObject.layer = LayerMask.NameToLayer("Dead Projectiles");
@@ -81,6 +85,7 @@ public class Projectile : CustomObject{
         gameObject.layer = firedLayer - 4;
         _firedLayer = firedLayer;
         //Body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
+        Awake();
         Body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         _piercing = piercing;

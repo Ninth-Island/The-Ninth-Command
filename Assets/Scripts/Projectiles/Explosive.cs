@@ -33,7 +33,7 @@ public class Explosive : Projectile{
     private SpriteRenderer _spriteRenderer;
     
     // Start is called before the first frame update
-    void Start(){
+    protected override void Start(){
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioManager = GetComponent<AudioManager>();
         if (_live){
@@ -46,7 +46,7 @@ public class Explosive : Projectile{
 
     }
 
-    private void FixedUpdate(){
+    protected override void FixedUpdate(){
         if (propulsion && _spriteRenderer.enabled){ // if propulsion rocket and active
             
             if (Body.velocity.magnitude <= 150){
