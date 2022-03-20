@@ -16,42 +16,13 @@ public partial class Player : Character{
 * 
 * ================================================================================================================
 */
-
+    [Header("Basic Weapons")] 
     [SerializeField] public BasicWeapon primaryWeapon;
     [SerializeField] public BasicWeapon secondaryWeapon;
-
     
-    [SerializeField] private float jetPower;
-
-    [SerializeField] private GameObject spritesParent;
-
-    [SerializeField] private Sprite[] ArmTypes;
-
-    private Transform _arm;
-    public Transform Helmet;
-
-    private SpriteRenderer _armRenderer;
-
-
-
+    
     private bool _isCrouching;
 
-
-    private bool _armOverride;
-
-
-    private ANames _aNames = new ANames();
-    private Color[] _colors = new Color[3];
-    private GameObject[] sprites = new GameObject[7];
-
-    private class ANames{
-        public readonly string running = "Running";
-        public readonly  string runningBackwards = "RunningBackward";
-        public readonly  string crouching = "Crouching";
-        public readonly  string jumping = "Jumping";
-        public readonly  string punching = "Punch";
-        public readonly  string dying = "Dying";
-    }
 
 
     #region Start And Update
@@ -65,24 +36,16 @@ public partial class Player : Character{
     protected override void Start(){
         base.Start();
 
-
-        _arm = transform.GetChild(1).transform.GetChild(5);
-        Helmet = transform.GetChild(1).transform.GetChild(4);
-
-        _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
-
-        
-        for (int i = 0; i < spritesParent.transform.childCount; i++){
-            sprites[i] = spritesParent.transform.GetChild(i).gameObject;
-        }
-        
-        Start2();
+        HUDVisualStart();
+        ControlStart();
     }
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
         Move();
         Jump();
+        
+        ControlFixedUpdate();
     }
 
     protected override void Update(){
@@ -94,9 +57,7 @@ public partial class Player : Character{
         primaryWeapon.CheckReload();
         RotateArm();
         
-        
-        
-        Update2();
+        ControlUpdate();
         CheckForPickup();
     }
     #endregion
@@ -122,16 +83,12 @@ public partial class Player : Character{
             }
             else{
                 Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
-                SortSound(1);
             }
             
         }
-        
-        //CheckJetpack();
     }
 
     private void Jump(){
-        
         
         if (Input.GetKey(KeyCode.W)){
             Vector2 velocity = Body.velocity;
@@ -144,17 +101,9 @@ public partial class Player : Character{
                 SortSound(0);
             }
         }
-        
         Animator.SetBool(_aNames.jumping, Airborne);
     }
 
-    private void CheckJetpack(){
-        if (Input.GetKey(KeyCode.W) && Airborne){
-            Body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
-        }
-    }
-    
-    
 
     private void CheckCrouch(){
         if (Input.GetKeyDown(KeyCode.S)){
@@ -162,11 +111,7 @@ public partial class Player : Character{
             Animator.SetBool(_aNames.crouching, _isCrouching);
         }
     }
-
-    private void Transform(float x){ 
-        Vector2 pos = transform.position;
-        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
-    }
+    
     
     #endregion
 
@@ -258,40 +203,6 @@ public partial class Player : Character{
             }
         }
     }
-
-    private void RotateArm(){
-        float rotation = GetPlayerToMouseRotation();
-
-        if (_armOverride == false){
-            _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
-            _arm.transform.localScale = new Vector3(1, 1);
-        }
-
-        Helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
-        Helmet.transform.localScale = new Vector3(1, 1);
-
-        
-        transform.localScale = new Vector3(1, 1);
-        if (rotation > 90 && rotation < 270){
-            _arm.transform.localScale = new Vector3(-1, -1);
-            Helmet.transform.localScale = new Vector3(-1, -1);
-            transform.localScale = new Vector3(-1, 1);
-        }
-    }
-
-    public void SetArmType(int armType){
-        _armRenderer.sprite = ArmTypes[armType];
-    }
-
-    public void SetArmRotation(Vector2 restingSwinging){ // for melee weapons
-        _armOverride = true;
-        _arm.transform.rotation = Quaternion.Euler(0, 0, restingSwinging.x);
-        if (Mathf.Sign(transform.localScale.x) == -1){
-            _arm.transform.rotation = Quaternion.Euler(0, 0, restingSwinging.y);
-
-        }
-        _arm.transform.localScale = new Vector3(1, 1);
-    }
     
     
     public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
@@ -303,42 +214,7 @@ public partial class Player : Character{
     
     public Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> _allBasicWeapons = new Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>();
     public Dictionary<GameObject, Vehicle> _allVehicles = new Dictionary<GameObject, Vehicle>();
-
     
-    #endregion
-
-    #region Sound
-    /*
-    * ================================================================================================================
-    *                                               Sound
-    * ================================================================================================================
-    */
-    
-    
-   
-    #endregion
-    
-    #region Other
-    /*
-    * ================================================================================================================
-    *                                               Other
-    * ================================================================================================================
-    */
-   
-    
-
-    
-    public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){
-        if (Math.Abs(pos1.x - pos2.x) < xAffordance && Math.Abs(pos1.y - pos2.y) < yAffordance){
-            return true;
-        }
-        return false;
-    }
-    
-    
-    public BoxCollider2D GetFeetCollider(){
-        return FeetCollider;
-    }
     
 
     protected override void TakeDamage(int damage){

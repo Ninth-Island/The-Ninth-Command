@@ -236,29 +236,21 @@ AnimationClip:
     script: {fileID: 0}
   - curve:
     - time: 0
-      value: {fileID: -6170126940846279571, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.083333336
-      value: {fileID: 564581019204825394, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.16666667
-      value: {fileID: -1286455423214519452, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.25
-      value: {fileID: 3077832946543437397, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.33333334
-      value: {fileID: 5287830381667880429, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.41666666
-      value: {fileID: 5898352447187580609, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.5
-      value: {fileID: -6656892824112025313, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     - time: 0.5833333
-      value: {fileID: -22975815664129749, guid: 6b9e87b230810954d8512d4dffac8aca,
-        type: 3}
+      value: {fileID: 0}
     attribute: m_Sprite
     path: Sprites/Helmet
     classID: 212
@@ -394,14 +386,14 @@ AnimationClip:
     - {fileID: -3406843930107617671, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
     - {fileID: -958220191789875927, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
     - {fileID: -8062578979193767562, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
-    - {fileID: -6170126940846279571, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: 564581019204825394, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: -1286455423214519452, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: 3077832946543437397, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: 5287830381667880429, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: 5898352447187580609, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: -6656892824112025313, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
-    - {fileID: -22975815664129749, guid: 6b9e87b230810954d8512d4dffac8aca, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: -2442285753461745105, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
     - {fileID: 6722572186997652136, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
     - {fileID: -3996114147960533733, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
@@ -934,4 +926,18 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0.16666667
+    functionName: SortSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0
+  - time: 0.5
+    functionName: SortSound
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 1
+    messageOptions: 0

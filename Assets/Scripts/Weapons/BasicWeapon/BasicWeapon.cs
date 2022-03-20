@@ -61,7 +61,7 @@ public class BasicWeapon : Weapon{
         base.PickUp(character);
         
         
-        Player.WeaponImage.sprite = SpriteRenderer.sprite;
+        Player.weaponImage.sprite = SpriteRenderer.sprite;
         CursorControl.SetCursorType(cursorType);
         
         AudioManager.PlaySound(2, false, 0);

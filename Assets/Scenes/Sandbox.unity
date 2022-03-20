@@ -836,7 +836,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 519420032, guid: e345ad05263733541986df36eb47d4c3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.5
+      value: 67.50001
       objectReference: {fileID: 0}
     - target: {fileID: 626165736, guid: e345ad05263733541986df36eb47d4c3, type: 3}
       propertyPath: m_Follow
@@ -980,6 +980,11 @@ PrefabInstance:
       propertyPath: HUD
       value: 
       objectReference: {fileID: 1004889291}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: dashVelocity
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_Name

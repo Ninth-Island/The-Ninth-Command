@@ -938,6 +938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   moveSpeed: 15
+  jumpPower: 18
   materials:
   - {fileID: 6200000, guid: 3d166540dc9af644ba0c3177793833f5, type: 2}
   - {fileID: 6200000, guid: 01c9ac2c2a68ec5469f41f40987b1703, type: 2}
@@ -945,7 +946,7 @@ MonoBehaviour:
   - {fileID: 6200000, guid: 721799b3543ddcd43a5eba3b5613cd36, type: 2}
   primaryWeapon: {fileID: 6412611949876825548}
   secondaryWeapon: {fileID: 3366574980827617874}
-  jumpPower: 18
+  sprintAmplifier: 1.6
   jetPower: 0
   spritesParent: {fileID: 3208046358017332010}
   ArmTypes:
@@ -955,6 +956,7 @@ MonoBehaviour:
   - {fileID: -5643868179137935686, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   - {fileID: 7364606866421688543, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   - {fileID: 2415256495891508668, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  Helmet: {fileID: 0}
   HUD: {fileID: 0}
   pickupText: {fileID: 0}
   WeaponImage: {fileID: 0}
@@ -1007,7 +1009,7 @@ MonoBehaviour:
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0.3
+    waitTillNext: 0
     loop: 0
   - name: Grass Shuffle
     clipsList:
@@ -1080,7 +1082,7 @@ MonoBehaviour:
     pitch: 1
     spacialBlend: 0
     priority: 128
-    waitTillNext: 0.3
+    waitTillNext: 0
     loop: 0
   - name: Metal Shuffle
     clipsList:
@@ -1155,7 +1157,7 @@ MonoBehaviour:
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0.3
+    waitTillNext: 0
     loop: 0
   - name: Rock Shuffle
     clipsList:
@@ -1229,7 +1231,7 @@ MonoBehaviour:
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0.3
+    waitTillNext: 0
     loop: 0
   - name: Snow Shuffle
     clipsList:
