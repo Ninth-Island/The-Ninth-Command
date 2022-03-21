@@ -19,7 +19,7 @@ public class ColorTransferer : MonoBehaviour
     
     public void TogglePause(){
         if (Time.timeScale == 1){
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             pauseMenu = Instantiate(pauseMenuPrefab).transform.GetChild(0).gameObject;
             pauseMenu.GetComponent<Pause>().SetColorTransferer(this);
         }
@@ -28,4 +28,5 @@ public class ColorTransferer : MonoBehaviour
             Destroy(pauseMenu); 
         }
     }
+    
 }

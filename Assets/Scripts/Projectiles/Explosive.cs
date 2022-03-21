@@ -34,6 +34,7 @@ public class Explosive : Projectile{
     
     // Start is called before the first frame update
     protected override void Start(){
+        base.Start();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioManager = GetComponent<AudioManager>();
         if (_live){

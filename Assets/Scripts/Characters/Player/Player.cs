@@ -16,6 +16,7 @@ public partial class Player : Character{
 * 
 * ================================================================================================================
 */
+
     [Header("Basic Weapons")] 
     [SerializeField] public BasicWeapon primaryWeapon;
     [SerializeField] public BasicWeapon secondaryWeapon;
@@ -23,6 +24,7 @@ public partial class Player : Character{
     
     private bool _isCrouching;
 
+    private bool hardLanding;
 
 
     #region Start And Update
@@ -46,6 +48,12 @@ public partial class Player : Character{
         Jump();
         
         ControlFixedUpdate();
+
+        hardLanding = false;
+        if (Math.Abs(Body.velocity.x) > 20 || Math.Abs(Body.velocity.y) > 70){
+            hardLanding = true;
+        }
+        
     }
 
     protected override void Update(){
@@ -200,6 +208,19 @@ public partial class Player : Character{
                 driverVisor.color = helmet.GetChild(2).GetComponent<SpriteRenderer>().color;
                 
                         
+            }
+        }
+    }
+
+    protected override void OnCollisionEnter2D(Collision2D other){
+        base.OnCollisionEnter2D(other);
+        
+        if (other.gameObject.CompareTag("Ground")){
+            if (hardLanding){
+                SortSound(4);
+            }
+            else{
+                SortSound(3);
             }
         }
     }

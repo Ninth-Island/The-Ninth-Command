@@ -19,8 +19,8 @@ public class CursorControl : MonoBehaviour{
 
     private void Start(){
         mainCam = Camera.main;
-        vc = mainCam.transform.parent.transform.GetChild(2).transform.GetChild(0)
-            .GetComponent<CinemachineVirtualCamera>();
+        vc = mainCam.transform.parent.transform.GetChild(3).GetComponent<CinemachineVirtualCamera>();
+       
         _player = FindObjectOfType<Player>();
 
 

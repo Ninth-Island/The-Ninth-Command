@@ -7,7 +7,6 @@ public class CustomObject : MonoBehaviour{
 
     [SerializeField] public readonly float TerminalVelocity = -100f;
 
-    
     protected Rigidbody2D Body;
 
     protected virtual void Start(){

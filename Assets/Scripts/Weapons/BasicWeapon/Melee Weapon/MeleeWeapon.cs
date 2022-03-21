@@ -80,7 +80,7 @@ public class MeleeWeapon : BasicWeapon{
         yield return new WaitForSeconds(attackLength);
 
         _hitBox.gameObject.SetActive(false);
-        Player.moveSpeed /= speedMultiplier;
+        Player.moveSpeed /= Player.moveSpeed;
         _isAttacking = false;
         
         _coolDownLeft = coolDown;

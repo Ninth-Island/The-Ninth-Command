@@ -51,7 +51,11 @@ public class AudioManager : MonoBehaviour{
     }
 
     public void PlayAtPoint(int index){
-        AudioSource.PlayClipAtPoint(sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)], transform.position);
+        AudioSource newSource = gameObject.AddComponent<AudioSource>();
+        newSource.clip = sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)];
+        newSource.Play();
+        
+        Destroy(newSource, 5f);
     }
     
 

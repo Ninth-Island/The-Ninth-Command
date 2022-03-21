@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Pathfinding;
 using TMPro;
 using UnityEngine;
@@ -35,6 +36,8 @@ public partial class Player : Character{
     
     private float heat;
     private float energy;
+
+    private GameObject _externalJetpack;
     
     private Slider _energySlider;
     private Slider _overflowSlider;
@@ -46,6 +49,8 @@ public partial class Player : Character{
 
     
     private Camera _mainCamera;
+    private CinemachineVirtualCamera[] _virtualCamera;
+    
     private CursorControl _cursorControl;
     private ANames _aNames = new ANames();
 
@@ -64,13 +69,18 @@ public partial class Player : Character{
     */
     
     protected virtual void ControlStart(){
+
+        _externalJetpack = transform.GetChild(2).gameObject;
         
         _mainCamera = Camera.main;
+        _virtualCamera = new CinemachineVirtualCamera[3];
+        _virtualCamera[0] = _mainCamera.transform.parent.GetChild(3).GetComponent<CinemachineVirtualCamera>();
+        _virtualCamera[1] = _mainCamera.transform.parent.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        _virtualCamera[2] = _mainCamera.transform.parent.GetChild(5).GetComponent<CinemachineVirtualCamera>();
         _cursorControl = FindObjectOfType<CursorControl>();
 
 
-        Bindings.Add(KeyCode.LeftShift, Sprint);
-        Bindings.Add(KeyCode.LeftControl, null);
+        Bindings.Add(KeyCode.LeftShift, UseJetPack);
         Bindings.Add(KeyCode.LeftAlt, Dash);
     }
     
@@ -92,12 +102,33 @@ public partial class Player : Character{
     private void ControlFixedUpdate(){
         heat = Mathf.Clamp(heat + heatCharge, 0, MaxHeat);
         energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);
-        
-        
+
+
         CheckBindings();
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
+
+        if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] || AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
+            if (AudioManager.source.isPlaying && !Input.GetKey(KeyCode.LeftShift)){
+                AudioManager.source.Stop();
+                AudioManager.PlayAtPoint(22);            
+                AudioManager.source.loop = false;
+            }
+        }
+
+        if (AudioManager.source.clip != AudioManager.sounds[21].clipsList[0] && AudioManager.source.loop){
+            AudioManager.source.loop = false;
+        }
+
+        if (!Input.GetKey(KeyCode.LeftShift)){
+            _virtualCamera[0].Priority = 10;
+            _virtualCamera[1].Priority = 0;
+            _virtualCamera[2].Priority = 0;
+        }
+
     }
-    
-    
+
+
     #endregion
     
     
@@ -118,11 +149,55 @@ public partial class Player : Character{
         Body.velocity = new Vector2(moveSpeed * sprintAmplifier * Input.GetAxis("Horizontal"), Body.velocity.y);
         Animator.speed = 1.3f;
     }
+    
+    
     private void UseJetPack(){
-        if (Input.GetKey(KeyCode.W) && Airborne){
+        Body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        Animator.SetBool(_aNames.jumping, true);
+        
+        
+        if (_externalJetpack.activeSelf && Input.GetKey(KeyCode.Space)){
+            _virtualCamera[0].Priority = 0;
+            _virtualCamera[1].Priority = 0;
+            _virtualCamera[2].Priority = 10;
+            
+            Body.constraints = RigidbodyConstraints2D.None;
+            float rotation = GetPlayerToMouseRotation();
+            
+            /*_virtualCamera[2].m_Lens.Dutch = transform.rotation.z * Mathf.Rad2Deg;
+             */
+            
+            transform.rotation = Quaternion.Euler(0, 0, rotation - 90);
+            rotation *= Mathf.Deg2Rad;
+            Body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
+        }
+        
+        else{
+            _virtualCamera[0].Priority = 0;
+            _virtualCamera[1].Priority = 10;
+            _virtualCamera[2].Priority = 0;
+
             Body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
+            if (Input.GetAxis("Horizontal") != 0){
+                Sprint();
+            }
+
+
+        }
+        
+        if (!AudioManager.source.isPlaying){
+            AudioManager.source.clip = AudioManager.sounds[20].clipsList[0];
+            AudioManager.source.Play();
+        }
+
+        if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] && AudioManager.source.time >= AudioManager.source.clip.length - 0.1f || Airborne && !AudioManager.source.isPlaying){
+            AudioManager.source.clip = AudioManager.sounds[21].clipsList[0];
+            AudioManager.source.Play();
+            AudioManager.source.loop = true;
         }
     }
+
+    
 
     #endregion
 
@@ -142,8 +217,15 @@ public partial class Player : Character{
     }
 
     #endregion
-   
+
+
     
+    private void MagBoots(){
+        //stick to walls and stuff. 
+    }
+    
+    // similar to armor abilities, but this is the trigger for external equipment such as grav boots, jetpack, etc
+
   
 
     private class AbilityNames{
@@ -164,6 +246,7 @@ public partial class Player : Character{
         public readonly  string punching = "Punch";
         public readonly  string dying = "Dying";
     }
+    
 
     public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){
         if (Math.Abs(pos1.x - pos2.x) < xAffordance && Math.Abs(pos1.y - pos2.y) < yAffordance){

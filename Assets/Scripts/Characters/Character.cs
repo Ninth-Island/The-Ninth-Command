@@ -124,14 +124,7 @@ public class Character : CustomObject{
     }
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        if (other.gameObject.CompareTag("Ground")){
-            if (Math.Abs(Body.velocity.y) > 20){
-                SortSound(4);
-            }
-            else{
-                SortSound(3);
-            }
-        }
+        
     }
 
     protected void SortSound(int type){
