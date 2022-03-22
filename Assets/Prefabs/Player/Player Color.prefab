@@ -51,7 +51,7 @@ ParticleSystem:
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
-  useRigidbodyForVelocity: 1
+  useRigidbodyForVelocity: 0
   startDelay:
     serializedVersion: 2
     minMaxState: 0
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -865,7 +865,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8000
+      scalar: 0
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -918,7 +918,7 @@ ParticleSystem:
     rateOverDistance:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 100
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5881,7 +5881,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: eb997b926bd3dc948acf1ff5b7775f9f, type: 3}
     - {fileID: 8300000, guid: e86815adaf77b8f4d933c5cc6e852868, type: 3}
     - {fileID: 8300000, guid: 55b5d6d5d38b28a4a8b1a6a84e71fddf, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5898,7 +5898,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: cf6da0346820d1448a21edeb39c169c5, type: 3}
     - {fileID: 8300000, guid: 09a75d2433ac67a4587b68f8a73e66e7, type: 3}
     - {fileID: 8300000, guid: 8b6009f3703ce7742b3a0440b27a7245, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5911,7 +5911,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 0.2
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5924,7 +5924,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5937,7 +5937,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5954,7 +5954,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: eb997b926bd3dc948acf1ff5b7775f9f, type: 3}
     - {fileID: 8300000, guid: e86815adaf77b8f4d933c5cc6e852868, type: 3}
     - {fileID: 8300000, guid: 55b5d6d5d38b28a4a8b1a6a84e71fddf, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5971,7 +5971,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8b66889d68df11b4d93293d5b92dd48c, type: 3}
     - {fileID: 8300000, guid: e68a60ef23b56e64c9f32affb48949db, type: 3}
     - {fileID: 8300000, guid: 33d87b437863def4d9dc2b7c51222eb3, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -5989,7 +5989,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 6d4cca66d8d930744a9fe43cef9dee51, type: 3}
     - {fileID: 8300000, guid: a379f17b4c59e9d458be93122966076b, type: 3}
     - {fileID: 8300000, guid: 086c9c65bcc4e6a4bac6e58d599378db, type: 3}
-    volume: 0.2
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6002,7 +6002,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b1838351383d3b8488da6243106ffcf6, type: 3}
     - {fileID: 8300000, guid: a5b6af97286c58a47b322f7484b53ad6, type: 3}
     - {fileID: 8300000, guid: fa4fa8a485087e84c87095d9003f6526, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6015,7 +6015,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f3031c3385904ce4ab1dcc13a175cb28, type: 3}
     - {fileID: 8300000, guid: 8422f968a42e5da489c832a7c4f786cb, type: 3}
     - {fileID: 8300000, guid: e4df2ce90957de943928eb344209d8f3, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6029,7 +6029,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e5051685b851bda489b2907eb3dad147, type: 3}
     - {fileID: 8300000, guid: 91dedcf101a2c5a4db8976292280d479, type: 3}
     - {fileID: 8300000, guid: b703ebf336964ee48b5a90659585de22, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6046,7 +6046,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d3a8e7a4aac14bc4199a69f4d10e83af, type: 3}
     - {fileID: 8300000, guid: 742400520438392408d89ed4e2e14ffe, type: 3}
     - {fileID: 8300000, guid: 25fffcfda1fe9a74ea2350a42859d4e0, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6064,7 +6064,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a0697c0830633a242a6826d3447d1977, type: 3}
     - {fileID: 8300000, guid: 3e540337510c4b947ba0e4e2ce261a3b, type: 3}
     - {fileID: 8300000, guid: a4b2656e257c03c458ab63acdd1006ea, type: 3}
-    volume: 0.2
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6076,7 +6076,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 104fdcf6f82a3144bbddbcc5b231308e, type: 3}
     - {fileID: 8300000, guid: 87c23492c52dbc5429d9ebca6fc3ac24, type: 3}
     - {fileID: 8300000, guid: 8db63d1d5ef9389498b59dd407352e47, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6089,7 +6089,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b5c3d77e2d34bbe4f9266e311462207e, type: 3}
     - {fileID: 8300000, guid: f3031c3385904ce4ab1dcc13a175cb28, type: 3}
     - {fileID: 8300000, guid: 8422f968a42e5da489c832a7c4f786cb, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6102,7 +6102,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 59ca10fda6f1eec41b90bcf68ec603b3, type: 3}
     - {fileID: 8300000, guid: 976e8e67c3a01d24d8de91edaeba71dc, type: 3}
     - {fileID: 8300000, guid: dbfbd3bc8fa295f418fdbd8d13da4b8c, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6120,7 +6120,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 307e9e953b152f14ea9eb03b4cdb81ea, type: 3}
     - {fileID: 8300000, guid: e8d27adba7ecd8547be296334705af7c, type: 3}
     - {fileID: 8300000, guid: 324b3e56c7848f14bb6d29a8847f99e0, type: 3}
-    volume: 0.2
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6138,7 +6138,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fd773daec5ee3544d9ff48d86c8f81c6, type: 3}
     - {fileID: 8300000, guid: fdcc2e0bf27c0bc4c973ebd3022ee312, type: 3}
     - {fileID: 8300000, guid: d7c28e1fd0f8afd428a0afb6813a5ad3, type: 3}
-    volume: 0.2
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6160,7 +6160,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 44b1a7b7ae2cfa5419b096d6cc4bd564, type: 3}
     - {fileID: 8300000, guid: fdac2dbba8504224f87d183b424f1f0c, type: 3}
     - {fileID: 8300000, guid: 254af4bea07accf488d00de70cbf5a27, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6175,7 +6175,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0e583de51bc96b14faa80810265f246c, type: 3}
     - {fileID: 8300000, guid: df2c0590bb65225438feaeedc3df26a2, type: 3}
     - {fileID: 8300000, guid: feef31f0c52a5824b9bff9426bd3d09d, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6184,7 +6184,7 @@ MonoBehaviour:
   - name: Jetpack In
     clipsList:
     - {fileID: 8300000, guid: e16a00d37c8fb134c9d4199d22c49271, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6193,7 +6193,7 @@ MonoBehaviour:
   - name: Jetpack Loop
     clipsList:
     - {fileID: 8300000, guid: 7c97f8ef14ae4d54e8d4a22a6d58c295, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6202,7 +6202,7 @@ MonoBehaviour:
   - name: Jetpack Out
     clipsList:
     - {fileID: 8300000, guid: a1cc48579338d7a41ac2d93de0032218, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 0
     priority: 0

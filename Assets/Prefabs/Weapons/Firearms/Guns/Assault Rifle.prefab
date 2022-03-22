@@ -204,7 +204,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 896e822eb62723447b844fe1e417f389, type: 3}
     - {fileID: 8300000, guid: e6b8cd4d5a252b1468508bbca33eff90, type: 3}
     - {fileID: 8300000, guid: c5105d9faec60e44cac53f41a5bf09cc, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -215,7 +215,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 352a6c4462348af4b8fc49b02b0f2759, type: 3}
     - {fileID: 8300000, guid: e1ff58883d6b3234d9f59660a0b1b2fc, type: 3}
     - {fileID: 8300000, guid: a3be05e0c7ce4734f83720a07425591e, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a3108aa5aff99d846bfb419e1200d3fb, type: 3}
     - {fileID: 8300000, guid: 2d6b7a577eb8ac7439243d3cf2b6edb7, type: 3}
     - {fileID: 8300000, guid: 0d47a3a4cd5a1ee4291b65049876dba2, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0

@@ -47,6 +47,10 @@ public partial class Player : Character{
         Move();
         Jump();
         
+        if (Input.GetKey(KeyCode.Mouse0)){
+            primaryWeapon.CheckFire(GetPlayerToMouseRotation() * Mathf.Deg2Rad);
+        }
+        
         ControlFixedUpdate();
 
         hardLanding = false;
@@ -146,7 +150,7 @@ public partial class Player : Character{
             (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
             primaryWeapon.PickUp(this);
-            SetArmType(primaryWeapon.armType);
+            UpdateHUD();
             _armOverride = false;
         }
     }
@@ -183,9 +187,40 @@ public partial class Player : Character{
                 
                 primaryWeapon = weapon;
                 weapon.PickUp(this);
+                UpdateHUD();
             }
         }
     
+    }
+
+    public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
+        base.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, energy, heat, type);
+
+        if (type == 1){ // bullet weapon
+            energyCounter.SetText("");
+            heatCounter.SetText("");
+            ammoCounter.SetText(bulletsLeft + "/" + magazineSize);
+            magCounter.SetText(("" + magazinesLeft));
+        }
+        if (type == 2){ // energy weapon
+            ammoCounter.SetText("");
+            magCounter.SetText("");
+            
+            energyCounter.SetText("" + Mathf.RoundToInt(energy));
+            heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
+        }
+        if (type == 3){ // charging weapon
+            ammoCounter.SetText("");
+            magCounter.SetText("");
+
+            energyCounter.SetText("" + Mathf.RoundToInt(energy));
+            heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
+        }
+    }
+
+    public override void SetReloadingText(string text){
+        base.SetReloadingText(text);
+        ammoCounter.SetText(text);
     }
 
     private void VehicleEmbark(GameObject nearestObject){

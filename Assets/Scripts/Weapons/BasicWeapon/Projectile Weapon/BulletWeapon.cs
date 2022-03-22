@@ -41,9 +41,9 @@ public class BulletWeapon : ProjectileWeapon{
     }
 
 
-    protected override void CheckFire(){
+    public override void CheckFire(float angle){
         if (_bulletsLeft > 0 && !reloading && !Firing){
-            StartCoroutine(Fire());
+            StartCoroutine(Fire(angle));
             if (bulletShell){
                 Destroy(Instantiate(bulletShell, transform.position, transform.rotation), 1f);
             } 
@@ -61,13 +61,12 @@ public class BulletWeapon : ProjectileWeapon{
     
     public IEnumerator Reload(){
         if (magazinesLeft > 0){
-            
-            
-            Player.ammoCounter.SetText("Reloading...");
-            
-            
-            reloading = true;
+
+            wielder.SetReloadingText("Reloading...");
             AudioManager.PlaySound(1, false, 0);
+
+
+            reloading = true;
             yield return new WaitForSeconds(reloadTime);
             AudioManager.PlaySound(2, false, 0);
             
@@ -122,12 +121,8 @@ public class BulletWeapon : ProjectileWeapon{
     */
 
     public override void RefreshText(){
-        if (Player.primaryWeapon == this){
-            base.RefreshText();
-            Player.energyCounter.SetText("");
-            Player.heatCounter.SetText("");
-            Player.ammoCounter.SetText(_bulletsLeft + "/" + magazineSize);
-            Player.magCounter.SetText(("" + magazinesLeft));
+        if (wielder){
+            wielder.SetWeaponValues(magazinesLeft, magazineSize, _bulletsLeft, 0, 0, 1);
         }
     }
 

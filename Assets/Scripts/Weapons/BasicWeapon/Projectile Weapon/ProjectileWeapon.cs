@@ -42,11 +42,11 @@ public class ProjectileWeapon : BasicWeapon{
     
     
     
-    protected IEnumerator Fire(){
+    protected IEnumerator Fire(float angle){
         Firing = true;
         if (ReadyToFire){
             for (int i = 0; i < shotsPerSalvo; i++){
-                CreateProjectile();
+                CreateProjectile(angle);
                 SetLoadingState();
                 yield return new WaitForSeconds(firingDelay);
             }
@@ -56,14 +56,14 @@ public class ProjectileWeapon : BasicWeapon{
     }
 
 
-    private void CreateProjectile(){
+    private void CreateProjectile(float angle){
         Subtract();
         RefreshText();
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
-        Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetCollider()); 
-        Physics2D.IgnoreCollision(projectile.GetCollider(), Player.GetFeetCollider());
-        projectile.GetComponent<Rigidbody2D>().velocity = Player.GetBody().velocity;
-        projectile.SetValues(projectileDamage, projectileSpeed, Player.GetPlayerToMouseRotation() * Mathf.Deg2Rad + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
+        Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetCollider()); 
+        Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
+        projectile.GetComponent<Rigidbody2D>().velocity = wielder.GetBody().velocity;
+        projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
     }
     
     private IEnumerator SalvoDelay(){
@@ -84,8 +84,6 @@ public class ProjectileWeapon : BasicWeapon{
     }
 
     protected override void Update(){
-        if (Player.primaryWeapon == this){
-            base.Update();
-        }
+        base.Update();
     }
 }

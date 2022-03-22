@@ -79,6 +79,20 @@ public partial class Player : Character
         _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
 
     }
+
+    private void UpdateHUD(){
+        weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
+        _cursorControl.SetCursorType(primaryWeapon.cursorType);
+
+        primaryWeapon.AudioManager.PlaySound(2, false, 0);
+
+
+        primaryWeapon.transform.localPosition = primaryWeapon.offset;
+
+        SetNotifText(primaryWeapon.name);
+        SetArmType(primaryWeapon.armType);
+    }
+
     
     
     private void RotateArm(){

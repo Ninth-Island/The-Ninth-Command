@@ -14,6 +14,8 @@ public class MeleeWeapon : BasicWeapon{
     [SerializeField] private Vector2 leftRightRotation;
     [SerializeField] private Vector2 leftRightRotationSwing;
 
+    
+    /*
     private bool _isAttacking;
     private float _coolDownLeft = 0;
 
@@ -37,7 +39,7 @@ public class MeleeWeapon : BasicWeapon{
      *yeah so there isn't actually any hit detection on here yet. I'm thinking probably create a child that has all the knockback properties and stuff
      *
      * 
-     */
+     #1#
     
     protected override void FixedUpdate(){
         base.FixedUpdate();
@@ -64,7 +66,7 @@ public class MeleeWeapon : BasicWeapon{
         }
     }
 
-    protected override void CheckFire(){
+    public override void CheckFire(float angle){
         if (!_isAttacking && _coolDownLeft <= 0){
             StartCoroutine(Swish());
         }
@@ -90,7 +92,7 @@ public class MeleeWeapon : BasicWeapon{
     private void SwingTo(){
         Player.SetArmRotation(leftRightRotationSwing);
         
-    }
+    }*/
 
     
 }

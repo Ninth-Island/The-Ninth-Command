@@ -79,7 +79,7 @@ public class Projectile : CustomObject{
       *                                        Set Values for Instantiators
      * ================================================================================================================
      */
-    public void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         _damage = damage;
         gameObject.name = name + " " + gameObject;
         gameObject.layer = firedLayer - 4;

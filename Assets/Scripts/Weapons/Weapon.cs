@@ -21,22 +21,20 @@ public class Weapon : CustomObject{
     [SerializeField] protected float pickupRange;
     [SerializeField] protected Character wielder;
 
-    protected AudioManager AudioManager;
+    public AudioManager AudioManager;
     
-    protected SpriteRenderer SpriteRenderer;
+    public SpriteRenderer spriteRenderer;
     protected PolygonCollider2D Collider;
 
 
-    protected Player Player;
     
     // Start is called before the first frame update
     protected override void Start(){
         base.Start();
         
-        SpriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         Collider = GetComponent<PolygonCollider2D>();
 
-        Player = FindObjectOfType<Player>();
 
         AudioManager = GetComponent<AudioManager>();
     }
@@ -53,9 +51,8 @@ public class Weapon : CustomObject{
     public virtual void PickUp(Character pickedUpBy){
         wielder = pickedUpBy;
         Body.simulated = false;
-        transform.parent = Player.gameObject.transform.GetChild(1).transform.GetChild(5);
-        Player.SetNotifText(name);
-       // AudioManager.PlayFromList(2);
+        transform.parent = wielder.gameObject.transform.GetChild(1).transform.GetChild(5);
+        // AudioManager.PlayFromList(2);
     }
 
     public virtual void Drop(){

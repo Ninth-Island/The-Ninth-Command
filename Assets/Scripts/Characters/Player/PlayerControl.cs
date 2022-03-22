@@ -26,7 +26,7 @@ public partial class Player : Character{
     [SerializeField] private float dashVelocity;
 
     
-    [Header("Heat and Energy")]
+    /*[Header("Heat and Energy")]
     [SerializeField] private float MaxEnergy;
     [SerializeField] private float energyCharge;
     [SerializeField] private float MaxHeat;
@@ -35,7 +35,7 @@ public partial class Player : Character{
     
     
     private float heat;
-    private float energy;
+    private float energy;*/
 
     private GameObject _externalJetpack;
     
@@ -99,10 +99,11 @@ public partial class Player : Character{
     }
 
 
-    private void ControlFixedUpdate(){
+    private void ControlFixedUpdate(){/*
         heat = Mathf.Clamp(heat + heatCharge, 0, MaxHeat);
-        energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);
+        energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);*/
 
+        Body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         CheckBindings();
 
@@ -152,7 +153,6 @@ public partial class Player : Character{
     
     
     private void UseJetPack(){
-        Body.constraints = RigidbodyConstraints2D.FreezeRotation;
         Animator.SetBool(_aNames.jumping, true);
         
         
@@ -184,15 +184,16 @@ public partial class Player : Character{
 
 
         }
+
+        AudioSource source = AudioManager.source;
+        List<Sound> sounds = AudioManager.sounds;
         
-        if (!AudioManager.source.isPlaying){
-            AudioManager.source.clip = AudioManager.sounds[20].clipsList[0];
-            AudioManager.source.Play();
+        if (source.clip != sounds[20].clipsList[0] && source.clip != sounds[21].clipsList[0]){
+            AudioManager.PlayConstant(20, true);
         }
 
-        if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] && AudioManager.source.time >= AudioManager.source.clip.length - 0.1f || Airborne && !AudioManager.source.isPlaying){
-            AudioManager.source.clip = AudioManager.sounds[21].clipsList[0];
-            AudioManager.source.Play();
+        if (source.clip == sounds[20].clipsList[0] && source.time >= source.clip.length - 0.1f || Airborne){
+            AudioManager.PlayConstant(21, true);
             AudioManager.source.loop = true;
         }
     }
@@ -204,12 +205,12 @@ public partial class Player : Character{
     #region LeftControl
 
     private void Dash(){
-        if (heat >= MaxHeat){
-            heat = 0;
+        //if (heat >= MaxHeat){
+            //heat = 0;
             float rotation = GetPlayerToMouseRotation();
             Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
             Body.velocity = dir * dashVelocity;
-        }
+        //}
     }
 
     private void UseGrapplingHook(){
@@ -256,9 +257,7 @@ public partial class Player : Character{
     }
     
     
-    public BoxCollider2D GetFeetCollider(){
-        return FeetCollider;
-    }
+    
     public float GetPlayerToMouseRotation(){
         float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
         if (ang < 0){

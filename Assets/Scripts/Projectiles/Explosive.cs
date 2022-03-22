@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Pathfinding.Ionic.Zip;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -35,16 +36,22 @@ public class Explosive : Projectile{
     // Start is called before the first frame update
     protected override void Start(){
         base.Start();
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioManager = GetComponent<AudioManager>();
-        if (_live){
-            StartCoroutine(Fuse());
-        }
+        
 
         if (propulsion){
             Body.velocity *= 0.01f;
         }
 
+    }
+
+    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
+        if (_live){
+            StartCoroutine(Fuse());
+        }
     }
 
     protected override void FixedUpdate(){
@@ -78,13 +85,7 @@ public class Explosive : Projectile{
         Explode();
     }
     
-    public void SetFuseTimer(float setFuseTimer){
-        fuseTimer = setFuseTimer;
-    }
 
-    public void StartFuse(){
-        StartCoroutine(Fuse());
-    }
     
 /*
      * ================================================================================================================

@@ -9,4 +9,8 @@ public class SpartanLaserProjectile : Projectile{
         Destroy(gameObject, 5f);
     }
     
+    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
+    }
+    
 }

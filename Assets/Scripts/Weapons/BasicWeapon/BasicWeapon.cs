@@ -19,15 +19,18 @@ public class BasicWeapon : Weapon{
    * ================================================================================================================
    */
     
+    
+    // major code cleanup of all projectiles weapons and characters due soon
+    
 
 
     protected Coroutine Coroutine;
     
     public bool looping;
 
-    [SerializeField] private Vector2 offset = new Vector2(1.69f, -0.42f);
+    [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f);
     [SerializeField] public int armType = 0;
-    [SerializeField] private int cursorType = 0;
+    [SerializeField] public int cursorType = 0;
     [SerializeField] private bool audioRepeating = false;
     protected CursorControl CursorControl;
 
@@ -36,8 +39,11 @@ public class BasicWeapon : Weapon{
         base.Start();
     
         CursorControl = FindObjectOfType<CursorControl>();
-      
-        Player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, Body)));
+
+        foreach (Player player in FindObjectsOfType<Player>()){
+            player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, Body)));
+
+        }
     }
 
     
@@ -50,26 +56,13 @@ public class BasicWeapon : Weapon{
      */
 
     protected override void FixedUpdate(){
-        if (Player.primaryWeapon == this){
-            if (Input.GetKey(KeyCode.Mouse0)){
-                CheckFire();
-            }
-        }
     }
 
     public override void PickUp(Character character){
         base.PickUp(character);
-        
-        
-        Player.weaponImage.sprite = SpriteRenderer.sprite;
-        CursorControl.SetCursorType(cursorType);
-        
-        AudioManager.PlaySound(2, false, 0);
-        
-        transform.localPosition = offset;
+
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
-        Player.SetArmType(armType);
         RefreshText();
     }
 
@@ -78,7 +71,7 @@ public class BasicWeapon : Weapon{
 
     public override void Drop(){
         base.Drop();
-        
+        wielder = null;
     }
     
     
@@ -95,10 +88,12 @@ public class BasicWeapon : Weapon{
         AudioManager.PlaySound(0, audioRepeating, 0);
     }
 
-    
-    protected virtual void CheckFire(){
+
+    public virtual void CheckFire(float angle){
         
     }
+
+    
     public virtual void RefreshText(){
         
     }
@@ -118,7 +113,7 @@ public class BasicWeapon : Weapon{
     }
     
     public void SetSpriteRenderer(bool setEnabled){
-        SpriteRenderer.enabled = setEnabled;
+        spriteRenderer.enabled = setEnabled;
     }
 
     protected override void Update(){

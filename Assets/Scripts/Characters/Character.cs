@@ -104,6 +104,10 @@ public class Character : CustomObject{
     public BoxCollider2D GetCollider(){
         return Collider;
     }
+    
+    public BoxCollider2D GetFeetCollider(){
+        return FeetCollider;
+    }
 
     public void SetInputFrozen(bool setInputFrozenState, float unfreezeTime){
         InputsFrozen = setInputFrozenState;
@@ -146,7 +150,15 @@ public class Character : CustomObject{
             }
         }
     }
+
     
+    public virtual void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
+
+    }
+
+    public virtual void SetReloadingText(string text){
+        
+    }
 
     private PhysicsMaterial2D GetMaterialTouching(){
         if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){

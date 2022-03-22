@@ -31,10 +31,10 @@ public class EnergyWeapon : ProjectileWeapon{
      *                                               Firing Stuff
      * ================================================================================================================
      */
-    
-    protected override void CheckFire(){
+
+    public override void CheckFire(float angle){
         if (_energy > 0 && _heat < 100 && !Firing && !_isCooling){
-            StartCoroutine(Fire());
+            StartCoroutine(Fire(angle));
         }
     }
 
@@ -104,13 +104,8 @@ public class EnergyWeapon : ProjectileWeapon{
     */
 
     public override void RefreshText(){
-        if (Player.primaryWeapon == this){
-            base.RefreshText();
-            Player.ammoCounter.SetText("");
-            Player.magCounter.SetText("");
-            
-            Player.energyCounter.SetText("" + Mathf.RoundToInt(_energy));
-            Player.heatCounter.SetText(Mathf.RoundToInt(_heat) + "% / 100%");
+        if (wielder){
+            wielder.SetWeaponValues(0, 0, 0, _energy, _heat, 2);
         }
     }
 

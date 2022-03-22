@@ -27,6 +27,8 @@ public class ChargingWeapon : ProjectileWeapon
 
     public float heat = 0;
     public bool coolingDown;
+
+    private bool hasReleased = true;
     
     
     /*
@@ -34,18 +36,19 @@ public class ChargingWeapon : ProjectileWeapon
      *                                               Firing Stuff
      * ================================================================================================================
      */
-    
-    protected override void CheckFire(){
+
+    public override void CheckFire(float angle){
+        ;
         if (energy > 0 && heat < 100 && !Firing && !coolingDown){
             heat += chargePerFrame;
             AudioManager.source.Stop();
             
             AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
-           
-            
+
+            hasReleased = false;
             if (heat >= 100){
                 AudioManager.PlaySound(1, false, 0);
-                StartCoroutine(Fire());
+                StartCoroutine(Fire(angle));
             }
         }
         
@@ -62,9 +65,10 @@ public class ChargingWeapon : ProjectileWeapon
     protected override void Update(){
         base.Update();
         
-        if (Input.GetKeyUp(KeyCode.Mouse0) && Player.primaryWeapon == this && !coolingDown){
+        if (!coolingDown && !hasReleased){
             AudioManager.source.Stop();
             AudioManager.PlaySound(5, false, 0);
+            hasReleased = true;
         }
         RefreshText();
     }
@@ -73,29 +77,17 @@ public class ChargingWeapon : ProjectileWeapon
 
         base.FixedUpdate();
         
-        if (Player.primaryWeapon == this){
-            
-
-            if (Input.GetKey(KeyCode.Mouse0)){
-                CheckFire();
-            }
-
-            
             heat -= cooldownSpeed;
 
             if (!coolingDown){ // so that after firing it cools down slower than before firing
                 heat -= cooldownSpeed;
-
-
             }
 
             if (heat <= 0){
                 coolingDown = false;
                 heat = 0;
             }
-
-
-        }
+            
     }
 
     public override void CheckReload(){
@@ -117,13 +109,8 @@ public class ChargingWeapon : ProjectileWeapon
     */
 
     public override void RefreshText(){
-        if (Player.primaryWeapon == this){
-            base.RefreshText();
-            Player.ammoCounter.SetText("");
-            Player.magCounter.SetText("");
-            
-            Player.energyCounter.SetText("" + Mathf.RoundToInt(energy));
-            Player.heatCounter.SetText(Mathf.RoundToInt(heat) + "% / 100%");
+        if (wielder){
+            wielder.SetWeaponValues(0, 0, 0, energy, heat, 3);
         }
     }
 
