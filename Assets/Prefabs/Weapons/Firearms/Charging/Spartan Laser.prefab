@@ -214,6 +214,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 1.15, y: 0.6136}
   armType: 5
@@ -254,7 +256,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e3ff451f3cc7b9a4b923b15d05f49cf8, type: 3}
     - {fileID: 8300000, guid: 1f4d7931204df944183915ae0d909f3a, type: 3}
     - {fileID: 8300000, guid: 0f58f31e40d8c5246af20f30f3ddf70e, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -265,7 +267,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c7e427238b06bf74da45d241bf6ddcc8, type: 3}
     - {fileID: 8300000, guid: c9559272cdfc9c94ebe8096bae71a035, type: 3}
     - {fileID: 8300000, guid: 3ddfdf298ada473499fdaba2c690b722, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -276,7 +278,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 00d09e19cc4aca14f80f46ba4a444079, type: 3}
     - {fileID: 8300000, guid: d1bedecbe7411744b9fbc50f75501d81, type: 3}
     - {fileID: 8300000, guid: 52d2ae74ae7151244b38766057b05d5f, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -292,7 +294,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 536cee64ecff049499f5a62a5955fad0, type: 3}
     - {fileID: 8300000, guid: fe36b47c376ef2140910d0f2ad986b7c, type: 3}
     - {fileID: 8300000, guid: e0d3541275e4fbc4f9818876e29a5470, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -301,7 +303,7 @@ MonoBehaviour:
   - name: Charge In
     clipsList:
     - {fileID: 8300000, guid: 65cb9f252634ded4a92b1867334eaf7c, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -310,7 +312,7 @@ MonoBehaviour:
   - name: Charge Out
     clipsList:
     - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128

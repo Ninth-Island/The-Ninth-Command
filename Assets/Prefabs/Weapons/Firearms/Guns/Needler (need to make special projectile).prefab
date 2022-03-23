@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 8234345618937749715}
   - component: {fileID: 1139117034037077947}
   m_Layer: 13
-  m_Name: Needler
+  m_Name: Needler (need to make special projectile)
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,6 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 1.566, y: -0.069}
   armType: 4
@@ -226,7 +228,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8ffd1aa6254ee8a40bf1164ac47eafa6, type: 3}
     - {fileID: 8300000, guid: cf10623ac9c59fe428adc44b67212184, type: 3}
     - {fileID: 8300000, guid: d31944b97531d7f4892b5d3f2abea225, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -237,7 +239,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 99cd41d74dadd2e4e8039650edb24919, type: 3}
     - {fileID: 8300000, guid: 3576b06149ff9b54797ed7f53c846296, type: 3}
     - {fileID: 8300000, guid: 95eacc03448fb4b4f83dccc472d6168a, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -248,7 +250,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a72e0dc4eb3d3294694489c291839b33, type: 3}
     - {fileID: 8300000, guid: e16d13a4afabd8e4b8ad8cd6e5502840, type: 3}
     - {fileID: 8300000, guid: c0d4276b9016d6c4d8e71e343b53ac42, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -260,7 +262,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a146eec46ad8a2140a47930b60879ddc, type: 3}
     - {fileID: 8300000, guid: e32177ed2c49a3349b4e7ac79e44ffaa, type: 3}
     - {fileID: 8300000, guid: 9d42be8c57f4c43489c39d3af36181d1, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0

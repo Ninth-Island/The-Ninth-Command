@@ -109,17 +109,7 @@ public partial class Player : Character{
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
 
-        if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] || AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
-            if (AudioManager.source.isPlaying && !Input.GetKey(KeyCode.LeftShift)){
-                AudioManager.source.Stop();
-                AudioManager.PlayAtPoint(22);            
-                AudioManager.source.loop = false;
-            }
-        }
-
-        if (AudioManager.source.clip != AudioManager.sounds[21].clipsList[0] && AudioManager.source.loop){
-            AudioManager.source.loop = false;
-        }
+        AudioSource source = AudioManager.source;
 
         if (!Input.GetKey(KeyCode.LeftShift)){
             _virtualCamera[0].Priority = 10;
@@ -185,17 +175,6 @@ public partial class Player : Character{
 
         }
 
-        AudioSource source = AudioManager.source;
-        List<Sound> sounds = AudioManager.sounds;
-        
-        if (source.clip != sounds[20].clipsList[0] && source.clip != sounds[21].clipsList[0]){
-            AudioManager.PlayConstant(20, true);
-        }
-
-        if (source.clip == sounds[20].clipsList[0] && source.time >= source.clip.length - 0.1f || Airborne){
-            AudioManager.PlayConstant(21, true);
-            AudioManager.source.loop = true;
-        }
     }
 
     

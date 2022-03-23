@@ -202,6 +202,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 2.08, y: -0.15}
   armType: 0
@@ -258,7 +260,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ea3aa8a2268359f4ca0d54f56fa04416, type: 3}
     - {fileID: 8300000, guid: bf721d970fb44d14b82a7cd98423b0fd, type: 3}
     - {fileID: 8300000, guid: 9db5ed8e3515e6a41ad295ae398ee4c8, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -270,7 +272,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b345dfcd3b1b4434eb2cca63d163bcec, type: 3}
     - {fileID: 8300000, guid: 4c194917e48460a46a0f7d492171c5f9, type: 3}
     - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -282,7 +284,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b345dfcd3b1b4434eb2cca63d163bcec, type: 3}
     - {fileID: 8300000, guid: 4c194917e48460a46a0f7d492171c5f9, type: 3}
     - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -291,7 +293,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -300,7 +302,7 @@ MonoBehaviour:
   - name: Charge In
     clipsList:
     - {fileID: 8300000, guid: a19282be1537f7c468764490b0a0841b, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -309,7 +311,7 @@ MonoBehaviour:
   - name: Charge Out
     clipsList:
     - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128

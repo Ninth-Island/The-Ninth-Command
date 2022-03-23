@@ -187,6 +187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 1.59, y: 0.525}
   armType: 5
@@ -204,7 +206,7 @@ MonoBehaviour:
   firingPoint: {fileID: 0}
   magazinesLeft: 2
   magazineSize: 2
-  reloadTime: 3
+  reloadTime: 2
   bulletShell: {fileID: 0}
   reloading: 0
 --- !u!114 &506922134546500636
@@ -226,7 +228,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 64a24e5b3d05ab04e96ce46220e6a3ec, type: 3}
     - {fileID: 8300000, guid: c4e73d5342abb1b46a21a53a83011944, type: 3}
     - {fileID: 8300000, guid: c4fe44c24861224458ce011c8511327e, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -237,7 +239,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e54b147d1e828d549b2fbbff4a2da628, type: 3}
     - {fileID: 8300000, guid: e70a69a85d5a9864998e2cb3213f9396, type: 3}
     - {fileID: 8300000, guid: bb281709707a1d54da292ded1d95c052, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -248,7 +250,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8e86fac6d77dcf847a3e41a3f946c43a, type: 3}
     - {fileID: 8300000, guid: 5fdea9ca5f1340e4c9457c93b24449a3, type: 3}
     - {fileID: 8300000, guid: d8d01b3fb42edf743887c246d393bb5b, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -257,7 +259,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -266,7 +268,7 @@ MonoBehaviour:
   - name: Locking
     clipsList:
     - {fileID: 8300000, guid: d22861f4412441f48b725afbcb759b97, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -275,7 +277,7 @@ MonoBehaviour:
   - name: Locked
     clipsList:
     - {fileID: 8300000, guid: f4d3465e70c3b3b4da1871657fca1ec0, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -415,16 +417,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3886628609415804473}
     m_Modifications:
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[0].clipsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 9c0dafc1081fd9145950a3d75d32fe44, type: 3}
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[1].clipsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: c6621a00cd0734d419133c4b7add01cd, type: 3}
     - target: {fileID: 1307336815688567874, guid: 021898f4662a0c547adb8dd0fe6851b5,
         type: 3}
       propertyPath: m_Name

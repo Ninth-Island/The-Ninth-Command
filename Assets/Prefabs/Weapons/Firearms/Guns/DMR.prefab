@@ -188,6 +188,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 1.97, y: 0.003}
   armType: 0
@@ -231,7 +233,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 7533a38f8694435478420d180ac828ac, type: 3}
     - {fileID: 8300000, guid: e4129119bb6400846af41b9965ac5942, type: 3}
     - {fileID: 8300000, guid: 5dc195b682758f449a59c3b620403d89, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -242,7 +244,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a108cde83fa4c9f4eb6f447490b46860, type: 3}
     - {fileID: 8300000, guid: 884534b56b7ed854f91f221ebf3c0af0, type: 3}
     - {fileID: 8300000, guid: 0ce18ff8257559749910a0df570a2ccd, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -252,7 +254,7 @@ MonoBehaviour:
     clipsList:
     - {fileID: 8300000, guid: eac769fadf2c7a34bb44260d90355f85, type: 3}
     - {fileID: 8300000, guid: 7df01bfc641513a469ecbbffc26e8e4c, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -261,7 +263,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -401,16 +403,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4506013158996176202}
     m_Modifications:
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[0].clipsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: dd03a370f0170a4499293d75f0d0a1a3, type: 3}
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[1].clipsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 21fd01b4201db5445b8e75ac7d2a3650, type: 3}
     - target: {fileID: 1307336815688567874, guid: 021898f4662a0c547adb8dd0fe6851b5,
         type: 3}
       propertyPath: m_Name

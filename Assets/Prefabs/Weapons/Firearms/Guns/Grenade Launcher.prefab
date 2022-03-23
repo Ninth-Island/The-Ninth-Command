@@ -185,11 +185,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 2.16, y: 0.01}
   armType: 0
   cursorType: 24
-  audioRepeating: 0
+  allowInterrupt: 0
   firingDelay: 0
   salvoDelay: 1
   shotsPerSalvo: 1
@@ -200,7 +202,7 @@ MonoBehaviour:
   projectileSpeed: 70
   piercing: 0
   firingPoint: {fileID: 0}
-  magazinesLeft: 2
+  magazinesLeft: 100
   magazineSize: 1
   reloadTime: 1.5
   bulletShell: {fileID: 0}
@@ -230,7 +232,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b75e78cb851992a4595a8b934cccbf9d, type: 3}
     - {fileID: 8300000, guid: e67ab988f61c73a479b3eabaccdc4391, type: 3}
     - {fileID: 8300000, guid: be9bf79167ae57e45944062985cb013a, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -241,7 +243,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 03d1f51e05a6bb249a66df928d0798e2, type: 3}
     - {fileID: 8300000, guid: a51a7cd37d0ca7745b624ddab73536f5, type: 3}
     - {fileID: 8300000, guid: 630a9fd07db70f544a8fb4bac3e4ab38, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -252,7 +254,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 418a7d805d1dc3b4ea75ef87459955a2, type: 3}
     - {fileID: 8300000, guid: fca4bc99d74c8c34ab2032a61a940c72, type: 3}
     - {fileID: 8300000, guid: 06ee03d5bfe88d74d90c54eee68927b5, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -261,7 +263,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0

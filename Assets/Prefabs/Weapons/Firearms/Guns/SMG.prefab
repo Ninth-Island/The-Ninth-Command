@@ -203,6 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 5
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 1
   offset: {x: 2.14, y: 0.16}
   armType: 1
@@ -240,7 +242,7 @@ MonoBehaviour:
   - name: Fire
     clipsList:
     - {fileID: 8300000, guid: 48e88564b75e30946861c643be5ed0d9, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -251,7 +253,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1df8c1136540bf24281861a1037a9c38, type: 3}
     - {fileID: 8300000, guid: e498ea769f16e714e83e65711b5eecd5, type: 3}
     - {fileID: 8300000, guid: d1eb31b87ec20354ebad599cd273ff8d, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -262,7 +264,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0874f037818114340a5c1d478c55b607, type: 3}
     - {fileID: 8300000, guid: 05f91bf250b1cd747890add3e56dc409, type: 3}
     - {fileID: 8300000, guid: f17aa17f99b2e4748a49ff19105841e6, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -271,7 +273,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 128

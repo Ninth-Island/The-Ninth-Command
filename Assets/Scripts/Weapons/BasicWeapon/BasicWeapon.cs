@@ -21,8 +21,12 @@ public class BasicWeapon : Weapon{
     
     
     // major code cleanup of all projectiles weapons and characters due soon
+    // also cant use input for reloading triggers
     
-
+    // go through manually and find everywhere refresh text is called and input is called
+    
+    // for reason unknown the shotgun is really loud
+    // I also had to disable the jetpack cuz it was acting really weird
 
     protected Coroutine Coroutine;
     
@@ -31,7 +35,7 @@ public class BasicWeapon : Weapon{
     [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f);
     [SerializeField] public int armType = 0;
     [SerializeField] public int cursorType = 0;
-    [SerializeField] private bool audioRepeating = false;
+    [SerializeField] private bool allowInterrupt = false;
     protected CursorControl CursorControl;
 
 
@@ -85,7 +89,7 @@ public class BasicWeapon : Weapon{
     
     
     protected virtual void Subtract(){
-        AudioManager.PlaySound(0, audioRepeating, 0);
+        AudioManager.PlaySound(0, allowInterrupt, 0);
     }
 
 
@@ -105,7 +109,7 @@ public class BasicWeapon : Weapon{
      */
 
     public virtual void CheckReload(){
-        
+        AudioManager.PlaySound(1, false, 0);
     }
 
     public virtual void SetLoadingState(){

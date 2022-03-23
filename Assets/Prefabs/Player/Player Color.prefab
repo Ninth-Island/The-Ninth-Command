@@ -5837,10 +5837,6 @@ MonoBehaviour:
   sprintAmplifier: 1.6
   jetPower: 2
   dashVelocity: 60
-  MaxEnergy: 0
-  energyCharge: 0
-  MaxHeat: 0
-  heatCharge: 0
   spritesParent: {fileID: 3208046358017332010}
   ArmTypes:
   - {fileID: -7887873344414462056, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
@@ -5924,7 +5920,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -5937,7 +5933,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 0.5
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6002,7 +5998,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b1838351383d3b8488da6243106ffcf6, type: 3}
     - {fileID: 8300000, guid: a5b6af97286c58a47b322f7484b53ad6, type: 3}
     - {fileID: 8300000, guid: fa4fa8a485087e84c87095d9003f6526, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6015,7 +6011,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f3031c3385904ce4ab1dcc13a175cb28, type: 3}
     - {fileID: 8300000, guid: 8422f968a42e5da489c832a7c4f786cb, type: 3}
     - {fileID: 8300000, guid: e4df2ce90957de943928eb344209d8f3, type: 3}
-    volume: 0.5
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6160,7 +6156,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 44b1a7b7ae2cfa5419b096d6cc4bd564, type: 3}
     - {fileID: 8300000, guid: fdac2dbba8504224f87d183b424f1f0c, type: 3}
     - {fileID: 8300000, guid: 254af4bea07accf488d00de70cbf5a27, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6175,7 +6171,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0e583de51bc96b14faa80810265f246c, type: 3}
     - {fileID: 8300000, guid: df2c0590bb65225438feaeedc3df26a2, type: 3}
     - {fileID: 8300000, guid: feef31f0c52a5824b9bff9426bd3d09d, type: 3}
-    volume: 0.5
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6184,7 +6180,7 @@ MonoBehaviour:
   - name: Jetpack In
     clipsList:
     - {fileID: 8300000, guid: e16a00d37c8fb134c9d4199d22c49271, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6193,7 +6189,7 @@ MonoBehaviour:
   - name: Jetpack Loop
     clipsList:
     - {fileID: 8300000, guid: 7c97f8ef14ae4d54e8d4a22a6d58c295, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -6202,7 +6198,7 @@ MonoBehaviour:
   - name: Jetpack Out
     clipsList:
     - {fileID: 8300000, guid: a1cc48579338d7a41ac2d93de0032218, type: 3}
-    volume: 0.5
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0

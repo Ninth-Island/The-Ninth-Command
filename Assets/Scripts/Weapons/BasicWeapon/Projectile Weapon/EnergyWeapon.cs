@@ -69,13 +69,13 @@ public class EnergyWeapon : ProjectileWeapon{
     }
 
     public override void CheckReload(){
-        base.CheckReload();
+        
         if (Input.GetKeyDown(KeyCode.R) && !_isCooling && _heat > 10){
             _isCooling = true;
             
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            AudioManager.PlaySound(1, true, 0);
+            base.CheckReload();
         }
     }
     

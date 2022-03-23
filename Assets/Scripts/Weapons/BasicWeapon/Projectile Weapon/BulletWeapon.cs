@@ -53,7 +53,7 @@ public class BulletWeapon : ProjectileWeapon{
                 StartReloading();
             }
             else{
-                AudioManager.PlaySound(3, true, 0);
+                AudioManager.PlayRepeating(3, 0);
             }
         }
     }
@@ -63,7 +63,7 @@ public class BulletWeapon : ProjectileWeapon{
         if (magazinesLeft > 0){
 
             wielder.SetReloadingText("Reloading...");
-            AudioManager.PlaySound(1, false, 0);
+            base.CheckReload();
 
 
             reloading = true;
@@ -97,7 +97,6 @@ public class BulletWeapon : ProjectileWeapon{
     }
 
     public override void CheckReload(){
-        base.CheckReload();
         if (Input.GetKeyDown(KeyCode.R) && magazineSize != _bulletsLeft && !reloading){
             StartReloading();
         }

@@ -208,11 +208,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 2.04, y: -0.22}
   armType: 0
   cursorType: 2
-  audioRepeating: 1
+  allowInterrupt: 1
   firingDelay: 0
   salvoDelay: 0
   shotsPerSalvo: 10
@@ -247,11 +249,11 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c971db3807703d44f80e0b1b21b170b5, type: 3}
     - {fileID: 8300000, guid: cf8aed41eb597a3469877ec65274fe70, type: 3}
     - {fileID: 8300000, guid: 710c62d3916fdac4dafa9de274039854, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0.5
+    waitTillNext: 1.44
     loop: 0
   - name: Reload
     clipsList:
@@ -263,7 +265,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 34547fceb5aceb34c8d1d865ddb7e46e, type: 3}
     - {fileID: 8300000, guid: edd193fda785d7a4188941e743145e6b, type: 3}
     - {fileID: 8300000, guid: 6f3d440ad9f73874aad5f94f09feb6b2, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -274,7 +276,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2976de0971d92f048a0be535296d95db, type: 3}
     - {fileID: 8300000, guid: da0aeb3c521f4fb4abd197dd5d0c8f2f, type: 3}
     - {fileID: 8300000, guid: 3cb09dee4858fee4e9b8f4ab7b11e3a6, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -283,7 +285,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0

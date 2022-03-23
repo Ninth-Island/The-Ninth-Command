@@ -206,6 +206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 2.02, y: 0.02}
   armType: 0
@@ -249,7 +251,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 7533a38f8694435478420d180ac828ac, type: 3}
     - {fileID: 8300000, guid: e4129119bb6400846af41b9965ac5942, type: 3}
     - {fileID: 8300000, guid: 5dc195b682758f449a59c3b620403d89, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -260,7 +262,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e701d2314c421544291f2855cf340383, type: 3}
     - {fileID: 8300000, guid: eb1a157c5d5b87e4f846b5b9b6d0002d, type: 3}
     - {fileID: 8300000, guid: 34a54bca14fb9ce46a3d599f92c49299, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -270,7 +272,7 @@ MonoBehaviour:
     clipsList:
     - {fileID: 8300000, guid: 5a03e7a0f7aced74ea5e86c060e8787c, type: 3}
     - {fileID: 8300000, guid: b33cdc5cea6349648959aeb62f90e1a1, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -279,7 +281,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -389,30 +391,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4506013158996176202}
     m_Modifications:
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[0].clipsList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[1].clipsList.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[0].clipsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: dd03a370f0170a4499293d75f0d0a1a3, type: 3}
-    - target: {fileID: 1082541672422344723, guid: 021898f4662a0c547adb8dd0fe6851b5,
-        type: 3}
-      propertyPath: sounds.Array.data[1].clipsList.Array.data[0]
-      value: 
-      objectReference: {fileID: 8300000, guid: 21fd01b4201db5445b8e75ac7d2a3650, type: 3}
     - target: {fileID: 1307336815688567874, guid: 021898f4662a0c547adb8dd0fe6851b5,
         type: 3}
       propertyPath: m_Name
       value: Scope
+      objectReference: {fileID: 0}
+    - target: {fileID: 2259981960893027435, guid: 021898f4662a0c547adb8dd0fe6851b5,
+        type: 3}
+      propertyPath: forcedOn
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2259981960893027435, guid: 021898f4662a0c547adb8dd0fe6851b5,
         type: 3}

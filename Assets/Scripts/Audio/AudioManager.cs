@@ -19,20 +19,18 @@ public class AudioManager : MonoBehaviour{
     }
 
 
-    private void PlayRepeating(Sound sound, float time){
+    public void PlayRepeating(int index, float time){
+        Sound sound = sounds[index];
+        
         if (source.time >= sound.waitTillNext || !source.isPlaying){
             source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
 
             source.Play();
-
             source.time = time;
-
-
-
         }
     }
 
-    public void PlaySound(int index, bool repeating, float time){
+    public void PlaySound(int index, bool allowInterrupt, float time){
         Sound sound = sounds[index];
 
         source.volume = sound.volume;
@@ -41,11 +39,12 @@ public class AudioManager : MonoBehaviour{
         source.priority = sound.priority;
         source.spatialBlend = sound.spacialBlend;
         
-        if (repeating){
-            PlayRepeating(sound, time);
+        if (allowInterrupt){
+            source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
+            source.Play();
         }
         else{
-            source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)]);
+            source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], source.volume);
         }
     }
 

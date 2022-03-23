@@ -63,8 +63,8 @@ MonoBehaviour:
   sounds:
   - name: Zoom In
     clipsList:
-    - {fileID: 8300000, guid: 6d775108bd6b2a445b546bbb688c281a, type: 3}
-    volume: 1
+    - {fileID: 8300000, guid: dd03a370f0170a4499293d75f0d0a1a3, type: 3}
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -72,8 +72,8 @@ MonoBehaviour:
     loop: 0
   - name: Zoom Out
     clipsList:
-    - {fileID: 8300000, guid: df40ee29c9d87e846abcf5bd063ee537, type: 3}
-    volume: 1
+    - {fileID: 8300000, guid: 21fd01b4201db5445b8e75ac7d2a3650, type: 3}
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 0

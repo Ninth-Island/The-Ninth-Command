@@ -43,7 +43,7 @@ public class ChargingWeapon : ProjectileWeapon
             heat += chargePerFrame;
             AudioManager.source.Stop();
             
-            AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
+            //AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
 
             hasReleased = false;
             if (heat >= 100){
@@ -91,7 +91,7 @@ public class ChargingWeapon : ProjectileWeapon
     }
 
     public override void CheckReload(){
-        base.CheckReload();
+        
     }
     
 

@@ -146,7 +146,7 @@ public class Character : CustomObject{
                 }
 
                 soundIndex += type;
-                AudioManager.PlaySound(soundIndex, true, 0);
+                AudioManager.PlaySound(soundIndex, false, 0);
             }
         }
     }

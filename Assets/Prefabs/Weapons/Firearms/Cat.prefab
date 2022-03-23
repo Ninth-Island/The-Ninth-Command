@@ -156,6 +156,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickupRange: 8
   wielder: {fileID: 0}
+  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   looping: 0
   offset: {x: 1.69, y: -0.42}
   armType: 0
@@ -170,7 +172,7 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 80
   piercing: 0
-  zoom: 0
+  firingPoint: {fileID: 0}
   percentagePerShot: 50
   heatPerShot: 10
   coolDown: 1
@@ -193,7 +195,7 @@ MonoBehaviour:
     clipsList:
     - {fileID: 8300000, guid: cfc88a032cf20d34db04fc4e07693613, type: 3}
     - {fileID: 8300000, guid: 7cb3310aef451d340b66c02bc61cb4fc, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -202,7 +204,7 @@ MonoBehaviour:
   - name: Overheat
     clipsList:
     - {fileID: 8300000, guid: d83e5353d31d9bc479a193dca27b31b6, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -213,7 +215,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d9bc8db1e9fe88a46bff84f6103893a0, type: 3}
     - {fileID: 8300000, guid: b4b71d4bcc1393b4d9c1608d5e330f0b, type: 3}
     - {fileID: 8300000, guid: 699de42ad0918de4ebc84df29b45d910, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -222,7 +224,7 @@ MonoBehaviour:
   - name: DryFire
     clipsList:
     - {fileID: 8300000, guid: cb55a263a371ff346b652c22b82ec39f, type: 3}
-    volume: 1
+    volume: 0.2
     pitch: 1
     spacialBlend: 0
     priority: 0
