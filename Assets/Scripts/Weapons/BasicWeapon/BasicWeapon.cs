@@ -25,8 +25,7 @@ public class BasicWeapon : Weapon{
     
     // go through manually and find everywhere refresh text is called and input is called
     
-    // for reason unknown the shotgun is really loud
-    // I also had to disable the jetpack cuz it was acting really weird
+    // charging weapons are broken
 
     protected Coroutine Coroutine;
     
@@ -37,6 +36,8 @@ public class BasicWeapon : Weapon{
     [SerializeField] public int cursorType = 0;
     [SerializeField] private bool allowInterrupt = false;
     protected CursorControl CursorControl;
+    public Transform firingPoint;
+
 
 
     protected override void Start(){

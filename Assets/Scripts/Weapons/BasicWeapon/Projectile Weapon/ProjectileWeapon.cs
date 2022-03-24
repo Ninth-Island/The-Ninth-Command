@@ -33,7 +33,6 @@ public class ProjectileWeapon : BasicWeapon{
 
 
 
-    public Transform firingPoint;
 
     
     protected bool ReadyToFire = true;

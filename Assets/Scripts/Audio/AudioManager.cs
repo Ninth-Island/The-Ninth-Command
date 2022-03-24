@@ -33,19 +33,27 @@ public class AudioManager : MonoBehaviour{
     public void PlaySound(int index, bool allowInterrupt, float time){
         Sound sound = sounds[index];
 
+        if (allowInterrupt){
+            source.Stop();
+            source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
+            source.Play();
+        }
+        else{
+            if (Math.Abs(sound.volume - source.volume) < 0.01){
+                source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], sound.volume);
+            }
+            else{
+                PlayNewSource(index);
+                return;
+            }
+        }
+        
         source.volume = sound.volume;
         source.pitch = sound.pitch;
         source.loop = sound.loop;
         source.priority = sound.priority;
         source.spatialBlend = sound.spacialBlend;
-        
-        if (allowInterrupt){
-            source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
-            source.Play();
-        }
-        else{
-            source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], source.volume);
-        }
+
     }
 
     public void PlayConstant(int index, bool allowInterrupt){
@@ -66,7 +74,7 @@ public class AudioManager : MonoBehaviour{
         }
     }
 
-    public void PlayAtPoint(int index){
+    public void PlayNewSource(int index){
         AudioSource newSource = gameObject.AddComponent<AudioSource>();
         newSource.clip = sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)];
         Sound sound = sounds[index];
@@ -78,7 +86,7 @@ public class AudioManager : MonoBehaviour{
         newSource.spatialBlend = sound.spacialBlend;
         newSource.Play();
         
-        Destroy(newSource, 5f);
+        Destroy(newSource, newSource.clip.length);
     }
     
 

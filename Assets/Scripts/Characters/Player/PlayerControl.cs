@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using Pathfinding;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,10 @@ public partial class Player : Character{
     private float energy;*/
 
     private GameObject _externalJetpack;
+
+    private ParticleSystem _jetPackEffects;
+    private TrailRenderer _foot1;
+    private TrailRenderer _foot2;
     
     private Slider _energySlider;
     private Slider _overflowSlider;
@@ -71,6 +76,12 @@ public partial class Player : Character{
     protected virtual void ControlStart(){
 
         _externalJetpack = transform.GetChild(2).gameObject;
+        _jetPackEffects = _externalJetpack.transform.GetChild(0).GetComponent<ParticleSystem>();
+        _foot1 = _externalJetpack.transform.GetChild(1).GetComponent<TrailRenderer>(); 
+        _foot2 = _externalJetpack.transform.GetChild(2).GetComponent<TrailRenderer>();        
+
+
+        
         
         _mainCamera = Camera.main;
         _virtualCamera = new CinemachineVirtualCamera[3];
@@ -82,6 +93,7 @@ public partial class Player : Character{
 
         Bindings.Add(KeyCode.LeftShift, UseJetPack);
         Bindings.Add(KeyCode.LeftAlt, Dash);
+        Bindings.Add(KeyCode.Space, Fly);
     }
     
     protected virtual void ControlUpdate(){
@@ -92,6 +104,14 @@ public partial class Player : Character{
             float alpha = _notificationText.color.a;
             if (alpha > 0){
                 SetColor(0, 0, 0, _notificationText.color.a - fadeSpeed);
+            }
+        }
+        
+        
+        if (Input.GetKeyUp(KeyCode.LeftShift)){
+            if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] ||
+                AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
+                AudioManager.PlaySound(22, true, 0);
             }
         }
 
@@ -116,6 +136,17 @@ public partial class Player : Character{
             _virtualCamera[1].Priority = 0;
             _virtualCamera[2].Priority = 0;
         }
+
+        if (Input.GetKey(KeyCode.LeftShift)){
+            _jetPackEffects.Play();
+        }
+        else{
+            _jetPackEffects.Stop();
+        }
+
+        _foot1.emitting = Input.GetKey(KeyCode.Space) && Airborne;
+        _foot2.emitting = Input.GetKey(KeyCode.Space) && Airborne;
+
 
     }
 
@@ -144,25 +175,17 @@ public partial class Player : Character{
     
     private void UseJetPack(){
         Animator.SetBool(_aNames.jumping, true);
-        
-        
-        if (_externalJetpack.activeSelf && Input.GetKey(KeyCode.Space)){
-            _virtualCamera[0].Priority = 0;
-            _virtualCamera[1].Priority = 0;
-            _virtualCamera[2].Priority = 10;
-            
-            Body.constraints = RigidbodyConstraints2D.None;
-            float rotation = GetPlayerToMouseRotation();
-            
-            /*_virtualCamera[2].m_Lens.Dutch = transform.rotation.z * Mathf.Rad2Deg;
-             */
-            
-            transform.rotation = Quaternion.Euler(0, 0, rotation - 90);
-            rotation *= Mathf.Deg2Rad;
-            Body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
+        if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] || AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
+            if (AudioManager.source.time >= AudioManager.source.clip.length - 0.1f)
+                AudioManager.PlaySound(21, true, 0);
         }
-        
         else{
+            AudioManager.PlaySound(20, true, 0);
+        }
+
+        if (!Input.GetKey(KeyCode.Space)){            
+            
+            
             _virtualCamera[0].Priority = 0;
             _virtualCamera[1].Priority = 10;
             _virtualCamera[2].Priority = 0;
@@ -171,10 +194,35 @@ public partial class Player : Character{
             if (Input.GetAxis("Horizontal") != 0){
                 Sprint();
             }
-
-
+        }
+        else{            
+            float rotation = GetPlayerToMouseRotation();
+            rotation *= Mathf.Deg2Rad;
+            Body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
         }
 
+    }
+
+    private void Fly(){
+        if (Airborne){
+            
+            float rotation = GetPlayerToMouseRotation() - 90;
+            
+            /*_virtualCamera[2].m_Lens.Dutch = transform.rotation.z * Mathf.Rad2Deg;
+             */
+         
+            
+            transform.rotation = Quaternion.Euler(0, 0, rotation );
+            Body.constraints = RigidbodyConstraints2D.None;
+
+            
+            
+            
+            _virtualCamera[0].Priority = 0;
+            _virtualCamera[1].Priority = 0;
+            _virtualCamera[2].Priority = 10;
+            
+        }
     }
 
     
@@ -239,6 +287,14 @@ public partial class Player : Character{
     
     public float GetPlayerToMouseRotation(){
         float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
+        if (ang < 0){
+            return 360 + ang;
+        }
+        return ang;
+    }
+  
+    public float GetBarrelToMouseRotation(){
+        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;
         }

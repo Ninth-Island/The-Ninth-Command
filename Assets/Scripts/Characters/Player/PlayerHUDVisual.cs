@@ -96,7 +96,7 @@ public partial class Player : Character
     
     
     private void RotateArm(){
-        float rotation = GetPlayerToMouseRotation();
+        float rotation = GetBarrelToMouseRotation();
 
         if (_armOverride == false){
             _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);

@@ -48,7 +48,7 @@ public partial class Player : Character{
         Jump();
         
         if (Input.GetKey(KeyCode.Mouse0)){
-            primaryWeapon.CheckFire(GetPlayerToMouseRotation() * Mathf.Deg2Rad);
+            primaryWeapon.CheckFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
         }
         
         ControlFixedUpdate();
