@@ -141,7 +141,7 @@ public class NPC : Character{
             Body.velocity = new Vector2(moveSpeed * transform.localScale.x, Body.velocity.y);
         }
         else{
-            _weapon.CheckFire(GetNpcToTargetAngle() * Mathf.Deg2Rad);
+            _weapon.AttemptFire(GetNpcToTargetAngle() * Mathf.Deg2Rad);
         }
     }
 

@@ -7,21 +7,12 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class ProjectileWeapon : BasicWeapon{
-    
-    /*
-   * ================================================================================================================
-   *                                  Projectile Weapon --> Basic Weapon --> Weapon
-     *
-     *   Contains logic for shooting and creating bullets
-     * 
-   * ================================================================================================================
-   */
-    
-    
+
+
     [Header("Projectile Weapon")]
-    [SerializeField] protected float firingDelay;
-    [SerializeField] protected float salvoDelay;
-    [SerializeField] protected float shotsPerSalvo;
+    [SerializeField] protected int shotDelay;
+    [SerializeField] protected int salvoDelay;
+    [SerializeField] protected int shotsPerSalvo;
     
 
     [SerializeField] protected float instability;
@@ -32,46 +23,44 @@ public class ProjectileWeapon : BasicWeapon{
     [SerializeField] protected bool piercing;
 
 
+    private int framesLeftTillNextShot; // has to be counted in physics update for consistent firing
+    private int framesLeftTillNextSalvo;
 
+    private int shotInSolvo;
+
+    private float shootingAngle;
 
     
-    protected bool ReadyToFire = true;
-    protected bool Firing = false;
-    
-    
-    
-    
-    protected IEnumerator Fire(float angle){
-        Firing = true;
-        if (ReadyToFire){
-            for (int i = 0; i < shotsPerSalvo; i++){
+
+    public override void AttemptFire(float angle){
+        shootingAngle = angle;
+        if (framesLeftTillNextSalvo <= 0){
+
+            if (framesLeftTillNextShot <= 0){
+
                 CreateProjectile(angle);
-                SetLoadingState();
-                yield return new WaitForSeconds(firingDelay);
+                HandleMagazineDecrement();
+                RefreshText();
+
+                framesLeftTillNextShot = shotDelay;
+                shotInSolvo++;
+                if (shotInSolvo >= shotsPerSalvo){
+                    framesLeftTillNextSalvo = salvoDelay;
+                    shotInSolvo = 0;
+                }
             }
-            ReadyToFire = false;
-            StartCoroutine(SalvoDelay());
         }
     }
-
-
-    private void CreateProjectile(float angle){
-        Subtract();
-        RefreshText();
+    
+    
+    
+    
+    protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetCollider()); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
-        //projectile.GetComponent<Rigidbody2D>().velocity = wielder.GetBody().velocity;
         projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
     }
-    
-    private IEnumerator SalvoDelay(){
-        yield return new WaitForSeconds(salvoDelay);
-        ReadyToFire = true;
-        Firing = false;
-    }
-
-    
 
     protected override void Start(){
         base.Start();
@@ -84,5 +73,15 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void Update(){
         base.Update();
+    }
+
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
+        if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
+            AttemptFire(shootingAngle);
+            
+        }
+        framesLeftTillNextShot--;
+        framesLeftTillNextSalvo--;
     }
 }

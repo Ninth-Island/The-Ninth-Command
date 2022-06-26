@@ -48,7 +48,7 @@ public partial class Player : Character{
         Jump();
         
         if (Input.GetKey(KeyCode.Mouse0)){
-            primaryWeapon.CheckFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+            primaryWeapon.AttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
         }
         
         ControlFixedUpdate();
@@ -66,7 +66,9 @@ public partial class Player : Character{
         CheckSwap();
         
         CheckCrouch();
-        primaryWeapon.CheckReload();
+        if (Input.GetKey(KeyCode.R)){
+            primaryWeapon.Reload();
+        }
         RotateArm();
         
         ControlUpdate();
@@ -145,10 +147,12 @@ public partial class Player : Character{
                 secondaryWeapon.SetSpriteRenderer(true);
             }
 
-            primaryWeapon.SetLoadingState();
+            primaryWeapon.Ready();
 
             (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
+            secondaryWeapon.activelyWielded = false;
+            primaryWeapon.activelyWielded = true;
             primaryWeapon.PickUp(this);
             UpdateHUD();
         }

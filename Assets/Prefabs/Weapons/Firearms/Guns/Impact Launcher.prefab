@@ -215,17 +215,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteLayer: 0
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  looping: 0
   offset: {x: 1.059, y: 0.525}
   armType: 5
   cursorType: 12
   allowInterrupt: 0
-  firingDelay: 0
-  salvoDelay: 1.5
+  firingPoint: {fileID: 0}
+  activelyWielded: 0
+  looping: 0
+  shotDelay: 0
+  salvoDelay: 80
   shotsPerSalvo: 1
   instability: 0
   projectileTemplate: {fileID: 5345319634674317827, guid: 2adc6301e3659ab4cace4d850949fdac,
@@ -233,12 +236,11 @@ MonoBehaviour:
   projectileDamage: 1
   projectileSpeed: 100
   piercing: 0
-  firingPoint: {fileID: 0}
   magazinesLeft: 100
   magazineSize: 2
   reloadTime: 2
   bulletShell: {fileID: 0}
-  reloading: 0
+  bulletsLeft: 2
 --- !u!114 &5803456964464056648
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -24,31 +24,22 @@ public class EnergyWeapon : ProjectileWeapon{
     public float _heat = 0;
 
     private bool _isCooling;
-    
-    
-    /*
-     * ================================================================================================================
-     *                                               Firing Stuff
-     * ================================================================================================================
-     */
 
-    public override void CheckFire(float angle){
-        if (_energy > 0 && _heat < 100 && !Firing && !_isCooling){
-            StartCoroutine(Fire(angle));
+
+    public override void AttemptFire(float angle){
+        if (!_isCooling){
+            if (_energy >= percentagePerShot){
+                base.AttemptFire(angle);
+            }
         }
     }
 
 
-    /*
-     * ================================================================================================================
-     *                                               Cooling
-     * ================================================================================================================
-     */
-    
-    
     protected override void Update(){
         base.Update();
-        RefreshText();
+        if (activelyWielded){
+            RefreshText();
+        }
     }
 
     protected override void FixedUpdate(){
@@ -69,21 +60,21 @@ public class EnergyWeapon : ProjectileWeapon{
         
     }
 
-    public override void CheckReload(){
+    public override void Reload(){
         
-        if (Input.GetKeyDown(KeyCode.R) && !_isCooling && _heat > 10){
+        if (!_isCooling && _heat > 10){
             _isCooling = true;
             wielder.Reload();
             
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            base.CheckReload();
+            base.Reload();
         }
     }
     
 
-    protected override void Subtract(){
-        base.Subtract();
+    protected override void HandleMagazineDecrement(){
+        base.HandleMagazineDecrement();
         
         AudioManager.source.pitch = 1 + (_heat / 75);
         _energy -= percentagePerShot;
@@ -98,12 +89,6 @@ public class EnergyWeapon : ProjectileWeapon{
         }
     }
     
-    
-    /*
-    * ================================================================================================================
-    *                                               Other
-    * ================================================================================================================
-    */
 
     public override void RefreshText(){
         if (wielder){

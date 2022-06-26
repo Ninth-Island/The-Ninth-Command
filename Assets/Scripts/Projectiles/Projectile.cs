@@ -61,7 +61,6 @@ public class Projectile : CustomObject{
     
 
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        Debug.Log(other.gameObject);
         if (sticky){
             transform.parent = other.gameObject.transform;
             Body.velocity = new Vector2(0, 0);

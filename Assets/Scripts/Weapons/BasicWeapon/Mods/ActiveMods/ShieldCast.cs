@@ -8,7 +8,7 @@ public class ShieldCast : ActiveMod{
     protected override void Start(){
         base.Start();
         
-        transform.position = WeaponAttachedTo.firingPoint.transform.position;
+//        transform.position = WeaponAttachedTo.firingPoint.transform.position;
 
         _renderer = GetComponent<SpriteRenderer>();
     }

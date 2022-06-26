@@ -37,18 +37,16 @@ public class ChargingWeapon : ProjectileWeapon
      * ================================================================================================================
      */
 
-    public override void CheckFire(float angle){
-        ;
-        if (energy > 0 && heat < 100 && !Firing && !coolingDown){
+    public override void AttemptFire(float angle){
+        if (energy > 0 && heat < 100 && !coolingDown){
             heat += chargePerFrame;
             AudioManager.source.Stop();
             
-            //AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
+            AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
 
             hasReleased = false;
             if (heat >= 100){
-                AudioManager.PlaySound(1, false, 0);
-                StartCoroutine(Fire(angle));
+                base.AttemptFire(angle);
             }
         }
         
@@ -65,7 +63,7 @@ public class ChargingWeapon : ProjectileWeapon
     protected override void Update(){
         base.Update();
         
-        if (!coolingDown && !hasReleased){
+        if (!coolingDown && !hasReleased && Input.GetKeyUp(KeyCode.Mouse0)){
             AudioManager.source.Stop();
             AudioManager.PlaySound(5, false, 0);
             hasReleased = true;
@@ -82,6 +80,11 @@ public class ChargingWeapon : ProjectileWeapon
             if (!coolingDown){ // so that after firing it cools down slower than before firing
                 heat -= cooldownSpeed;
             }
+            else{
+                if (heat == 80){
+                    AudioManager.PlaySound(1, false, 0);
+                }
+            }
 
             if (heat <= 0){
                 coolingDown = false;
@@ -93,13 +96,12 @@ public class ChargingWeapon : ProjectileWeapon
             
     }
 
-    public override void CheckReload(){
-        
+    public override void Reload(){  
     }
     
 
-    protected override void Subtract(){
-        base.Subtract();
+    protected override void HandleMagazineDecrement(){
+        base.HandleMagazineDecrement();
         energy -= percentagePerShot;
         heat = 100;
         coolingDown = true;

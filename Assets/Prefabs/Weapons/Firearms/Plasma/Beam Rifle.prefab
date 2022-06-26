@@ -163,16 +163,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a385d820f80c64086cd9a99309ad0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteLayer: 0
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  looping: 0
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 16
-  audioRepeating: 0
-  firingDelay: 0
+  allowInterrupt: 0
+  firingPoint: {fileID: 0}
+  activelyWielded: 0
+  looping: 0
+  shotDelay: 80
   salvoDelay: 1
   shotsPerSalvo: 1
   instability: 0
@@ -181,11 +184,10 @@ MonoBehaviour:
   projectileDamage: 1
   projectileSpeed: 300
   piercing: 0
-  firingPoint: {fileID: 0}
   percentagePerShot: 5
   heatPerShot: 50
   coolDown: 0.5
-  _energy: 0
+  _energy: 100
   _heat: 0
 --- !u!114 &3432605731686139888
 MonoBehaviour:
