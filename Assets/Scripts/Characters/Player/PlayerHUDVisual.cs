@@ -49,10 +49,12 @@ public partial class Player : Character
         
         
         // for the sprites that rotate and recolor and stuff
+
         _arm = transform.GetChild(1).transform.GetChild(5);
         Helmet = transform.GetChild(1).transform.GetChild(4);
 
         _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
+        spriteLayer = _armRenderer.sortingLayerID;
 
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
@@ -119,14 +121,18 @@ public partial class Player : Character
         _armRenderer.sprite = ArmTypes[armType];
     }
 
-    public void SetArmRotation(Vector2 restingSwinging){ // for melee weapons
+    public override void Reload(){ // for melee weapons
         _armOverride = true;
-        _arm.transform.rotation = Quaternion.Euler(0, 0, restingSwinging.x);
+        _arm.transform.rotation = Quaternion.Euler(0, 0, -30);
         if (Mathf.Sign(transform.localScale.x) == -1){
-            _arm.transform.rotation = Quaternion.Euler(0, 0, restingSwinging.y);
+            _arm.transform.rotation = Quaternion.Euler(0, 0, -150);
 
         }
         _arm.transform.localScale = new Vector3(1, 1);
+    }
+
+    public override void FinishReload(){
+        _armOverride = false;
     }
 
     

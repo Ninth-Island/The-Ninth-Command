@@ -20,8 +20,8 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private float reloadTime;
     [SerializeField] private GameObject bulletShell;
     
+    [SerializeField]    private int bulletsLeft;
     public bool reloading;
-    private int _bulletsLeft;
     
     
     /*
@@ -32,7 +32,6 @@ public class BulletWeapon : ProjectileWeapon{
     
     protected override void Start(){
         base.Start();
-        _bulletsLeft = magazineSize;
     }
 
 
@@ -42,13 +41,13 @@ public class BulletWeapon : ProjectileWeapon{
 
 
     public override void CheckFire(float angle){
-        if (_bulletsLeft > 0 && !reloading && !Firing){
+        if (bulletsLeft > 0 && !reloading && !Firing){
             StartCoroutine(Fire(angle));
             if (bulletShell){
                 Destroy(Instantiate(bulletShell, transform.position, transform.rotation), 1f);
             } 
         }
-        else if (!reloading && _bulletsLeft <= 0){
+        else if (!reloading && bulletsLeft <= 0){
             if (magazinesLeft > 0){
                 StartReloading();
             }
@@ -60,8 +59,8 @@ public class BulletWeapon : ProjectileWeapon{
 
     
     public IEnumerator Reload(){
+        wielder.Reload();
         if (magazinesLeft > 0){
-
             wielder.SetReloadingText("Reloading...");
             base.CheckReload();
 
@@ -71,10 +70,11 @@ public class BulletWeapon : ProjectileWeapon{
             AudioManager.PlaySound(2, false, 0);
             
             
-            _bulletsLeft = magazineSize;
+            bulletsLeft = magazineSize;
             reloading = false;
             magazinesLeft--;
             RefreshText();
+            wielder.FinishReload();
         }
     }
 
@@ -97,7 +97,7 @@ public class BulletWeapon : ProjectileWeapon{
     }
 
     public override void CheckReload(){
-        if (Input.GetKeyDown(KeyCode.R) && magazineSize != _bulletsLeft && !reloading){
+        if (Input.GetKeyDown(KeyCode.R) && magazineSize != bulletsLeft && !reloading){
             StartReloading();
         }
     }
@@ -110,7 +110,7 @@ public class BulletWeapon : ProjectileWeapon{
 
     protected override void Subtract(){
         base.Subtract();
-        _bulletsLeft--;
+        bulletsLeft--;
     }
     
     /*
@@ -121,7 +121,7 @@ public class BulletWeapon : ProjectileWeapon{
 
     public override void RefreshText(){
         if (wielder){
-            wielder.SetWeaponValues(magazinesLeft, magazineSize, _bulletsLeft, 0, 0, 1);
+            wielder.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, 0, 0, 1);
         }
     }
 
@@ -132,7 +132,7 @@ public class BulletWeapon : ProjectileWeapon{
    */
 
     public int GetBulletsLeft(){
-        return _bulletsLeft;
+        return bulletsLeft;
     }
     public int GetMagazineSize(){
         return magazineSize;

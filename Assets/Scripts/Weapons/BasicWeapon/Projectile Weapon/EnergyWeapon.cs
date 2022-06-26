@@ -64,6 +64,7 @@ public class EnergyWeapon : ProjectileWeapon{
 
             _isCooling = false;
             AudioManager.PlaySound(2, false, 0);
+            wielder.FinishReload();
         }
         
     }
@@ -72,6 +73,7 @@ public class EnergyWeapon : ProjectileWeapon{
         
         if (Input.GetKeyDown(KeyCode.R) && !_isCooling && _heat > 10){
             _isCooling = true;
+            wielder.Reload();
             
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;

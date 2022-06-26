@@ -151,7 +151,6 @@ public partial class Player : Character{
 
             primaryWeapon.PickUp(this);
             UpdateHUD();
-            _armOverride = false;
         }
     }
     

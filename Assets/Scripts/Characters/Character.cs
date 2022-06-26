@@ -126,6 +126,14 @@ public class Character : CustomObject{
         // do some knocked stuff
         // rework animations;
     }
+
+    public virtual void Reload(){
+        
+    }
+
+    public virtual void FinishReload(){
+        
+    }
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
         

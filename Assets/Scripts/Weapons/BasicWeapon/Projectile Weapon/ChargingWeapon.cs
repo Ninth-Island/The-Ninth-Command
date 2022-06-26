@@ -86,6 +86,9 @@ public class ChargingWeapon : ProjectileWeapon
             if (heat <= 0){
                 coolingDown = false;
                 heat = 0;
+                if (wielder){
+                    wielder.FinishReload();
+                }
             }
             
     }
@@ -100,6 +103,7 @@ public class ChargingWeapon : ProjectileWeapon
         energy -= percentagePerShot;
         heat = 100;
         coolingDown = true;
+        wielder.Reload();
     }
     
     /*

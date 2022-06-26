@@ -15,6 +15,8 @@ public class NPC : Character{
 
     private GameObject pivotPoint;
     public BasicWeapon _weapon;
+
+    public SpriteRenderer _SpriteRenderer;
     
     private GameObject healthBG;
     private GameObject healthFill;
@@ -27,7 +29,8 @@ public class NPC : Character{
 
     protected override void Start(){
         base.Start();
-
+        _SpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        spriteLayer = _SpriteRenderer.sortingLayerID;
         pivotPoint = transform.GetChild(1).GetChild(0).gameObject;
         _weapon = pivotPoint.transform.GetChild(3).GetComponent<BasicWeapon>();
 
