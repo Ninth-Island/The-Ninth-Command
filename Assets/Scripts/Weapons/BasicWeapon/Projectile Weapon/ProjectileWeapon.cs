@@ -61,7 +61,7 @@ public class ProjectileWeapon : BasicWeapon{
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetCollider()); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
-        projectile.GetComponent<Rigidbody2D>().velocity = wielder.GetBody().velocity;
+        //projectile.GetComponent<Rigidbody2D>().velocity = wielder.GetBody().velocity;
         projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
     }
     

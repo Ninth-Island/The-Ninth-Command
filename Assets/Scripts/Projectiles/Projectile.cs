@@ -38,6 +38,10 @@ public class Projectile : CustomObject{
         
     }
 
+    protected override void FixedUpdate(){
+        
+    }
+
     protected override void Start(){
         base.Start();
     }
@@ -57,6 +61,7 @@ public class Projectile : CustomObject{
     
 
     protected virtual void OnCollisionEnter2D(Collision2D other){
+        Debug.Log(other.gameObject);
         if (sticky){
             transform.parent = other.gameObject.transform;
             Body.velocity = new Vector2(0, 0);
@@ -84,11 +89,11 @@ public class Projectile : CustomObject{
         gameObject.name = name + " " + gameObject;
         gameObject.layer = firedLayer - 4;
         _firedLayer = firedLayer;
-        //Body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
-        Awake();
-        Body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
-        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         _piercing = piercing;
+        
+        Awake();
+        Body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
+        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
     }
     
     /*
