@@ -46,7 +46,7 @@ public class CursorControl : MonoBehaviour{
     public void SetCursorType(int type){ ;
         Cursor.SetCursor(Images[type], new Vector2(32, 32), CursorMode.ForceSoftware);
     }
-    public Vector2 GetMousePosition(){
+    public Vector3 GetMousePosition(){
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
     }
 

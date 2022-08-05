@@ -208,11 +208,9 @@ public partial class Player : Character{
             
             float rotation = GetPlayerToMouseRotation() - 90;
             
-            /*_virtualCamera[2].m_Lens.Dutch = transform.rotation.z * Mathf.Rad2Deg;
-             */
-         
-            
-            transform.rotation = Quaternion.Euler(0, 0, rotation );
+            //_virtualCamera[2].m_Lens.Dutch = transform.rotation.z * Mathf.Rad2Deg;
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, rotation), 16);
             body.constraints = RigidbodyConstraints2D.None;
 
             
@@ -286,6 +284,9 @@ public partial class Player : Character{
     
     
     public float GetPlayerToMouseRotation(){
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 3f){
+            return 0;
+        }
         float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;
@@ -294,6 +295,9 @@ public partial class Player : Character{
     }
   
     public float GetBarrelToMouseRotation(){
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 12f){
+            return 0;
+        }
         float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;

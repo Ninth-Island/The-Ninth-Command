@@ -104,6 +104,14 @@ public partial class Player : Character
             _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             _arm.transform.localScale = new Vector3(1, 1);
         }
+        else{
+            _arm.transform.localRotation = Quaternion.Euler(0, 0, -30);
+            if (Mathf.Sign(transform.localScale.x) < 0){
+                _arm.transform.rotation = Quaternion.Euler(0, 0, -150);
+    
+            }
+            _arm.transform.localScale = new Vector3(1, 1);
+        }
 
         Helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
         Helmet.transform.localScale = new Vector3(1, 1);
@@ -123,12 +131,6 @@ public partial class Player : Character
 
     public override void Reload(){ // for melee weapons
         _armOverride = true;
-        _arm.transform.rotation = Quaternion.Euler(0, 0, -30);
-        if (Mathf.Sign(transform.localScale.x) == -1){
-            _arm.transform.rotation = Quaternion.Euler(0, 0, -150);
-
-        }
-        _arm.transform.localScale = new Vector3(1, 1);
     }
 
     public override void FinishReload(){

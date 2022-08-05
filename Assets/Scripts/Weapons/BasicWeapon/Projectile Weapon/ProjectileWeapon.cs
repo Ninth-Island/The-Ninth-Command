@@ -47,7 +47,6 @@ public class ProjectileWeapon : BasicWeapon{
                 if (shotInSolvo >= shotsPerSalvo){
                     framesLeftTillNextSalvo = salvoDelay;
                     shotInSolvo = 0;
-                    Debug.Log(shotInSolvo);
 
                 }
             }
