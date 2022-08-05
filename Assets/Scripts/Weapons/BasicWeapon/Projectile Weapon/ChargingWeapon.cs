@@ -23,7 +23,6 @@ public class ChargingWeapon : ProjectileWeapon
     [SerializeField] float percentagePerShot;
 
     [SerializeField] protected float energy;
-    [SerializeField] private float earlyCutoff;
 
     public float heat = 0;
     public bool coolingDown;
@@ -40,12 +39,12 @@ public class ChargingWeapon : ProjectileWeapon
     public override void AttemptFire(float angle){
         if (energy > 0 && heat < 100 && !coolingDown){
             heat += chargePerFrame;
-            AudioManager.source.Stop();
             
-            //AudioManager.PlaySound(4, true, (AudioManager.sounds[4].clipsList[0].length - earlyCutoff) / 105 * heat);
+            AudioManager.PlayConstant(4, false, heat / 100f);
 
             hasReleased = false;
             if (heat >= 100){
+                AudioManager.source.Stop();
                 base.AttemptFire(angle);
             }
         }
@@ -65,7 +64,7 @@ public class ChargingWeapon : ProjectileWeapon
         
         if (!coolingDown && !hasReleased && Input.GetKeyUp(KeyCode.Mouse0)){
             AudioManager.source.Stop();
-            AudioManager.PlaySound(5, false, 0);
+            AudioManager.PlaySound(5, false);
             hasReleased = true;
         }
         RefreshText();
@@ -82,7 +81,7 @@ public class ChargingWeapon : ProjectileWeapon
             }
             else{
                 if (heat == 80){
-                    AudioManager.PlaySound(1, false, 0);
+                    AudioManager.PlaySound(1, false);
                 }
             }
 
@@ -103,9 +102,11 @@ public class ChargingWeapon : ProjectileWeapon
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         energy -= percentagePerShot;
-        heat = 100;
-        coolingDown = true;
-        wielder.Reload();
+        heat = 100f / shotsPerSalvo;
+        if (heat >= 100){
+            coolingDown = true;
+            wielder.Reload();
+        }
     }
     
     /*

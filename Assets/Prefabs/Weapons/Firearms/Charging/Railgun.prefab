@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.5, y: 0.1, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2121412993837453776}
   m_RootOrder: 0
@@ -63,6 +64,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3117667432633647728}
   - {fileID: 4065650770048115915}
@@ -80,6 +82,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -200,16 +203,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a17de3c158fe7b4f904c6e8ab41a81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteLayer: 0
+  body: {fileID: 0}
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  looping: 0
   offset: {x: 2.08, y: -0.15}
   armType: 0
   cursorType: 19
-  audioRepeating: 0
-  firingDelay: 0
+  allowInterrupt: 0
+  firingPoint: {fileID: 3117667432633647728}
+  activelyWielded: 0
+  looping: 0
+  shotDelay: 0
   salvoDelay: 0
   shotsPerSalvo: 1
   instability: 0
@@ -218,12 +225,10 @@ MonoBehaviour:
   projectileDamage: 1
   projectileSpeed: 800
   piercing: 0
-  firingPoint: {fileID: 0}
-  chargePerFrame: 1.8
+  chargePerFrame: 5
   cooldownSpeed: 1
   percentagePerShot: 6.67
   energy: 100
-  earlyCutoff: 0
   heat: 0
   coolingDown: 0
 --- !u!114 &-1659618350095441506
@@ -238,6 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d08c3fe5ff1f7814caef6759baa2f70e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteLayer: 0
+  body: {fileID: 0}
   forcedOn: 0
   zoomIncrements: 1
   zoomRange: 50
@@ -260,7 +267,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ea3aa8a2268359f4ca0d54f56fa04416, type: 3}
     - {fileID: 8300000, guid: bf721d970fb44d14b82a7cd98423b0fd, type: 3}
     - {fileID: 8300000, guid: 9db5ed8e3515e6a41ad295ae398ee4c8, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -272,7 +279,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b345dfcd3b1b4434eb2cca63d163bcec, type: 3}
     - {fileID: 8300000, guid: 4c194917e48460a46a0f7d492171c5f9, type: 3}
     - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -284,7 +291,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b345dfcd3b1b4434eb2cca63d163bcec, type: 3}
     - {fileID: 8300000, guid: 4c194917e48460a46a0f7d492171c5f9, type: 3}
     - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -293,7 +300,7 @@ MonoBehaviour:
   - name: Dry Fire
     clipsList:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128

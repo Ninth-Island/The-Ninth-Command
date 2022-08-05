@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.4, y: 0.25, z: 0}
   m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8609765344648067617}
   m_RootOrder: 0
@@ -62,6 +63,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3587849483105588378}
   m_Father: {fileID: 0}
@@ -78,6 +80,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -202,6 +205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteLayer: 0
+  body: {fileID: 0}
   pickupRange: 5
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
@@ -244,7 +248,7 @@ MonoBehaviour:
   - name: Fire
     clipsList:
     - {fileID: 8300000, guid: 48e88564b75e30946861c643be5ed0d9, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -255,7 +259,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1df8c1136540bf24281861a1037a9c38, type: 3}
     - {fileID: 8300000, guid: e498ea769f16e714e83e65711b5eecd5, type: 3}
     - {fileID: 8300000, guid: d1eb31b87ec20354ebad599cd273ff8d, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -266,7 +270,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0874f037818114340a5c1d478c55b607, type: 3}
     - {fileID: 8300000, guid: 05f91bf250b1cd747890add3e56dc409, type: 3}
     - {fileID: 8300000, guid: f17aa17f99b2e4748a49ff19105841e6, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128

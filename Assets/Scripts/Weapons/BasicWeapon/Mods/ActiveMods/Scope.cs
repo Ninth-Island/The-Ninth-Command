@@ -46,10 +46,10 @@ public class Scope : ActiveMod{
                 _multiplier = Mathf.Clamp(_multiplier + (sign * _incrementSize / zoomRange), 0, 1);
                 
                 if (sign > 0){
-                    AudioManager.PlaySound(0, false, 0);
+                    AudioManager.PlaySound(0, false);
                 }
                 else if (sign < 0){
-                    AudioManager.PlaySound(1, false, 0);
+                    AudioManager.PlaySound(1, false);
                 }
             }
             

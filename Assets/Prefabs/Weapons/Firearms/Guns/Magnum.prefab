@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1, y: 0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8529665086193386106}
   m_RootOrder: 0
@@ -62,6 +63,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 52176133151466104}
   m_Father: {fileID: 0}
@@ -78,6 +80,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -200,6 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteLayer: 0
+  body: {fileID: 0}
   pickupRange: 5
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
@@ -245,7 +249,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b66713d864038f441b98eef565f66176, type: 3}
     - {fileID: 8300000, guid: 1884d307bd4ce9047b1d2a6480e0ceb9, type: 3}
     - {fileID: 8300000, guid: 001ce8b7d6a4c764ba1690804fd042b0, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -256,7 +260,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c03cb3793624b354281729bc8cc0b29f, type: 3}
     - {fileID: 8300000, guid: 2bd756143f34a8143a26c8d1e499f689, type: 3}
     - {fileID: 8300000, guid: 69b2eaf7d17e32f42bc45aebd66a1a3d, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -266,7 +270,7 @@ MonoBehaviour:
     clipsList:
     - {fileID: 8300000, guid: 5a21a73a69d16a3499f243ce14617591, type: 3}
     - {fileID: 8300000, guid: 2dc21b6154ab97c4cb82818cc1af627f, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0

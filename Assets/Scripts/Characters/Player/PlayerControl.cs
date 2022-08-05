@@ -111,7 +111,7 @@ public partial class Player : Character{
         if (Input.GetKeyUp(KeyCode.LeftShift)){
             if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] ||
                 AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
-                AudioManager.PlaySound(22, true, 0);
+                AudioManager.PlaySound(22, true);
             }
         }
 
@@ -177,10 +177,10 @@ public partial class Player : Character{
         Animator.SetBool(_aNames.jumping, true);
         if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] || AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
             if (AudioManager.source.time >= AudioManager.source.clip.length - 0.1f)
-                AudioManager.PlaySound(21, true, 0);
+                AudioManager.PlaySound(21, true);
         }
         else{
-            AudioManager.PlaySound(20, true, 0);
+            AudioManager.PlaySound(20, true);
         }
 
         if (!Input.GetKey(KeyCode.Space)){            

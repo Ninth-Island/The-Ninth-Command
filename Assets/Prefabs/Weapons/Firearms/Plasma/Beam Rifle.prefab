@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5033598130610121201}
   - {fileID: 7272172829926962526}
@@ -49,6 +50,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -164,29 +166,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteLayer: 0
+  body: {fileID: 7449028600429464256}
   pickupRange: 8
   wielder: {fileID: 0}
-  AudioManager: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  AudioManager: {fileID: 3432605731686139888}
+  spriteRenderer: {fileID: 7449028600429464257}
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 16
   allowInterrupt: 0
-  firingPoint: {fileID: 0}
-  activelyWielded: 0
+  firingPoint: {fileID: 5033598130610121201}
+  activelyWielded: 1
   looping: 0
-  shotDelay: 80
+  shotDelay: 60
   salvoDelay: 1
   shotsPerSalvo: 1
   instability: 0
   projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
     type: 3}
   projectileDamage: 1
-  projectileSpeed: 300
+  projectileSpeed: 1000
   piercing: 0
   percentagePerShot: 5
-  heatPerShot: 50
-  coolDown: 0.5
+  heatPerShot: 70
+  coolDown: 0.75
   _energy: 100
   _heat: 0
 --- !u!114 &3432605731686139888
@@ -206,7 +209,7 @@ MonoBehaviour:
     clipsList:
     - {fileID: 8300000, guid: dff5451d25755c249976cdbd317c687b, type: 3}
     - {fileID: 8300000, guid: 24c679e0b440dd74abfde5c9b15cf722, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -217,7 +220,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 34107c3ed625c7b4ab4643d54427ec4d, type: 3}
     - {fileID: 8300000, guid: d35127bd954c7d74f81f33c73ae5791e, type: 3}
     - {fileID: 8300000, guid: c038f242d54d71544b37cbcc106fabd4, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -228,7 +231,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b4b71d4bcc1393b4d9c1608d5e330f0b, type: 3}
     - {fileID: 8300000, guid: 699de42ad0918de4ebc84df29b45d910, type: 3}
     - {fileID: 8300000, guid: d9bc8db1e9fe88a46bff84f6103893a0, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -366,6 +369,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 2.6, y: -0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7449028600429464261}
   m_RootOrder: 0

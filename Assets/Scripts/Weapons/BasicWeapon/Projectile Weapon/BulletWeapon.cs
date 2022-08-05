@@ -57,7 +57,7 @@ public class BulletWeapon : ProjectileWeapon{
 
 
         yield return new WaitForSeconds(reloadTime);
-        AudioManager.PlaySound(2, false, 0);
+        AudioManager.PlaySound(2, false);
         
         
         bulletsLeft = magazineSize;

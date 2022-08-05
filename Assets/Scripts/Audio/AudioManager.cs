@@ -19,7 +19,7 @@ public class AudioManager : MonoBehaviour{
     }
 
 
-    public void PlayRepeating(int index, float time){
+    public void PlayRepeating(int index, float time){ // for repeated noises that are attempted to be played every frame such as firing
         Sound sound = sounds[index];
         
         if (source.time >= sound.waitTillNext || !source.isPlaying){
@@ -30,7 +30,7 @@ public class AudioManager : MonoBehaviour{
         }
     }
 
-    public void PlaySound(int index, bool allowInterrupt, float time){
+    public void PlaySound(int index, bool allowInterrupt){
         Sound sound = sounds[index];
 
         if (allowInterrupt){
@@ -39,13 +39,7 @@ public class AudioManager : MonoBehaviour{
             source.Play();
         }
         else{
-            if (Math.Abs(sound.volume - source.volume) < 0.01){
-                source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], sound.volume);
-            }
-            else{
-                PlayNewSource(index);
-                return;
-            }
+            source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], sound.volume);
         }
         
         source.volume = sound.volume;
@@ -56,7 +50,8 @@ public class AudioManager : MonoBehaviour{
 
     }
 
-    public void PlayConstant(int index, bool allowInterrupt){
+    public void PlayConstant(int index, bool allowInterrupt, float time){ // for sounds that ramp up like charging that take time
+        source.Stop();
 
         Sound sound = sounds[index];
         
@@ -70,11 +65,15 @@ public class AudioManager : MonoBehaviour{
             source.spatialBlend = sound.spacialBlend;
 
             source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
+            source.timeSamples = Mathf.RoundToInt(source.clip.samples * Mathf.Clamp(time, 0, 1)) -1;
+
             source.Play();
+            
+            
         }
     }
 
-    public void PlayNewSource(int index){
+    public void PlayNewSource(int index){ // creates a new audio source to avoid interference with main one
         AudioSource newSource = gameObject.AddComponent<AudioSource>();
         newSource.clip = sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)];
         Sound sound = sounds[index];

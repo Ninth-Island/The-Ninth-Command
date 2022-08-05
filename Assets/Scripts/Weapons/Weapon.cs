@@ -55,7 +55,7 @@ public class Weapon : CustomObject{
         Collider = GetComponent<PolygonCollider2D>();
 
 
-        AudioManager = GetComponent<AudioManager>();
+        AudioManager = GetComponent<AudioManager>();    
     }
     
     protected override void Update(){

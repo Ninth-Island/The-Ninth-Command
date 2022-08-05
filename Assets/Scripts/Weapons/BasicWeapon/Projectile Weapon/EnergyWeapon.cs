@@ -54,7 +54,7 @@ public class EnergyWeapon : ProjectileWeapon{
             _heat = 0;
 
             _isCooling = false;
-            AudioManager.PlaySound(2, false, 0);
+            AudioManager.PlaySound(2, false);
             wielder.FinishReload();
         }
         
@@ -84,7 +84,7 @@ public class EnergyWeapon : ProjectileWeapon{
             _heat = 99.9f;
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            AudioManager.PlaySound(1, false, 0);
+            AudioManager.PlaySound(1, false);
             _isCooling = true;
         }
     }

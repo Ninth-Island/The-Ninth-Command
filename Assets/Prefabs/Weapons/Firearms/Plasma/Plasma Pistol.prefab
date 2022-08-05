@@ -32,6 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2055175209179292095}
   m_Father: {fileID: 0}
@@ -48,6 +49,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -154,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteLayer: 0
+  body: {fileID: 0}
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
@@ -197,7 +200,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f43c706e0d7900848a0d762c953fe8a8, type: 3}
     - {fileID: 8300000, guid: b3ef502c45e4e5147a56851570be680f, type: 3}
     - {fileID: 8300000, guid: f16382833b0c3314db4063bd067be3df, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -206,7 +209,7 @@ MonoBehaviour:
   - name: Overheat
     clipsList:
     - {fileID: 8300000, guid: be7eb1185154b2e43a079fdef36d86e0, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -220,7 +223,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0ac7c2f4020b0cf40a0b7e7bfe693689, type: 3}
     - {fileID: 8300000, guid: 8a601ae44f0d8dd4a87a6b3d42aafa97, type: 3}
     - {fileID: 8300000, guid: d7ee8da67213b80449f4a87f9b192504, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -362,6 +365,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.6, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 986607691338267661}
   m_RootOrder: 0

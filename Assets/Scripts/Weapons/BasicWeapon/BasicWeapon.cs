@@ -27,7 +27,7 @@ public class BasicWeapon : Weapon{
     }
     
     protected virtual void HandleMagazineDecrement(){
-        AudioManager.PlaySound(0, allowInterrupt, 0);
+        AudioManager.PlaySound(0, allowInterrupt);
     }
     
 
@@ -36,11 +36,11 @@ public class BasicWeapon : Weapon{
     }
 
     public virtual void Reload(){
-        AudioManager.PlaySound(1, false, 0);
+        AudioManager.PlaySound(1, false);
     }
 
     public virtual void Ready(){
-        AudioManager.PlaySound(2, allowInterrupt, 0);
+        AudioManager.PlaySound(2, allowInterrupt);
         activelyWielded = true;
         RefreshText();
     }
@@ -81,6 +81,9 @@ public class BasicWeapon : Weapon{
     
     protected override void FixedUpdate(){
     }
-    
+
+    private void OnDisable(){
+        AudioManager.source.Stop();
+    }
     
 }

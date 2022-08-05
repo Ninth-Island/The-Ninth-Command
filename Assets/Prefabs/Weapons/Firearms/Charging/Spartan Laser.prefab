@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8546548626594045353}
   m_RootOrder: 0
@@ -62,6 +63,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7749246487177832564}
   - {fileID: 1825439087595302889}
@@ -79,6 +81,7 @@ SpriteRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -213,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spriteLayer: 0
+  body: {fileID: 0}
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
@@ -221,7 +225,7 @@ MonoBehaviour:
   armType: 5
   cursorType: 14
   allowInterrupt: 0
-  firingPoint: {fileID: 0}
+  firingPoint: {fileID: 7749246487177832564}
   activelyWielded: 0
   looping: 0
   shotDelay: 0
@@ -237,7 +241,6 @@ MonoBehaviour:
   cooldownSpeed: 0.5
   percentagePerShot: 20
   energy: 100
-  earlyCutoff: 2
   heat: 0
   coolingDown: 0
 --- !u!114 &7469975935137330819
@@ -258,7 +261,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e3ff451f3cc7b9a4b923b15d05f49cf8, type: 3}
     - {fileID: 8300000, guid: 1f4d7931204df944183915ae0d909f3a, type: 3}
     - {fileID: 8300000, guid: 0f58f31e40d8c5246af20f30f3ddf70e, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -269,7 +272,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c7e427238b06bf74da45d241bf6ddcc8, type: 3}
     - {fileID: 8300000, guid: c9559272cdfc9c94ebe8096bae71a035, type: 3}
     - {fileID: 8300000, guid: 3ddfdf298ada473499fdaba2c690b722, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -280,7 +283,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 00d09e19cc4aca14f80f46ba4a444079, type: 3}
     - {fileID: 8300000, guid: d1bedecbe7411744b9fbc50f75501d81, type: 3}
     - {fileID: 8300000, guid: 52d2ae74ae7151244b38766057b05d5f, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -296,7 +299,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 536cee64ecff049499f5a62a5955fad0, type: 3}
     - {fileID: 8300000, guid: fe36b47c376ef2140910d0f2ad986b7c, type: 3}
     - {fileID: 8300000, guid: e0d3541275e4fbc4f9818876e29a5470, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128

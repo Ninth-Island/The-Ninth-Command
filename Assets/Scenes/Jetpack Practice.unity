@@ -459,7 +459,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9421965, y: 1}
+    m_SensorSize: {x: 1.8921002, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -554,16 +554,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spartan Laser
       objectReference: {fileID: 0}
-    - target: {fileID: 8546548626594045352, guid: ed1810f6f09d7a347baa4a37385093f1,
-        type: 3}
-      propertyPath: wielder
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8546548626594045352, guid: ed1810f6f09d7a347baa4a37385093f1,
-        type: 3}
-      propertyPath: firingPoint
-      value: 
-      objectReference: {fileID: 1041447793}
     - target: {fileID: 8546548626594045353, guid: ed1810f6f09d7a347baa4a37385093f1,
         type: 3}
       propertyPath: m_RootOrder
@@ -1207,7 +1197,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9421965, y: 1}
+    m_SensorSize: {x: 1.8921002, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1594,7 +1584,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9421965, y: 1}
+    m_SensorSize: {x: 1.8921002, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1808,11 +1798,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2121412993837453777, guid: 437307c02a382654280a2fbb6e29d28d,
-        type: 3}
-      propertyPath: projectileSpeed
-      value: 800
-      objectReference: {fileID: 0}
     - target: {fileID: 2121412993837453779, guid: 437307c02a382654280a2fbb6e29d28d,
         type: 3}
       propertyPath: m_Name
@@ -1956,16 +1941,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7449028600429464262, guid: 1b2010b41723d0b44a37a66b5829234c,
-        type: 3}
-      propertyPath: _energy
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7449028600429464262, guid: 1b2010b41723d0b44a37a66b5829234c,
-        type: 3}
-      propertyPath: projectileSpeed
-      value: 1000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b2010b41723d0b44a37a66b5829234c, type: 3}
 --- !u!4 &713732244 stripped
@@ -2069,11 +2044,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1512527297}
     m_Modifications:
-    - target: {fileID: 7220625419050319207, guid: 10088a89e838baf4d822fda5e60b5453,
-        type: 3}
-      propertyPath: sounds.Array.data[0].volume
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7220625419050319208, guid: 10088a89e838baf4d822fda5e60b5453,
         type: 3}
       propertyPath: m_RootOrder
@@ -2131,9 +2101,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7220625419050319212, guid: 10088a89e838baf4d822fda5e60b5453,
         type: 3}
-      propertyPath: firingPoint
-      value: 
-      objectReference: {fileID: 1736042293}
+      propertyPath: shotDelay
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7220625419050319213, guid: 10088a89e838baf4d822fda5e60b5453,
         type: 3}
       propertyPath: m_Name
@@ -2852,12 +2822,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1345449498}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1041447793 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7749246487177832564, guid: ed1810f6f09d7a347baa4a37385093f1,
-    type: 3}
-  m_PrefabInstance: {fileID: 208911842}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1071105814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4701203294938990909, guid: eb258fcdc2b17514eae15748433828af,
@@ -3073,11 +3037,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Storm Rifle (unused cuz of plasma rifle)
-      objectReference: {fileID: 0}
-    - target: {fileID: 5424993723957404761, guid: dd9baa4cd0593f544bb0bf19cc92b465,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd9baa4cd0593f544bb0bf19cc92b465, type: 3}
@@ -3718,12 +3677,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1736042293 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6490357384886991533, guid: 10088a89e838baf4d822fda5e60b5453,
-    type: 3}
-  m_PrefabInstance: {fileID: 790720386}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1821863709
 PrefabInstance:
   m_ObjectHideFlags: 0
