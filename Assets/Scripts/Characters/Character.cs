@@ -70,7 +70,7 @@ public class Character : CustomObject{
         base.FixedUpdate();
         
         FallingKnocked = true;
-        if (Math.Abs(Body.velocity.x) < moveSpeed * 1.2){
+        if (Math.Abs(body.velocity.x) < moveSpeed * 1.2){
             FallingKnocked = false;
         }
         
@@ -98,7 +98,7 @@ public class Character : CustomObject{
     
 
     public Rigidbody2D GetBody(){
-        return Body;
+        return body;
     }
     
     public BoxCollider2D GetCollider(){

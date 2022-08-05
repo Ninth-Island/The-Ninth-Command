@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -292,6 +293,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      ArmsWeapon_2: -5643868179137935686
+      ArmsWeapon_0: 2415256495891508668
+      ArmsWeapon_4: 987900064741833492
+      ArmsWeapon_5: -7887873344414462056
+      ArmsWeapon_3: -7378385645948591141
+      ArmsWeapon_1: 7364606866421688543
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

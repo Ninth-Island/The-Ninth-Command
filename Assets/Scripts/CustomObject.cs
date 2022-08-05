@@ -9,15 +9,15 @@ public class CustomObject : MonoBehaviour{
 
     public int spriteLayer;
 
-    protected Rigidbody2D Body;
+    public Rigidbody2D body;
 
     protected virtual void Start(){
-        Body = GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void FixedUpdate(){
-        if (Body && Body.velocity.y < TerminalVelocity){
-            Body.velocity = new Vector2(Body.velocity.x, TerminalVelocity);
+        if (body && body.velocity.y < TerminalVelocity){
+            body.velocity = new Vector2(body.velocity.x, TerminalVelocity);
         }
     }
 

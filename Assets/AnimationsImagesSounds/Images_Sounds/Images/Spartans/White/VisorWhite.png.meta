@@ -168,6 +168,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1300,6 +1301,55 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      VisorWhite_32: 3643066970180467636
+      VisorWhite_39: -8837235119883083390
+      VisorWhite_35: 1415733009806392921
+      VisorWhite_2: -2630934483620907642
+      VisorWhite_17: 2108723342650185968
+      VisorWhite_12: -1729956883012558184
+      VisorWhite_37: -4267523917608284374
+      VisorWhite_24: -6510770046413108301
+      VisorWhite_6: 1848610418247853958
+      VisorWhite_30: -1844546682573466904
+      VisorWhite_28: 5393399063033553695
+      VisorWhite_11: 4841213053045382701
+      VisorWhite_22: 6156507513222205254
+      VisorWhite_13: 4790817153319835093
+      VisorWhite_4: 4169092098607078216
+      VisorWhite_10: 2003549824958275266
+      VisorWhite_34: 6154170273035132817
+      VisorWhite_45: -7755980363794596444
+      VisorWhite_1: 6353353339247569601
+      VisorWhite_47: 6990332814850248106
+      VisorWhite_27: -8792460198065890490
+      VisorWhite_21: 2084099239265177376
+      VisorWhite_36: 8181848027352948583
+      VisorWhite_41: -3507715678426993233
+      VisorWhite_38: 7848648781735104414
+      VisorWhite_0: -3563802433866014338
+      VisorWhite_31: -4817384723154187397
+      VisorWhite_7: -7212713927074661233
+      VisorWhite_3: 4660409204957012035
+      VisorWhite_5: -1714979046047669432
+      VisorWhite_9: 5394002618253973831
+      VisorWhite_33: 7103147058691270930
+      VisorWhite_42: 726253382110935714
+      VisorWhite_15: -41700078461897364
+      VisorWhite_43: -8787506932492705899
+      VisorWhite_8: -3337886140502653083
+      VisorWhite_18: -5380762231370867778
+      VisorWhite_19: -6626109139088077511
+      VisorWhite_23: -8124893364282070011
+      VisorWhite_20: -2773134053227863693
+      VisorWhite_46: -1504941726207303887
+      VisorWhite_26: 8627215541514916840
+      VisorWhite_44: -995480773711537400
+      VisorWhite_16: 2628517406246093778
+      VisorWhite_40: 1709976589459185862
+      VisorWhite_25: 2647397446935308774
+      VisorWhite_29: 2101571569357703180
+      VisorWhite_14: -1268516227518749521
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

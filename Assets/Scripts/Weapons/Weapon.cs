@@ -21,7 +21,7 @@ public class Weapon : CustomObject{
 
     public virtual void PickUp(Character pickedUpBy){
         wielder = pickedUpBy;
-        Body.simulated = false;
+        body.simulated = false;
         spriteRenderer.sortingLayerID = pickedUpBy.spriteLayer;
         spriteRenderer.sortingOrder = 4;
         transform.parent = wielder.gameObject.transform.GetChild(1).transform.GetChild(5);
@@ -29,7 +29,7 @@ public class Weapon : CustomObject{
     }
 
     public virtual void Drop(){
-        Body.simulated = true;
+        body.simulated = true;
         gameObject.layer = LayerMask.NameToLayer("Objects");
         transform.parent = null;
 

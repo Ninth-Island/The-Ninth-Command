@@ -15,7 +15,7 @@ public class Brute : NPC{
         base.Update();
         
         Animator.SetBool(_aNames.Running, false);
-        if (Math.Abs(Body.velocity.x) > 0 && !Airborne){
+        if (Math.Abs(body.velocity.x) > 0 && !Airborne){
             Animator.SetBool(_aNames.Running, true);
         }
     }

@@ -51,15 +51,20 @@ public class ProjectileWeapon : BasicWeapon{
             }
         }
     }
-    
-    
-    
-    
+
+
     protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
+        
+        // the projectile visually spawns too far forward so to avoid this, the projectile now spawns BEHIND the firing
+        // point. The collider is disabled for a frame until it reaches the firing point so it looks better now
+        Transform projectileTransform;
+        (projectileTransform = projectile.transform).position -= new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * projectileSpeed / 50f;
+        projectileTransform.position += transform.right * projectileTransform.localScale.x / 4; // dividing by 4 is converting scale units to world units
+
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetCollider()); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
-        projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
+        projectile.StartCoroutine(projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name));
     }
 
     protected override void Start(){

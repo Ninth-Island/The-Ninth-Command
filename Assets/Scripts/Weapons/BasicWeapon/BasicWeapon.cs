@@ -71,7 +71,7 @@ public class BasicWeapon : Weapon{
         
         CursorControl = FindObjectOfType<CursorControl>();
         foreach (Player player in FindObjectsOfType<Player>()){
-            player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, Body)));
+            player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, body)));
         }
     }
 

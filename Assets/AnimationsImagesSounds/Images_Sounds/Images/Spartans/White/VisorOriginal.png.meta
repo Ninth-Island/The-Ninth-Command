@@ -168,6 +168,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1300,6 +1301,55 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      VisorOriginal_21: -6387312354003265224
+      VisorOriginal_23: -5122694657470832320
+      VisorOriginal_36: -1817082932759962550
+      VisorOriginal_22: 1453949134015869967
+      VisorOriginal_2: 3560796970594710348
+      VisorOriginal_20: 5942801551496277312
+      VisorOriginal_34: 7436233560290373383
+      VisorOriginal_37: -1179536129566198583
+      VisorOriginal_33: -6090499541901823913
+      VisorOriginal_6: -5340196428562234196
+      VisorOriginal_25: 2614101216598330576
+      VisorOriginal_44: -8460349387624731796
+      VisorOriginal_41: -6298318777899121735
+      VisorOriginal_10: 5641407043098104609
+      VisorOriginal_47: 9049578870811039666
+      VisorOriginal_15: -2442285753461745105
+      VisorOriginal_27: 935701610670655042
+      VisorOriginal_31: 5233217636346906106
+      VisorOriginal_16: -7384165577039491597
+      VisorOriginal_19: -2377369909923772285
+      VisorOriginal_26: -2438658312645584126
+      VisorOriginal_24: -1513768023158598015
+      VisorOriginal_28: 1317972684788233404
+      VisorOriginal_32: 164645255945221454
+      VisorOriginal_17: -629218558471879306
+      VisorOriginal_18: -5191869007282105142
+      VisorOriginal_13: -3996114147960533733
+      VisorOriginal_9: -7314109181798952166
+      VisorOriginal_11: -5305828099882289358
+      VisorOriginal_1: -8972658242481873906
+      VisorOriginal_7: 3914880368803138800
+      VisorOriginal_38: -8417128859295143045
+      VisorOriginal_12: -7556895385018907843
+      VisorOriginal_8: 3106164295728912775
+      VisorOriginal_40: -3871292136721961674
+      VisorOriginal_0: -8572295344895672839
+      VisorOriginal_42: 6849080087242003195
+      VisorOriginal_3: 6206415758796122355
+      VisorOriginal_4: -953226415319098787
+      VisorOriginal_43: 3466599035916262981
+      VisorOriginal_14: 6722572186997652136
+      VisorOriginal_45: -1159195623619035267
+      VisorOriginal_46: -4364219670868889685
+      VisorOriginal_5: 6012410680547839017
+      VisorOriginal_35: 4595526489504815883
+      VisorOriginal_30: 8965443322810729751
+      VisorOriginal_29: 6703960345036403641
+      VisorOriginal_39: 3330888712648126502
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

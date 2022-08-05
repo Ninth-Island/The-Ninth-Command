@@ -108,6 +108,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -840,6 +841,35 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Basic Mountain Tiles-2.png (2)-1.png_22: -6890813275770683851
+      Basic Mountain Tiles-2.png (2)-1.png_0: 1550516839439501874
+      Basic Mountain Tiles-2.png (2)-1.png_18: 8253965400032780406
+      Basic Mountain Tiles-2.png (2)-1.png_4: -50502844605297344
+      Basic Mountain Tiles-2.png (2)-1.png_5: -3003220710696552109
+      Basic Mountain Tiles-2.png (2)-1.png_3: 2780615803313097474
+      Basic Mountain Tiles-2.png (2)-1.png_25: -681038781984266688
+      Basic Mountain Tiles-2.png (2)-1.png_27: -8046378437397596610
+      Basic Mountain Tiles-2.png (2)-1.png_8: -1524530340255669013
+      Basic Mountain Tiles-2.png (2)-1.png_6: -2108143528363500357
+      Basic Mountain Tiles-2.png (2)-1.png_15: -4992832368122905133
+      Basic Mountain Tiles-2.png (2)-1.png_26: 244351321492069461
+      Basic Mountain Tiles-2.png (2)-1.png_24: 7539339740788468082
+      Basic Mountain Tiles-2.png (2)-1.png_2: -4050663852461068669
+      Basic Mountain Tiles-2.png (2)-1.png_13: 5678152100498453161
+      Basic Mountain Tiles-2.png (2)-1.png_17: 3877697178174289077
+      Basic Mountain Tiles-2.png (2)-1.png_20: 5442301510827324946
+      Basic Mountain Tiles-2.png (2)-1.png_14: 2501926306874664035
+      Basic Mountain Tiles-2.png (2)-1.png_19: -9144230820502207619
+      Basic Mountain Tiles-2.png (2)-1.png_23: 7783841426376963577
+      Basic Mountain Tiles-2.png (2)-1.png_1: 2713887426968615279
+      Basic Mountain Tiles-2.png (2)-1.png_10: 3892722049240835378
+      Basic Mountain Tiles-2.png (2)-1.png_9: -1958087668495093950
+      Basic Mountain Tiles-2.png (2)-1.png_16: -1327402693163561341
+      Basic Mountain Tiles-2.png (2)-1.png_11: 3967313834111285690
+      Basic Mountain Tiles-2.png (2)-1.png_12: 622072611850392637
+      Basic Mountain Tiles-2.png (2)-1.png_21: 222347159840372682
+      Basic Mountain Tiles-2.png (2)-1.png_7: -3090054835776842293
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

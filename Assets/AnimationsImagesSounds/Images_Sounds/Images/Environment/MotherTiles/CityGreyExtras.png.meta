@@ -42,6 +42,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -302,6 +303,13 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      CityExtrasGrey_5: 7849977577963876691
+      CityExtrasGrey_0: 5183856261474784762
+      CityExtrasGrey_4: -8584802925256940541
+      CityExtrasGrey_1: 2706222798134058112
+      CityExtrasGrey_3: -577015888089133832
+      CityExtrasGrey_2: -4826667742666342113
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

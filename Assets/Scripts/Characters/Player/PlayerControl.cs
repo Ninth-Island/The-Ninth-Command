@@ -123,7 +123,7 @@ public partial class Player : Character{
         heat = Mathf.Clamp(heat + heatCharge, 0, MaxHeat);
         energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);*/
 
-        Body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         CheckBindings();
 
@@ -168,7 +168,7 @@ public partial class Player : Character{
 
     
     private void Sprint(){
-        Body.velocity = new Vector2(moveSpeed * sprintAmplifier * Input.GetAxis("Horizontal"), Body.velocity.y);
+        body.velocity = new Vector2(moveSpeed * sprintAmplifier * Input.GetAxis("Horizontal"), body.velocity.y);
         Animator.speed = 1.3f;
     }
     
@@ -190,7 +190,7 @@ public partial class Player : Character{
             _virtualCamera[1].Priority = 10;
             _virtualCamera[2].Priority = 0;
 
-            Body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
+            body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
             if (Input.GetAxis("Horizontal") != 0){
                 Sprint();
             }
@@ -198,7 +198,7 @@ public partial class Player : Character{
         else{            
             float rotation = GetPlayerToMouseRotation();
             rotation *= Mathf.Deg2Rad;
-            Body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
+            body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
         }
 
     }
@@ -213,7 +213,7 @@ public partial class Player : Character{
          
             
             transform.rotation = Quaternion.Euler(0, 0, rotation );
-            Body.constraints = RigidbodyConstraints2D.None;
+            body.constraints = RigidbodyConstraints2D.None;
 
             
             
@@ -236,7 +236,7 @@ public partial class Player : Character{
             //heat = 0;
             float rotation = GetPlayerToMouseRotation();
             Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
-            Body.velocity = dir * dashVelocity;
+            body.velocity = dir * dashVelocity;
         //}
     }
 

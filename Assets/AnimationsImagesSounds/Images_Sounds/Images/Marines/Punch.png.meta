@@ -44,6 +44,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -278,6 +279,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (3)_1: -6901755988331681657
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (3)_4: -1279779639305421183
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (3)_3: 4281563334536469300
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (3)_2: 8358852572524941718
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (3)_0: -3083844211304365314
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

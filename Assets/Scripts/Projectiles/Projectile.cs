@@ -63,8 +63,8 @@ public class Projectile : CustomObject{
     protected virtual void OnCollisionEnter2D(Collision2D other){
         if (sticky){
             transform.parent = other.gameObject.transform;
-            Body.velocity = new Vector2(0, 0);
-            Body.simulated = false;
+            body.velocity = new Vector2(0, 0);
+            body.simulated = false;
         }
 
         Character character = other.gameObject.GetComponent<Character>();
@@ -72,9 +72,10 @@ public class Projectile : CustomObject{
             character.Hit(this);
         }
         
-        Body.mass = 1;
+        body.mass = 1;
         _live = false;
         gameObject.layer = LayerMask.NameToLayer("Dead Projectiles");
+        
     }
 
 
@@ -83,16 +84,19 @@ public class Projectile : CustomObject{
       *                                        Set Values for Instantiators
      * ================================================================================================================
      */
-    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+    public virtual IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        _collider.enabled = false;
         _damage = damage;
         gameObject.name = name + " " + gameObject;
         gameObject.layer = firedLayer - 4;
         _firedLayer = firedLayer;
         _piercing = piercing;
-        
+
         Awake();
-        Body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
+        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+        yield return null;
+        _collider.enabled = true;
     }
     
     /*

@@ -42,23 +42,24 @@ public class Explosive : Projectile{
         
 
         if (propulsion){
-            Body.velocity *= 0.01f;
+            body.velocity *= 0.01f;
         }
 
     }
 
-    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
+    public override IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        StartCoroutine(base.SetValues(damage, speed, angle, piercing, firedLayer, name));
         if (_live){
             StartCoroutine(Fuse());
         }
+        yield break;
     }
 
     protected override void FixedUpdate(){
         if (propulsion && _spriteRenderer.enabled){ // if propulsion rocket and active
             
-            if (Body.velocity.magnitude <= 150){
-                Body.velocity *= acceleration;
+            if (body.velocity.magnitude <= 150){
+                body.velocity *= acceleration;
             }
         }
     }
@@ -67,7 +68,7 @@ public class Explosive : Projectile{
     public void Explode(){
        _audioManager.PlaySound(0, false, 0);
         _spriteRenderer.enabled = false;
-        Body.simulated = false;
+        body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject, 1f);
     }
@@ -78,7 +79,7 @@ public class Explosive : Projectile{
      * ================================================================================================================
      */
     IEnumerator Fuse(){
-        Body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         gameObject.layer = _firedLayer - 4;
         yield return new WaitForSeconds(fuseTimer);
         
@@ -100,8 +101,8 @@ public class Explosive : Projectile{
     protected override void OnCollisionEnter2D(Collision2D other){
         if (cat){
             PhysicsMaterial2D material = new PhysicsMaterial2D();
-            material.bounciness = Body.sharedMaterial.bounciness * 1.1f;
-            Body.sharedMaterial = material;
+            material.bounciness = body.sharedMaterial.bounciness * 1.1f;
+            body.sharedMaterial = material;
             
             // don't uncomment this. Don't you dare.
             //_audioManager.PlaySound(0, false, 0);

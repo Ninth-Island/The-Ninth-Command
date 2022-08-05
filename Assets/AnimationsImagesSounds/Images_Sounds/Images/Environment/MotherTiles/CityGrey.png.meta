@@ -102,6 +102,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -839,6 +840,33 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      CityGrey_9: 3531106520361227121
+      CityGrey_10: 448937651772006333
+      CityGrey_6: 8422701346348995738
+      CityGrey_18: 1519657216224236156
+      CityGrey_20: -7149919743409646554
+      CityGrey_1: -8987113788940447682
+      CityGrey_3: -5291433359417740962
+      CityGrey_4: 3857844604231595735
+      CityGrey_25: -3962061430248692324
+      CityGrey_16: -4731364545617606235
+      CityGrey_13: 892200793870159345
+      CityGrey_17: -4042870815547663032
+      CityGrey_14: 7568160150033846158
+      CityGrey_15: 1739296149645190156
+      CityGrey_19: -4588556662732270113
+      CityGrey_21: -6317121918434603020
+      CityGrey_2: 2928039912685618246
+      CityGrey_11: 5625684254446513522
+      CityGrey_8: -5356515556128574773
+      CityGrey_22: 5570961043321119396
+      CityGrey_12: 2133729171166711391
+      CityGrey_23: -2838115126059605530
+      CityGrey_5: -2378408241868934532
+      CityGrey_24: -3718263884553338518
+      CityGrey_0: -7065729104823307196
+      CityGrey_7: 2480486600286389551
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

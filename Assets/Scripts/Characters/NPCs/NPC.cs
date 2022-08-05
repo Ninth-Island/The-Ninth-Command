@@ -103,7 +103,7 @@ public class NPC : Character{
         if (isPatrolling){
             WallCheck();
             GroundCheck();
-            Body.velocity = new Vector2(moveSpeed * transform.localScale.x, Body.velocity.y);
+            body.velocity = new Vector2(moveSpeed * transform.localScale.x, body.velocity.y);
         }
     }
 
@@ -138,7 +138,7 @@ public class NPC : Character{
     private void AttackTarget(){
         if (Vector2.Distance(target.position, transform.position) > attackRange){
             transform.localScale = new Vector3(Mathf.Sign(target.position.x - transform.position.x), 1, 1);
-            Body.velocity = new Vector2(moveSpeed * transform.localScale.x, Body.velocity.y);
+            body.velocity = new Vector2(moveSpeed * transform.localScale.x, body.velocity.y);
         }
         else{
             _weapon.AttemptFire(GetNpcToTargetAngle() * Mathf.Deg2Rad);

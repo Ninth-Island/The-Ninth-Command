@@ -186,6 +186,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -1464,6 +1465,61 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Grassland-1.png_43: -4903202485076143059
+      Grassland-1.png_46: 2397846085540813613
+      Grassland-1.png_28: 3056660573135410840
+      Grassland-1.png_36: 3213861005911744110
+      Grassland-1.png_53: -8378377866900935111
+      Grassland-1.png_5: -1661222774555856579
+      Grassland-1.png_0: 1933224581333651455
+      Grassland-1.png_10: 8770255862575156576
+      Grassland-1.png_32: 8273186198227221279
+      Grassland-1.png_41: -5068219693566362548
+      Grassland-1.png_1: -5656442262910706285
+      Grassland-1.png_24: -8272217965601633952
+      Grassland-1.png_35: 4538604664360124370
+      Grassland-1.png_6: 6674431172001166601
+      Grassland-1.png_12: 4571458614179278773
+      Grassland-1.png_45: 7776006140005510056
+      Grassland-1.png_27: 6837872352787225479
+      Grassland-1.png_26: -6963169790389603914
+      Grassland-1.png_50: -6255860812119618554
+      Grassland-1.png_38: 793630980382867344
+      Grassland-1.png_40: 1354095835240836938
+      Grassland-1.png_25: -4190478189711698352
+      Grassland-1.png_49: 1396418094432846887
+      Grassland-1.png_17: 8327231322717455953
+      Grassland-1.png_30: -2390809510329686328
+      Grassland-1.png_9: 4819539100894475344
+      Grassland-1.png_29: 8612765810524450282
+      Grassland-1.png_13: -2140013491569058955
+      Grassland-1.png_20: -6139996643675747972
+      Grassland-1.png_52: -2971868293721792676
+      Grassland-1.png_48: 4644762331508004746
+      Grassland-1.png_2: 2129587859312718214
+      Grassland-1.png_22: 4729500131956114082
+      Grassland-1.png_34: 5548976072141873232
+      Grassland-1.png_11: -8213403259682324633
+      Grassland-1.png_47: -5030503928410754156
+      Grassland-1.png_3: -6656708226577860368
+      Grassland-1.png_44: -2197813516267741363
+      Grassland-1.png_18: -7298028688261233020
+      Grassland-1.png_33: -5748288694137685070
+      Grassland-1.png_19: -433769852873417848
+      Grassland-1.png_39: 790222727766930008
+      Grassland-1.png_37: -3951151150249931313
+      Grassland-1.png_4: -8543152145266074065
+      Grassland-1.png_8: 3185717640261130341
+      Grassland-1.png_16: -3200257841014724937
+      Grassland-1.png_31: 5744401652844095549
+      Grassland-1.png_15: -8853025717746035016
+      Grassland-1.png_23: -1741842089485645271
+      Grassland-1.png_51: 7571674838200293615
+      Grassland-1.png_42: 4118124583300376079
+      Grassland-1.png_21: 4651927594620820769
+      Grassland-1.png_7: -2192983959095365134
+      Grassland-1.png_14: 9017726792951844112
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

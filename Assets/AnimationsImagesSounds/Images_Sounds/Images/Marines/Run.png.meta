@@ -60,6 +60,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -382,6 +383,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_8: 5672799891193288182
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_7: -8678068550919251951
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_5: -3249729077637233983
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_0: 5143023119165784610
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_4: 381869974263399598
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_1: -8405056415291257092
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_2: 8618409088758114250
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_6: 1672352836710145730
+      halo_series_space_command_sprite_sheet_by_dantewreckmen_999_d95a038-2.png-2.png (1) (2)_3: -5490649559532915603
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

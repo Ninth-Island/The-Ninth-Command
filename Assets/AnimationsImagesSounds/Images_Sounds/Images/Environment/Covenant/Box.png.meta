@@ -40,6 +40,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -252,6 +253,11 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      halo_series_customizable_spartan_sprite_sheet_by_dantewreckmen_999_d95g4bq (1)-2.png (1)_1: -8331776410787678762
+      halo_series_customizable_spartan_sprite_sheet_by_dantewreckmen_999_d95g4bq (1)-2.png (1)_3: 6867917734698227429
+      halo_series_customizable_spartan_sprite_sheet_by_dantewreckmen_999_d95g4bq (1)-2.png (1)_2: 3454035033632713194
+      halo_series_customizable_spartan_sprite_sheet_by_dantewreckmen_999_d95g4bq (1)-2.png (1)_0: 242860568016230268
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

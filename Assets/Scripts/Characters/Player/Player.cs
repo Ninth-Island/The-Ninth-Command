@@ -54,7 +54,7 @@ public partial class Player : Character{
         ControlFixedUpdate();
 
         hardLanding = false;
-        if (Math.Abs(Body.velocity.x) > 20 || Math.Abs(Body.velocity.y) > 70){
+        if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
             hardLanding = true;
         }
         
@@ -92,11 +92,11 @@ public partial class Player : Character{
             Animator.SetBool(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
             
             if (_isCrouching){
-                Body.velocity = new Vector2(moveSpeed / 2 * input, Body.velocity.y);
+                body.velocity = new Vector2(moveSpeed / 2 * input, body.velocity.y);
                 SortSound(2);
             }
             else{
-                Body.velocity = new Vector2(moveSpeed * input, Body.velocity.y);
+                body.velocity = new Vector2(moveSpeed * input, body.velocity.y);
             }
             
         }
@@ -105,12 +105,12 @@ public partial class Player : Character{
     private void Jump(){
         
         if (Input.GetKey(KeyCode.W)){
-            Vector2 velocity = Body.velocity;
+            Vector2 velocity = body.velocity;
             
             // can't use airborne because the player is considered not airborne a few seconds before and after jumping
             if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
                 Airborne = true;
-                Body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
+                body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
                 
                 SortSound(0);
             }
