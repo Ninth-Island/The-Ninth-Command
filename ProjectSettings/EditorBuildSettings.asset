@@ -9,9 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 1053022bf87dbac4fad61a0b23b31425
   - enabled: 1
-    path: Assets/Scenes/Sandbox.unity
+    path: Assets/Scenes/Single Player/Sandbox.unity
     guid: 01f369939ed842b4fb9734742114c6e4
   - enabled: 1
-    path: Assets/Scenes/Jetpack Practice.unity
+    path: Assets/Scenes/Single Player/Jetpack Practice.unity
     guid: 674ed32c007fcc044a6a37388f98889b
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 00f7695a6328fb444b88ca39a103880a
   m_configObjects: {}
