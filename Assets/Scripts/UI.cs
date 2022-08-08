@@ -18,7 +18,24 @@ public class UI : MonoBehaviour
     [SerializeField] private TMP_Text clientError;
     private ushort _port = 7777;
     private string _ipAddress = "127.0.0.1";
-    
+    private NetworkManager _networkManager;
+
+    private VirtualPlayer _player;
+
+
+    private void Start(){
+        _networkManager = NetworkManager.singleton;
+        if (SceneManager.GetActiveScene().name == "Lobby"){
+            StartCoroutine(InitializePlayer());
+        }
+    }
+
+    private IEnumerator InitializePlayer(){
+        yield return new WaitUntil(()=> NetworkClient.isConnected);
+        yield return new WaitUntil(()=> NetworkClient.connection.identity != null);
+        _player = NetworkClient.connection.identity.GetComponent<VirtualPlayer>();
+        Debug.Log(_player);
+    }
 
 
     #region MainMenu
@@ -102,14 +119,15 @@ public class UI : MonoBehaviour
     }
 
     public void AttemptHost(){
-        NetworkManager.singleton.GetComponent<KcpTransport>().Port = _port;
-        NetworkManager.singleton.StartHost();
+        _networkManager.GetComponent<KcpTransport>().Port = _port;
+        _networkManager.StartHost();
     }
     
     public void AttemptClient(){
-        NetworkManager.singleton.networkAddress = _ipAddress;
-        NetworkManager.singleton.GetComponent<KcpTransport>().Port = _port;
+        _networkManager.networkAddress = _ipAddress;
+        _networkManager.GetComponent<KcpTransport>().Port = _port;
         NetworkManager.singleton.StartClient();
+        
     }
 
     #endregion
@@ -117,15 +135,41 @@ public class UI : MonoBehaviour
     
     #region Lobby
 
+    private TMP_Text _overriddenText;
+
     public void SetPlayerTeamPosition(TMP_Text text){
-        text.text = NetworkClient.connection.identity.GetComponent<VirtualPlayer>().username;
+        if (_overriddenText != null){
+            _player.CmdSetTeamIndex(int.Parse(text.name), _overriddenText, text);
+        }
+        _overriddenText = text;
     }
 
     public void SetUsername(string enteredName){
-        NetworkClient.connection.identity.GetComponent<VirtualPlayer>().CmdSetUsername(enteredName);
-        Debug.Log(enteredName);
+        _player.CmdSetUsername(enteredName);
     }
-    
+
+    public void SetColor0(Color color){
+        _player.ClientSetColor(color, 0);
+    }
+    public void SetColor1(Color color){
+        _player.ClientSetColor(color, 1);
+    }
+    public void SetColor2(Color color){
+        _player.ClientSetColor(color, 2);
+    }
+    public void SetColor3(Color color){
+        _player.ClientSetColor(color, 3);
+    }
+
+    public void Disconnect(){
+        if (_player.isClientOnly){
+            _networkManager.StopClient();
+        }
+        else{
+            _networkManager.StopHost();
+        }
+        
+    }
     
     #endregion
 
