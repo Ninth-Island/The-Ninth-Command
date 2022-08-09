@@ -103,13 +103,13 @@ public class UI : MonoBehaviour
     }
 
     public void AttemptHost(){
-        _networkManager.GetComponent<KcpTransport>().Port = _port;
+        _networkManager.GetComponent<TelepathyTransport>().port = _port;
         _networkManager.StartHost();
     }
     
     public void AttemptClient(){
         _networkManager.networkAddress = _ipAddress;
-        _networkManager.GetComponent<KcpTransport>().Port = _port;
+        _networkManager.GetComponent<TelepathyTransport>().port = _port;
         NetworkManager.singleton.StartClient();
         
     }

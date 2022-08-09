@@ -67,9 +67,11 @@ public class LobbyUI : MonoBehaviour
     private bool _isReady;
 
     public void SetPlayerTeamPosition(TMP_Text text){
-        Debug.Log(_player);
         _player.GetPlayerTag().CmdSetTeamIndex(int.Parse(text.name), text);
         text.text = "  Click to Join...";
+        
+        _player.GetPlayerTag().transform.SetParent(text.transform, false);
+        _player.GetPlayerTag().transform.localPosition = Vector3.zero;
     }
 
     public void SetUsername(TMP_InputField enteredName){

@@ -25,7 +25,7 @@ public class PlayerTag : NetworkBehaviour
 
     #region Server
 
-    public override void OnStartServer(){
+    public override void OnStartClient(){
         _username = $"Player {NetworkManager.singleton.numPlayers}";
         _teamIndex = NetworkManager.singleton.numPlayers;
         
@@ -64,8 +64,6 @@ public class PlayerTag : NetworkBehaviour
     public void CmdSetTeamIndex(int teamIndex, TMP_Text text){
         if (teamIndex > 0 && teamIndex< 13){
             _teamIndex = teamIndex;
-            transform.SetParent(text.transform, false);
-            transform.localPosition = Vector3.zero;
             _name.color = text.color;
             if (teamIndex > 6){
                 _preview.transform.localScale = new Vector3(-1, 1, 1);
