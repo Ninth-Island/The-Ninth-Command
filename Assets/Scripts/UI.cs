@@ -9,6 +9,7 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
@@ -20,27 +21,10 @@ public class UI : MonoBehaviour
     private string _ipAddress = "127.0.0.1";
     private NetworkManager _networkManager;
 
-    private VirtualPlayer _player;
-
-
     private void Start(){
-        _networkManager = NetworkManager.singleton;
-        if (SceneManager.GetActiveScene().name == "Lobby"){
-            StartCoroutine(InitializePlayer());
-        }
-    }
+    _networkManager = NetworkManager.singleton;
+}
 
-    private IEnumerator InitializePlayer(){
-        yield return new WaitUntil(()=> NetworkClient.isConnected);
-        yield return new WaitUntil(()=> NetworkClient.connection.identity != null);
-        _player = NetworkClient.connection.identity.GetComponent<VirtualPlayer>();
-        Debug.Log(_player);
-    }
-
-
-    #region MainMenu
-
-    
     public void SetPortHost(string port){
         bool portAvailable = true;
         if (int.TryParse(port, out int validPort)){
@@ -129,49 +113,7 @@ public class UI : MonoBehaviour
         NetworkManager.singleton.StartClient();
         
     }
-
-    #endregion
     
-    
-    #region Lobby
-
-    private TMP_Text _overriddenText;
-
-    public void SetPlayerTeamPosition(TMP_Text text){
-        if (_overriddenText != null){
-            _player.CmdSetTeamIndex(int.Parse(text.name), _overriddenText, text);
-        }
-        _overriddenText = text;
-    }
-
-    public void SetUsername(string enteredName){
-        _player.CmdSetUsername(enteredName);
-    }
-
-    public void SetColor0(Color color){
-        _player.ClientSetColor(color, 0);
-    }
-    public void SetColor1(Color color){
-        _player.ClientSetColor(color, 1);
-    }
-    public void SetColor2(Color color){
-        _player.ClientSetColor(color, 2);
-    }
-    public void SetColor3(Color color){
-        _player.ClientSetColor(color, 3);
-    }
-
-    public void Disconnect(){
-        if (_player.isClientOnly){
-            _networkManager.StopClient();
-        }
-        else{
-            _networkManager.StopHost();
-        }
-        
-    }
-    
-    #endregion
 
     public void ActivatePanel(GameObject panel){
         panel.SetActive(true);
