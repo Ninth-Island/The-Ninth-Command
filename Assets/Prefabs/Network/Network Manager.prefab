@@ -61,7 +61,7 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 1701726687958807885, guid: 6c1e23be0b171e6439237a954765832b, type: 3}
-  playerTagPrefab: {fileID: 1701726687958807885, guid: 6c1e23be0b171e6439237a954765832b,
+  lobbyPlayerPrefab: {fileID: 1701726687958807885, guid: 6c1e23be0b171e6439237a954765832b,
     type: 3}
 --- !u!114 &4626232488469340491
 MonoBehaviour:

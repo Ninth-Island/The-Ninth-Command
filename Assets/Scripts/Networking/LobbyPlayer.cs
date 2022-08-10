@@ -21,6 +21,7 @@ public class LobbyPlayer : NetworkBehaviour{
     private Image[] _previewImages;
 
     private TMP_Text _name;
+    private bool _ready = false;
 
     public event Action<string, int, Color[]> UpdatePlayerInfo;
 
@@ -62,6 +63,8 @@ public class LobbyPlayer : NetworkBehaviour{
             }
         }
 
+        _ready = true;
+
     }
 
 
@@ -90,8 +93,8 @@ public class LobbyPlayer : NetworkBehaviour{
             
             // if these two lines would work on the client it would be BEAUTIFUL
             // this should work, dunno why it doesnt
-            transform.SetParent( _playerJoinButtons[teamIndex - 1].transform, false);
-            transform.localPosition = Vector3.zero;
+            /*transform.SetParent( _playerJoinButtons[teamIndex - 1].transform, false);
+            transform.localPosition = Vector3.zero;*/
         }
     }
 
@@ -127,11 +130,13 @@ public class LobbyPlayer : NetworkBehaviour{
 
     private void ClientHandleChangeTeamIndex(int oldTeamIndex, int newTeamIndex){
         _teamIndex = newTeamIndex;
-        UpdatePlayerInfo?.Invoke(_username, newTeamIndex, _colors);/*
-        transform.SetParent(_playerJoinButtons[newTeamIndex - 1].transform, false);
-        transform.localPosition = Vector3.zero;*/
+        UpdatePlayerInfo?.Invoke(_username, newTeamIndex, _colors);
+        if (_ready){
+            transform.SetParent(_playerJoinButtons[newTeamIndex - 1].transform, false);
+            transform.localPosition = Vector3.zero;
+        }
     }
-    
+
 
     #endregion
 

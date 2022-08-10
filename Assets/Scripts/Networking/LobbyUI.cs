@@ -21,6 +21,7 @@ public class LobbyUI : MonoBehaviour
     private CustomNetworkManager _networkManager;
 
     private VirtualPlayer _player;
+    private List<LobbyPlayer> _lobbyPlayers;
 
     private int _mapChoice;
 
@@ -106,8 +107,12 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    private void UpdatePlayerInfo(string username, int teamIndex, Color[] colors){
+    private void UpdatePlayerInfo(/*GameObject lobbyPlayer, */string username, int teamIndex, Color[] colors){
         Debug.Log("update");
+        
+        /*lobbyPlayer.transform.SetParent(teamJoinButtons[teamIndex - 1].transform, false);
+        lobbyPlayer.transform.localPosition = Vector3.zero;
+        */
         //teamJoinButtons[teamIndex - 1].transform.GetChild(0).GetComponent<TMP_Text>().text = username;
     }
 

@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 5286773521164095312}
   - component: {fileID: 8668462680296714141}
   m_Layer: 5
-  m_Name: Player Tag
+  m_Name: LobbyPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
