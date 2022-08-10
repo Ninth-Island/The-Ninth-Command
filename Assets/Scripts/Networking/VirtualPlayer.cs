@@ -7,15 +7,16 @@ using UnityEngine;
 
 public class VirtualPlayer : NetworkBehaviour{
 
-    private PlayerTag _playerTag;
+    private LobbyPlayer _lobbyPlayer;
 
-    public void SetPlayerTag(PlayerTag playerTag){
-        _playerTag = playerTag;
+    public void SetLobbyPlayer(LobbyPlayer lobbyPlayer){
+        _lobbyPlayer = lobbyPlayer;
     }
 
-    public PlayerTag GetPlayerTag(){
-        return _playerTag;
+    public LobbyPlayer GetLobbyPlayer(){
+        return _lobbyPlayer;
     }
+    
     
     
     

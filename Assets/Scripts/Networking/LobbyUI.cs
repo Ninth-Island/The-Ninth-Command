@@ -34,7 +34,7 @@ public class LobbyUI : MonoBehaviour
     public void ChangeMapChoice(int choice){
         _mapChoice += choice;
     }
- 
+
 
     private void SetMap(int map){
         leftArrow.transform.parent.GetChild(0).GetComponent<Image>().sprite = maps[_mapChoice];
@@ -50,14 +50,14 @@ public class LobbyUI : MonoBehaviour
             ActivatePanel(rightArrow); 
         }
 
-        yield return new WaitUntil(() => _player.GetPlayerTag() != null);
-        _player.GetPlayerTag().UpdatePlayerInfo += UpdatePlayerInfo;
+        yield return new WaitUntil(() => _player.GetLobbyPlayer() != null);
+        _player.GetLobbyPlayer().UpdatePlayerInfo += UpdatePlayerInfo;
 
     }
 
     private void OnDestroy(){
         if (_player){
-            _player.GetPlayerTag().UpdatePlayerInfo -= UpdatePlayerInfo;
+            _player.GetLobbyPlayer().UpdatePlayerInfo -= UpdatePlayerInfo;
         }
     }
 
@@ -67,50 +67,48 @@ public class LobbyUI : MonoBehaviour
     private bool _isReady;
 
     public void SetPlayerTeamPosition(TMP_Text text){
-        _player.GetPlayerTag().CmdSetTeamIndex(int.Parse(text.name), text);
-        text.text = "  Click to Join...";
-        
-        _player.GetPlayerTag().transform.SetParent(text.transform, false);
-        _player.GetPlayerTag().transform.localPosition = Vector3.zero;
+        _player.GetLobbyPlayer().CmdSetTeamIndex(int.Parse(text.name));
+        text.text = " Click to Join...";
     }
 
     public void SetUsername(TMP_InputField enteredName){
-        _player.GetPlayerTag().CmdSetUsername(enteredName.text);
+        _player.GetLobbyPlayer().CmdSetUsername(enteredName.text);
     }
 
     public void SetColor0(Color color){
-        _player.GetPlayerTag().CmdSetColor(0, color);
+        _player.GetLobbyPlayer().CmdSetColor(0, color);
     }
     public void SetColor1(Color color){
-        _player.GetPlayerTag().CmdSetColor(1, color);
+        _player.GetLobbyPlayer().CmdSetColor(1, color);
     }
     public void SetColor2(Color color){
-        _player.GetPlayerTag().CmdSetColor(2, color);
+        _player.GetLobbyPlayer().CmdSetColor(2, color);
     }
     public void SetColor3(Color color){
-        _player.GetPlayerTag().CmdSetColor(3, color);
+        _player.GetLobbyPlayer().CmdSetColor(3, color);
     }
 
     public void ReadyUp(Button button){
-        if (_player.GetPlayerTag().isReady){
+        if (_player.GetLobbyPlayer().isReady){
             //if (_player.netIdentity.isClientOnly){
                 button.image.color = Color.red;
                 button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Not Ready";
-                _player.GetPlayerTag().isReady = false;
+                _player.GetLobbyPlayer().isReady = false;
                 /*}
                 else{
                     _networkManager.ServerChangeScene(SceneManager.GetSceneByBuildIndex(_mapChoice).name);
                 }*/
         }
         else{
-            _player.GetPlayerTag().isReady = true;
+            _player.GetLobbyPlayer().isReady = true;
             button.image.color = Color.green;
             button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
         }
     }
 
     private void UpdatePlayerInfo(string username, int teamIndex, Color[] colors){
-        teamJoinButtons[teamIndex - 1].transform.GetChild(0).GetComponent<TMP_Text>().text = username;
+        Debug.Log("update");
+        //teamJoinButtons[teamIndex - 1].transform.GetChild(0).GetComponent<TMP_Text>().text = username;
     }
 
     public void Disconnect(){

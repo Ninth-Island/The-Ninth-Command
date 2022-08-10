@@ -8284,8 +8284,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1460033404}
         m_TargetAssemblyTypeName: LobbyUI, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 3
+        m_MethodName: Disconnect
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -40634,7 +40634,7 @@ GameObject:
   - component: {fileID: 8638543241034175518}
   m_Layer: 5
   m_Name: 4
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40866,7 +40866,7 @@ GameObject:
   - component: {fileID: 8638543241058476122}
   m_Layer: 5
   m_Name: 9
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41135,7 +41135,7 @@ GameObject:
   - component: {fileID: 8638543241098710208}
   m_Layer: 5
   m_Name: 3
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41290,7 +41290,7 @@ GameObject:
   - component: {fileID: 8638543241186991833}
   m_Layer: 5
   m_Name: 7
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41425,7 +41425,7 @@ GameObject:
   - component: {fileID: 8638543241227136795}
   m_Layer: 5
   m_Name: 10
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42088,7 +42088,7 @@ GameObject:
   - component: {fileID: 8638543241672447153}
   m_Layer: 5
   m_Name: 11
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42231,7 +42231,7 @@ GameObject:
   - component: {fileID: 8638543241690927379}
   m_Layer: 5
   m_Name: 1
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42346,7 +42346,7 @@ GameObject:
   - component: {fileID: 8638543241708577444}
   m_Layer: 5
   m_Name: 6
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42811,7 +42811,7 @@ GameObject:
   - component: {fileID: 8638543242236060905}
   m_Layer: 5
   m_Name: 2
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43214,7 +43214,7 @@ GameObject:
   - component: {fileID: 8638543242589594683}
   m_Layer: 5
   m_Name: 8
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43366,7 +43366,7 @@ GameObject:
   - component: {fileID: 8638543242702989087}
   m_Layer: 5
   m_Name: 5
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43618,7 +43618,7 @@ GameObject:
   - component: {fileID: 8638543242818400019}
   m_Layer: 5
   m_Name: 12
-  m_TagString: Untagged
+  m_TagString: Team Join Button Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
