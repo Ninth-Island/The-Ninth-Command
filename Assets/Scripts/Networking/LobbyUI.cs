@@ -90,30 +90,25 @@ public class LobbyUI : MonoBehaviour
     }
 
     public void ReadyUp(Button button){
-        if (_player.GetLobbyPlayer().isReady){
+        if (_player.GetLobbyPlayer().GetIsReady()){
             //if (_player.netIdentity.isClientOnly){
                 button.image.color = Color.red;
                 button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Not Ready";
-                _player.GetLobbyPlayer().isReady = false;
+                _player.GetLobbyPlayer().CmdSetReady(false);
                 /*}
                 else{
                     _networkManager.ServerChangeScene(SceneManager.GetSceneByBuildIndex(_mapChoice).name);
                 }*/
         }
         else{
-            _player.GetLobbyPlayer().isReady = true;
+            _player.GetLobbyPlayer().CmdSetReady(true);
             button.image.color = Color.green;
             button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
         }
     }
 
-    private void UpdatePlayerInfo(/*GameObject lobbyPlayer, */string username, int teamIndex, Color[] colors){
-        Debug.Log("update");
+    private void UpdatePlayerInfo(/*GameObject lobbyPlayer, */string username, int teamIndex, Color[] colors, bool isReady){
         
-        /*lobbyPlayer.transform.SetParent(teamJoinButtons[teamIndex - 1].transform, false);
-        lobbyPlayer.transform.localPosition = Vector3.zero;
-        */
-        //teamJoinButtons[teamIndex - 1].transform.GetChild(0).GetComponent<TMP_Text>().text = username;
     }
 
     public void Disconnect(){

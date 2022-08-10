@@ -8,24 +8,32 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyPlayer : NetworkBehaviour{
+
     [SyncVar(hook = nameof(ClientHandleChangeDisplayName))]
     private string _username; // remember to clamp at 15 chars
 
     [SyncVar(hook = nameof(ClientHandleChangeTeamIndex))]
     private int _teamIndex; // 1-6 is team left, 7-12 is team right
+    
+    [SyncVar(hook = nameof(ClientHandleToggleReady))] private bool _isReady;
+
     private TMP_Text[] _playerJoinButtons;
 
     private Color[] _colors;
 
     private GameObject _preview;
-    private Image[] _previewImages;
+
+    private GameObject _notReadyPreview;
+    private Image[] _notReadyPreviewImages;
+    
+    private GameObject _readyPreview;
+    private Image[] _readyPreviewImages;
 
     private TMP_Text _name;
-    private bool _ready = false;
+    private bool _started = false;
 
-    public event Action<string, int, Color[]> UpdatePlayerInfo;
+    public event Action<string, int, Color[], bool> UpdatePlayerInfo;
 
-    public bool isReady;
 
     #region Server
 
@@ -49,10 +57,19 @@ public class LobbyPlayer : NetworkBehaviour{
         };
 
         _preview = transform.GetChild(1).gameObject;
-        _previewImages = new Image[4];
+
+        _notReadyPreview = _preview.transform.GetChild(0).gameObject;
+        _notReadyPreviewImages = new Image[4];
+
+        _readyPreview = _preview.transform.GetChild(1).gameObject;
+        _readyPreviewImages = new Image[4];
+        
         for (int i = 0; i < 4; i++){
-            _previewImages[i] = _preview.transform.GetChild(i).GetComponent<Image>();
-            _previewImages[i].color = _colors[i];
+            _notReadyPreviewImages[i] = _notReadyPreview.transform.GetChild(i).GetComponent<Image>();
+            _notReadyPreviewImages[i].color = _colors[i];
+
+            _readyPreviewImages[i] = _readyPreview.transform.GetChild(i).GetComponent<Image>();
+            _readyPreviewImages[i].color = _colors[i];
         }
 
         _name = transform.GetChild(0).GetComponent<TMP_Text>();
@@ -63,7 +80,10 @@ public class LobbyPlayer : NetworkBehaviour{
             }
         }
 
-        _ready = true;
+        foreach (LobbyPlayer lobbyPlayer in FindObjectsOfType<LobbyPlayer>()){
+            lobbyPlayer.SetupLobbyPlayer();
+        }
+        _started = true;
 
     }
 
@@ -72,7 +92,6 @@ public class LobbyPlayer : NetworkBehaviour{
     public void CmdSetUsername(string enteredName){
         if (enteredName.Length < 15 && enteredName.Length > 1){
             _username = enteredName;
-            _name.text = _username;
         }
     }
 
@@ -80,35 +99,32 @@ public class LobbyPlayer : NetworkBehaviour{
     public void CmdSetTeamIndex(int teamIndex){
         if (teamIndex > 0 && teamIndex < 13){
             _teamIndex = teamIndex;
-            _name.color = _playerJoinButtons[teamIndex - 1].color;
-            if (teamIndex > 6){
-                _preview.transform.localScale = new Vector3(-1, 1, 1);
-                _preview.transform.localPosition =
-                    new Vector3(Mathf.Abs(_preview.transform.localPosition.x) * -1, 0, 0);
-            }
-            else{
-                _preview.transform.localScale = new Vector3(1, 1, 1);
-                _preview.transform.localPosition = new Vector3(Mathf.Abs(_preview.transform.localPosition.x), 0, 0);
-            }
-            
-            // if these two lines would work on the client it would be BEAUTIFUL
-            // this should work, dunno why it doesnt
-            /*transform.SetParent( _playerJoinButtons[teamIndex - 1].transform, false);
-            transform.localPosition = Vector3.zero;*/
         }
     }
 
-    /*problems:
-     server sees both, works great. Client sees neither
-     */
-
+    [Command]
+    public void CmdSetReady(bool setReady){
+        _isReady = setReady;
+    }
 
     [Command]
     public void CmdSetColor(int piece, Color color){
         if (piece >= 0 && piece < 4){
-            _colors[piece] = color;
-            _previewImages[piece].color = color;
+            ClientHandleColorChanged(color, piece);
         }
+    }
+
+    
+    private void SetupLobbyPlayer(){
+
+        /*
+        //colors
+        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
+            ClientHandleColorChanged(_readyPreviewImages[i].color, i);
+            ClientHandleColorChanged(_notReadyPreviewImages[i].color, i);
+        }
+        ClientHandleChangeDisplayName("", _username);
+        ClientHandleChangeTeamIndex(0, _teamIndex);*/
     }
 
 
@@ -117,24 +133,48 @@ public class LobbyPlayer : NetworkBehaviour{
     #region Client
 
 
-
-    public void ClientSetColor(Color color, int pieceIndex){
+    [ClientRpc]
+    private void ClientHandleColorChanged(Color color, int pieceIndex){
+        _notReadyPreviewImages[pieceIndex].color = color;
+        _readyPreviewImages[pieceIndex].color = color;
         _colors[pieceIndex] = color;
-        UpdatePlayerInfo?.Invoke(_username, _teamIndex, _colors);
+        UpdatePlayerInfo?.Invoke(_username, _teamIndex, _colors, _isReady);
     }
 
     private void ClientHandleChangeDisplayName(string oldName, string newName){
-        _username = newName;
-        UpdatePlayerInfo?.Invoke(newName, _teamIndex, _colors);
+        UpdatePlayerInfo?.Invoke(newName, _teamIndex, _colors, _isReady);
+        
+        if (_started){
+            _name.text = _username;
+        }
+
     }
 
     private void ClientHandleChangeTeamIndex(int oldTeamIndex, int newTeamIndex){
-        _teamIndex = newTeamIndex;
-        UpdatePlayerInfo?.Invoke(_username, newTeamIndex, _colors);
-        if (_ready){
+
+        UpdatePlayerInfo?.Invoke(_username, newTeamIndex, _colors, _isReady);
+        if (_started){
+            _name.color = _playerJoinButtons[newTeamIndex - 1].color;
             transform.SetParent(_playerJoinButtons[newTeamIndex - 1].transform, false);
             transform.localPosition = Vector3.zero;
+            
+            if (newTeamIndex > 6){
+                _preview.transform.localScale = new Vector3(-1, 1, 1);
+                _preview.transform.localPosition =
+                    new Vector3(Mathf.Abs(_preview.transform.localPosition.x) * -1, 0, 0);
+            }
+            else{
+                _preview.transform.localScale = new Vector3(1, 1, 1);
+                _preview.transform.localPosition = new Vector3(Mathf.Abs(_preview.transform.localPosition.x), 0, 0);
+            }
         }
+    }
+
+    private void ClientHandleToggleReady(bool oldReady, bool newReady){
+        UpdatePlayerInfo?.Invoke(_username, _teamIndex, _colors, _isReady);
+    
+        _readyPreview.SetActive(newReady);
+        _notReadyPreview.SetActive(!newReady);
     }
 
 
@@ -146,5 +186,9 @@ public class LobbyPlayer : NetworkBehaviour{
     }
     public Color[] GetColors(){
         return _colors;
+    }
+
+    public bool GetIsReady(){
+        return _isReady;
     }
 }
