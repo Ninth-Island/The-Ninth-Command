@@ -50,17 +50,8 @@ public class LobbyUI : MonoBehaviour
             ActivatePanel(leftArrow);
             ActivatePanel(rightArrow); 
         }
-
-        yield return new WaitUntil(() => _player.GetLobbyPlayer() != null);
-        _player.GetLobbyPlayer().UpdatePlayerInfo += UpdatePlayerInfo;
-
     }
 
-    private void OnDestroy(){
-        if (_player){
-            _player.GetLobbyPlayer().UpdatePlayerInfo -= UpdatePlayerInfo;
-        }
-    }
 
 
    

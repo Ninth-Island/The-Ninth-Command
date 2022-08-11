@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,31 +32,40 @@ public class LobbyPlayer : NetworkBehaviour{
     private TMP_Text _name;
     private bool _started = false;
 
+    public event Action<string, int, Color[], bool> UpdatePlayerInfo;
 
 
     #region Server
 
     public override void OnStartClient(){
-        /*
-        _username = $"Player {NetworkManager.singleton.numPlayers}";
-        _teamIndex = NetworkManager.singleton.numPlayers;
-        */
 
+        if (hasAuthority){
+            foreach (VirtualPlayer virtualPlayer in FindObjectsOfType<VirtualPlayer>()){
+                if (virtualPlayer.hasAuthority && virtualPlayer.GetLobbyPlayer() == null){
+                    virtualPlayer.SetLobbyPlayer(this);
+                    break;
+                }
+            }
+        }
+    }
+
+    public override void OnStartServer(){
+        
+        
         GameObject[] unsortedList = GameObject.FindGameObjectsWithTag("Team Join Button Text");
 
         _playerJoinButtons = new TMP_Text[unsortedList.Length];
         foreach (GameObject go in unsortedList){
             _playerJoinButtons[int.Parse(go.name)-1] = go.GetComponent<TMP_Text>();
         }
+        
 
-        if (_colors == null){
-            _colors = new[]{
-                new Color(1, 0.5716f, 0, 1),
-                new Color(0, 0.7961729f, 1, 1),
-                new Color(0, 0.7961729f, 1, 1),
-                new Color(0, 0.7961729f, 1, 1)
-            };
-        }
+        _colors = new[]{
+            new Color(1, 0.5716f, 0, 1),
+            new Color(0, 0.7961729f, 1, 1),
+            new Color(0, 0.7961729f, 1, 1),
+            new Color(0, 0.7961729f, 1, 1)
+        };
 
         _preview = transform.GetChild(1).gameObject;
 
@@ -76,18 +85,21 @@ public class LobbyPlayer : NetworkBehaviour{
 
         _name = transform.GetChild(0).GetComponent<TMP_Text>();
 
-        foreach (VirtualPlayer virtualPlayer in FindObjectsOfType<VirtualPlayer>()){
-            if (virtualPlayer.hasAuthority && virtualPlayer.GetLobbyPlayer() == null){
-                virtualPlayer.SetLobbyPlayer(this);
-            }
-        }
-
-        foreach (LobbyPlayer lobbyPlayer in FindObjectsOfType<LobbyPlayer>()){
-            lobbyPlayer.SetupLobbyPlayer();
-        }
+       
+        
         _started = true;
-
+        Debug.Log("server ");
+        /*
+        //colors
+        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
+            ClientHandleColorChanged(_readyPreviewImages[i].color, i);
+            ClientHandleColorChanged(_notReadyPreviewImages[i].color, i);
+        }
+        ClientHandleChangeDisplayName("", _username);
+        
+        ClientHandleChangeTeamIndex(0, _teamIndex);*/
     }
+    
 
 
     [Command]
@@ -116,6 +128,26 @@ public class LobbyPlayer : NetworkBehaviour{
         }
     }
 
+    [Command]
+    private void SetupLobbyPlayer(){
+        Debug.Log(_teamIndex);
+        /*_name.color = _playerJoinButtons[_teamIndex - 1].color;
+        _name.text = _username;
+        transform.SetParent(_playerJoinButtons[_teamIndex - 1].transform, false);
+        transform.localPosition = Vector3.zero;
+            
+        if (_teamIndex > 6){
+            _preview.transform.localScale = new Vector3(-1, 1, 1);
+            _preview.transform.localPosition =
+                new Vector3(Mathf.Abs(_preview.transform.localPosition.x) * -1, 0, 0);
+        }
+        else{
+            _preview.transform.localScale = new Vector3(1, 1, 1);
+            _preview.transform.localPosition = new Vector3(Mathf.Abs(_preview.transform.localPosition.x), 0, 0);
+        }
+        */
+        
+        }
 
 
     #endregion
@@ -128,9 +160,11 @@ public class LobbyPlayer : NetworkBehaviour{
         _notReadyPreviewImages[pieceIndex].color = color;
         _readyPreviewImages[pieceIndex].color = color;
         _colors[pieceIndex] = color;
+        UpdatePlayerInfo?.Invoke(_username, _teamIndex, _colors, _isReady);
     }
 
     private void ClientHandleChangeDisplayName(string oldName, string newName){
+        UpdatePlayerInfo?.Invoke(newName, _teamIndex, _colors, _isReady);
         
         if (_started){
             _name.text = _username;
@@ -140,6 +174,7 @@ public class LobbyPlayer : NetworkBehaviour{
 
     private void ClientHandleChangeTeamIndex(int oldTeamIndex, int newTeamIndex){
 
+        UpdatePlayerInfo?.Invoke(_username, newTeamIndex, _colors, _isReady);
         if (_started){
             _name.color = _playerJoinButtons[newTeamIndex - 1].color;
             transform.SetParent(_playerJoinButtons[newTeamIndex - 1].transform, false);
@@ -158,22 +193,12 @@ public class LobbyPlayer : NetworkBehaviour{
     }
 
     private void ClientHandleToggleReady(bool oldReady, bool newReady){
+        UpdatePlayerInfo?.Invoke(_username, _teamIndex, _colors, _isReady);
+    
         _readyPreview.SetActive(newReady);
         _notReadyPreview.SetActive(!newReady);
     }
 
-    
-    [Client]
-    private void SetupLobbyPlayer(){ 
-        ClientHandleChangeDisplayName("", _username);
-        ClientHandleChangeTeamIndex(0, _teamIndex);
-        ClientHandleToggleReady(false, _isReady);
-        //colors
-        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
-            ClientHandleColorChanged(_readyPreviewImages[i].color, i);
-            ClientHandleColorChanged(_notReadyPreviewImages[i].color, i);
-        }
-    }
 
     #endregion
 
