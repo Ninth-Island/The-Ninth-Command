@@ -15,8 +15,14 @@ public class LobbyPlayer : NetworkBehaviour{
     [SyncVar(hook = nameof(ClientHandleChangeTeamIndex))]
     private int _teamIndex; // 1-6 is team left, 7-12 is team right
     
-    [SyncVar(hook = nameof(ClientHandleToggleReady))] private bool _isReady;
-
+    [SyncVar(hook = nameof(ClientHandleToggleReady))] 
+    private bool _isReady;
+    
+    [SyncVar(hook = nameof(ClientHandleVisorColor))] private Color _visorColor;
+    [SyncVar(hook = nameof(ClientHandleHelmetColor))] private Color _helmetColor;
+    [SyncVar(hook = nameof(ClientHandleArmsColor))] private Color _armsColor;
+    [SyncVar(hook = nameof(ClientHandlePrimaryColor))] private Color _primaryColor;
+    
     private TMP_Text[] _playerJoinButtons;
 
     private Color[] _colors;
@@ -112,7 +118,7 @@ public class LobbyPlayer : NetworkBehaviour{
     [Command]
     public void CmdSetColor(int piece, Color color){
         if (piece >= 0 && piece < 4){
-            ClientHandleColorChanged(color, piece);
+            ClientHandleColorChanged(piece, color);
         }
     }
 
@@ -124,14 +130,31 @@ public class LobbyPlayer : NetworkBehaviour{
 
 
     [ClientRpc]
-    private void ClientHandleColorChanged(Color color, int pieceIndex){
-        _notReadyPreviewImages[pieceIndex].color = color;
-        _readyPreviewImages[pieceIndex].color = color;
-        _colors[pieceIndex] = color;
+    private void ClientHandleColorChanged(int pieceIndex, Color color){
+        if (_started){
+            _notReadyPreviewImages[pieceIndex].color = color;
+            _readyPreviewImages[pieceIndex].color = color;
+            _colors[pieceIndex] = color;
+        }
+
+        if (pieceIndex == 0){
+            ClientHandleVisorColor(Color.clear, color);
+        }
+        
+        else if (pieceIndex == 1){
+            ClientHandleHelmetColor(Color.clear, color);
+        }
+        
+        else if (pieceIndex == 2){
+            ClientHandleArmsColor(Color.clear, color);
+        }
+        
+        else if (pieceIndex == 3){
+            ClientHandlePrimaryColor(Color.clear, color);
+        }
     }
 
     private void ClientHandleChangeDisplayName(string oldName, string newName){
-        
         if (_started){
             _name.text = _username;
         }
@@ -158,20 +181,67 @@ public class LobbyPlayer : NetworkBehaviour{
     }
 
     private void ClientHandleToggleReady(bool oldReady, bool newReady){
-        _readyPreview.SetActive(newReady);
-        _notReadyPreview.SetActive(!newReady);
+        if (_started){
+            _readyPreview.SetActive(newReady);
+            _notReadyPreview.SetActive(!newReady);
+        }
     }
 
-    
+    private void ClientHandleVisorColor(Color oldColor, Color newColor){
+        if (_started){
+            _visorColor = newColor;
+            _colors[0] = newColor;
+            _notReadyPreviewImages[0].color = newColor;
+            _readyPreviewImages[0].color = newColor;
+        }
+    }
+
+    private void ClientHandleHelmetColor(Color oldColor, Color newColor){
+        if (_started){
+            _helmetColor = newColor;
+            _colors[1] = newColor;
+            _notReadyPreviewImages[1].color = newColor;
+            _readyPreviewImages[1].color = newColor;
+        }
+    }
+
+    private void ClientHandleArmsColor(Color oldColor, Color newColor){
+        if (_started){
+            _armsColor = newColor;
+            _colors[2] = newColor;
+            _notReadyPreviewImages[2].color = newColor;
+            _readyPreviewImages[2].color = newColor;
+        }
+    }
+
+    private void ClientHandlePrimaryColor(Color oldColor, Color newColor){
+        if (_started){
+            _primaryColor = newColor;
+            _colors[3] = newColor;
+            _notReadyPreviewImages[3].color = newColor;
+            _readyPreviewImages[3].color = newColor;
+        }
+    }
+
     [Client]
-    private void SetupLobbyPlayer(){ 
-        ClientHandleChangeDisplayName("", _username);
-        ClientHandleChangeTeamIndex(0, _teamIndex);
-        ClientHandleToggleReady(false, _isReady);
-        //colors
-        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
-            ClientHandleColorChanged(_readyPreviewImages[i].color, i);
-            ClientHandleColorChanged(_notReadyPreviewImages[i].color, i);
+    private void SetupLobbyPlayer(){
+        if (_teamIndex > 0){
+            ClientHandleChangeDisplayName("", _username);
+            ClientHandleChangeTeamIndex(0, _teamIndex);
+            ClientHandleToggleReady(false, _isReady);
+
+            Debug.Log(_colors[0]);
+            Debug.Log(_colors[1]);
+            Debug.Log(_colors[2]);
+            Debug.Log(_colors[3]);
+            ClientHandleVisorColor(Color.clear, _colors[0]);
+            ClientHandleHelmetColor(Color.clear, _colors[1]);
+            ClientHandleArmsColor(Color.clear, _colors[2]);
+            ClientHandlePrimaryColor(Color.clear, _colors[3]);
+            
+        }
+        else{
+            Debug.Log("Player doesn't have a team index yet");
         }
     }
 
