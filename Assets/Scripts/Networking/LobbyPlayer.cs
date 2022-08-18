@@ -43,10 +43,6 @@ public class LobbyPlayer : NetworkBehaviour{
     #region Server
 
     public override void OnStartClient(){
-        /*
-        _username = $"Player {NetworkManager.singleton.numPlayers}";
-        _teamIndex = NetworkManager.singleton.numPlayers;
-        */
 
         GameObject[] unsortedList = GameObject.FindGameObjectsWithTag("Team Join Button Text");
 
@@ -119,6 +115,14 @@ public class LobbyPlayer : NetworkBehaviour{
     public void CmdSetColor(int piece, Color color){
         if (piece >= 0 && piece < 4){
             ClientHandleColorChanged(piece, color);
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdInitializeColor(){
+        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
+            ClientHandleColorChanged(i, _readyPreviewImages[i].color);
+            ClientHandleColorChanged(i, _notReadyPreviewImages[i].color); 
         }
     }
 
@@ -230,15 +234,10 @@ public class LobbyPlayer : NetworkBehaviour{
             ClientHandleChangeTeamIndex(0, _teamIndex);
             ClientHandleToggleReady(false, _isReady);
 
-            Debug.Log(_colors[0]);
-            Debug.Log(_colors[1]);
-            Debug.Log(_colors[2]);
-            Debug.Log(_colors[3]);
-            ClientHandleVisorColor(Color.clear, _colors[0]);
-            ClientHandleHelmetColor(Color.clear, _colors[1]);
-            ClientHandleArmsColor(Color.clear, _colors[2]);
-            ClientHandlePrimaryColor(Color.clear, _colors[3]);
+
+
             
+            CmdInitializeColor();
         }
         else{
             Debug.Log("Player doesn't have a team index yet");
