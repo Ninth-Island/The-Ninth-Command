@@ -87,9 +87,13 @@ public class LobbyPlayer : NetworkBehaviour{
         foreach (LobbyPlayer lobbyPlayer in FindObjectsOfType<LobbyPlayer>()){
             lobbyPlayer.SetupLobbyPlayer();
         }
+        
         _started = true;
+        
+
 
     }
+
 
 
     [Command]

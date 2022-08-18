@@ -15628,19 +15628,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17d90080b48e29c4db0f82648335e0fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teamJoinButtons:
-  - {fileID: 8638543242320633032}
-  - {fileID: 8638543242025743223}
-  - {fileID: 8638543242826931731}
-  - {fileID: 8638543241063911975}
-  - {fileID: 8638543241804534266}
-  - {fileID: 8638543242648467690}
-  - {fileID: 8638543241624488304}
-  - {fileID: 8638543241350466299}
-  - {fileID: 8638543242456465537}
-  - {fileID: 8638543242929118106}
-  - {fileID: 8638543241243572655}
-  - {fileID: 8638543241624168779}
+  username: {fileID: 1053514173}
+  pickers:
+  - {fileID: 1889740592}
+  - {fileID: 1803234702}
+  - {fileID: 15838528}
+  - {fileID: 868250368}
+  playerPreview:
+  - {fileID: 1095210564}
+  - {fileID: 335558384}
+  - {fileID: 1819866298}
+  - {fileID: 1161449042}
   leftArrow: {fileID: 599316684}
   rightArrow: {fileID: 479893733}
   maps: []
