@@ -18,13 +18,14 @@ public class LobbyUI : MonoBehaviour{
     [SerializeField] private Image[] playerPreview;
     [SerializeField] private GameObject leftArrow;
     [SerializeField] private GameObject rightArrow;
-    [SerializeField] private Sprite[] maps;
+    [SerializeField] private Sprite[] mapIcons;
+    [SerializeField] private Image mapPreview;
     private CustomNetworkManager _networkManager;
 
     private VirtualPlayer _player;
     private List<LobbyPlayer> _lobbyPlayers;
 
-    private int _mapChoice;
+    private int _mapChoice = 0;
 
 
     private void Start(){
@@ -35,14 +36,16 @@ public class LobbyUI : MonoBehaviour{
 
     public void ChangeMapChoice(int choice){
         _mapChoice += choice;
+        if (_mapChoice == -1){
+            _mapChoice = mapIcons.Length - 1;
+        }
+
+        if (_mapChoice == mapIcons.Length){
+            _mapChoice = 0;
+        }
+        mapPreview.sprite = mapIcons[_mapChoice];
     }
-
-
-    private void SetMap(int map){
-        leftArrow.transform.parent.GetChild(0).GetComponent<Image>().sprite = maps[_mapChoice];
-
-    }
-
+    
     private IEnumerator InitializePlayer(){
         yield return new WaitUntil(()=> NetworkClient.isConnected);
         yield return new WaitUntil(()=> NetworkClient.connection.identity != null);
@@ -136,25 +139,27 @@ public class LobbyUI : MonoBehaviour{
 
     public void ReadyUp(Button button){
         if (_player.GetLobbyPlayer().GetIsReady()){
-            //if (_player.netIdentity.isClientOnly){
                 button.image.color = Color.red;
                 button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Not Ready";
                 _player.GetLobbyPlayer().CmdSetReady(false);
-                /*}
-                else{
-                    _networkManager.ServerChangeScene(SceneManager.GetSceneByBuildIndex(_mapChoice).name);
-                }*/
         }
         else{
-            _player.GetLobbyPlayer().CmdSetReady(true);
-            button.image.color = Color.green;
-            button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
+            if (_player.netIdentity.isClientOnly){
+                _player.GetLobbyPlayer().CmdSetReady(true);
+                button.image.color = Color.green;
+                button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
+            }
+            else{
+                SceneManager.sceneLoaded += ServerChangeScene; 
+                SceneManager.LoadScene(_mapChoice + 2);
+            }
         }
     }
 
-    private void UpdatePlayerInfo(/*GameObject lobbyPlayer, */string username, int teamIndex, Color[] colors, bool isReady){
-        
+    private void ServerChangeScene(Scene scene, LoadSceneMode mode){
+        _networkManager.ServerChangeScene(scene.name);
     }
+
 
     public void Disconnect(){
         if (_player.netIdentity.isClientOnly){
@@ -178,11 +183,7 @@ public class LobbyUI : MonoBehaviour{
     public void TogglePanel(GameObject panel){
         panel.SetActive(!panel.activeSelf);
     }
-    
-    public void LoadScene(int scene){
-        SceneManager.LoadScene(scene);
-        
-    }
+   
 
     
     public void Quit(){
