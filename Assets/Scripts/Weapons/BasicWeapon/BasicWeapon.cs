@@ -83,7 +83,7 @@ public class BasicWeapon : Weapon{
     }
 
     private void OnDisable(){
-        AudioManager.source.Stop();
+        //AudioManager.source.Stop();
     }
     
 }

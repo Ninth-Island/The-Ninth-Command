@@ -21,10 +21,6 @@ public partial class Player : Character{
 * 
 * ================================================================================================================
 */
-    [Header("Player Abilities")]
-    [SerializeField] private float sprintAmplifier = 2;
-    [SerializeField] private float jetPower;
-    [SerializeField] private float dashVelocity;
 
     
     /*[Header("Heat and Energy")]
@@ -85,9 +81,9 @@ public partial class Player : Character{
         
         _mainCamera = Camera.main;
         _virtualCamera = new CinemachineVirtualCamera[3];
-        _virtualCamera[0] = _mainCamera.transform.parent.GetChild(3).GetComponent<CinemachineVirtualCamera>();
-        _virtualCamera[1] = _mainCamera.transform.parent.GetChild(4).GetComponent<CinemachineVirtualCamera>();
-        _virtualCamera[2] = _mainCamera.transform.parent.GetChild(5).GetComponent<CinemachineVirtualCamera>();
+        _virtualCamera[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        _virtualCamera[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
+        _virtualCamera[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
         _cursorControl = FindObjectOfType<CursorControl>();
 
 
@@ -167,14 +163,14 @@ public partial class Player : Character{
     #region LeftShift
 
     
-    private void Sprint(){
+    private void Sprint(){/*
         body.velocity = new Vector2(moveSpeed * sprintAmplifier * Input.GetAxis("Horizontal"), body.velocity.y);
-        Animator.speed = 1.3f;
+        Animator.speed = 1.3f;*/
     }
     
     
     private void UseJetPack(){
-        Animator.SetBool(_aNames.jumping, true);
+        /*Animator.SetBool(_aNames.jumping, true);
         if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] || AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
             if (AudioManager.source.time >= AudioManager.source.clip.length - 0.1f)
                 AudioManager.PlaySound(21, true);
@@ -199,7 +195,7 @@ public partial class Player : Character{
             float rotation = GetPlayerToMouseRotation();
             rotation *= Mathf.Deg2Rad;
             body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
-        }
+        }*/
 
     }
 
@@ -232,9 +228,9 @@ public partial class Player : Character{
     private void Dash(){
         //if (heat >= MaxHeat){
             //heat = 0;
-            float rotation = GetPlayerToMouseRotation();
+            /*float rotation = GetPlayerToMouseRotation();
             Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
-            body.velocity = dir * dashVelocity;
+            body.velocity = dir * dashVelocity;*/
         //}
     }
 
@@ -298,6 +294,7 @@ public partial class Player : Character{
         if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 12f){
             return 0;
         }
+        
         float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;

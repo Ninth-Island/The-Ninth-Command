@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponMod : CustomObject{
+public class WeaponMod : MonoBehaviour{
 
     [SerializeField] protected bool forcedOn = false;
     
@@ -10,13 +10,13 @@ public class WeaponMod : CustomObject{
     protected AudioManager AudioManager;
 
     
-    protected override void Start(){
+    protected /*override*/virtual void Start(){
         WeaponAttachedTo = transform.parent.GetComponent<ProjectileWeapon>();
         AudioManager = GetComponent<AudioManager>();
         
     }
 
-    protected override void Update(){
+    protected /*override*/virtual void Update(){
         
     }
 

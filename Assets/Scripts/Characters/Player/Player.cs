@@ -21,7 +21,9 @@ public partial class Player : Character{
     [SerializeField] public BasicWeapon primaryWeapon;
     [SerializeField] public BasicWeapon secondaryWeapon;
     
-    
+    [SerializeField] public BasicWeapon primaryWeaponPrefab;
+    [SerializeField] public BasicWeapon secondaryWeaponPrefab;
+
     private bool _isCrouching;
 
     private bool hardLanding;
@@ -40,6 +42,37 @@ public partial class Player : Character{
 
         HUDVisualStart();
         ControlStart();
+
+        primaryWeapon = Instantiate(primaryWeaponPrefab, transform.GetChild(1).GetChild(5));
+        secondaryWeapon = Instantiate(secondaryWeaponPrefab, transform.GetChild(1).GetChild(5));
+        
+        primaryWeapon.body.simulated = false;
+        secondaryWeapon.body.simulated = false;
+        
+        if (secondaryWeapon != null){
+            secondaryWeapon.SetSpriteRenderer(false);
+        }
+
+        if (primaryWeapon != null){
+            primaryWeapon.SetSpriteRenderer(true);
+        }
+
+        primaryWeapon.Ready();
+
+        primaryWeapon.activelyWielded = true;
+        secondaryWeapon.activelyWielded = false;
+        primaryWeapon.PickUp(this);
+        UpdateHUD();
+        /*
+        secondaryWeapon.PickUp(this);
+        secondaryWeapon.activelyWielded = false;
+        secondaryWeapon.SetSpriteRenderer(false);
+        primaryWeapon.PickUp(this);
+        primaryWeapon.Ready();
+
+        primaryWeapon.spriteRenderer.sortingLayerID = SortingLayer.NameToID("Players");
+        secondaryWeapon.spriteRenderer.sortingLayerID = SortingLayer.NameToID("Players");*/
+
     }
 
     protected override void FixedUpdate(){

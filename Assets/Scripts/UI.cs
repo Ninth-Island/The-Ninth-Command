@@ -21,9 +21,12 @@ public class UI : MonoBehaviour
     private string _ipAddress = "127.0.0.1";
     private NetworkManager _networkManager;
 
+    private AudioSource _audioSource;
+
     private void Start(){
     _networkManager = NetworkManager.singleton;
-}
+    _audioSource = GetComponent<AudioSource>();
+    }
 
     public void SetPortHost(string port){
         bool portAvailable = true;
@@ -113,7 +116,16 @@ public class UI : MonoBehaviour
         NetworkManager.singleton.StartClient();
         
     }
-    
+
+    public void Disconnect(){
+        try{
+            _networkManager.StopHost();
+        }
+        catch (Exception e){
+            _networkManager.StopClient();
+        }
+
+    }
 
     public void ActivatePanel(GameObject panel){
         panel.SetActive(true);
@@ -136,4 +148,5 @@ public class UI : MonoBehaviour
     public void Quit(){
         Application.Quit();
     }
+
 }

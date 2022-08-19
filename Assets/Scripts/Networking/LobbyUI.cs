@@ -150,8 +150,9 @@ public class LobbyUI : MonoBehaviour{
                 button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
             }
             else{
-                SceneManager.sceneLoaded += ServerChangeScene; 
-                SceneManager.LoadScene(_mapChoice + 2);
+                _networkManager.ServerChangeScene("MultiplayerSandbox"/*SceneManager.GetSceneByBuildIndex(_mapChoice + 2).name*/);
+                //SceneManager.sceneLoaded += ServerChangeScene; 
+                //SceneManager.LoadScene(_mapChoice + 2);
             }
         }
     }

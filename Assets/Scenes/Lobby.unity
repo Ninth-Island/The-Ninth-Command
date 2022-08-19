@@ -15642,8 +15642,6 @@ MonoBehaviour:
   rightArrow: {fileID: 479893733}
   mapIcons:
   - {fileID: -3590379592227587388, guid: 1ad6ff75a2137c84ab2443fa71b21e92, type: 3}
-  - {fileID: -1790145400590651902, guid: 1ad6ff75a2137c84ab2443fa71b21e92, type: 3}
-  - {fileID: 1669587765549309381, guid: 1ad6ff75a2137c84ab2443fa71b21e92, type: 3}
   mapPreview: {fileID: 6788305270097585921}
 --- !u!1 &1686948182
 GameObject:
