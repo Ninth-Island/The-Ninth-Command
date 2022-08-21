@@ -8,7 +8,6 @@ using UnityEngine.SocialPlatforms;
 
 public class CustomObject : NetworkBehaviour{
 
-    [SerializeField] public readonly float TerminalVelocity = -100f;
 
     public Transform parent;
     public Vector3 localPos;
@@ -19,16 +18,21 @@ public class CustomObject : NetworkBehaviour{
 
     public Rigidbody2D body;
 
-    protected virtual void Start(){
+
+    public override void OnStartClient(){
         body = GetComponent<Rigidbody2D>();
     }
 
+    [ClientCallback]
     protected virtual void FixedUpdate(){
-        if (body && body.velocity.y < TerminalVelocity){
-            body.velocity = new Vector2(body.velocity.x, TerminalVelocity);
-        }
     }
 
+    [ClientCallback]
     protected virtual void Update(){
+        if (parent && hasAuthority){
+            transform.position = parent.position + localPos;
+            transform.rotation = Quaternion.Euler(parent.transform.eulerAngles.x, parent.transform.eulerAngles.y, parent.transform.eulerAngles.z + localRot);
+            transform.localScale = new Vector3(parent.transform.localScale.x * localScale.x, parent.transform.localScale.y, 1);
+        }
     }
 }

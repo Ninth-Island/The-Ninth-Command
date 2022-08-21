@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SpartanLaserProjectile : Projectile{
     
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
         Destroy(gameObject, 5f);
     }
     

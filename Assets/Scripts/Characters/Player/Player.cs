@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Mirror;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -29,6 +30,59 @@ public partial class Player : Character{
     private bool hardLanding;
 
 
+    
+    #region Server
+
+    [Server]
+    protected override void ServerMove(){
+        XMove = Mathf.Clamp(XMove, -1, 1);
+        Animator.SetBool(_aNames.running, XMove != 0);
+
+        if (XMove != 0 && !InputsFrozen && !FallingKnocked){
+
+            Animator.SetBool(_aNames.runningBackwards, Math.Sign(XMove) != Math.Sign(transform.localScale.x));
+            
+            if (_isCrouching){
+                body.velocity = new Vector2(moveSpeed / 2 * XMove, body.velocity.y);
+                SortSound(2);
+            }
+            else{
+                body.velocity = new Vector2(moveSpeed * XMove, body.velocity.y);
+            }
+            
+        }
+    }
+
+
+    [Command]
+    protected override void CmdServerJump(){
+        base.CmdServerJump();
+        Animator.SetBool(_aNames.jumping, Airborne);
+    }
+    
+    
+    
+
+    #endregion
+
+    #region Client
+
+
+    protected override void ClientMove(){
+        CmdSetXMoveServer(Input.GetAxis("Horizontal"));
+    }
+
+    protected override void ClientJump(){
+        if (Input.GetKeyDown(KeyCode.W)){
+            CmdServerJump();
+            CmdAnimatorSetBool(_aNames.jumping, true);
+            CmdSetSuppressGroundCheck();
+        }
+    
+    }
+
+    #endregion
+    
     #region Start And Update
 
     /*
@@ -37,12 +91,13 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
 
         HUDVisualStart();
         ControlStart();
 
+        /*
         primaryWeapon = Instantiate(primaryWeaponPrefab, transform.GetChild(1).GetChild(5));
         secondaryWeapon = Instantiate(secondaryWeaponPrefab, transform.GetChild(1).GetChild(5));
         
@@ -63,32 +118,24 @@ public partial class Player : Character{
         secondaryWeapon.activelyWielded = false;
         primaryWeapon.PickUp(this);
         UpdateHUD();
-        /*
-        secondaryWeapon.PickUp(this);
-        secondaryWeapon.activelyWielded = false;
-        secondaryWeapon.SetSpriteRenderer(false);
-        primaryWeapon.PickUp(this);
-        primaryWeapon.Ready();
-
-        primaryWeapon.spriteRenderer.sortingLayerID = SortingLayer.NameToID("Players");
-        secondaryWeapon.spriteRenderer.sortingLayerID = SortingLayer.NameToID("Players");*/
+        */
 
     }
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
-        Move();
-        Jump();
-        
-        if (Input.GetKey(KeyCode.Mouse0)){
+
+        /*if (Input.GetKey(KeyCode.Mouse0)){
             primaryWeapon.AttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
-        }
+        }*/
         
         ControlFixedUpdate();
 
-        hardLanding = false;
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
             hardLanding = true;
+        }
+        else{
+            hardLanding = false;
         }
         
     }
@@ -99,6 +146,9 @@ public partial class Player : Character{
         CheckSwap();
         
         CheckCrouch();
+        
+        Animator.SetBool(_aNames.jumping, Airborne);
+
         if (Input.GetKey(KeyCode.R)){
             primaryWeapon.Reload();
         }
@@ -116,40 +166,7 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-    private void Move(){
-        float input = Input.GetAxis("Horizontal");
-        Animator.SetBool(_aNames.running, input != 0);
-
-        if (input != 0 && !InputsFrozen && !FallingKnocked){
-
-            Animator.SetBool(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
-            
-            if (_isCrouching){
-                body.velocity = new Vector2(moveSpeed / 2 * input, body.velocity.y);
-                SortSound(2);
-            }
-            else{
-                body.velocity = new Vector2(moveSpeed * input, body.velocity.y);
-            }
-            
-        }
-    }
-
-    private void Jump(){
-        
-        if (Input.GetKey(KeyCode.W)){
-            Vector2 velocity = body.velocity;
-            
-            // can't use airborne because the player is considered not airborne a few seconds before and after jumping
-            if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
-                Airborne = true;
-                body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
-                
-                SortSound(0);
-            }
-        }
-        Animator.SetBool(_aNames.jumping, Airborne);
-    }
+    
 
 
     private void CheckCrouch(){

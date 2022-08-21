@@ -6,8 +6,8 @@ using UnityEngine;
 public class Brute : NPC{
     
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
 
     }
 

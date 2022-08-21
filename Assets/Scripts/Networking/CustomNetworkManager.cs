@@ -4,15 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CustomNetworkManager : NetworkManager{
 
     [SerializeField] private GameObject lobbyPlayerPrefab;
     [SerializeField] private GameObject gamePlayerPrefab;
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn){
         base.OnServerAddPlayer(conn);
-        
-        NetworkServer.Spawn(Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity, FindObjectOfType<Canvas>().transform), conn);
+        if (SceneManager.GetActiveScene().name == "Assets/Scenes/Menu.unity"){
+            NetworkServer.Spawn(
+                Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity,
+                    FindObjectOfType<Canvas>().transform), conn);
+        }
     }
 
     public override void OnServerSceneChanged(string sceneName){

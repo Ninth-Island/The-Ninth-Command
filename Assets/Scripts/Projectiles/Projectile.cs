@@ -42,13 +42,13 @@ public class Projectile : CustomObject{
         
     }
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
     }
 
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
-        Start();
+        OnStartClient();
         if (_live){
             Destroy(gameObject, lifetime);
         }

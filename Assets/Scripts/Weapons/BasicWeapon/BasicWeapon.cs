@@ -66,8 +66,8 @@ public class BasicWeapon : Weapon{
         spriteRenderer.enabled = setEnabled;
     }
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
         
         CursorControl = FindObjectOfType<CursorControl>();
         foreach (Player player in FindObjectsOfType<Player>()){

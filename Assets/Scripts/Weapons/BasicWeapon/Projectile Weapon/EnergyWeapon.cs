@@ -96,7 +96,7 @@ public class EnergyWeapon : ProjectileWeapon{
         }
     }
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
     }
 }

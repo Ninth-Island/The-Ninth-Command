@@ -76,7 +76,7 @@ public partial class Player : Character
         pickupText.SetText("");
         
         
-        Transform energyGauge = HUD.transform.GetChild(5);
+        Transform energyGauge = HUD.transform.GetChild(4);
         _energySlider = energyGauge.GetChild(2).GetComponent<Slider>();
         _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
 

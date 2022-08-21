@@ -22,8 +22,8 @@ public class Vehicle : CustomObject{
         return embarkRange;
     }
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
         
         _player = FindObjectOfType<Player>();
         _cursorControl = FindObjectOfType<CursorControl>();

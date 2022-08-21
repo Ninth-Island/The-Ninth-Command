@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using Mirror;
 using UnityEngine;
 
 public class Character : CustomObject{
@@ -43,11 +45,100 @@ public class Character : CustomObject{
 
     protected AudioManager AudioManager;
     
+    protected float XMove;
+
+    protected bool SuppressGroundCheck;
+
+
+    #region Server
+
+    [Command]
+    protected virtual void CmdServerUpdate(){ // as soon as get here XMove is 0 for client
+        ServerMove();
+        CheckStates();
+    
+    }
+
+    [Command]
+    protected void CmdSetXMoveServer(float xMove){
+        XMove = xMove;
+    }
+
+    [Server]
+    protected virtual void ServerMove(){
+        XMove = Mathf.Clamp(XMove, -1, 1);
+        if (XMove != 0 && !InputsFrozen && !FallingKnocked){
+            body.velocity = new Vector2(moveSpeed * XMove, body.velocity.y);
+        }
+    }
+    
+    
+    
+    [Command]
+    protected virtual void CmdServerJump(){
+        
+        Vector2 velocity = body.velocity;
+        
+        // can't use airborne because the player is considered not airborne a few seconds before and after jumping
+        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
+            Airborne = true;
+            body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
+            
+            SortSound(0);
+        }
+    
+    }
+
+
+    [Server]
+    private void CheckStates(){
+        if (Math.Abs(body.velocity.x) < moveSpeed * 1.2){
+            FallingKnocked = false;
+        }
+        else{
+            FallingKnocked = true;
+        }
+
+        if (!SuppressGroundCheck){
+            RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
+                LayerMask.GetMask("Ground", "Platform", "Vehicle"));
+
+            if (clampScan.collider){
+                Airborne = false;
+            }
+            else{
+                Airborne = true;
+            }
+        }
+    }
+
+    [Command]
+    protected void CmdSetSuppressGroundCheck(){
+        StartCoroutine(ResetGroundCheck());
+    }
+
+    [Server]
+    private IEnumerator ResetGroundCheck(){
+        SuppressGroundCheck = true;
+        yield return new WaitForSeconds(0.2f);
+        SuppressGroundCheck = false;
+    }
+
+    [Command]
+    protected void CmdAnimatorSetBool(string state, bool setTo){
+        Animator.SetBool(state, setTo);
+    }
+    
     
 
+    #endregion
 
-    protected override void Start(){
-        base.Start();
+
+    #region Client
+
+    
+    public override void OnStartClient(){
+        base.OnStartClient();
 
         maxhealth = health;
         
@@ -63,26 +154,46 @@ public class Character : CustomObject{
         }
     }
 
+    [ClientCallback]
     protected override void Update(){
         base.Update();
+        if (hasAuthority){
+            ClientJump();
+        }
     }
+
+
+    [ClientCallback]
     protected override void FixedUpdate(){
         base.FixedUpdate();
-        
-        FallingKnocked = true;
-        if (Math.Abs(body.velocity.x) < moveSpeed * 1.2){
-            FallingKnocked = false;
-        }
-        
-        Airborne = true;
-        RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
-            LayerMask.GetMask("Ground", "Platform", "Vehicle"));
-        
-        if (clampScan.collider){
-            Airborne = false;
-            
+        if (hasAuthority){
+
+            ClientMove();
+            CmdServerUpdate();
+
         }
     }
+
+    [Client]
+    protected virtual void ClientMove(){
+        
+    }
+
+    [Client]
+    protected virtual void ClientJump(){
+        
+    }
+
+    
+    #endregion
+
+    
+    
+    
+    
+    
+    
+    
 
     public void Hit(Projectile projectile){
         TakeDamage(projectile.GetDamage());

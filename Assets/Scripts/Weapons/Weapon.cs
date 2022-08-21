@@ -48,8 +48,8 @@ public class Weapon : CustomObject{
 
     #region Start Update
 
-    protected override void Start(){
-        base.Start();
+    public override void OnStartClient(){
+        base.OnStartClient();
         
         spriteRenderer = GetComponent<SpriteRenderer>();
         Collider = GetComponent<PolygonCollider2D>();
