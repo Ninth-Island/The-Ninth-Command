@@ -35,6 +35,7 @@ public partial class Player : Character{
 
     [Server]
     protected override void ServerMove(){
+
         XMove = Mathf.Clamp(XMove, -1, 1);
         Animator.SetBool(_aNames.running, XMove != 0);
 
@@ -57,6 +58,11 @@ public partial class Player : Character{
     [Command]
     protected override void CmdServerJump(){
         base.CmdServerJump();
+        Animator.SetBool(_aNames.jumping, true);
+    }
+
+    [Command]
+    protected override void CmdAnimatorUpdateAirborne(){
         Animator.SetBool(_aNames.jumping, Airborne);
     }
     
@@ -68,14 +74,15 @@ public partial class Player : Character{
     #region Client
 
 
+    [Client]
     protected override void ClientMove(){
         CmdSetXMoveServer(Input.GetAxis("Horizontal"));
     }
 
+    [Client]
     protected override void ClientJump(){
         if (Input.GetKeyDown(KeyCode.W)){
             CmdServerJump();
-            CmdAnimatorSetBool(_aNames.jumping, true);
             CmdSetSuppressGroundCheck();
         }
     
@@ -122,14 +129,16 @@ public partial class Player : Character{
 
     }
 
+    [ClientCallback]
     protected override void FixedUpdate(){
         base.FixedUpdate();
 
         /*if (Input.GetKey(KeyCode.Mouse0)){
             primaryWeapon.AttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
         }*/
-        
-        ControlFixedUpdate();
+        if (hasAuthority){
+            ControlFixedUpdate();
+        }
 
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
             hardLanding = true;
@@ -140,22 +149,23 @@ public partial class Player : Character{
         
     }
 
+    [ClientCallback]
     protected override void Update(){
         base.Update();
 
-        CheckSwap();
-        
-        CheckCrouch();
-        
-        Animator.SetBool(_aNames.jumping, Airborne);
+        if (hasAuthority){
+            CheckSwap();
+            CheckCrouch();
 
-        if (Input.GetKey(KeyCode.R)){
-            primaryWeapon.Reload();
+            CmdAnimatorUpdateAirborne();
+            if (Input.GetKey(KeyCode.R)){
+                primaryWeapon.Reload();
+            }
+            RotateArm();
+            ControlUpdate();
+            CheckForPickup();
         }
-        RotateArm();
         
-        ControlUpdate();
-        CheckForPickup();
     }
     #endregion
 
@@ -169,10 +179,11 @@ public partial class Player : Character{
     
 
 
+    [Client]
     private void CheckCrouch(){
         if (Input.GetKeyDown(KeyCode.S)){
             _isCrouching = !_isCrouching;
-            Animator.SetBool(_aNames.crouching, _isCrouching);
+            CmdAnimatorSetBool(_aNames.crouching, _isCrouching);
         }
     }
     

@@ -13,7 +13,7 @@ public class CustomNetworkManager : NetworkManager{
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn){
         base.OnServerAddPlayer(conn);
-        if (SceneManager.GetActiveScene().name == "Assets/Scenes/Menu.unity"){
+        if (SceneManager.GetActiveScene().name == "Lobby"){
             NetworkServer.Spawn(
                 Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity,
                     FindObjectOfType<Canvas>().transform), conn);

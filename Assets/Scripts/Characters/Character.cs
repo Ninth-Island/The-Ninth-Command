@@ -56,7 +56,6 @@ public class Character : CustomObject{
     protected virtual void CmdServerUpdate(){ // as soon as get here XMove is 0 for client
         ServerMove();
         CheckStates();
-    
     }
 
     [Command]
@@ -92,13 +91,13 @@ public class Character : CustomObject{
 
     [Server]
     private void CheckStates(){
+
         if (Math.Abs(body.velocity.x) < moveSpeed * 1.2){
             FallingKnocked = false;
         }
         else{
             FallingKnocked = true;
         }
-
         if (!SuppressGroundCheck){
             RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
                 LayerMask.GetMask("Ground", "Platform", "Vehicle"));
@@ -110,6 +109,7 @@ public class Character : CustomObject{
                 Airborne = true;
             }
         }
+        
     }
 
     [Command]
@@ -127,6 +127,11 @@ public class Character : CustomObject{
     [Command]
     protected void CmdAnimatorSetBool(string state, bool setTo){
         Animator.SetBool(state, setTo);
+    }
+
+    [Command]
+    protected virtual void CmdAnimatorUpdateAirborne(){
+        
     }
     
     
@@ -170,7 +175,6 @@ public class Character : CustomObject{
 
             ClientMove();
             CmdServerUpdate();
-
         }
     }
 
