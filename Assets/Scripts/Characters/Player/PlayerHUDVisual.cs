@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -97,9 +98,8 @@ public partial class Player : Character
 
     
     
-    private void RotateArm(){
-        float rotation = GetBarrelToMouseRotation();
-
+    [Command]
+    private void CmdRotateArm(float rotation){
         if (_armOverride == false){
             _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             _arm.transform.localScale = new Vector3(1, 1);
@@ -117,11 +117,13 @@ public partial class Player : Character
         Helmet.transform.localScale = new Vector3(1, 1);
 
         
-        transform.localScale = new Vector3(1, 1);
         if (rotation > 90 && rotation < 270){
             _arm.transform.localScale = new Vector3(-1, -1);
             Helmet.transform.localScale = new Vector3(-1, -1);
             transform.localScale = new Vector3(-1, 1);
+        }
+        else{
+            transform.localScale = new Vector3(1, 1);
         }
     }
 

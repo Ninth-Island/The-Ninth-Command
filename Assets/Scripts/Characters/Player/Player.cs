@@ -104,6 +104,10 @@ public partial class Player : Character{
         HUDVisualStart();
         ControlStart();
 
+        if (hasAuthority){
+            _virtualCamera[0].Priority = 10;
+        }
+
         /*
         primaryWeapon = Instantiate(primaryWeaponPrefab, transform.GetChild(1).GetChild(5));
         secondaryWeapon = Instantiate(secondaryWeaponPrefab, transform.GetChild(1).GetChild(5));
@@ -161,7 +165,8 @@ public partial class Player : Character{
             if (Input.GetKey(KeyCode.R)){
                 primaryWeapon.Reload();
             }
-            RotateArm();
+            CmdRotateArm(GetBarrelToMouseRotation());
+
             ControlUpdate();
             CheckForPickup();
         }
