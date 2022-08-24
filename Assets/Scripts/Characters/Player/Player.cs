@@ -88,9 +88,7 @@ public partial class Player : Character{
     
     }
 
-    #endregion
     
-    #region Start And Update
 
     /*
     * ================================================================================================================
@@ -133,6 +131,8 @@ public partial class Player : Character{
 
     }
 
+    
+    
     [ClientCallback]
     protected override void FixedUpdate(){
         base.FixedUpdate();
@@ -165,6 +165,7 @@ public partial class Player : Character{
             if (Input.GetKey(KeyCode.R)){
                 primaryWeapon.Reload();
             }
+            
             CmdRotateArm(GetBarrelToMouseRotation());
 
             ControlUpdate();
@@ -172,9 +173,7 @@ public partial class Player : Character{
         }
         
     }
-    #endregion
 
-    #region Movement
     /*
     * ================================================================================================================
     *                                               Movement
@@ -191,8 +190,8 @@ public partial class Player : Character{
             CmdAnimatorSetBool(_aNames.crouching, _isCrouching);
         }
     }
-    
-    
+
+
     #endregion
 
     #region Weapon and Vehicle

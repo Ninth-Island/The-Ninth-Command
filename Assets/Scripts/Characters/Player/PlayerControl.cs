@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Mirror;
 using Pathfinding;
 using TMPro;
 using Unity.Mathematics;
@@ -69,6 +70,7 @@ public partial class Player : Character{
     * ================================================================================================================
     */
     
+        [Client]
     protected virtual void ControlStart(){
 
         _externalJetpack = transform.GetChild(2).gameObject;
@@ -92,6 +94,7 @@ public partial class Player : Character{
         Bindings.Add(KeyCode.Space, Fly);
     }
     
+    [Client]
     protected virtual void ControlUpdate(){
         if (_fadeTimer > 0){
             _fadeTimer --;   
@@ -115,6 +118,7 @@ public partial class Player : Character{
     }
 
 
+    [Client]
     private void ControlFixedUpdate(){/*
         heat = Mathf.Clamp(heat + heatCharge, 0, MaxHeat);
         energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);*/

@@ -116,7 +116,7 @@ public partial class Player : Character
         Helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
         Helmet.transform.localScale = new Vector3(1, 1);
 
-        
+
         if (rotation > 90 && rotation < 270){
             _arm.transform.localScale = new Vector3(-1, -1);
             Helmet.transform.localScale = new Vector3(-1, -1);
