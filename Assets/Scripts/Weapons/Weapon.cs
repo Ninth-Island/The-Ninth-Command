@@ -14,7 +14,6 @@ public class Weapon : CustomObject{
     
     public AudioManager AudioManager;
     
-    public SpriteRenderer spriteRenderer;
     protected PolygonCollider2D Collider;
     
 
@@ -22,9 +21,9 @@ public class Weapon : CustomObject{
     public virtual void PickUp(Character pickedUpBy){
         wielder = pickedUpBy;
         body.simulated = false;
-        spriteRenderer.sortingLayerID = pickedUpBy.spriteLayer;
+        spriteRenderer.sortingLayerID = pickedUpBy.spriteRenderer.sortingLayerID;
         spriteRenderer.sortingOrder = 4;
-        transform.parent = wielder.gameObject.transform.GetChild(1).transform.GetChild(5);
+        transform.parent = wielder.transform.GetChild(1).transform.GetChild(3);
         // AudioManager.PlayFromList(2);
     }
 
@@ -57,7 +56,11 @@ public class Weapon : CustomObject{
 
         AudioManager = GetComponent<AudioManager>();    
     }
-    
+
+    public override void OnStartServer(){
+        base.OnStartServer();
+    }
+
     protected override void Update(){
         base.Update();
     }

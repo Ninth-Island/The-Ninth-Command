@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
+using Mirror;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -44,6 +45,7 @@ public class BasicWeapon : Weapon{
         activelyWielded = true;
         RefreshText();
     }
+
 
 
     public override void PickUp(Character character){

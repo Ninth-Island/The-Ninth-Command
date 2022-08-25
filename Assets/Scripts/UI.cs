@@ -116,16 +116,7 @@ public class UI : MonoBehaviour
         NetworkManager.singleton.StartClient();
         
     }
-
-    public void Disconnect(){
-        try{
-            _networkManager.StopHost();
-        }
-        catch (Exception e){
-            _networkManager.StopClient();
-        }
-
-    }
+    
 
     public void ActivatePanel(GameObject panel){
         panel.SetActive(true);

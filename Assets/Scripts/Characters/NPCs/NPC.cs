@@ -16,7 +16,6 @@ public class NPC : Character{
     private GameObject pivotPoint;
     public BasicWeapon _weapon;
 
-    public SpriteRenderer _SpriteRenderer;
     
     private GameObject healthBG;
     private GameObject healthFill;
@@ -24,13 +23,11 @@ public class NPC : Character{
     private Coroutine HealthRoutine;
 
     private Transform target = null;
-
-
+    
 
     public override void OnStartClient(){
         base.OnStartClient();
-        _SpriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        spriteLayer = _SpriteRenderer.sortingLayerID;
+        spriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
         pivotPoint = transform.GetChild(1).GetChild(0).gameObject;
         _weapon = pivotPoint.transform.GetChild(3).GetComponent<BasicWeapon>();
 

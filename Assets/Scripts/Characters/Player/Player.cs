@@ -19,16 +19,17 @@ public partial class Player : Character{
 */
 
     [Header("Basic Weapons")] 
-    [SerializeField] public BasicWeapon primaryWeapon;
-    [SerializeField] public BasicWeapon secondaryWeapon;
+    public BasicWeapon primaryWeapon;
+    public BasicWeapon secondaryWeapon;
     
-    [SerializeField] public BasicWeapon primaryWeaponPrefab;
-    [SerializeField] public BasicWeapon secondaryWeaponPrefab;
+    public BasicWeapon primaryWeaponPrefab;
+    public BasicWeapon secondaryWeaponPrefab;
 
     private bool _isCrouching;
 
     private bool hardLanding;
 
+    private bool _swappedWeapon;
 
     
     #region Server
@@ -65,8 +66,12 @@ public partial class Player : Character{
     protected override void CmdAnimatorUpdateAirborne(){
         Animator.SetBool(_aNames.jumping, Airborne);
     }
-    
-    
+
+    [ClientRpc]
+    public void SetArmAsParentOf(Transform weapon){
+        weapon.parent = arm;
+    }
+
     
 
     #endregion
@@ -106,33 +111,17 @@ public partial class Player : Character{
             _virtualCamera[0].Priority = 10;
         }
 
-        /*
-        primaryWeapon = Instantiate(primaryWeaponPrefab, transform.GetChild(1).GetChild(5));
-        secondaryWeapon = Instantiate(secondaryWeaponPrefab, transform.GetChild(1).GetChild(5));
-        
-        primaryWeapon.body.simulated = false;
-        secondaryWeapon.body.simulated = false;
-        
-        if (secondaryWeapon != null){
-            secondaryWeapon.SetSpriteRenderer(false);
-        }
-
-        if (primaryWeapon != null){
-            primaryWeapon.SetSpriteRenderer(true);
-        }
-
-        primaryWeapon.Ready();
-
-        primaryWeapon.activelyWielded = true;
-        secondaryWeapon.activelyWielded = false;
+        primaryWeapon = arm.GetChild(1).GetComponent<BasicWeapon>();
         primaryWeapon.PickUp(this);
-        UpdateHUD();
-        */
-
+        primaryWeapon.transform.localPosition = primaryWeapon.offset;
+        
+        secondaryWeapon = arm.GetChild(2).GetComponent<BasicWeapon>();
+        secondaryWeapon.PickUp(this);
+        secondaryWeapon.activelyWielded = false;
+        secondaryWeapon.spriteRenderer.enabled = false;
     }
 
-    
-    
+
     [ClientCallback]
     protected override void FixedUpdate(){
         base.FixedUpdate();
@@ -203,7 +192,7 @@ public partial class Player : Character{
     
     private void CheckSwap(){
 
-        if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1)){
+        if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
             if (primaryWeapon != null){
                 primaryWeapon.SetSpriteRenderer(false);
             }
@@ -217,10 +206,20 @@ public partial class Player : Character{
             (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
             secondaryWeapon.activelyWielded = false;
+            secondaryWeapon.spriteRenderer.enabled = false;
+            
             primaryWeapon.activelyWielded = true;
+            primaryWeapon.spriteRenderer.enabled = true;
             primaryWeapon.PickUp(this);
             UpdateHUD();
+
+            _swappedWeapon = true;
+            Invoke(nameof(ResetSwappedWeapon), 0.25f);
         }
+    }
+
+    private void ResetSwappedWeapon(){
+        _swappedWeapon = false;
     }
     
     private void CheckForPickup(){

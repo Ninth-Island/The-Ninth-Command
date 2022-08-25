@@ -101,7 +101,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272140532128219913}
   m_BodyType: 0
-  m_Simulated: 1
+  m_Simulated: 0
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -169,16 +169,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  parent: {fileID: 0}
-  localPos: {x: 0, y: 0, z: 0}
-  localRot: 0
-  localScale: {x: 0, y: 0, z: 0}
-  spriteLayer: 0
-  body: {fileID: 0}
+  body: {fileID: 272140532128219919}
+  spriteRenderer: {fileID: 272140532128219916}
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
-  spriteRenderer: {fileID: 0}
   offset: {x: 1.932, y: -0.22}
   armType: 0
   cursorType: 0
@@ -377,7 +372,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 272140532128219913}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
   m_Name: 
@@ -385,10 +380,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 0
-  sendInterval: 0.05
+  sendInterval: 0.02
   syncPosition: 1
   syncRotation: 1
-  syncScale: 0
+  syncScale: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0

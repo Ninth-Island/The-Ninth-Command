@@ -35,8 +35,8 @@ public partial class Player : Character
     
     
     
-    private Transform _arm;
-    public Transform Helmet;
+    public Transform arm;
+    public Transform helmet;
 
     private SpriteRenderer _armRenderer;
     private bool _armOverride;
@@ -44,19 +44,10 @@ public partial class Player : Character
     private Color[] _colors = new Color[3];
     private GameObject[] sprites = new GameObject[7];
 
-
+    
 
     private void HUDVisualStart(){
-        
-        
-        // for the sprites that rotate and recolor and stuff
-
-        _arm = transform.GetChild(1).transform.GetChild(5);
-        Helmet = transform.GetChild(1).transform.GetChild(4);
-
-        _armRenderer = _arm.GetChild(0).GetComponent<SpriteRenderer>();
-        spriteLayer = _armRenderer.sortingLayerID;
-
+        _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
         }
@@ -101,25 +92,25 @@ public partial class Player : Character
     [Command]
     private void CmdRotateArm(float rotation){
         if (_armOverride == false){
-            _arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
-            _arm.transform.localScale = new Vector3(1, 1);
+            arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            arm.transform.localScale = new Vector3(1, 1);
         }
         else{
-            _arm.transform.localRotation = Quaternion.Euler(0, 0, -30);
+            arm.transform.localRotation = Quaternion.Euler(0, 0, -30);
             if (Mathf.Sign(transform.localScale.x) < 0){
-                _arm.transform.rotation = Quaternion.Euler(0, 0, -150);
+                arm.transform.rotation = Quaternion.Euler(0, 0, -150);
     
             }
-            _arm.transform.localScale = new Vector3(1, 1);
+            arm.transform.localScale = new Vector3(1, 1);
         }
 
-        Helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
-        Helmet.transform.localScale = new Vector3(1, 1);
+        helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        helmet.transform.localScale = new Vector3(1, 1);
 
 
         if (rotation > 90 && rotation < 270){
-            _arm.transform.localScale = new Vector3(-1, -1);
-            Helmet.transform.localScale = new Vector3(-1, -1);
+            arm.transform.localScale = new Vector3(-1, -1);
+            helmet.transform.localScale = new Vector3(-1, -1);
             transform.localScale = new Vector3(-1, 1);
         }
         else{

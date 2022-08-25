@@ -170,12 +170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteLayer: 0
+  syncMode: 0
+  syncInterval: 0.1
   body: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   pickupRange: 8
   wielder: {fileID: 0}
   AudioManager: {fileID: 0}
-  spriteRenderer: {fileID: 0}
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 30
@@ -384,10 +385,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 0
-  sendInterval: 0.05
+  sendInterval: 0.02
   syncPosition: 1
   syncRotation: 1
-  syncScale: 0
+  syncScale: 1
   interpolatePosition: 1
   interpolateRotation: 1
   interpolateScale: 0

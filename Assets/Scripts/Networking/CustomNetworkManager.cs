@@ -22,10 +22,20 @@ public class CustomNetworkManager : NetworkManager{
 
     public override void OnServerSceneChanged(string sceneName){
         if (sceneName != "Assets/Scenes/Lobby.unity" && sceneName != "Assets/Scenes/Menu.unity"){
-            foreach (KeyValuePair<int, NetworkConnectionToClient> connectionToClient in NetworkServer.connections){
-                NetworkServer.Spawn(Instantiate(gamePlayerPrefab), connectionToClient.Value);
+            foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
+                
+                Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
+                GameObject pW = Instantiate(player.primaryWeaponPrefab.gameObject, player.arm);
+                GameObject sW = Instantiate(player.secondaryWeaponPrefab.gameObject, player.arm);
+                NetworkServer.Spawn(player.gameObject, connectionToClient);
+                NetworkServer.Spawn(pW);
+                NetworkServer.Spawn(sW);
+                player.SetArmAsParentOf(pW.transform);
+                player.SetArmAsParentOf(sW.transform);
             }
+
         }
-        
+
     }
+
 }

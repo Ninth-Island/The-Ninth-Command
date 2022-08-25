@@ -83,25 +83,6 @@ AnimationClip:
     path: Sprites/Arms
     classID: 1
     script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Sprites/Helmet
-    classID: 1
-    script: {fileID: 0}
   m_PPtrCurves:
   - curve:
     - time: 0
@@ -122,23 +103,6 @@ AnimationClip:
     script: {fileID: 0}
   - curve:
     - time: 0
-      value: {fileID: -5545214303318638897, guid: 6f39621f3f622a7428922a2660284131,
-        type: 3}
-    - time: 0.083333336
-      value: {fileID: -4753280249692694078, guid: 6f39621f3f622a7428922a2660284131,
-        type: 3}
-    - time: 0.16666667
-      value: {fileID: -6267222054308620433, guid: 6f39621f3f622a7428922a2660284131,
-        type: 3}
-    - time: 0.25
-      value: {fileID: 8562183515977091991, guid: 6f39621f3f622a7428922a2660284131,
-        type: 3}
-    attribute: m_Sprite
-    path: Sprites/Helmet
-    classID: 212
-    script: {fileID: 0}
-  - curve:
-    - time: 0
       value: {fileID: 1913650328458896090, guid: cda421dda742b2940aed29bc6f3c0239,
         type: 3}
     - time: 0.083333336
@@ -152,40 +116,6 @@ AnimationClip:
         type: 3}
     attribute: m_Sprite
     path: Sprites/Arms
-    classID: 212
-    script: {fileID: 0}
-  - curve:
-    - time: 0
-      value: {fileID: 164645255945221454, guid: 3a2887020a0d0a8488c4ff3b19530143,
-        type: 3}
-    - time: 0.083333336
-      value: {fileID: -6090499541901823913, guid: 3a2887020a0d0a8488c4ff3b19530143,
-        type: 3}
-    - time: 0.16666667
-      value: {fileID: 7436233560290373383, guid: 3a2887020a0d0a8488c4ff3b19530143,
-        type: 3}
-    - time: 0.25
-      value: {fileID: 4595526489504815883, guid: 3a2887020a0d0a8488c4ff3b19530143,
-        type: 3}
-    attribute: m_Sprite
-    path: Sprites/VisorOriginal
-    classID: 212
-    script: {fileID: 0}
-  - curve:
-    - time: 0
-      value: {fileID: 3643066970180467636, guid: 4e3e898698228ad41883cf3985564462,
-        type: 3}
-    - time: 0.083333336
-      value: {fileID: 7103147058691270930, guid: 4e3e898698228ad41883cf3985564462,
-        type: 3}
-    - time: 0.16666667
-      value: {fileID: 6154170273035132817, guid: 4e3e898698228ad41883cf3985564462,
-        type: 3}
-    - time: 0.25
-      value: {fileID: 1415733009806392921, guid: 4e3e898698228ad41883cf3985564462,
-        type: 3}
-    attribute: m_Sprite
-    path: Sprites/VisorOriginal/VisorColor
     classID: 212
     script: {fileID: 0}
   m_SampleRate: 12
@@ -217,21 +147,7 @@ AnimationClip:
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 3983878383
-      attribute: 2086281974
-      script: {fileID: 0}
-      typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
       path: 2835562040
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-    - serializedVersion: 2
-      path: 3983878383
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -244,41 +160,15 @@ AnimationClip:
       typeID: 212
       customType: 23
       isPPtrCurve: 1
-    - serializedVersion: 2
-      path: 3083928114
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
-    - serializedVersion: 2
-      path: 3924505964
-      attribute: 0
-      script: {fileID: 0}
-      typeID: 212
-      customType: 23
-      isPPtrCurve: 1
     pptrCurveMapping:
     - {fileID: 2829588060858407925, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
     - {fileID: 6393107087435189210, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
     - {fileID: 859723408146594934, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
     - {fileID: 7728488746179117960, guid: 0da584bb3faef11428b2b2cc51d8079a, type: 3}
-    - {fileID: -5545214303318638897, guid: 6f39621f3f622a7428922a2660284131, type: 3}
-    - {fileID: -4753280249692694078, guid: 6f39621f3f622a7428922a2660284131, type: 3}
-    - {fileID: -6267222054308620433, guid: 6f39621f3f622a7428922a2660284131, type: 3}
-    - {fileID: 8562183515977091991, guid: 6f39621f3f622a7428922a2660284131, type: 3}
     - {fileID: 1913650328458896090, guid: cda421dda742b2940aed29bc6f3c0239, type: 3}
     - {fileID: -5046411783210021409, guid: cda421dda742b2940aed29bc6f3c0239, type: 3}
     - {fileID: -3412686313614083288, guid: cda421dda742b2940aed29bc6f3c0239, type: 3}
     - {fileID: -4965920054795198434, guid: cda421dda742b2940aed29bc6f3c0239, type: 3}
-    - {fileID: 164645255945221454, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
-    - {fileID: -6090499541901823913, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
-    - {fileID: 7436233560290373383, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
-    - {fileID: 4595526489504815883, guid: 3a2887020a0d0a8488c4ff3b19530143, type: 3}
-    - {fileID: 3643066970180467636, guid: 4e3e898698228ad41883cf3985564462, type: 3}
-    - {fileID: 7103147058691270930, guid: 4e3e898698228ad41883cf3985564462, type: 3}
-    - {fileID: 6154170273035132817, guid: 4e3e898698228ad41883cf3985564462, type: 3}
-    - {fileID: 1415733009806392921, guid: 4e3e898698228ad41883cf3985564462, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -364,25 +254,6 @@ AnimationClip:
       m_RotationOrder: 4
     attribute: m_IsActive
     path: Sprites/Arms
-    classID: 1
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Sprites/Helmet
     classID: 1
     script: {fileID: 0}
   m_EulerEditorCurves: []
