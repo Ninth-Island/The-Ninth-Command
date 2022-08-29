@@ -21,9 +21,6 @@ public partial class Player : Character{
     [Header("Basic Weapons")] 
     public BasicWeapon primaryWeapon;
     public BasicWeapon secondaryWeapon;
-    
-    public BasicWeapon primaryWeaponPrefab;
-    public BasicWeapon secondaryWeaponPrefab;
 
     private bool _isCrouching;
 
@@ -66,11 +63,7 @@ public partial class Player : Character{
     protected override void CmdAnimatorUpdateAirborne(){
         Animator.SetBool(_aNames.jumping, Airborne);
     }
-
-    [ClientRpc]
-    public void SetArmAsParentOf(Transform weapon){
-        weapon.parent = arm;
-    }
+    
 
     
 
@@ -111,14 +104,6 @@ public partial class Player : Character{
             _virtualCamera[0].Priority = 10;
         }
 
-        primaryWeapon = arm.GetChild(1).GetComponent<BasicWeapon>();
-        primaryWeapon.PickUp(this);
-        primaryWeapon.transform.localPosition = primaryWeapon.offset;
-        
-        secondaryWeapon = arm.GetChild(2).GetComponent<BasicWeapon>();
-        secondaryWeapon.PickUp(this);
-        secondaryWeapon.activelyWielded = false;
-        secondaryWeapon.spriteRenderer.enabled = false;
     }
 
 
@@ -193,7 +178,7 @@ public partial class Player : Character{
     private void CheckSwap(){
 
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
-            if (primaryWeapon != null){
+            /*if (primaryWeapon != null){
                 primaryWeapon.SetSpriteRenderer(false);
             }
 
@@ -210,7 +195,44 @@ public partial class Player : Character{
             
             primaryWeapon.activelyWielded = true;
             primaryWeapon.spriteRenderer.enabled = true;
-            primaryWeapon.PickUp(this);
+            primaryWeapon.PickUp(this, arm.GetChild(1));*/
+            ServerSwap();
+        }
+    }
+
+    [Command]
+    private void ServerSwap(){
+        ClientReceiveSwap();
+    }
+
+    [ClientRpc]
+    private void ClientReceiveSwap(){
+        if (primaryWeapon != null){
+            primaryWeapon.SetSpriteRenderer(false);
+        }
+
+        if (secondaryWeapon != null){
+            secondaryWeapon.SetSpriteRenderer(true);
+        }
+
+        primaryWeapon.Ready();
+
+        (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
+
+        secondaryWeapon.activelyWielded = false;
+        secondaryWeapon.spriteRenderer.enabled = false;
+
+        primaryWeapon.activelyWielded = true;
+        primaryWeapon.spriteRenderer.enabled = true;
+        primaryWeapon.PickUp(this, arm.GetChild(1));
+
+        primaryWeapon.AudioManager.PlaySound(2, false);
+
+
+        primaryWeapon.transform.localPosition = primaryWeapon.offset;
+        SetArmType(primaryWeapon.armType);
+
+        if (hasAuthority){
             UpdateHUD();
 
             _swappedWeapon = true;
@@ -253,7 +275,7 @@ public partial class Player : Character{
                 primaryWeapon.Drop();
                 
                 primaryWeapon = weapon;
-                weapon.PickUp(this);
+                weapon.PickUp(this, arm.GetChild(1));
                 UpdateHUD();
             }
         }

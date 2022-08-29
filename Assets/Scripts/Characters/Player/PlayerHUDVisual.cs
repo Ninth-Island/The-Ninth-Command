@@ -78,13 +78,7 @@ public partial class Player : Character
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
-        primaryWeapon.AudioManager.PlaySound(2, false);
-
-
-        primaryWeapon.transform.localPosition = primaryWeapon.offset;
-
         SetNotifText(primaryWeapon.name);
-        SetArmType(primaryWeapon.armType);
     }
 
     

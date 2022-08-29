@@ -8,7 +8,6 @@ using UnityEngine;
 
 public class BasicWeapon : Weapon{
 
-    [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f);
     [SerializeField][Tooltip("Player Only")] public int armType = 0;
     [SerializeField][Tooltip("Player Only")] public int cursorType = 0;
     [SerializeField] private bool allowInterrupt = false;
@@ -16,6 +15,8 @@ public class BasicWeapon : Weapon{
     public Transform firingPoint;
 
     public bool activelyWielded = false;
+
+    public readonly bool _duelWieldable = false;
 
     protected Coroutine Coroutine;
     
@@ -48,14 +49,18 @@ public class BasicWeapon : Weapon{
 
 
 
-    public override void PickUp(Character character){
-        base.PickUp(character);
+    [Server]
+    public override void PickUp(Character character, Transform parent){
+        base.PickUp(character, parent);
 
+        
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
         activelyWielded = true;
         RefreshText();
     }
+    
+    
     
     public override void Drop(){
         base.Drop();
@@ -68,8 +73,8 @@ public class BasicWeapon : Weapon{
         spriteRenderer.enabled = setEnabled;
     }
 
-    public override void OnStartClient(){
-        base.OnStartClient();
+    protected override void Start(){
+        base.Start();
         
         CursorControl = FindObjectOfType<CursorControl>();
         foreach (Player player in FindObjectsOfType<Player>()){
@@ -82,6 +87,7 @@ public class BasicWeapon : Weapon{
     }
     
     protected override void FixedUpdate(){
+        
     }
 
     private void OnDisable(){

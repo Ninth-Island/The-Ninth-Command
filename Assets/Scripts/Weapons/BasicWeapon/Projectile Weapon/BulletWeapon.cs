@@ -92,8 +92,8 @@ public class BulletWeapon : ProjectileWeapon{
 
 
     
-    public override void OnStartClient(){
-        base.OnStartClient();
+    protected override void Start(){
+        base.Start();
     }
 
 

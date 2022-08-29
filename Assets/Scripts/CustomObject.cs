@@ -7,9 +7,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 
 public class CustomObject : NetworkBehaviour{
-
-
-
+    
     public Rigidbody2D body;
     public SpriteRenderer spriteRenderer;
 
@@ -24,7 +22,7 @@ public class CustomObject : NetworkBehaviour{
 
     [ClientCallback]
     protected virtual void Update(){
-        
     }
+    
 }
 

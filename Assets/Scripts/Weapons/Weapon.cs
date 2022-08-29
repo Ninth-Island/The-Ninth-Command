@@ -1,31 +1,39 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class Weapon : CustomObject{
+public class Weapon : MonoBehaviour{
     
 
     
     [Header("Weapon")]
+    
+    
+    
     [SerializeField] protected float pickupRange;
     [SerializeField] protected Character wielder;
+    [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f);
 
-    
+    public Rigidbody2D body;
+    public SpriteRenderer spriteRenderer;
+
     
     public AudioManager AudioManager;
     
     protected PolygonCollider2D Collider;
+
     
+    public virtual void PickUp(Character pickedUpBy, Transform parent){
 
-
-    public virtual void PickUp(Character pickedUpBy){
+        transform.parent = parent;
         wielder = pickedUpBy;
         body.simulated = false;
         spriteRenderer.sortingLayerID = pickedUpBy.spriteRenderer.sortingLayerID;
         spriteRenderer.sortingOrder = 4;
-        transform.parent = wielder.transform.GetChild(1).transform.GetChild(3);
         // AudioManager.PlayFromList(2);
     }
+    
 
     public virtual void Drop(){
         body.simulated = true;
@@ -47,22 +55,20 @@ public class Weapon : CustomObject{
 
     #region Start Update
 
-    public override void OnStartClient(){
-        base.OnStartClient();
-        
+    protected virtual void Start(){
+        body = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         Collider = GetComponent<PolygonCollider2D>();
-
-
+        
         AudioManager = GetComponent<AudioManager>();    
     }
-
-    public override void OnStartServer(){
-        base.OnStartServer();
+    
+    protected virtual void Update(){
+        
     }
-
-    protected override void Update(){
-        base.Update();
+    
+    protected virtual void FixedUpdate(){
+        
     }
 
     #endregion

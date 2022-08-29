@@ -25,17 +25,10 @@ public class CustomNetworkManager : NetworkManager{
             foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
                 
                 Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
-                GameObject pW = Instantiate(player.primaryWeaponPrefab.gameObject, player.arm);
-                GameObject sW = Instantiate(player.secondaryWeaponPrefab.gameObject, player.arm);
+
                 NetworkServer.Spawn(player.gameObject, connectionToClient);
-                NetworkServer.Spawn(pW);
-                NetworkServer.Spawn(sW);
-                player.SetArmAsParentOf(pW.transform);
-                player.SetArmAsParentOf(sW.transform);
             }
-
         }
-
     }
-
 }
+

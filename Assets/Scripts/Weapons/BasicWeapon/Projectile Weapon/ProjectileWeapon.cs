@@ -68,8 +68,8 @@ public class ProjectileWeapon : BasicWeapon{
         projectile.StartCoroutine(projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name));
     }
 
-    public override void OnStartClient(){
-        base.OnStartClient();
+    protected override void Start(){
+        base.Start();
         CursorControl = FindObjectOfType<CursorControl>();
     }
 

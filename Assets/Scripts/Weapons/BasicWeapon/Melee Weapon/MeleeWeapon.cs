@@ -15,8 +15,9 @@ public class MeleeWeapon : BasicWeapon{
     [SerializeField] private Vector2 leftRightRotationSwing;
 
 
-    public override void OnStartClient(){
-        base.OnStartClient();
+    
+    protected override void Start(){
+        base.Start();
     }
 
     protected void Awake(){
