@@ -154,9 +154,6 @@ public class Character : CustomObject{
 
         AudioManager = GetComponent<AudioManager>();
         
-        foreach (Weapon weapon in GetComponentsInChildren<Weapon>()){
-            weapon.SetWielder(this);
-        }
     }
 
     [ClientCallback]
@@ -191,9 +188,10 @@ public class Character : CustomObject{
     
     #endregion
 
-    
-    
-    
+    [Client]
+    public virtual void PickupWeapon(BasicWeapon basicWeapon){
+        
+    }
     
     
     

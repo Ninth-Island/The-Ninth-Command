@@ -77,7 +77,6 @@ public partial class Player : Character
     private void UpdateHUD(){
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
-
         SetNotifText(primaryWeapon.name);
     }
 

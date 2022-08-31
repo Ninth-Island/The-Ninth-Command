@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 958858899413579696}
   - component: {fileID: 958858899413579701}
-  - component: {fileID: 958858899413579702}
-  - component: {fileID: 958858899413579703}
   - component: {fileID: 958858899413579700}
   - component: {fileID: 958858899413579691}
   - component: {fileID: 4162241715402215316}
@@ -77,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 447239203
-  m_SortingLayer: 6
-  m_SortingOrder: 0
+  m_SortingLayerID: -607890577
+  m_SortingLayer: 7
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: ef7b237ed38535443a7c423ccf3fb251, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -91,71 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &958858899413579702
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958858899413579697}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!60 &958858899413579703
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958858899413579697}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.75, y: 8.75}
-    newSize: {x: 8.75, y: 8.75}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 1.7443924, y: 0.4992231}
-      - {x: 0.62252045, y: 0.6198423}
-      - {x: -0.12666321, y: 0.75245893}
-      - {x: -0.8600311, y: 0.75460494}
-      - {x: -1.124794, y: 0.5041306}
-      - {x: -1.6239777, y: 0.5034677}
-      - {x: -1.8747864, y: 0.2407968}
-      - {x: -1.8769684, y: -0.23589754}
-      - {x: -1.619461, y: -0.5023315}
-      - {x: -1.128479, y: -0.49511743}
-      - {x: -0.8704071, y: -0.7440033}
-      - {x: -0.3763733, y: -0.7420685}
-      - {x: -0.121276855, y: -0.61725736}
-      - {x: 0.002571106, y: -0.49797368}
-      - {x: 0.50463104, y: -0.36880302}
-      - {x: 0.9925537, y: -0.23180294}
-      - {x: 1.7428589, y: 0.002379179}
-      - {x: 1.8770599, y: 0.12479067}
-      - {x: 1.875, y: 0.36765265}
 --- !u!114 &958858899413579700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,18 +101,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRange: 8
+  weaponPickup: {fileID: -2873789304163301064, guid: 2c91fa60cfd85414a8eacbf07ea42f3a,
+    type: 3}
   wielder: {fileID: 0}
   offset: {x: 1.69, y: -0.42}
-  body: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: 958858899413579691}
   armType: 0
   cursorType: 30
   allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
-  looping: 0
   shotDelay: 0
   salvoDelay: 18
   shotsPerSalvo: 1

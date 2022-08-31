@@ -11,19 +11,11 @@ public class BasicWeapon : Weapon{
     [SerializeField][Tooltip("Player Only")] public int armType = 0;
     [SerializeField][Tooltip("Player Only")] public int cursorType = 0;
     [SerializeField] private bool allowInterrupt = false;
-    protected CursorControl CursorControl;
     public Transform firingPoint;
 
     public bool activelyWielded = false;
-
-    public readonly bool _duelWieldable = false;
-
-    protected Coroutine Coroutine;
     
-    public bool looping;
 
-
-    
     public virtual void AttemptFire(float angle){
         
     }
@@ -46,27 +38,7 @@ public class BasicWeapon : Weapon{
         activelyWielded = true;
         RefreshText();
     }
-
-
-
-    [Server]
-    public override void PickUp(Character character, Transform parent){
-        base.PickUp(character, parent);
-
-        
-        transform.localRotation = new Quaternion(0, 0, 0, 0);
-        transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
-        activelyWielded = true;
-        RefreshText();
-    }
     
-    
-    
-    public override void Drop(){
-        base.Drop();
-        wielder = null;
-        activelyWielded = false;
-    }
 
 
     public void SetSpriteRenderer(bool setEnabled){
@@ -75,11 +47,12 @@ public class BasicWeapon : Weapon{
 
     protected override void Start(){
         base.Start();
+
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
+        transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
+        activelyWielded = true;
+        RefreshText();
         
-        CursorControl = FindObjectOfType<CursorControl>();
-        foreach (Player player in FindObjectsOfType<Player>()){
-            player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, body)));
-        }
     }
 
     protected override void Update(){

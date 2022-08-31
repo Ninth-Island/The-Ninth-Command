@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.XR;
 
 public partial class Player : Character{
-    
+
     /*
 * ================================================================================================================
 *                                               Player
@@ -18,17 +18,19 @@ public partial class Player : Character{
 * ================================================================================================================
 */
 
-    [Header("Basic Weapons")] 
-    public BasicWeapon primaryWeapon;
+    [Header("Basic Weapons")] public BasicWeapon primaryWeapon;
     public BasicWeapon secondaryWeapon;
+    
+    [SerializeField] private NetworkTransformChild _primaryTransform;
+    [SerializeField] private NetworkTransformChild _secondaryTransform;
 
+    
     private bool _isCrouching;
 
     private bool hardLanding;
 
     private bool _swappedWeapon;
 
-    
     #region Server
 
     [Server]
@@ -40,7 +42,7 @@ public partial class Player : Character{
         if (XMove != 0 && !InputsFrozen && !FallingKnocked){
 
             Animator.SetBool(_aNames.runningBackwards, Math.Sign(XMove) != Math.Sign(transform.localScale.x));
-            
+
             if (_isCrouching){
                 body.velocity = new Vector2(moveSpeed / 2 * XMove, body.velocity.y);
                 SortSound(2);
@@ -48,7 +50,7 @@ public partial class Player : Character{
             else{
                 body.velocity = new Vector2(moveSpeed * XMove, body.velocity.y);
             }
-            
+
         }
     }
 
@@ -63,9 +65,9 @@ public partial class Player : Character{
     protected override void CmdAnimatorUpdateAirborne(){
         Animator.SetBool(_aNames.jumping, Airborne);
     }
-    
 
-    
+
+
 
     #endregion
 
@@ -83,10 +85,10 @@ public partial class Player : Character{
             CmdServerJump();
             CmdSetSuppressGroundCheck();
         }
-    
+
     }
 
-    
+
 
     /*
     * ================================================================================================================
@@ -124,13 +126,12 @@ public partial class Player : Character{
         else{
             hardLanding = false;
         }
-        
+
     }
 
     [ClientCallback]
     protected override void Update(){
         base.Update();
-
         if (hasAuthority){
             CheckSwap();
             CheckCrouch();
@@ -139,13 +140,13 @@ public partial class Player : Character{
             if (Input.GetKey(KeyCode.R)){
                 primaryWeapon.Reload();
             }
-            
+
             CmdRotateArm(GetBarrelToMouseRotation());
 
             ControlUpdate();
             CheckForPickup();
         }
-        
+
     }
 
     /*
@@ -154,7 +155,7 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-    
+
 
 
     [Client]
@@ -169,33 +170,16 @@ public partial class Player : Character{
     #endregion
 
     #region Weapon and Vehicle
+
     /*
     * ================================================================================================================
     *                                               Weapon and Vehicle
     * ================================================================================================================
     */
-    
+
     private void CheckSwap(){
 
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
-            /*if (primaryWeapon != null){
-                primaryWeapon.SetSpriteRenderer(false);
-            }
-
-            if (secondaryWeapon != null){
-                secondaryWeapon.SetSpriteRenderer(true);
-            }
-
-            primaryWeapon.Ready();
-
-            (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
-
-            secondaryWeapon.activelyWielded = false;
-            secondaryWeapon.spriteRenderer.enabled = false;
-            
-            primaryWeapon.activelyWielded = true;
-            primaryWeapon.spriteRenderer.enabled = true;
-            primaryWeapon.PickUp(this, arm.GetChild(1));*/
             ServerSwap();
         }
     }
@@ -218,20 +202,15 @@ public partial class Player : Character{
         primaryWeapon.Ready();
 
         (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
+        (_primaryTransform.target, _secondaryTransform.target) = (_secondaryTransform.target, _primaryTransform.target);
 
         secondaryWeapon.activelyWielded = false;
         secondaryWeapon.spriteRenderer.enabled = false;
 
         primaryWeapon.activelyWielded = true;
         primaryWeapon.spriteRenderer.enabled = true;
-        primaryWeapon.PickUp(this, arm.GetChild(1));
 
-        primaryWeapon.AudioManager.PlaySound(2, false);
-
-
-        primaryWeapon.transform.localPosition = primaryWeapon.offset;
-        SetArmType(primaryWeapon.armType);
-
+        WeaponReady();
         if (hasAuthority){
             UpdateHUD();
 
@@ -240,15 +219,23 @@ public partial class Player : Character{
         }
     }
 
+    [Client]
+    private void WeaponReady(){
+        primaryWeapon.AudioManager.PlaySound(2, false);
+        primaryWeapon.transform.localPosition = primaryWeapon.offset;
+        SetArmType(primaryWeapon.armType);
+    }
+
     private void ResetSwappedWeapon(){
         _swappedWeapon = false;
     }
-    
+
+    [Client]
     private void CheckForPickup(){
         Vector2 mousePos = _cursorControl.GetMousePosition();
         RaycastHit2D objectScan =
             Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects", "Vehicle"));
-        
+
         pickupText.SetText("");
         if (objectScan){
             GameObject nearestObject = objectScan.collider.gameObject;
@@ -265,24 +252,52 @@ public partial class Player : Character{
         }
     }
 
-    private void WeaponPickup(GameObject nearestObject){
-        BasicWeapon weapon = _allBasicWeapons[nearestObject].Key;
-
-        if (IsTouching(transform.position, nearestObject.transform.position,
-            weapon.GetPickupRange(), weapon.GetPickupRange())){
-            pickupText.SetText("(G) " + weapon.name);
-            if (Input.GetKeyDown(KeyCode.G)){
-                primaryWeapon.Drop();
-                
-                primaryWeapon = weapon;
-                weapon.PickUp(this, arm.GetChild(1));
-                UpdateHUD();
-            }
-        }
-    
+    [Command]
+    private void CmdReplaceWeaponWithPickup(){
+        NetworkServer.Spawn(Instantiate(primaryWeapon.GetWeaponPickup().gameObject, primaryWeapon.transform.position,
+            primaryWeapon.transform.rotation));
+        MakeClientsDestroyWeapon();
     }
 
-    public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
+    [Client]
+    private void WeaponPickup(GameObject nearestObject){
+
+        if (Vector2.Distance(transform.position, nearestObject.transform.position) < 10){
+            pickupText.SetText("(G) " + nearestObject.name);
+            if (Input.GetKeyDown(KeyCode.G)){
+                CmdReplaceWeaponWithPickup();
+                nearestObject.GetComponent<WeaponPickup>().PickUp(this, new[]{1, 3, 1});
+            }
+        }
+
+    }
+
+    [Server]
+    private void MakeClientsDestroyWeapon(){
+        DestroyWeaponOnClients();
+    }
+
+    [ClientRpc]
+    private void DestroyWeaponOnClients(){
+        primaryWeapon.gameObject.SetActive(false);
+        Destroy(primaryWeapon.gameObject);
+    }
+
+    [Client]
+    public override void PickupWeapon(BasicWeapon basicWeapon){
+        base.PickupWeapon(basicWeapon);
+        primaryWeapon = basicWeapon;
+        
+        _primaryTransform.target = primaryWeapon.transform;
+        WeaponReady();
+        if (hasAuthority){
+            UpdateHUD();
+        }
+    }
+
+
+
+public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
         base.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, energy, heat, type);
 
         if (type == 1){ // bullet weapon
@@ -313,7 +328,7 @@ public partial class Player : Character{
     }
 
     private void VehicleEmbark(GameObject nearestObject){
-        Vehicle vehicle = _allVehicles[nearestObject];
+        /*Vehicle vehicle = _allVehicles[nearestObject];
         if (IsTouching(transform.position, nearestObject.transform.position, vehicle.GetEmbarkRange(),
             vehicle.GetEmbarkRange())){
             pickupText.SetText("(G) " + nearestObject.name);
@@ -333,7 +348,7 @@ public partial class Player : Character{
                 
                         
             }
-        }
+        }*/
     }
 
     protected override void OnCollisionEnter2D(Collision2D other){
@@ -348,19 +363,6 @@ public partial class Player : Character{
             }
         }
     }
-    
-    
-    public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
-        _allBasicWeapons.Add(weapon.Key, weapon.Value);
-    }
-    public void AddVehicle(KeyValuePair<GameObject, Vehicle> vehicle){
-        _allVehicles.Add(vehicle.Key, vehicle.Value);
-    }
-    
-    public Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> _allBasicWeapons = new Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>();
-    public Dictionary<GameObject, Vehicle> _allVehicles = new Dictionary<GameObject, Vehicle>();
-    
-    
 
     protected override void TakeDamage(int damage){
         base.TakeDamage(damage);

@@ -10,9 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3886628609415804473}
   - component: {fileID: 3886628609415804453}
-  - component: {fileID: 3886628609415804454}
+  - component: {fileID: 3886628609415804452}
+  - component: {fileID: 3886628609415804455}
+  - component: {fileID: 7517794554836764578}
   - component: {fileID: 506922134546500636}
   - component: {fileID: 1570973111342355210}
+  - component: {fileID: -5554566946478564064}
+  - component: {fileID: 7182635805630926359}
   m_Layer: 13
   m_Name: Rocket Launcher
   m_TagString: Weapon
@@ -75,9 +79,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -607890577
-  m_SortingLayer: 7
-  m_SortingOrder: 4
+  m_SortingLayerID: 447239203
+  m_SortingLayer: 6
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3078a552947817e4697108fb77ac0a9e, type: 3}
   m_Color: {r: 0, g: 0.90713024, b: 1, a: 1}
   m_FlipX: 0
@@ -89,7 +93,91 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3886628609415804454
+--- !u!50 &3886628609415804452
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886628609415804472}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &3886628609415804455
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886628609415804472}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.75, y: 8.75}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -2.0052757, y: 0.87921524}
+      - {x: -2.0030937, y: 1.0057445}
+      - {x: -1.626255, y: 1.011426}
+      - {x: -1.3722668, y: 0.7614775}
+      - {x: -1.1209927, y: 0.7548342}
+      - {x: -0.73495865, y: 1.1179962}
+      - {x: 0.49576187, y: 1.1364632}
+      - {x: 0.6221962, y: 0.9959464}
+      - {x: 0.63165283, y: 0.7522383}
+      - {x: 2.3725643, y: 0.748261}
+      - {x: 2.500084, y: 0.62245417}
+      - {x: 2.5092373, y: 0.25740576}
+      - {x: 2.3736362, y: 0.12398863}
+      - {x: 2.119917, y: 0.009492874}
+      - {x: 1.6241932, y: -0.0059046745}
+      - {x: 1.6218071, y: -0.24857807}
+      - {x: 1.4984303, y: -0.24915266}
+      - {x: 1.3782749, y: -0.7461524}
+      - {x: 1.2454319, y: -0.8710017}
+      - {x: 1.005724, y: -0.87055206}
+      - {x: 0.8776226, y: -0.746943}
+      - {x: 0.87737465, y: -0.6139455}
+      - {x: 0.7487049, y: -0.61734915}
+      - {x: 0.49602318, y: -0.8706579}
+      - {x: -0.24506092, y: -0.87502337}
+      - {x: -0.25136662, y: -1.0031042}
+      - {x: -0.61535835, y: -1.0034842}
+      - {x: -0.8641777, y: -0.74996614}
+      - {x: -1.0004711, y: -0.49440956}
+      - {x: -1.2466335, y: -0.2381773}
+      - {x: -1.6216068, y: -0.24884892}
+      - {x: -1.6304531, y: -0.36724377}
+      - {x: -1.9915075, y: -0.3798933}
+      - {x: -2.247159, y: -0.11519432}
+      - {x: -2.4901285, y: 0.0073099136}
+      - {x: -2.6211557, y: 0.13195181}
+      - {x: -2.6219234, y: 0.7415333}
+      - {x: -2.4811049, y: 0.8772721}
+--- !u!114 &7517794554836764578
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,34 +186,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3886628609415804472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
+  m_Script: {fileID: 11500000, guid: aa9f2073dca18b24ba6a6dae1171d39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPickup: {fileID: 7517794554836764578, guid: c7e2476af1827284fa5d710b94866cd7,
-    type: 3}
-  wielder: {fileID: 0}
-  offset: {x: 1.59, y: 0.525}
+  syncMode: 0
+  syncInterval: 0.1
+  body: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  AudioManager: {fileID: 506922134546500636}
-  armType: 5
-  cursorType: 12
-  allowInterrupt: 0
-  firingPoint: {fileID: 0}
-  activelyWielded: 0
-  shotDelay: 0
-  salvoDelay: 80
-  shotsPerSalvo: 1
-  instability: 0
-  projectileTemplate: {fileID: 5345319634674317827, guid: 1074378ac8cb2cc49a8610e6794528c7,
-    type: 3}
-  projectileDamage: 1
-  projectileSpeed: 100
-  piercing: 0
-  magazinesLeft: 2
-  magazineSize: 2
-  reloadTime: 2
-  bulletShell: {fileID: 0}
-  bulletsLeft: 2
+  weapon: {fileID: 3886628609415804454, guid: fd4c5a7c7afd170459456c8754c3531f, type: 3}
 --- !u!114 &506922134546500636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +365,57 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-5554566946478564064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886628609415804472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: c7e2476af1827284fa5d710b94866cd7
+  hasSpawned: 0
+--- !u!114 &7182635805630926359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3886628609415804472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.02
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &6818982757109664363
 GameObject:
   m_ObjectHideFlags: 0

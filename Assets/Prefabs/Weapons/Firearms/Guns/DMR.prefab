@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4506013158996176202}
   - component: {fileID: 4506013158996176214}
-  - component: {fileID: 4506013158996176213}
-  - component: {fileID: 4506013158996176212}
   - component: {fileID: 4506013158996176203}
   - component: {fileID: -5509028141593329034}
   - component: {fileID: 2200746131306474332}
@@ -77,9 +75,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 447239203
-  m_SortingLayer: 6
-  m_SortingOrder: 0
+  m_SortingLayerID: -607890577
+  m_SortingLayer: 7
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 5904717d97f7a0f4a8a9c53bf834ca3b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -91,91 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &4506013158996176213
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4506013158996176201}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!60 &4506013158996176212
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4506013158996176201}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.75, y: 8.75}
-    newSize: {x: 10, y: 10}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.253811, y: 0.013143063}
-      - {x: 1.6248894, y: -0.3700943}
-      - {x: 1.3716698, y: -0.37315083}
-      - {x: 1.3714485, y: -0.25835037}
-      - {x: 0.6238899, y: -0.49819946}
-      - {x: 0.12959671, y: -0.495965}
-      - {x: 0.12423706, y: -0.74527454}
-      - {x: -0.12960434, y: -1.0022669}
-      - {x: -0.8603363, y: -0.9950075}
-      - {x: -0.9969826, y: -0.86295605}
-      - {x: -0.9931221, y: -0.37575626}
-      - {x: -1.3754501, y: -0.75100136}
-      - {x: -1.8476372, y: -0.753767}
-      - {x: -2.1231842, y: -0.49933243}
-      - {x: -2.2531033, y: -0.12205076}
-      - {x: -2.2495766, y: 0.5013814}
-      - {x: -2.108101, y: 0.6181879}
-      - {x: -0.9929123, y: 0.61879253}
-      - {x: -0.99292374, y: 0.5030298}
-      - {x: -0.5006943, y: 0.50367546}
-      - {x: -0.49090576, y: 0.74625206}
-      - {x: -0.38302994, y: 0.75457954}
-      - {x: -0.37775803, y: 0.8807354}
-      - {x: 0.0075950623, y: 0.88002014}
-      - {x: 0.0047950745, y: 0.9946976}
-      - {x: 0.12351227, y: 0.99337864}
-      - {x: 0.12322235, y: 0.8703213}
-      - {x: 0.37099075, y: 0.8724003}
-      - {x: 0.51408005, y: 0.6369467}
-      - {x: 1.1239967, y: 0.613677}
-      - {x: 1.2682381, y: 0.37652016}
-      - {x: 1.3689919, y: 0.37489414}
-      - {x: 1.3736382, y: 0.6219845}
-      - {x: 1.5014229, y: 0.7485266}
-      - {x: 1.6279335, y: 0.74430275}
-      - {x: 1.7579613, y: 0.6150284}
-      - {x: 1.7647057, y: 0.37552834}
-      - {x: 2.1297112, y: 0.38634014}
-      - {x: 2.2465744, y: 0.24026823}
 --- !u!114 &4506013158996176203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,18 +101,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupRange: 8
+  weaponPickup: {fileID: -9068513062149009902, guid: c9b9b9ef5ca35e846ab0588d9bdb5514,
+    type: 3}
   wielder: {fileID: 0}
   offset: {x: 1.97, y: 0.003}
-  body: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: -5509028141593329034}
   armType: 0
   cursorType: 5
   allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
-  looping: 0
   shotDelay: 0
   salvoDelay: 45
   shotsPerSalvo: 1

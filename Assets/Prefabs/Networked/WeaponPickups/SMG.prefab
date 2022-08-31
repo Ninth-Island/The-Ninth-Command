@@ -41,9 +41,13 @@ GameObject:
   m_Component:
   - component: {fileID: 8609765344648067617}
   - component: {fileID: 8609765344648067629}
-  - component: {fileID: 8609765344648067616}
+  - component: {fileID: 8609765344648067618}
+  - component: {fileID: 8609765344648067619}
+  - component: {fileID: 2189189822740507190}
   - component: {fileID: -7570404451717712117}
   - component: {fileID: 8659021871769568557}
+  - component: {fileID: -4983598022177233067}
+  - component: {fileID: 2883607222468397355}
   m_Layer: 13
   m_Name: SMG
   m_TagString: Weapon
@@ -105,9 +109,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -607890577
-  m_SortingLayer: 7
-  m_SortingOrder: 4
+  m_SortingLayerID: 447239203
+  m_SortingLayer: 6
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 48d7696d3ca27124aa1be0378c2656f6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -119,7 +123,78 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8609765344648067616
+--- !u!50 &8609765344648067618
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609765344648067622}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &8609765344648067619
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609765344648067622}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 8.75, y: 8.75}
+    newSize: {x: 10, y: 10}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.5154724, y: 0.7470503}
+      - {x: 0.5009079, y: 0.62504005}
+      - {x: -0.1268692, y: 0.6303177}
+      - {x: -0.12781525, y: 0.75148106}
+      - {x: -0.37124634, y: 0.7538605}
+      - {x: -0.3719406, y: 0.6412525}
+      - {x: -1.2471447, y: 0.62116146}
+      - {x: -1.3711395, y: 0.49561214}
+      - {x: -1.3710861, y: -0.37370777}
+      - {x: -1.1122665, y: -0.62148476}
+      - {x: -0.3828125, y: -0.62379646}
+      - {x: -0.38015747, y: -0.75352955}
+      - {x: -0.1331482, y: -0.7521391}
+      - {x: 0.25198364, y: -0.3820629}
+      - {x: 0.25572968, y: -0.48670483}
+      - {x: 0.50753784, y: -0.7456236}
+      - {x: 0.7518692, y: -0.7501564}
+      - {x: 1.0009003, y: -0.48964214}
+      - {x: 0.99687195, y: 0.0032072067}
+      - {x: 1.2512054, y: 0.00047302246}
+      - {x: 1.3733978, y: 0.14475632}
+      - {x: 1.3750687, y: 0.37278652}
+      - {x: 1.244278, y: 0.505126}
+      - {x: 0.8864498, y: 0.50248957}
+      - {x: 0.74391556, y: 0.740232}
+--- !u!114 &2189189822740507190
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,35 +203,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8609765344648067622}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
+  m_Script: {fileID: 11500000, guid: aa9f2073dca18b24ba6a6dae1171d39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPickup: {fileID: 2189189822740507190, guid: 8e3ac7b5abec58b4a9519cd5bacb68b4,
-    type: 3}
-  wielder: {fileID: 0}
-  offset: {x: 2.14, y: 0.16}
+  syncMode: 0
+  syncInterval: 0.1
+  body: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  AudioManager: {fileID: -7570404451717712117}
-  armType: 1
-  cursorType: 4
-  allowInterrupt: 0
-  firingPoint: {fileID: 0}
-  activelyWielded: 0
-  shotDelay: 0
-  salvoDelay: 3
-  shotsPerSalvo: 1
-  instability: 0.1
-  projectileTemplate: {fileID: -5604932223983771090, guid: 31cb229e9234b7c46a2f98a62f5d917a,
-    type: 3}
-  projectileDamage: 1
-  projectileSpeed: 200
-  piercing: 0
-  magazinesLeft: 2
-  magazineSize: 60
-  reloadTime: 3
-  bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
-    type: 3}
-  bulletsLeft: 60
+  weapon: {fileID: 8609765344648067616, guid: d3390a709037c4f418f6076cd7880c9b, type: 3}
 --- !u!114 &-7570404451717712117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,3 +361,54 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4983598022177233067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609765344648067622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 8e3ac7b5abec58b4a9519cd5bacb68b4
+  hasSpawned: 0
+--- !u!114 &2883607222468397355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609765344648067622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.02
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}

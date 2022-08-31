@@ -31,7 +31,6 @@ public class Vehicle : CustomObject{
         driverVisor = transform.GetChild(3).GetComponent<SpriteRenderer>();
         driver = transform.GetChild(4).GetComponent<SpriteRenderer>();
         
-        _player.AddVehicle(new KeyValuePair<GameObject, Vehicle>(gameObject, this));
     }
 
     protected override void Update(){

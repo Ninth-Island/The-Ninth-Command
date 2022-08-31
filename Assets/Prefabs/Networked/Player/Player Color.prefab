@@ -6751,6 +6751,8 @@ MonoBehaviour:
   - {fileID: 6200000, guid: 721799b3543ddcd43a5eba3b5613cd36, type: 2}
   primaryWeapon: {fileID: 5681705279204132651}
   secondaryWeapon: {fileID: 7289503157807256290}
+  _primaryTransform: {fileID: 3271630110782841029}
+  _secondaryTransform: {fileID: 3831858527425262733}
   spritesParent: {fileID: 3208046358017332010}
   ArmTypes:
   - {fileID: -7887873344414462056, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}

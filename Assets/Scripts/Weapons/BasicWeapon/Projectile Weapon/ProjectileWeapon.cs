@@ -70,7 +70,6 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void Start(){
         base.Start();
-        CursorControl = FindObjectOfType<CursorControl>();
     }
 
     private void Awake(){

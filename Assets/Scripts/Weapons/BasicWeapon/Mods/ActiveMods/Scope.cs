@@ -32,7 +32,7 @@ public class Scope : ActiveMod{
     }
     
     private void CheckZoom(){
-        _cursorControl.ResetCamera();
+        //_cursorControl.ResetCamera();
         if (Input.GetKeyUp(KeyCode.Mouse1)){
             _multiplier = _incrementSize / zoomRange;
         }
