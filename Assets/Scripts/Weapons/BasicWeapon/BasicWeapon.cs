@@ -28,7 +28,7 @@ public class BasicWeapon : Weapon{
     }
     
     protected virtual void HandleMagazineDecrement(){
-        AudioManager.PlaySound(0, allowInterrupt);
+        audioManager.PlaySound(0, allowInterrupt);
     }
     
 
@@ -37,22 +37,20 @@ public class BasicWeapon : Weapon{
     }
 
     public virtual void Reload(){
-        AudioManager.PlaySound(1, false);
+        audioManager.PlaySound(1, false);
     }
 
     public virtual void Ready(){
-        AudioManager.PlaySound(2, allowInterrupt);
+        audioManager.PlaySound(2, allowInterrupt);
         activelyWielded = true;
         RefreshText();
     }
 
 
 
-    public override void PickUp(Character character){
-        base.PickUp(character);
-
-        transform.localRotation = new Quaternion(0, 0, 0, 0);
-        transform.localScale = new Vector3(Math.Abs(transform.localScale.x), Math.Abs(transform.localScale.y));
+    public override void PickUp(Character character, Transform p){
+        base.PickUp(character, p);
+        
         activelyWielded = true;
         RefreshText();
     }

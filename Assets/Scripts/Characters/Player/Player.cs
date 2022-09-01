@@ -67,18 +67,14 @@ public partial class Player : Character{
         Animator.SetBool(_aNames.jumping, Airborne);
     }
 
-    [ClientRpc]
-    public void SetArmAsParentOf(Transform weapon){
-        weapon.parent = arm;
-    }
 
-    
 
     #endregion
 
     #region Client
 
 
+    
     [Client]
     protected override void ClientMove(){
         CmdSetXMoveServer(Input.GetAxis("Horizontal"));
@@ -110,15 +106,6 @@ public partial class Player : Character{
         if (hasAuthority){
             _virtualCamera[0].Priority = 10;
         }
-
-        primaryWeapon = arm.GetChild(1).GetComponent<BasicWeapon>();
-        primaryWeapon.PickUp(this);
-        primaryWeapon.transform.localPosition = primaryWeapon.offset;
-        
-        secondaryWeapon = arm.GetChild(2).GetComponent<BasicWeapon>();
-        secondaryWeapon.PickUp(this);
-        secondaryWeapon.activelyWielded = false;
-        secondaryWeapon.spriteRenderer.enabled = false;
     }
 
 
@@ -206,11 +193,11 @@ public partial class Player : Character{
             (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
             secondaryWeapon.activelyWielded = false;
-            secondaryWeapon.spriteRenderer.enabled = false;
+            secondaryWeapon.gameObject.SetActive(false);
             
             primaryWeapon.activelyWielded = true;
-            primaryWeapon.spriteRenderer.enabled = true;
-            primaryWeapon.PickUp(this);
+            primaryWeapon.gameObject.SetActive(true);
+            primaryWeapon.PickUp(this, arm);
             UpdateHUD();
 
             _swappedWeapon = true;
@@ -253,7 +240,7 @@ public partial class Player : Character{
                 primaryWeapon.Drop();
                 
                 primaryWeapon = weapon;
-                weapon.PickUp(this);
+                weapon.PickUp(this, arm); // some of this is redundant, rework
                 UpdateHUD();
             }
         }

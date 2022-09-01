@@ -172,11 +172,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  body: {fileID: 958858899413579702}
+  spriteRenderer: {fileID: 958858899413579701}
+  audioManager: {fileID: 958858899413579691}
+  parent: {fileID: 0}
+  localPos: {x: 0, y: 0}
   pickupRange: 8
   wielder: {fileID: 0}
-  AudioManager: {fileID: 0}
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 30

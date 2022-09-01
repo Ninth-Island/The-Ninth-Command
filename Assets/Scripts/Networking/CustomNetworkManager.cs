@@ -13,29 +13,39 @@ public class CustomNetworkManager : NetworkManager{
 
     public override void OnServerAddPlayer(NetworkConnectionToClient conn){
         base.OnServerAddPlayer(conn);
-        if (SceneManager.GetActiveScene().name == "Lobby"){
-            NetworkServer.Spawn(
-                Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity,
-                    FindObjectOfType<Canvas>().transform), conn);
+        string sceneName = SceneManager.GetActiveScene().name;
+        
+        // if in the lobby, spawn a lobby character
+        if (sceneName == "Lobby"){
+            NetworkServer.Spawn(Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity, FindObjectOfType<Canvas>().transform), conn);
+        }
+        
+        // if the game is running, spawn an actual character
+        else if (sceneName != "Assets/Scenes/Lobby.unity" && sceneName != "Assets/Scenes/Menu.unity"){
+            SetupPlayer(conn);
         }
     }
 
-    public override void OnServerSceneChanged(string sceneName){
-        if (sceneName != "Assets/Scenes/Lobby.unity" && sceneName != "Assets/Scenes/Menu.unity"){
-            foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
+
+    [Server]
+    private void SetupPlayer(NetworkConnectionToClient connectionToClient){
+        
+        Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
+        BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
+        BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
+        NetworkServer.Spawn(player.gameObject, connectionToClient);
+
+        pW.PickUp(player, player.arm);
                 
-                Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
-                GameObject pW = Instantiate(player.primaryWeaponPrefab.gameObject, player.arm);
-                GameObject sW = Instantiate(player.secondaryWeaponPrefab.gameObject, player.arm);
-                NetworkServer.Spawn(player.gameObject, connectionToClient);
-                NetworkServer.Spawn(pW);
-                NetworkServer.Spawn(sW);
-                player.SetArmAsParentOf(pW.transform);
-                player.SetArmAsParentOf(sW.transform);
-            }
+        sW.PickUp(player, player.arm);
+        sW.activelyWielded = false;
+        sW.gameObject.SetActive(false);
 
-        }
-
+        player.primaryWeapon = pW;
+        player.secondaryWeapon = sW;
+                
+        NetworkServer.Spawn(pW.gameObject, connectionToClient);
+        NetworkServer.Spawn(sW.gameObject, connectionToClient);
     }
 
 }

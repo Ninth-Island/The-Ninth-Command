@@ -208,9 +208,11 @@ MonoBehaviour:
   syncInterval: 0.1
   body: {fileID: 8529665086193386104}
   spriteRenderer: {fileID: 8529665086193386105}
+  audioManager: {fileID: 7988521113704876517}
+  parent: {fileID: 0}
+  localPos: {x: 0, y: 0}
   pickupRange: 5
   wielder: {fileID: 0}
-  AudioManager: {fileID: 0}
   offset: {x: 1.91, y: -0.1}
   armType: 4
   cursorType: 4
