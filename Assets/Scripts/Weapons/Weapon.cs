@@ -11,19 +11,14 @@ public class Weapon : CustomObject{
     [SerializeField] protected Character wielder;
 
     
-    
-    public AudioManager AudioManager;
-    
-    protected PolygonCollider2D Collider;
-    
 
 
-    public virtual void PickUp(Character pickedUpBy){
+    public virtual void PickUp(Character pickedUpBy, Transform t){
+        parent = t;
         wielder = pickedUpBy;
         body.simulated = false;
         spriteRenderer.sortingLayerID = pickedUpBy.spriteRenderer.sortingLayerID;
         spriteRenderer.sortingOrder = 4;
-        transform.parent = wielder.transform.GetChild(1).transform.GetChild(3);
         // AudioManager.PlayFromList(2);
     }
 
@@ -49,12 +44,6 @@ public class Weapon : CustomObject{
 
     public override void OnStartClient(){
         base.OnStartClient();
-        
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        Collider = GetComponent<PolygonCollider2D>();
-
-
-        AudioManager = GetComponent<AudioManager>();    
     }
 
     public override void OnStartServer(){
