@@ -176,18 +176,7 @@ public partial class Player : Character{
     *                                               Weapon and Vehicle
     * ================================================================================================================
     */
-
-    [Server]
-    public IEnumerator ServerInitializePlayer(BasicWeapon pW, BasicWeapon sW){
-        yield return new WaitUntil(() => NetworkClient.ready); // FOR SOME REASON, THIS DOESN'T WORK WHEN EDITOR HOSTS AND BUILD CLIENTS
-        ClientInitializePlayer(pW, sW);
-    }
-
-    [ClientRpc]
-    private void ClientInitializePlayer(BasicWeapon pW, BasicWeapon sW){
-        primaryWeapon = pW;
-        secondaryWeapon = sW;
-}
+    
 
     [Command]
     private void CmdServerTellClientsSwap(){

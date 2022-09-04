@@ -41,7 +41,8 @@ public class CustomNetworkManager : NetworkManager{
         NetworkServer.Spawn(sW.gameObject, connectionToClient);
 
 
-        player.StartCoroutine(player.ServerInitializePlayer(pW, sW));
+        player.primaryWeapon = pW;
+        player.secondaryWeapon = sW;
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player));
     }
