@@ -54,7 +54,24 @@ public class BasicWeapon : Weapon{
         activelyWielded = true;
         RefreshText();
     }
-    
+
+    [Server]
+    public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Character w){
+        yield return new WaitUntil(() => NetworkClient.ready);
+        ClientInitializeWeapon(isThePrimaryWeapon, w);
+    }
+
+    [ClientRpc]
+    private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w){
+        Debug.Log("gii");
+        PickUp(w, w.transform.GetChild(1).GetChild(3));
+        
+        if (!isThePrimaryWeapon){
+            activelyWielded = false;
+            gameObject.SetActive(false);
+        }
+    }
+
     public override void Drop(){
         base.Drop();
         wielder = null;

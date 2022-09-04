@@ -19,13 +19,13 @@ public partial class Player : Character{
 */
 
     [Header("Basic Weapons")] 
-    public BasicWeapon primaryWeapon;
-    public BasicWeapon secondaryWeapon;
+    [SyncVar] public BasicWeapon primaryWeapon;
+    [SyncVar] public BasicWeapon secondaryWeapon;
     
     public BasicWeapon primaryWeaponPrefab;
     public BasicWeapon secondaryWeaponPrefab;
 
-    private bool _isCrouching;
+    [SyncVar] private bool _isCrouching;
 
     private bool hardLanding;
 
@@ -105,9 +105,9 @@ public partial class Player : Character{
 
         if (hasAuthority){
             _virtualCamera[0].Priority = 10;
+            HUD.gameObject.SetActive(true);
         }
     }
-
 
     [ClientCallback]
     protected override void FixedUpdate(){
@@ -176,32 +176,50 @@ public partial class Player : Character{
     *                                               Weapon and Vehicle
     * ================================================================================================================
     */
+
+    [Server]
+    public IEnumerator ServerInitializePlayer(BasicWeapon pW, BasicWeapon sW){
+        yield return new WaitUntil(() => NetworkClient.ready); // FOR SOME REASON, THIS DOESN'T WORK WHEN EDITOR HOSTS AND BUILD CLIENTS
+        ClientInitializePlayer(pW, sW);
+    }
+
+    [ClientRpc]
+    private void ClientInitializePlayer(BasicWeapon pW, BasicWeapon sW){
+        primaryWeapon = pW;
+        secondaryWeapon = sW;
+}
+
+    [Command]
+    private void CmdServerTellClientsSwap(){
+        ClientReceiveSwap();
+    }
+
+    [ClientRpc]
+    private void ClientReceiveSwap(){
+        primaryWeapon.SetSpriteRenderer(false);
+        secondaryWeapon.SetSpriteRenderer(true);
+        primaryWeapon.Ready();
+
+        (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
+
+        secondaryWeapon.activelyWielded = false;
+        secondaryWeapon.gameObject.SetActive(false);
+            
+        primaryWeapon.activelyWielded = true;
+        primaryWeapon.gameObject.SetActive(true);
+        primaryWeapon.PickUp(this, arm);
+        UpdateHUD();
+
+        _swappedWeapon = true;
+        Invoke(nameof(ResetSwappedWeapon), 0.25f);
+
+    }
     
+    [Client]
     private void CheckSwap(){
 
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
-            if (primaryWeapon != null){
-                primaryWeapon.SetSpriteRenderer(false);
-            }
-
-            if (secondaryWeapon != null){
-                secondaryWeapon.SetSpriteRenderer(true);
-            }
-
-            primaryWeapon.Ready();
-
-            (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
-
-            secondaryWeapon.activelyWielded = false;
-            secondaryWeapon.gameObject.SetActive(false);
-            
-            primaryWeapon.activelyWielded = true;
-            primaryWeapon.gameObject.SetActive(true);
-            primaryWeapon.PickUp(this, arm);
-            UpdateHUD();
-
-            _swappedWeapon = true;
-            Invoke(nameof(ResetSwappedWeapon), 0.25f);
+            CmdServerTellClientsSwap();
         }
     }
 
