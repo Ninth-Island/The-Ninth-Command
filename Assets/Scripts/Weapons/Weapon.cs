@@ -53,6 +53,10 @@ public class Weapon : CustomObject{
     protected override void Update(){
         base.Update();
     }
+    
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
+    }
 
     #endregion
     

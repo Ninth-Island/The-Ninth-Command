@@ -35,6 +35,12 @@ public class CustomNetworkManager : NetworkManager{
         Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
         BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
+        
+        // this is server only for hierarchy organization
+        Transform container = new GameObject($"Player {connectionToClient.connectionId}").transform;
+        player.transform.parent = container;
+        pW.transform.parent = container;
+        sW.transform.parent = container;
 
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         NetworkServer.Spawn(pW.gameObject, connectionToClient);
