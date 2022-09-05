@@ -63,7 +63,7 @@ public class BasicWeapon : Weapon{
 
     [ClientRpc]
     private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w){
-        Debug.Log("gii");
+        
         PickUp(w, w.transform.GetChild(1).GetChild(3));
         
         if (!isThePrimaryWeapon){
@@ -97,6 +97,7 @@ public class BasicWeapon : Weapon{
     }
     
     protected override void FixedUpdate(){
+        base.FixedUpdate();
     }
 
     private void OnDisable(){
