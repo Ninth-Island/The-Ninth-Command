@@ -39,20 +39,16 @@ public class BasicWeapon : Weapon{
     public virtual void Reload(){
         audioManager.PlaySound(1, false);
     }
-
-    public virtual void Ready(){
-        audioManager.PlaySound(2, allowInterrupt);
-        activelyWielded = true;
-        RefreshText();
-    }
+    
 
 
 
-    public override void PickUp(Character character, Transform p){
-        base.PickUp(character, p);
+    public override void Ready(){
+        base.Ready();
         
         activelyWielded = true;
         RefreshText();
+        audioManager.PlaySound(2, allowInterrupt);
     }
 
     [Server]
@@ -64,7 +60,7 @@ public class BasicWeapon : Weapon{
     [ClientRpc]
     private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w){
         
-        PickUp(w, w.transform.GetChild(1).GetChild(3));
+        Pickup(w, w.transform.GetChild(1).GetChild(3));
         
         if (!isThePrimaryWeapon){
             activelyWielded = false;
@@ -76,11 +72,6 @@ public class BasicWeapon : Weapon{
         base.Drop();
         wielder = null;
         activelyWielded = false;
-    }
-
-
-    public void SetSpriteRenderer(bool setEnabled){
-        spriteRenderer.enabled = setEnabled;
     }
 
     public override void OnStartClient(){

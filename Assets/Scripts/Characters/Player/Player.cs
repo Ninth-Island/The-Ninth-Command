@@ -185,18 +185,15 @@ public partial class Player : Character{
 
     [ClientRpc]
     private void ClientReceiveSwap(){
-        primaryWeapon.SetSpriteRenderer(false);
-        secondaryWeapon.SetSpriteRenderer(true);
-        primaryWeapon.Ready();
 
         (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
-        secondaryWeapon.activelyWielded = false;
-        secondaryWeapon.gameObject.SetActive(false);
-            
         primaryWeapon.activelyWielded = true;
         primaryWeapon.gameObject.SetActive(true);
-        primaryWeapon.PickUp(this, arm);
+        primaryWeapon.Ready();
+
+        secondaryWeapon.activelyWielded = false;
+        secondaryWeapon.gameObject.SetActive(false);
         UpdateHUD();
 
         _swappedWeapon = true;
@@ -247,7 +244,7 @@ public partial class Player : Character{
                 primaryWeapon.Drop();
                 
                 primaryWeapon = weapon;
-                weapon.PickUp(this, arm); // some of this is redundant, rework
+                weapon.Pickup(this, arm); // some of this is redundant, rework
                 UpdateHUD();
             }
         }

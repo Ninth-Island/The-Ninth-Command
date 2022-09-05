@@ -13,13 +13,19 @@ public class Weapon : CustomObject{
     
 
 
-    public virtual void PickUp(Character pickedUpBy, Transform t){
+    public virtual void Ready(){
+        
+    }
+
+    public void Pickup(Character character, Transform t){
         parent = t;
-        wielder = pickedUpBy;
+        wielder = character;
         body.simulated = false;
-        spriteRenderer.sortingLayerID = pickedUpBy.spriteRenderer.sortingLayerID;
+        
+        spriteRenderer.sortingLayerID = character.spriteRenderer.sortingLayerID;
         spriteRenderer.sortingOrder = 4;
-        // AudioManager.PlayFromList(2);
+
+        Ready();
     }
 
     public virtual void Drop(){
