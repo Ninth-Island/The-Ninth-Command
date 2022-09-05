@@ -11,16 +11,24 @@ public class CustomObject : NetworkBehaviour{
 
 
     public Rigidbody2D body;
+    public Collider2D Collider;
     public SpriteRenderer spriteRenderer;
-    public AudioManager audioManager;
+    protected AudioManager AudioManager;
 
-    public Transform parent;
-    public Vector2 localPos;
+    protected Transform Parent;
+    protected Vector2 LocalPos;
     
-
-
+    
     public override void OnStartClient(){
         body = GetComponent<Rigidbody2D>();
+        Collider = GetComponent<Collider2D>();
+        //sprite renderer follows a different path each time
+        AudioManager = GetComponent<AudioManager>();
+    }
+    
+    [ClientCallback]
+    protected virtual void Update(){
+        
     }
 
     [ClientCallback]
@@ -29,20 +37,16 @@ public class CustomObject : NetworkBehaviour{
             CmdServerPositionUpdateHasParent();
         }
     }
-
+    
     [Command]
     private void CmdServerPositionUpdateHasParent(){
-        if (parent){
-            Vector3 offset = new Vector3();
-            transform.position = parent.transform.position + offset;
-            transform.rotation = parent.transform.rotation;
-            transform.localScale = parent.transform.lossyScale;
+        if (Parent){
+            Vector3 offset = new Vector3(); // make this smth good!
+            transform.position = Parent.transform.position + offset;
+            transform.rotation = Parent.transform.rotation;
+            transform.localScale = Parent.transform.lossyScale;
         }
     }
 
-    [ClientCallback]
-    protected virtual void Update(){
-        
-    }
 }
 

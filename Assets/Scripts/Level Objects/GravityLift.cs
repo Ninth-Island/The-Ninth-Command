@@ -12,9 +12,5 @@ public class GravityLift : MonoBehaviour{
         float angle = (Mathf.PI / 2) + transform.parent.transform.rotation.z;
         Vector2 velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         other.attachedRigidbody.velocity = velocity.normalized * boost;
-        Character characterScript = other.GetComponent<Character>();
-        if (characterScript){
-            characterScript.SetInputFrozen(true, (-Physics2D.gravity.y) / boost);
-        }
     }
 }

@@ -27,9 +27,9 @@ public partial class Player : Character{
 
     [SyncVar] private bool _isCrouching;
 
-    private bool hardLanding;
+    private bool _hardLanding; // used for sound
 
-    private bool _swappedWeapon;
+    private bool _swappedWeapon; // used to can't spam sounds
 
     
     #region Server
@@ -54,19 +54,24 @@ public partial class Player : Character{
             
         }
     }
-
-
+    
     [Command]
     protected override void CmdServerJump(){
         base.CmdServerJump();
         Animator.SetBool(_aNames.jumping, true);
+        _isCrouching = false;
     }
 
     [Command]
-    protected override void CmdAnimatorUpdateAirborne(){
+    private void CmdAnimatorUpdateAirborne(){ // only using authoritative animations for ease
         Animator.SetBool(_aNames.jumping, Airborne);
     }
-
+    
+    [Command]
+    private void CmdToggleIsCrouching(){
+        _isCrouching = !_isCrouching;
+        Animator.SetBool(_aNames.crouching, _isCrouching);
+    }
 
 
     #endregion
@@ -81,15 +86,19 @@ public partial class Player : Character{
     }
 
     [Client]
-    protected override void ClientJump(){
+    protected override void ClientHandleJump(){
         if (Input.GetKeyDown(KeyCode.W)){
             CmdServerJump();
             CmdSetSuppressGroundCheck();
         }
-    
     }
 
-    
+    [Client]
+    private void CheckCrouch(){
+        if (Input.GetKeyDown(KeyCode.S)){
+            CmdToggleIsCrouching();
+        }
+    }
 
     /*
     * ================================================================================================================
@@ -120,11 +129,12 @@ public partial class Player : Character{
             ControlFixedUpdate();
         }
 
+        // happens on client cuz just for sounds
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
-            hardLanding = true;
+            _hardLanding = true;
         }
         else{
-            hardLanding = false;
+            _hardLanding = false;
         }
         
     }
@@ -137,14 +147,15 @@ public partial class Player : Character{
             CheckSwap();
             CheckCrouch();
 
-            CmdAnimatorUpdateAirborne();
+            CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
             if (Input.GetKey(KeyCode.R)){
-                primaryWeapon.Reload();
+                primaryWeapon.Reload(); // make into a command at some point
             }
             
             CmdRotateArm(GetBarrelToMouseRotation());
 
-            ControlUpdate();
+            ControlUpdate(); // all hud and audio stuff
+            HUDUpdate();
             CheckForPickup();
         }
         
@@ -158,14 +169,6 @@ public partial class Player : Character{
 
     
 
-
-    [Client]
-    private void CheckCrouch(){
-        if (Input.GetKeyDown(KeyCode.S)){
-            _isCrouching = !_isCrouching;
-            CmdAnimatorSetBool(_aNames.crouching, _isCrouching);
-        }
-    }
 
 
     #endregion
@@ -188,12 +191,11 @@ public partial class Player : Character{
 
         (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
-        primaryWeapon.activelyWielded = true;
-        primaryWeapon.gameObject.SetActive(true);
-        primaryWeapon.Ready();
+        primaryWeapon.spriteRenderer.enabled = true;
+        Debug.Log(primaryWeapon.hasAuthority);
 
         secondaryWeapon.activelyWielded = false;
-        secondaryWeapon.gameObject.SetActive(false);
+        secondaryWeapon.spriteRenderer.enabled = false;
         UpdateHUD();
 
         _swappedWeapon = true;
@@ -205,18 +207,20 @@ public partial class Player : Character{
     private void CheckSwap(){
 
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
+            secondaryWeapon.CmdReady(); // IMPORTANT, there's a bit of delay between saying this and swapping weapons, so this is the soon to be primary
             CmdServerTellClientsSwap();
         }
     }
 
+    [Client]
     private void ResetSwappedWeapon(){
         _swappedWeapon = false;
     }
     
+    [Client]
     private void CheckForPickup(){
         Vector2 mousePos = _cursorControl.GetMousePosition();
-        RaycastHit2D objectScan =
-            Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects", "Vehicle"));
+        RaycastHit2D objectScan = Physics2D.CircleCast(mousePos, 1, new Vector2(), 0, LayerMask.GetMask("Objects", "Vehicle"));
         
         pickupText.SetText("");
         if (objectScan){
@@ -234,24 +238,25 @@ public partial class Player : Character{
         }
     }
 
+    [Client]
     private void WeaponPickup(GameObject nearestObject){
-        BasicWeapon weapon = _allBasicWeapons[nearestObject].Key;
 
-        if (IsTouching(transform.position, nearestObject.transform.position,
-            weapon.GetPickupRange(), weapon.GetPickupRange())){
-            pickupText.SetText("(G) " + weapon.name);
+        if (IsTouching(transform.position, nearestObject.transform.position, 10, 10)){
+            pickupText.SetText("(G) " + nearestObject.name);
             if (Input.GetKeyDown(KeyCode.G)){
-                primaryWeapon.Drop();
+                BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
+                primaryWeapon.CmdDrop();
                 
-                primaryWeapon = weapon;
-                weapon.Pickup(this, arm); // some of this is redundant, rework
+                primaryWeapon = newWeapon;
+                newWeapon.CmdPickup(this, new []{1, 3}); // some of this is redundant, rework
                 UpdateHUD();
             }
         }
     
     }
 
-    public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
+    [Client]
+    public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){ // HUD stuff
         base.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, energy, heat, type);
 
         if (type == 1){ // bullet weapon
@@ -276,20 +281,20 @@ public partial class Player : Character{
         }
     }
 
+    [Client]
     public override void SetReloadingText(string text){
         base.SetReloadingText(text);
         ammoCounter.SetText(text);
     }
 
+    [Client]
     private void VehicleEmbark(GameObject nearestObject){
-        Vehicle vehicle = _allVehicles[nearestObject];
-        if (IsTouching(transform.position, nearestObject.transform.position, vehicle.GetEmbarkRange(),
-            vehicle.GetEmbarkRange())){
+        if (IsTouching(transform.position, nearestObject.transform.position, 50, 50)){
             pickupText.SetText("(G) " + nearestObject.name);
             if (Input.GetKeyDown(KeyCode.G)){
                 SetNotifText("Embarked " + gameObject.name);
                 gameObject.SetActive(false);
-
+                Vehicle vehicle = nearestObject.GetComponent<Vehicle>();
                 vehicle.SetDriver(this);
                 SpriteRenderer driver = vehicle.GetDriver();
                 SpriteRenderer driverVisor = vehicle.GetDriverVisor();
@@ -309,7 +314,7 @@ public partial class Player : Character{
         base.OnCollisionEnter2D(other);
         
         if (other.gameObject.CompareTag("Ground")){
-            if (hardLanding){
+            if (_hardLanding){
                 SortSound(4);
             }
             else{
@@ -317,22 +322,9 @@ public partial class Player : Character{
             }
         }
     }
-    
-    
-    public void AddWeapon(KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> weapon){
-        _allBasicWeapons.Add(weapon.Key, weapon.Value);
-    }
-    public void AddVehicle(KeyValuePair<GameObject, Vehicle> vehicle){
-        _allVehicles.Add(vehicle.Key, vehicle.Value);
-    }
-    
-    public Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>> _allBasicWeapons = new Dictionary<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>();
-    public Dictionary<GameObject, Vehicle> _allVehicles = new Dictionary<GameObject, Vehicle>();
-    
-    
 
-    protected override void TakeDamage(int damage){
-        base.TakeDamage(damage);
+    public override void Hit(int damage){
+        base.Hit(damage);
     }
 
     #endregion

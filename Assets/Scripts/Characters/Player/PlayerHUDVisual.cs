@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
@@ -16,6 +17,7 @@ public partial class Player : Character
 
     [Header("HUD and Visuals")]
     [SerializeField] protected Canvas HUD;
+    [SerializeField] private TMP_Text pingDisplay;
     
     
 
@@ -46,6 +48,7 @@ public partial class Player : Character
 
     
 
+    [Client]
     private void HUDVisualStart(){
         _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < spritesParent.transform.childCount; i++){
@@ -74,14 +77,14 @@ public partial class Player : Character
 
     }
 
-    private void UpdateHUD(){
+    private void HUDUpdate(){ // every frame
+        pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
+    }
+
+    private void UpdateHUD(){ // called when smth changes like weapon swap
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
-        primaryWeapon.audioManager.PlaySound(2, false);
-
-
-        primaryWeapon.transform.localPosition = primaryWeapon.offset;
 
         SetNotifText(primaryWeapon.name);
         SetArmType(primaryWeapon.armType);
@@ -122,6 +125,7 @@ public partial class Player : Character
         _armRenderer.sprite = ArmTypes[armType];
     }
 
+    
     public override void Reload(){ // for melee weapons
         _armOverride = true;
     }

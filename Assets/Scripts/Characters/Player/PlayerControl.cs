@@ -69,8 +69,11 @@ public partial class Player : Character{
     * 
     * ================================================================================================================
     */
-    
-        [Client]
+
+
+
+
+    [Client]
     protected virtual void ControlStart(){
 
         _externalJetpack = transform.GetChild(2).gameObject;

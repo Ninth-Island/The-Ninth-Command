@@ -27,7 +27,6 @@ public class NPC : Character{
 
     public override void OnStartClient(){
         base.OnStartClient();
-        spriteRenderer = transform.GetChild(1).GetComponent<SpriteRenderer>();
         pivotPoint = transform.GetChild(1).GetChild(0).gameObject;
         _weapon = pivotPoint.transform.GetChild(3).GetComponent<BasicWeapon>();
 
@@ -55,8 +54,8 @@ public class NPC : Character{
         }
     }
 
-    protected override void TakeDamage(int damage){
-        base.TakeDamage(damage);
+    public override void Hit(int damage){
+        base.Hit(damage);
 
         if (HealthRoutine != null){
             StopCoroutine(HealthRoutine);
@@ -70,7 +69,7 @@ public class NPC : Character{
         Vector3 scale = healthFill.transform.localScale;
         Vector3 pos = healthFill.transform.localPosition;
 
-        float newScale = (float) health / maxhealth;
+        float newScale = (float) health / MaxHealth;
         float newPos = 2 - newScale * 2;
         if (transform.localScale.x > 0){
             newPos *= -1;
