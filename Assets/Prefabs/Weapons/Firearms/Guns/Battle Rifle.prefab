@@ -212,11 +212,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   body: {fileID: 4506013158996176213}
+  Collider: {fileID: 0}
   spriteRenderer: {fileID: 4506013158996176214}
-  audioManager: {fileID: 7920543007619545138}
   parent: {fileID: 0}
-  localPos: {x: 0, y: 0}
-  pickupRange: 8
+  localPos: {x: 2.02, y: -0.02}
   wielder: {fileID: 0}
   offset: {x: 2.02, y: 0.02}
   armType: 0

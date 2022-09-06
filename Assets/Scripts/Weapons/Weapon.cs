@@ -21,18 +21,24 @@ public class Weapon : CustomObject{
         ServerPickup(character, path);
     }
 
+    [Server]
     protected void ServerPickup(Character character, int[] path){
-        Parent = character.transform;
+        parent = character.transform;
         for (int i = 0; i < path.Length; i++){
-            Parent = Parent.GetChild(path[i]);
+            parent = parent.GetChild(path[i]);
         }
         wielder = character;
         body.simulated = false;
         
-        spriteRenderer.sortingLayerID = character.spriteRenderer.sortingLayerID;
-        spriteRenderer.sortingOrder = 4;
+        SetSpriteLayer(character.spriteRenderer.sortingLayerID);
 
         ServerReady();
+    }
+
+    [ClientRpc]
+    private void SetSpriteLayer(int layer){
+        spriteRenderer.sortingLayerID = layer;
+        spriteRenderer.sortingOrder = 4;
     }
  
     [Server]
@@ -44,7 +50,7 @@ public class Weapon : CustomObject{
     public virtual void CmdDrop(){
         body.simulated = true;
         gameObject.layer = LayerMask.NameToLayer("Objects");
-        Parent = null;
+        parent = null;
 
         spriteRenderer.sortingLayerID = SortingLayer.NameToID("Objects");
         spriteRenderer.sortingOrder = 0;

@@ -15,20 +15,20 @@ public class CustomObject : NetworkBehaviour{
     public SpriteRenderer spriteRenderer;
     protected AudioManager AudioManager;
 
-    protected Transform Parent;
-    protected Vector2 LocalPos;
-    
-    
+    public Transform parent;
+    public Vector2 localPos;
+
+
     public override void OnStartClient(){
         body = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
         //sprite renderer follows a different path each time
         AudioManager = GetComponent<AudioManager>();
     }
-    
+
     [ClientCallback]
     protected virtual void Update(){
-        
+
     }
 
     [ClientCallback]
@@ -37,16 +37,25 @@ public class CustomObject : NetworkBehaviour{
             CmdServerPositionUpdateHasParent();
         }
     }
-    
+
     [Command]
     private void CmdServerPositionUpdateHasParent(){
-        if (Parent){
-            Vector3 offset = new Vector3(); // make this smth good!
-            transform.position = Parent.transform.position + offset;
-            transform.rotation = Parent.transform.rotation;
-            transform.localScale = Parent.transform.lossyScale;
+        if (parent){
+            float angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
+
+            float yMultiplier = 1;
+            if (parent.localScale.x < 0){
+                yMultiplier = -1;
+            }
+            
+            Vector2 xOffsetPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * localPos.x;
+            Vector3 offset = new Vector3(
+                localPos.y * Mathf.Cos(angle - Mathf.PI / 2) + xOffsetPoint.x,
+                localPos.y * yMultiplier * Mathf.Sin(angle - Mathf.PI / 2) + xOffsetPoint.y);
+
+            transform.position = parent.position + offset;
+            transform.rotation = parent.rotation;
+            transform.localScale = parent.lossyScale;
         }
     }
-
 }
-

@@ -192,7 +192,6 @@ public partial class Player : Character{
         (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
         primaryWeapon.spriteRenderer.enabled = true;
-        Debug.Log(primaryWeapon.hasAuthority);
 
         secondaryWeapon.activelyWielded = false;
         secondaryWeapon.spriteRenderer.enabled = false;

@@ -62,7 +62,7 @@ public class BasicWeapon : Weapon{
 
     [ClientRpc]
     private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w){
-
+        
         if (!isThePrimaryWeapon){
             activelyWielded = false;
             spriteRenderer.enabled = false;
