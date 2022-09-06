@@ -63,7 +63,7 @@ public class ProjectileWeapon : BasicWeapon{
         (projectileTransform = projectile.transform).position -= new Vector3(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * projectileSpeed / 50f;
         projectileTransform.position += transform.right * projectileTransform.localScale.x / 4; // dividing by 4 is converting scale units to world units
 
-        Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetCollider()); 
+        Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
         projectile.StartCoroutine(projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name));
     }

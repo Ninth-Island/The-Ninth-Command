@@ -54,7 +54,7 @@ public class EnergyWeapon : ProjectileWeapon{
             _heat = 0;
 
             _isCooling = false;
-            audioManager.PlaySound(2, false);
+            AudioManager.PlaySound(2, false);
             wielder.FinishReload();
         }
         
@@ -66,8 +66,8 @@ public class EnergyWeapon : ProjectileWeapon{
             _isCooling = true;
             wielder.Reload();
             
-            audioManager.source.Stop();
-            audioManager.source.pitch = 1;
+            AudioManager.source.Stop();
+            AudioManager.source.pitch = 1;
             base.Reload();
         }
     }
@@ -76,15 +76,15 @@ public class EnergyWeapon : ProjectileWeapon{
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         
-        audioManager.source.pitch = 1 + (_heat / 75);
+        AudioManager.source.pitch = 1 + (_heat / 75);
         _energy -= percentagePerShot;
         _heat += heatPerShot;
 
         if (_heat >= 100){
             _heat = 99.9f;
-            audioManager.source.Stop();
-            audioManager.source.pitch = 1;
-            audioManager.PlaySound(1, false);
+            AudioManager.source.Stop();
+            AudioManager.source.pitch = 1;
+            AudioManager.PlaySound(1, false);
             _isCooling = true;
         }
     }

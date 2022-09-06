@@ -49,8 +49,8 @@ public class CustomNetworkManager : NetworkManager{
 
         player.primaryWeapon = pW;
         player.secondaryWeapon = sW;
-        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player));
-        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player));
+        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
+        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
     }
 
 }

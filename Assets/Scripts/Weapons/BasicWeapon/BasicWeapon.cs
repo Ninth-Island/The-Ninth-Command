@@ -8,9 +8,10 @@ using UnityEngine;
 
 public class BasicWeapon : Weapon{
 
-    [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f);
+    [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f); // this is gonna get deleted and replaced
     [SerializeField][Tooltip("Player Only")] public int armType = 0;
     [SerializeField][Tooltip("Player Only")] public int cursorType = 0;
+    
     [SerializeField] private bool allowInterrupt = false;
     protected CursorControl CursorControl;
     public Transform firingPoint;
@@ -28,7 +29,7 @@ public class BasicWeapon : Weapon{
     }
     
     protected virtual void HandleMagazineDecrement(){
-        audioManager.PlaySound(0, allowInterrupt);
+        AudioManager.PlaySound(0, allowInterrupt);
     }
     
 
@@ -37,39 +38,39 @@ public class BasicWeapon : Weapon{
     }
 
     public virtual void Reload(){
-        audioManager.PlaySound(1, false);
+        AudioManager.PlaySound(1, false);
     }
     
 
 
 
-    public override void Ready(){
-        base.Ready();
+    [Server]
+    protected override void ServerReady(){
+        base.ServerReady();
         
         activelyWielded = true;
         RefreshText();
-        audioManager.PlaySound(2, allowInterrupt);
+        AudioManager.PlaySound(2, allowInterrupt);
     }
 
     [Server]
-    public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Character w){
+    public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Character w, int[] path){
         yield return new WaitUntil(() => NetworkClient.ready);
         ClientInitializeWeapon(isThePrimaryWeapon, w);
+        ServerPickup(w, path);
     }
 
     [ClientRpc]
     private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w){
         
-        Pickup(w, w.transform.GetChild(1).GetChild(3));
-        
         if (!isThePrimaryWeapon){
             activelyWielded = false;
-            gameObject.SetActive(false);
+            spriteRenderer.enabled = false;
         }
     }
 
-    public override void Drop(){
-        base.Drop();
+    public override void CmdDrop(){
+        base.CmdDrop();
         wielder = null;
         activelyWielded = false;
     }
@@ -78,9 +79,7 @@ public class BasicWeapon : Weapon{
         base.OnStartClient();
         
         CursorControl = FindObjectOfType<CursorControl>();
-        foreach (Player player in FindObjectsOfType<Player>()){
-            player.AddWeapon(new KeyValuePair<GameObject, KeyValuePair<BasicWeapon, Rigidbody2D>>(gameObject, new KeyValuePair<BasicWeapon, Rigidbody2D>(this, body)));
-        }
+        
     }
 
     protected override void Update(){

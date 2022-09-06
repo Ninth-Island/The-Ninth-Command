@@ -69,7 +69,7 @@ public class Projectile : CustomObject{
 
         Character character = other.gameObject.GetComponent<Character>();
         if (character && _live){
-            character.Hit(this);
+            character.Hit(_damage);
         }
         
         body.mass = 1;

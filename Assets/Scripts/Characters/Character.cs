@@ -21,39 +21,31 @@ public class Character : CustomObject{
 * ================================================================================================================
 */
     
-    [SerializeField] protected int health;
-    [SerializeField] public float moveSpeed;
-    [SerializeField] protected float jumpPower = 18;
-
+    [SyncVar] [SerializeField] protected int health;
+    [SerializeField] protected float moveSpeed;
+    [SerializeField] protected float jumpVelocity = 18;
     
     [SerializeField] private PhysicsMaterial2D[] materials;
 
-    protected int maxhealth;
-
-
-    protected BoxCollider2D Collider;
-    
-    protected BoxCollider2D FeetCollider;
-
+    protected int MaxHealth; // for healthbar and respawns
+    private BoxCollider2D _feetCollider; // for ground checks
     
     protected Animator Animator;
-
     
     protected bool Airborne = true;
-    protected bool FallingKnocked = false;
-    protected bool InputsFrozen = false;
-
-    protected AudioManager AudioManager;
+    protected bool FallingKnocked = false; // for falling too fast
+    protected bool InputsFrozen = false; // for death
     
     protected float XMove;
 
-    protected bool SuppressGroundCheck;
+    private bool _suppressGroundCheck;
 
 
+    
     #region Server
 
     [Command]
-    protected virtual void CmdServerUpdate(){ // as soon as get here XMove is 0 for client
+    protected virtual void CmdServerUpdate(){ // fixed update that happens on server
         ServerMove();
         CheckStates();
     }
@@ -64,75 +56,57 @@ public class Character : CustomObject{
     }
 
     [Server]
-    protected virtual void ServerMove(){
+    protected virtual void ServerMove(){ // happens on fixed update
         XMove = Mathf.Clamp(XMove, -1, 1);
         if (XMove != 0 && !InputsFrozen && !FallingKnocked){
             body.velocity = new Vector2(moveSpeed * XMove, body.velocity.y);
         }
     }
-    
-    
-    
+
     [Command]
-    protected virtual void CmdServerJump(){
+    protected virtual void CmdServerJump(){ // happens only as called
         
         Vector2 velocity = body.velocity;
-        
-        // can't use airborne because the player is considered not airborne a few seconds before and after jumping
-        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
+        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
             Airborne = true;
-            body.velocity = new Vector2(velocity.x, velocity.y + jumpPower);
-            
+            body.velocity = new Vector2(velocity.x, velocity.y + jumpVelocity);
             SortSound(0);
         }
-    
     }
 
-
     [Server]
-    private void CheckStates(){
-
-        if (Math.Abs(body.velocity.x) < moveSpeed * 1.2){
-            FallingKnocked = false;
-        }
-        else{
-            FallingKnocked = true;
-        }
-        if (!SuppressGroundCheck){
-            RaycastHit2D clampScan = Physics2D.Raycast(transform.position, Vector2.down, 4,
-                LayerMask.GetMask("Ground", "Platform", "Vehicle"));
-
-            if (clampScan.collider){
-                Airborne = false;
-            }
-            else{
-                Airborne = true;
-            }
-        }
+    private void CheckStates(){ // happens on fixed update
+        FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
         
+        if (!_suppressGroundCheck){
+            RaycastHit2D groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 4, LayerMask.GetMask("Ground", "Platform", "Vehicle"));
+
+            Airborne = !groundCheck.collider; // if the raycast hit something set to not airborne and vice versa
+        }
     }
 
     [Command]
     protected void CmdSetSuppressGroundCheck(){
+        /*
+        the player has a little bit of area where they're not technically touching the ground but need to act like it 
+        for the game to look good like when going down a slope. Because of this, right after jumping the player is still
+        inside this area, so the ground check needs to be temporarily suppresses right after jumping
+        */ 
         StartCoroutine(ResetGroundCheck());
     }
 
     [Server]
     private IEnumerator ResetGroundCheck(){
-        SuppressGroundCheck = true;
+        _suppressGroundCheck = true;
         yield return new WaitForSeconds(0.2f);
-        SuppressGroundCheck = false;
+        _suppressGroundCheck = false;
     }
 
     [Command]
     protected void CmdAnimatorSetBool(string state, bool setTo){
         Animator.SetBool(state, setTo);
     }
-
-    [Command]
-    protected virtual void CmdAnimatorUpdateAirborne(){
-        
-    }
+    
     
     
 
@@ -144,35 +118,33 @@ public class Character : CustomObject{
     
     public override void OnStartClient(){
         base.OnStartClient();
-
-        maxhealth = health;
         
-        Collider = GetComponent<BoxCollider2D>();
-        FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
-
         Animator = GetComponent<Animator>();
-
         AudioManager = GetComponent<AudioManager>();
         
-        foreach (Weapon weapon in GetComponentsInChildren<Weapon>()){
-            weapon.SetWielder(this);
-        }
+        MaxHealth = health;
+        _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        
     }
 
+    
     [ClientCallback]
     protected override void Update(){
+        /*Client calls command on server when jump key is pressed (checked for in update)*/
         base.Update();
         if (hasAuthority){
-            ClientJump();
+            ClientHandleJump();
         }
     }
 
 
     [ClientCallback]
     protected override void FixedUpdate(){
+        /*Client fixed update calls command which sets XMove
+         On Server's fixed update (called from client) uses XMove to actually move*/
+        
         base.FixedUpdate();
         if (hasAuthority){
-
             ClientMove();
             CmdServerUpdate();
         }
@@ -184,7 +156,7 @@ public class Character : CustomObject{
     }
 
     [Client]
-    protected virtual void ClientJump(){
+    protected virtual void ClientHandleJump(){
         
     }
 
@@ -192,68 +164,31 @@ public class Character : CustomObject{
     #endregion
 
     
-    
-    
-    
-    
-    
-    
 
-    public void Hit(Projectile projectile){
-        TakeDamage(projectile.GetDamage());
-    }
-
-    protected virtual void TakeDamage(int damage){
+    [Server]
+    public virtual void Hit(int damage){
         health -= damage;
         if (health <= 0){
             InputsFrozen = true;
             Destroy(gameObject);
         }
     }
-    
 
-    public Rigidbody2D GetBody(){
-        return body;
-    }
-    
-    public BoxCollider2D GetCollider(){
-        return Collider;
-    }
-    
-    public BoxCollider2D GetFeetCollider(){
-        return FeetCollider;
+    [Client]
+    public virtual void Reload(){ // called by weapon
+        // the override is only a visual thing
     }
 
-    public void SetInputFrozen(bool setInputFrozenState, float unfreezeTime){
-        InputsFrozen = setInputFrozenState;
-        if (setInputFrozenState && unfreezeTime > 0){
-            StartCoroutine(UnFreeze(unfreezeTime));
-        }
-    }
-
-    IEnumerator UnFreeze(float time){
-        yield return new WaitForSeconds(time);
-        InputsFrozen = false;
-    }
-    
-    public void SetKnocked(bool setKnockedState){
-        FallingKnocked = setKnockedState; 
-        // do some knocked stuff
-        // rework animations;
-    }
-
-    public virtual void Reload(){
-        
-    }
-
-    public virtual void FinishReload(){
+    [Client]
+    public virtual void FinishReload(){ // same as above
         
     }
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        
+        // just for sounds
     }
 
+    [Client]
     protected void SortSound(int type){
 
         if (AudioManager){
@@ -274,29 +209,39 @@ public class Character : CustomObject{
         }
     }
 
-    
-    public virtual void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
-
-    }
-
-    public virtual void SetReloadingText(string text){
-        
-    }
-
+    [Client]
     private PhysicsMaterial2D GetMaterialTouching(){
-        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
             Collider2D[] output = new Collider2D[1];
             
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Ground", "Platform"));
             
-            FeetCollider.OverlapCollider(filter, output);
+            _feetCollider.OverlapCollider(filter, output);
             if (output[0] != null){
                 return output[0].attachedRigidbody.sharedMaterial;
             }
         }
-
         return null;
+    }
+
+
+    
+    //UI
+    
+    [Client]
+    public virtual void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
+
+    }
+    
+    [Client]
+    public virtual void SetReloadingText(string text){
+        
+    }
+    
+    [Server]
+    public BoxCollider2D GetFeetCollider(){ // needed to ignore collisions
+        return _feetCollider;
     }
 
 }
