@@ -33,13 +33,11 @@ public class CustomObject : NetworkBehaviour{
 
     [ClientCallback]
     protected virtual void FixedUpdate(){
-        if (hasAuthority){
-            CmdServerPositionUpdateHasParent();
-        }
+        
     }
 
-    [Command]
-    private void CmdServerPositionUpdateHasParent(){
+    [Server]
+    public void ServerPositionUpdateHasParent(){
         if (parent){
             float angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
 

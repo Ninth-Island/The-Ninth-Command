@@ -36,6 +36,9 @@ public partial class Player : Character{
 
     [Server]
     protected override void ServerMove(){
+        
+        primaryWeapon.ServerPositionUpdateHasParent();
+        secondaryWeapon.ServerPositionUpdateHasParent();
 
         XMove = Mathf.Clamp(XMove, -1, 1);
         Animator.SetBool(_aNames.running, XMove != 0);
