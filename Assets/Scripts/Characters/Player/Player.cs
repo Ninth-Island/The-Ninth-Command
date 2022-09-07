@@ -27,18 +27,17 @@ public partial class Player : Character{
 
     [SyncVar] private bool _isCrouching;
 
-    private bool _hardLanding; // used for sound
+    [SyncVar] private bool _hardLanding; // used for sound
 
     private bool _swappedWeapon; // used to can't spam sounds
 
+    [SerializeField] private GameObject empty;
     
     #region Server
 
     [Server]
     protected override void ServerMove(){
         
-        primaryWeapon.ServerPositionUpdateHasParent();
-        secondaryWeapon.ServerPositionUpdateHasParent();
 
         XMove = Mathf.Clamp(XMove, -1, 1);
         Animator.SetBool(_aNames.running, XMove != 0);
@@ -56,6 +55,7 @@ public partial class Player : Character{
             }
             
         }
+
     }
     
     [Command]
@@ -84,7 +84,7 @@ public partial class Player : Character{
 
     
     [Client]
-    protected override void ClientMove(){
+    protected override void ClientHandleMove(){
         CmdSetXMoveServer(Input.GetAxis("Horizontal"));
     }
 
@@ -121,18 +121,18 @@ public partial class Player : Character{
         }
     }
 
-    [ClientCallback]
+    [ServerCallback]
     protected override void FixedUpdate(){
         base.FixedUpdate();
 
         /*if (Input.GetKey(KeyCode.Mouse0)){
             primaryWeapon.AttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
-        }*/
-        if (hasAuthority){
-            ControlFixedUpdate();
-        }
+        }*/ 
+        
+        //ControlFixedUpdate();
+        
 
-        // happens on client cuz just for sounds
+        // just for sounds
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
             _hardLanding = true;
         }

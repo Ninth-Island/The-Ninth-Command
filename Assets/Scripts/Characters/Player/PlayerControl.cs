@@ -132,8 +132,6 @@ public partial class Player : Character{
 
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
 
-        AudioSource source = AudioManager.source;
-
         if (!Input.GetKey(KeyCode.LeftShift)){
             _virtualCamera[0].Priority = 10;
             _virtualCamera[1].Priority = 0;

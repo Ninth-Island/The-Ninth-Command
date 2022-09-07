@@ -5895,7 +5895,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3543665972376036743
 Transform:
   m_ObjectHideFlags: 0
@@ -6706,6 +6706,8 @@ MonoBehaviour:
   body: {fileID: 3757039344788581442}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 3208046358155570110}
+  parent: {fileID: 0}
+  localPos: {x: 0, y: 0}
   health: 100
   moveSpeed: 15
   jumpVelocity: 30

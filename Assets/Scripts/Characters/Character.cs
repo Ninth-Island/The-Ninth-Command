@@ -44,12 +44,16 @@ public class Character : CustomObject{
     
     #region Server
 
-    [Command]
-    protected virtual void CmdServerUpdate(){ // fixed update that happens on server
+    
+    [ServerCallback]
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
         ServerMove();
         CheckStates();
+        
     }
-
+    
+    
     [Command]
     protected void CmdSetXMoveServer(float xMove){
         XMove = xMove;
@@ -133,25 +137,14 @@ public class Character : CustomObject{
         /*Client calls command on server when jump key is pressed (checked for in update)*/
         base.Update();
         if (hasAuthority){
+            ClientHandleMove();
             ClientHandleJump();
         }
     }
 
 
-    [ClientCallback]
-    protected override void FixedUpdate(){
-        /*Client fixed update calls command which sets XMove
-         On Server's fixed update (called from client) uses XMove to actually move*/
-        
-        base.FixedUpdate();
-        if (hasAuthority){
-            ClientMove();
-            CmdServerUpdate();
-        }
-    }
-
     [Client]
-    protected virtual void ClientMove(){
+    protected virtual void ClientHandleMove(){
         
     }
 
