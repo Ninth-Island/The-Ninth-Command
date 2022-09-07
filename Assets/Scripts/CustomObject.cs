@@ -28,32 +28,38 @@ public class CustomObject : NetworkBehaviour{
 
     [ClientCallback]
     protected virtual void Update(){
-
     }
 
-    [ClientCallback]
+    [ServerCallback]
     protected virtual void FixedUpdate(){
-        
+        StartCoroutine(ServerPositionUpdateHasParent());
     }
 
     [Server]
-    public void ServerPositionUpdateHasParent(){
+    private IEnumerator ServerPositionUpdateHasParent(){
         if (parent){
-            float angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-            float yMultiplier = 1;
-            if (parent.localScale.x < 0){
-                yMultiplier = -1;
-            }
+            yield return new WaitForFixedUpdate();
+            if (parent){
             
-            Vector2 xOffsetPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * localPos.x;
-            Vector3 offset = new Vector3(
-                localPos.y * Mathf.Cos(angle - Mathf.PI / 2) + xOffsetPoint.x,
-                localPos.y * yMultiplier * Mathf.Sin(angle - Mathf.PI / 2) + xOffsetPoint.y);
+                float angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-            transform.position = parent.position + offset;
-            transform.rotation = parent.rotation;
-            transform.localScale = parent.lossyScale;
+                float yMultiplier = 1;
+                if (parent.localScale.x < 0){
+                    yMultiplier = -1;
+                }
+            
+                Vector2 xOffsetPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * localPos.x;
+                Vector3 offset = new Vector3(
+                    localPos.y * Mathf.Cos(angle - Mathf.PI / 2) + xOffsetPoint.x,
+                    localPos.y * yMultiplier * Mathf.Sin(angle - Mathf.PI / 2) + xOffsetPoint.y);
+
+                transform.position = parent.position + offset;
+                transform.rotation = parent.rotation;
+                transform.localScale = parent.lossyScale;
+            }
         }
     }
+  
+
 }
