@@ -13,31 +13,34 @@ public class BasicWeapon : Weapon{
     [SerializeField][Tooltip("Player Only")] public int cursorType = 0;
     
     [SerializeField] private bool allowInterrupt = false;
-    protected CursorControl CursorControl;
     public Transform firingPoint;
 
     public bool activelyWielded = false;
-
-    protected Coroutine Coroutine;
     
-    public bool looping;
 
-
-    
-    public virtual void AttemptFire(float angle){
-        
+    [Command]
+    public void CmdAttemptFire(float angle){
+        ServerHandleFiring(angle);    
     }
     
+    [Server]
+    protected virtual void ServerHandleFiring(float angle){
+        
+    }
+
+    
+    [Server]
     protected virtual void HandleMagazineDecrement(){
         AudioManager.PlaySound(0, allowInterrupt);
     }
     
-
+    [Client]
     public virtual void RefreshText(){
         
     }
 
-    public virtual void Reload(){
+    [Command]
+    public virtual void CmdReload(){
         AudioManager.PlaySound(1, false);
     }
     
@@ -69,6 +72,7 @@ public class BasicWeapon : Weapon{
         }
     }
 
+    [Command]
     public override void CmdDrop(){
         base.CmdDrop();
         wielder = null;
@@ -77,9 +81,6 @@ public class BasicWeapon : Weapon{
 
     public override void OnStartClient(){
         base.OnStartClient();
-        
-        CursorControl = FindObjectOfType<CursorControl>();
-        
     }
 
     protected override void Update(){

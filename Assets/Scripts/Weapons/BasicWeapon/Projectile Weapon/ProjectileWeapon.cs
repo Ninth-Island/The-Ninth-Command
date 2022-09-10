@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Mirror;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -32,7 +33,8 @@ public class ProjectileWeapon : BasicWeapon{
 
     
 
-    public override void AttemptFire(float angle){
+    [Server]
+    protected override void ServerHandleFiring(float angle){
         shootingAngle = angle;
         if (framesLeftTillNextSalvo <= 0){
 
@@ -47,13 +49,13 @@ public class ProjectileWeapon : BasicWeapon{
                 if (shotInSolvo >= shotsPerSalvo){
                     framesLeftTillNextSalvo = salvoDelay;
                     shotInSolvo = 0;
-
                 }
             }
-        }
+        }        
     }
 
 
+    [Server]
     protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
         
@@ -65,12 +67,12 @@ public class ProjectileWeapon : BasicWeapon{
 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
+        NetworkServer.Spawn(projectile.gameObject);
         projectile.StartCoroutine(projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name));
     }
 
     public override void OnStartClient(){
         base.OnStartClient();
-        CursorControl = FindObjectOfType<CursorControl>();
     }
 
     private void Awake(){
@@ -83,11 +85,13 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
-        if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
-            AttemptFire(shootingAngle);
-            
+        if (isServer){
+            if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
+                ServerHandleFiring(shootingAngle);
+                
+            }
+            framesLeftTillNextShot--;
+            framesLeftTillNextSalvo--;
         }
-        framesLeftTillNextShot--;
-        framesLeftTillNextSalvo--;
     }
 }

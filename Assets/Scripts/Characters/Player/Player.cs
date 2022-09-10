@@ -31,7 +31,7 @@ public partial class Player : Character{
 
     private bool _swappedWeapon; // used to can't spam sounds
 
-    [SerializeField] private GameObject empty;
+    private bool _attemptingToFire;
     
     #region Server
 
@@ -74,6 +74,11 @@ public partial class Player : Character{
     private void CmdToggleIsCrouching(){
         _isCrouching = !_isCrouching;
         Animator.SetBool(_aNames.crouching, _isCrouching);
+    }
+
+    [Command]
+    private void CmdSetFiring(bool firing){
+        _attemptingToFire = firing;
     }
 
 
@@ -125,12 +130,11 @@ public partial class Player : Character{
     protected override void FixedUpdate(){
         base.FixedUpdate();
 
-        /*if (Input.GetKey(KeyCode.Mouse0)){
-            primaryWeapon.AttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
-        }*/ 
-        
         //ControlFixedUpdate();
-        
+
+        if (_attemptingToFire && hasAuthority){
+            primaryWeapon.CmdAttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+        }
 
         // just for sounds
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
@@ -139,7 +143,6 @@ public partial class Player : Character{
         else{
             _hardLanding = false;
         }
-        
     }
 
     [ClientCallback]
@@ -151,17 +154,30 @@ public partial class Player : Character{
             CheckCrouch();
 
             CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
-            if (Input.GetKey(KeyCode.R)){
-                primaryWeapon.Reload(); // make into a command at some point
-            }
             
             CmdRotateArm(GetBarrelToMouseRotation());
+
+            ClientHandleWeapon();
 
             ControlUpdate(); // all hud and audio stuff
             HUDUpdate();
             CheckForPickup();
         }
         
+    }
+
+    [Client]
+    private void ClientHandleWeapon(){
+        if (Input.GetKey(KeyCode.R)){
+            primaryWeapon.CmdReload(); // make into a command at some point
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)){
+            CmdSetFiring(true);
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0)){
+            CmdSetFiring(false);
+        }
     }
 
     /*

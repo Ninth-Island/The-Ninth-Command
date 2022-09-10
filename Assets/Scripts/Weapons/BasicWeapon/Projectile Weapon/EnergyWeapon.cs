@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
+using Telepathy;
 using UnityEngine;
 
 public class EnergyWeapon : ProjectileWeapon{
@@ -26,15 +28,17 @@ public class EnergyWeapon : ProjectileWeapon{
     private bool _isCooling;
 
 
-    public override void AttemptFire(float angle){
+    [Server]
+    protected override void ServerHandleFiring(float angle){
         if (!_isCooling){
             if (_energy >= percentagePerShot){
-                base.AttemptFire(angle);
+                base.ServerHandleFiring(angle);
             }
         }
     }
 
 
+    [Server]
     protected override void Update(){
         base.Update();
         if (activelyWielded){
@@ -60,7 +64,8 @@ public class EnergyWeapon : ProjectileWeapon{
         
     }
 
-    public override void Reload(){
+    [Command]
+    public override void CmdReload(){
         
         if (!_isCooling && _heat > 10){
             _isCooling = true;
@@ -68,11 +73,13 @@ public class EnergyWeapon : ProjectileWeapon{
             
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            base.Reload();
+            base.CmdReload();
         }
     }
     
 
+    
+    [Server]
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         
@@ -90,6 +97,7 @@ public class EnergyWeapon : ProjectileWeapon{
     }
     
 
+    [Client]
     public override void RefreshText(){
         if (wielder){
             wielder.SetWeaponValues(0, 0, 0, _energy, _heat, 2);

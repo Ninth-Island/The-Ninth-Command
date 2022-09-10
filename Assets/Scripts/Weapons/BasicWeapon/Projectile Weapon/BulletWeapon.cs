@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class BulletWeapon : ProjectileWeapon{
@@ -19,25 +20,41 @@ public class BulletWeapon : ProjectileWeapon{
 
 
 
-    public override void AttemptFire(float angle){
+    [Server]
+    protected override void ServerHandleFiring(float angle){
         if (bulletsLeft > 0){
             if (!reloading){
-                base.AttemptFire(angle);
+                base.ServerHandleFiring(angle);
             }
         }
         else{
-            Reload();
+            ServerReload();
         }
     }
 
+    [Server]
     protected override void CreateProjectile(float angle){
         base.CreateProjectile(angle);
         if (bulletShell){
-            Destroy(Instantiate(bulletShell, transform.position, transform.rotation), 1f);
+            StartCoroutine(CreateShell());
         }
     }
 
-    public override void Reload(){
+    [Server]
+    private IEnumerator CreateShell(){
+        GameObject gO = Instantiate(bulletShell, transform.position, transform.rotation);
+        NetworkServer.Spawn(gO);
+        yield return new WaitForSeconds(1);
+        NetworkServer.Destroy(gO);
+    }
+
+    [Command]
+    public override void CmdReload(){
+        ServerReload();
+    }
+
+    [Server]
+    private void ServerReload(){
         if (magazinesLeft > 0 && bulletsLeft < magazineSize){
             if (!reloading){
                 StartCoroutine(ReloadRoutine());
@@ -48,9 +65,10 @@ public class BulletWeapon : ProjectileWeapon{
         }
     }
     
+    [Server] 
     public IEnumerator ReloadRoutine(){
         reloading = true;
-        base.Reload();
+        base.CmdReload();
         
         wielder.Reload();
         wielder.SetReloadingText("Reloading...");
@@ -76,6 +94,7 @@ public class BulletWeapon : ProjectileWeapon{
     
 
 
+    [Server]
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         bulletsLeft--;
@@ -84,6 +103,7 @@ public class BulletWeapon : ProjectileWeapon{
     
     
 
+    [Client]
     public override void RefreshText(){
         if (wielder){
             wielder.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, 0, 0, 1);
