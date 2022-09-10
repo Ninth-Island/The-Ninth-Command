@@ -89,7 +89,7 @@ public partial class Player : Character{
         _virtualCamera[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
         _virtualCamera[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
         _virtualCamera[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
-        _cursorControl = FindObjectOfType<CursorControl>();
+        _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
 
 
         Bindings.Add(KeyCode.LeftShift, UseJetPack);
@@ -294,14 +294,13 @@ public partial class Player : Character{
         }
         return ang;
     }
-  
-    public float GetBarrelToMouseRotation(){
+
+    private float GetBarrelToMouseRotation(){
         if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 12f){
             return 0;
         }
         
-        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
-        //float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
+        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;
         }

@@ -27,7 +27,7 @@ public class Scope : ActiveMod{
         base.Update();
         
         if (IsReady){
-            CheckZoom();
+            //CheckZoom();
         }
     }
     

@@ -31,7 +31,8 @@ public partial class Player : Character{
 
     private bool _swappedWeapon; // used to can't spam sounds
 
-    [SerializeField] private GameObject empty;
+    private bool _attemptingToFire;
+    private float _firingAngle;
     
     #region Server
 
@@ -76,6 +77,12 @@ public partial class Player : Character{
         Animator.SetBool(_aNames.crouching, _isCrouching);
     }
 
+    [Command]
+    private void CmdSetFiring(bool firing, float angle){
+        _attemptingToFire = firing;
+        _firingAngle = angle;
+    }
+
 
     #endregion
 
@@ -92,7 +99,6 @@ public partial class Player : Character{
     protected override void ClientHandleJump(){
         if (Input.GetKeyDown(KeyCode.W)){
             CmdServerJump();
-            CmdSetSuppressGroundCheck();
         }
     }
 
@@ -109,8 +115,8 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-    public override void OnStartClient(){
-        base.OnStartClient();
+    protected override void Start(){
+        base.Start();
 
         HUDVisualStart();
         ControlStart();
@@ -121,16 +127,16 @@ public partial class Player : Character{
         }
     }
 
-    [ServerCallback]
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
+    
+    protected override void ServerFixedUpdate(){
+        base.ServerFixedUpdate();
 
-        /*if (Input.GetKey(KeyCode.Mouse0)){
-            primaryWeapon.AttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
-        }*/ 
-        
         //ControlFixedUpdate();
-        
+
+        if (_attemptingToFire){
+            primaryWeapon.ServerHandleFiring(_firingAngle);
+            
+        }
 
         // just for sounds
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
@@ -139,29 +145,39 @@ public partial class Player : Character{
         else{
             _hardLanding = false;
         }
+    }
+
+    
+    protected override void ClientUpdate(){
+        base.ClientUpdate();
+
+        CheckSwap();
+        CheckCrouch();
+
+        CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
+        
+        CmdRotateArm(GetBarrelToMouseRotation());
+
+        ClientHandleWeapon();
+
+        ControlUpdate(); // all hud and audio stuff
+        HUDUpdate();
+        CheckForPickup();
         
     }
 
-    [ClientCallback]
-    protected override void Update(){
-        base.Update();
-
-        if (hasAuthority){
-            CheckSwap();
-            CheckCrouch();
-
-            CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
-            if (Input.GetKey(KeyCode.R)){
-                primaryWeapon.Reload(); // make into a command at some point
-            }
-            
-            CmdRotateArm(GetBarrelToMouseRotation());
-
-            ControlUpdate(); // all hud and audio stuff
-            HUDUpdate();
-            CheckForPickup();
+    [Client]
+    private void ClientHandleWeapon(){
+        if (Input.GetKey(KeyCode.R)){
+            primaryWeapon.CmdReload(); // make into a command at some point
         }
-        
+
+        if (Input.GetKey(KeyCode.Mouse0)){
+            CmdSetFiring(true, GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0)){
+            CmdSetFiring(false, 0);
+        }
     }
 
     /*
@@ -250,7 +266,7 @@ public partial class Player : Character{
                 primaryWeapon.CmdDrop();
                 
                 primaryWeapon = newWeapon;
-                newWeapon.CmdPickup(this, new []{1, 3}); // some of this is redundant, rework
+                newWeapon.CmdPickup(this, new []{1, 3}); 
                 UpdateHUD();
             }
         }

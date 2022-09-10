@@ -21,8 +21,8 @@ public class Bullet : Projectile
         base.OnCollisionEnter2D(other);
         GameObject DB = Instantiate(deadBullet, transform.position, transform.rotation);
         DB.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
-        Destroy(DB, 2f);
-        Destroy(gameObject);
+        StartCoroutine(ServerDestroy(DB, 2));
+        StartCoroutine(ServerDestroy(gameObject, 0));
     }
 
     public override IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){

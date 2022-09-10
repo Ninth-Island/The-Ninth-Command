@@ -45,9 +45,8 @@ public class Character : CustomObject{
     #region Server
 
     
-    [ServerCallback]
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
+    protected override void ServerFixedUpdate(){
+        base.ServerFixedUpdate();
         ServerMove();
         CheckStates();
         
@@ -74,7 +73,14 @@ public class Character : CustomObject{
         if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
             Airborne = true;
             body.velocity = new Vector2(velocity.x, velocity.y + jumpVelocity);
-            SortSound(0);
+            SortSound(0); 
+            
+            /*
+            the player has a little bit of area where they're not technically touching the ground but need to act like it 
+            for the game to look good like when going down a slope. Because of this, right after jumping the player is still
+            inside this area, so the ground check needs to be temporarily suppresses right after jumping
+            */
+            StartCoroutine(ResetGroundCheck());
         }
     }
 
@@ -89,15 +95,6 @@ public class Character : CustomObject{
         }
     }
 
-    [Command]
-    protected void CmdSetSuppressGroundCheck(){
-        /*
-        the player has a little bit of area where they're not technically touching the ground but need to act like it 
-        for the game to look good like when going down a slope. Because of this, right after jumping the player is still
-        inside this area, so the ground check needs to be temporarily suppresses right after jumping
-        */ 
-        StartCoroutine(ResetGroundCheck());
-    }
 
     [Server]
     private IEnumerator ResetGroundCheck(){
@@ -120,8 +117,8 @@ public class Character : CustomObject{
     #region Client
 
     
-    public override void OnStartClient(){
-        base.OnStartClient();
+    protected override void Start(){
+        base.Start();
         
         Animator = GetComponent<Animator>();
         AudioManager = GetComponent<AudioManager>();
@@ -130,16 +127,12 @@ public class Character : CustomObject{
         _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         
     }
-
     
-    [ClientCallback]
-    protected override void Update(){
+    protected override void ClientUpdate(){
         /*Client calls command on server when jump key is pressed (checked for in update)*/
-        base.Update();
-        if (hasAuthority){
-            ClientHandleMove();
-            ClientHandleJump();
-        }
+        base.ClientUpdate();
+        ClientHandleMove();
+        ClientHandleJump();
     }
 
 

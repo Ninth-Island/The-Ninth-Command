@@ -20,8 +20,8 @@ public class CursorControl : MonoBehaviour{
     private void Awake(){
         mainCam = Camera.main;
         vc = transform.parent.transform.GetChild(3).GetComponent<CinemachineVirtualCamera>();
-       
-        _player = FindObjectOfType<Player>();
+
+        _player = transform.parent.GetComponent<Player>();
 
 
 

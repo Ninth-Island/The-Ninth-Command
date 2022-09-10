@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Mirror;
 using UnityEngine;
 
 public class ChargingWeapon : ProjectileWeapon
@@ -27,7 +28,7 @@ public class ChargingWeapon : ProjectileWeapon
     public float heat = 0;
     public bool coolingDown;
 
-    private bool hasReleased = true;
+    private bool _hasReleased = true;
     
     
     /*
@@ -35,17 +36,17 @@ public class ChargingWeapon : ProjectileWeapon
      *                                               Firing Stuff
      * ================================================================================================================
      */
-
-    public override void AttemptFire(float angle){
+    [Server]
+    public override void ServerHandleFiring(float angle){
         if (energy > 0 && heat < 100 && !coolingDown){
             heat += chargePerFrame;
             
             AudioManager.PlayConstant(4, false, heat / 100f);
 
-            hasReleased = false;
+            _hasReleased = false;
             if (heat >= 100){
                 AudioManager.source.Stop();
-                base.AttemptFire(angle);
+                base.ServerHandleFiring(angle);
             }
         }
         
@@ -62,10 +63,10 @@ public class ChargingWeapon : ProjectileWeapon
     protected override void Update(){
         base.Update();
         
-        if (!coolingDown && !hasReleased && Input.GetKeyUp(KeyCode.Mouse0)){
+        if (isServer && !coolingDown && !_hasReleased && Input.GetKeyUp(KeyCode.Mouse0)){
             AudioManager.source.Stop();
             AudioManager.PlaySound(5, false);
-            hasReleased = true;
+            _hasReleased = true;
         }
         RefreshText();
     }
@@ -95,10 +96,12 @@ public class ChargingWeapon : ProjectileWeapon
             
     }
 
-    public override void Reload(){  
+    [Command]
+    public override void CmdReload(){  
     }
     
 
+    [Server]
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         energy -= percentagePerShot;
@@ -115,6 +118,7 @@ public class ChargingWeapon : ProjectileWeapon
     * ================================================================================================================
     */
 
+    [Client]
     public override void RefreshText(){
         if (wielder){
             wielder.SetWeaponValues(0, 0, 0, energy, heat, 3);

@@ -16,7 +16,7 @@ public class Bolt : Projectile
     
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
-        Destroy(gameObject);
+        StartCoroutine(ServerDestroy(gameObject, 0));
     }
 
     public override IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
