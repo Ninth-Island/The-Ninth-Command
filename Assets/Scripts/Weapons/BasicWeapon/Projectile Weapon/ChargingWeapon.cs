@@ -37,7 +37,7 @@ public class ChargingWeapon : ProjectileWeapon
      * ================================================================================================================
      */
     [Server]
-    protected override void ServerHandleFiring(float angle){
+    public override void ServerHandleFiring(float angle){
         if (energy > 0 && heat < 100 && !coolingDown){
             heat += chargePerFrame;
             

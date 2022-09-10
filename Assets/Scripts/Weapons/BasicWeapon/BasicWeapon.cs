@@ -24,7 +24,7 @@ public class BasicWeapon : Weapon{
     }
     
     [Server]
-    protected virtual void ServerHandleFiring(float angle){
+    public virtual void ServerHandleFiring(float angle){
         
     }
 

@@ -21,7 +21,7 @@ public class BulletWeapon : ProjectileWeapon{
 
 
     [Server]
-    protected override void ServerHandleFiring(float angle){
+    public override void ServerHandleFiring(float angle){
         if (bulletsLeft > 0){
             if (!reloading){
                 base.ServerHandleFiring(angle);
@@ -68,7 +68,6 @@ public class BulletWeapon : ProjectileWeapon{
     [Server] 
     public IEnumerator ReloadRoutine(){
         reloading = true;
-        base.CmdReload();
         
         wielder.Reload();
         wielder.SetReloadingText("Reloading...");

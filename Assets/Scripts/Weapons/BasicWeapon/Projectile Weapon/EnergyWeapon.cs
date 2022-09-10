@@ -29,7 +29,7 @@ public class EnergyWeapon : ProjectileWeapon{
 
 
     [Server]
-    protected override void ServerHandleFiring(float angle){
+    public override void ServerHandleFiring(float angle){
         if (!_isCooling){
             if (_energy >= percentagePerShot){
                 base.ServerHandleFiring(angle);

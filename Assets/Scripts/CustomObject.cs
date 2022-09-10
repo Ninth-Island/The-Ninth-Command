@@ -19,22 +19,62 @@ public class CustomObject : NetworkBehaviour{
     public Vector2 localPos;
 
 
-    public override void OnStartClient(){
+    protected virtual void Start(){
         body = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
         //sprite renderer follows a different path each time
         AudioManager = GetComponent<AudioManager>();
+    
     }
 
-    [ClientCallback]
-    protected virtual void Update(){
+    public override void OnStartClient(){
+        
     }
 
-    [ServerCallback]
+    public override void OnStartServer(){
+        base.OnStartServer();
+    }
+
+
     protected virtual void FixedUpdate(){
+        if (isClientOnly){
+            ClientFixedUpdate();
+        }
+        else{
+            ServerFixedUpdate();
+        }
+    }
+
+    protected virtual void Update(){
+        if (isClient && hasAuthority){
+            ClientUpdate();
+        }
+        if (isServer){
+            ServerUpdate();
+        }
+    }
+
+
+    [Server]
+    protected virtual void ServerUpdate(){
+        
+    }
+
+    [Server]
+    protected virtual void ServerFixedUpdate(){
         StartCoroutine(ServerPositionUpdateHasParent());
     }
 
+    [Client]
+    protected virtual void ClientUpdate(){
+        
+    }
+    
+    [Client]
+    protected virtual void ClientFixedUpdate(){
+        
+    }
+    
     [Server]
     private IEnumerator ServerPositionUpdateHasParent(){
         if (parent){
@@ -59,6 +99,12 @@ public class CustomObject : NetworkBehaviour{
                 transform.localScale = parent.lossyScale;
             }
         }
+    }
+
+    [Server]
+    protected IEnumerator ServerDestroy(GameObject obj, float time){
+        yield return new WaitForSeconds(time);
+        NetworkServer.Destroy(obj);
     }
   
 

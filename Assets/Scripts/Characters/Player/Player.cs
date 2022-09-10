@@ -97,7 +97,6 @@ public partial class Player : Character{
     protected override void ClientHandleJump(){
         if (Input.GetKeyDown(KeyCode.W)){
             CmdServerJump();
-            CmdSetSuppressGroundCheck();
         }
     }
 
@@ -114,8 +113,8 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-    public override void OnStartClient(){
-        base.OnStartClient();
+    protected override void Start(){
+        base.Start();
 
         HUDVisualStart();
         ControlStart();
@@ -126,14 +125,15 @@ public partial class Player : Character{
         }
     }
 
-    [ServerCallback]
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
+    
+    protected override void ServerFixedUpdate(){
+        base.ServerFixedUpdate();
 
         //ControlFixedUpdate();
 
-        if (_attemptingToFire && hasAuthority){
-            primaryWeapon.CmdAttemptFire(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+        if (_attemptingToFire){
+            primaryWeapon.ServerHandleFiring(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+            
         }
 
         // just for sounds
@@ -145,24 +145,22 @@ public partial class Player : Character{
         }
     }
 
-    [ClientCallback]
-    protected override void Update(){
-        base.Update();
+    
+    protected override void ClientUpdate(){
+        base.ClientUpdate();
 
-        if (hasAuthority){
-            CheckSwap();
-            CheckCrouch();
+        CheckSwap();
+        CheckCrouch();
 
-            CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
-            
-            CmdRotateArm(GetBarrelToMouseRotation());
+        CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
+        
+        CmdRotateArm(GetBarrelToMouseRotation());
 
-            ClientHandleWeapon();
+        ClientHandleWeapon();
 
-            ControlUpdate(); // all hud and audio stuff
-            HUDUpdate();
-            CheckForPickup();
-        }
+        ControlUpdate(); // all hud and audio stuff
+        HUDUpdate();
+        CheckForPickup();
         
     }
 
@@ -266,7 +264,7 @@ public partial class Player : Character{
                 primaryWeapon.CmdDrop();
                 
                 primaryWeapon = newWeapon;
-                newWeapon.CmdPickup(this, new []{1, 3}); // some of this is redundant, rework
+                newWeapon.CmdPickup(this, new []{1, 3}); 
                 UpdateHUD();
             }
         }

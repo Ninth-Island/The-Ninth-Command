@@ -34,7 +34,7 @@ public class ProjectileWeapon : BasicWeapon{
     
 
     [Server]
-    protected override void ServerHandleFiring(float angle){
+    public override void ServerHandleFiring(float angle){
         shootingAngle = angle;
         if (framesLeftTillNextSalvo <= 0){
 

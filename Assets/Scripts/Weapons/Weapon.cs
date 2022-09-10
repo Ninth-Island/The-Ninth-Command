@@ -16,13 +16,16 @@ public class Weapon : CustomObject{
     }
    
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdPickup(Character character, int[] path){
-        ServerPickup(character, path);
+        if (Vector2.Distance(character.transform.position, transform.position) <= 10){
+            ServerPickup(character, path);
+        }
     }
 
     [Server]
     protected void ServerPickup(Character character, int[] path){
+        netIdentity.AssignClientAuthority(character.connectionToClient);    
         parent = character.transform;
         for (int i = 0; i < path.Length; i++){
             parent = parent.GetChild(path[i]);
@@ -54,6 +57,7 @@ public class Weapon : CustomObject{
 
         spriteRenderer.sortingLayerID = SortingLayer.NameToID("Objects");
         spriteRenderer.sortingOrder = 0;
+        netIdentity.RemoveClientAuthority();
     }
     
 

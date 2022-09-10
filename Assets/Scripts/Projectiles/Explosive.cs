@@ -70,7 +70,7 @@ public class Explosive : Projectile{
         _spriteRenderer.enabled = false;
         body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
-        Destroy(gameObject, 1f);
+        StartCoroutine(ServerDestroy(gameObject, 1));
     }
 
     /*

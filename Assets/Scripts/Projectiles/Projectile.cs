@@ -48,9 +48,9 @@ public class Projectile : CustomObject{
 
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
-        OnStartClient();
-        if (_live){
-            Destroy(gameObject, lifetime);
+        Start();
+        if (_live && isServer){
+            StartCoroutine(ServerDestroy(gameObject, lifetime));
         }
     }
     /*
