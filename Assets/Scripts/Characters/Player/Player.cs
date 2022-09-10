@@ -32,6 +32,7 @@ public partial class Player : Character{
     private bool _swappedWeapon; // used to can't spam sounds
 
     private bool _attemptingToFire;
+    private float _firingAngle;
     
     #region Server
 
@@ -77,8 +78,9 @@ public partial class Player : Character{
     }
 
     [Command]
-    private void CmdSetFiring(bool firing){
+    private void CmdSetFiring(bool firing, float angle){
         _attemptingToFire = firing;
+        _firingAngle = angle;
     }
 
 
@@ -132,7 +134,7 @@ public partial class Player : Character{
         //ControlFixedUpdate();
 
         if (_attemptingToFire){
-            primaryWeapon.ServerHandleFiring(GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+            primaryWeapon.ServerHandleFiring(_firingAngle);
             
         }
 
@@ -170,11 +172,11 @@ public partial class Player : Character{
             primaryWeapon.CmdReload(); // make into a command at some point
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0)){
-            CmdSetFiring(true);
+        if (Input.GetKey(KeyCode.Mouse0)){
+            CmdSetFiring(true, GetBarrelToMouseRotation() * Mathf.Deg2Rad);
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0)){
-            CmdSetFiring(false);
+            CmdSetFiring(false, 0);
         }
     }
 
