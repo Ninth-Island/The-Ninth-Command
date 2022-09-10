@@ -181,7 +181,6 @@ MonoBehaviour:
   allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
-  looping: 0
   shotDelay: 0
   salvoDelay: 4
   shotsPerSalvo: 1

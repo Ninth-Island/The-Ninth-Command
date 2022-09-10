@@ -9,9 +9,8 @@ public class SpartanLaserProjectile : Projectile{
         Destroy(gameObject, 5f);
     }
     
-    public override IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        StartCoroutine(base.SetValues(damage, speed, angle, piercing, firedLayer, name));
-        yield break;
+    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
     }
     
 }

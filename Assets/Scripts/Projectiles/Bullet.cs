@@ -3,8 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : Projectile
-{
+public class Bullet : Projectile{
     /*
 * ================================================================================================================
 *                                               Bullet
@@ -15,7 +14,7 @@ public class Bullet : Projectile
 */
 
     [SerializeField] private GameObject deadBullet;
-  
+
 
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
@@ -25,8 +24,7 @@ public class Bullet : Projectile
         StartCoroutine(ServerDestroy(gameObject, 0));
     }
 
-    public override IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        StartCoroutine(base.SetValues(damage, speed, angle, piercing, firedLayer, name));
-        yield break;
+    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
     }
 }

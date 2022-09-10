@@ -25,6 +25,7 @@ public class Projectile : CustomObject{
     private Collider2D _collider;
     private int _damage;
     private bool _piercing;
+    private LineRenderer _lineRenderer;
 
     protected int _firedLayer;
 
@@ -35,7 +36,11 @@ public class Projectile : CustomObject{
 
     // Update is called once per frame
     protected override void Update(){
-        
+        /*int positionCount = _lineRenderer.positionCount + 1;
+        _lineRenderer.positionCount = positionCount;
+        Debug.Log(positionCount);
+        _lineRenderer.SetPosition(positionCount, transform.position);
+    */
     }
 
     protected override void FixedUpdate(){
@@ -48,6 +53,7 @@ public class Projectile : CustomObject{
 
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
+        //_lineRenderer = transform.GetChild(0).GetComponent<LineRenderer>();
         Start();
         if (_live && isServer){
             StartCoroutine(ServerDestroy(gameObject, lifetime));
@@ -84,8 +90,7 @@ public class Projectile : CustomObject{
       *                                        Set Values for Instantiators
      * ================================================================================================================
      */
-    public virtual IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        _collider.enabled = false;
+    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         _damage = damage;
         gameObject.name = name + " " + gameObject;
         gameObject.layer = firedLayer - 4;
@@ -93,10 +98,13 @@ public class Projectile : CustomObject{
         _piercing = piercing;
 
         Awake();
+        
+        /*Debug.Log(_lineRenderer.positionCount);
+        _lineRenderer.positionCount = 1;
+        _lineRenderer.SetPosition(0, transform.position);
+        */
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
-        yield return null;
-        _collider.enabled = true;
     }
     
     /*

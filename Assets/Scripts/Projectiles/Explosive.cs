@@ -46,13 +46,11 @@ public class Explosive : Projectile{
         }
 
     }
-
-    public override IEnumerator SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        StartCoroutine(base.SetValues(damage, speed, angle, piercing, firedLayer, name));
+    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
         if (_live){
             StartCoroutine(Fuse());
         }
-        yield break;
     }
 
     protected override void FixedUpdate(){

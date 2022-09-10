@@ -162,7 +162,7 @@ public class Character : CustomObject{
 
     [Client]
     public virtual void Reload(){ // called by weapon
-        // the override is only a visual thing
+        // the override is only a visual thing for the arm
     }
 
     [Client]
