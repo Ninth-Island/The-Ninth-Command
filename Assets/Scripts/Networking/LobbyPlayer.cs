@@ -22,6 +22,8 @@ public class LobbyPlayer : NetworkBehaviour{
     [SyncVar(hook = nameof(ClientHandleHelmetColor))] private Color _helmetColor;
     [SyncVar(hook = nameof(ClientHandleArmsColor))] private Color _armsColor;
     [SyncVar(hook = nameof(ClientHandlePrimaryColor))] private Color _primaryColor;
+
+    private VirtualPlayer _virtualPlayer;
     
     private TMP_Text[] _playerJoinButtons;
 
@@ -95,11 +97,16 @@ public class LobbyPlayer : NetworkBehaviour{
     }
 
 
+    [Server]
+    public void SetVirtualPlayer(VirtualPlayer virtualPlayer){
+        _virtualPlayer = virtualPlayer;
+    }
 
     [Command]
     public void CmdSetUsername(string enteredName){
         if (enteredName.Length < 15 && enteredName.Length > 1){
             _username = enteredName;
+            _virtualPlayer.SetUsername(enteredName);
         }
     }
 
@@ -119,6 +126,7 @@ public class LobbyPlayer : NetworkBehaviour{
     public void CmdSetColor(int piece, Color color){
         if (piece >= 0 && piece < 4){
             ClientHandleColorChanged(piece, color);
+            _virtualPlayer.SetColors(_colors);
         }
     }
 
@@ -127,6 +135,7 @@ public class LobbyPlayer : NetworkBehaviour{
         for (int i = 0; i < _notReadyPreviewImages.Length; i++){
             ClientHandleColorChanged(i, _readyPreviewImages[i].color);
             ClientHandleColorChanged(i, _notReadyPreviewImages[i].color); 
+            _virtualPlayer.SetColors(_colors);
         }
     }
 
@@ -238,13 +247,8 @@ public class LobbyPlayer : NetworkBehaviour{
             ClientHandleChangeTeamIndex(0, _teamIndex);
             ClientHandleToggleReady(false, _isReady);
 
-
-
             
             CmdInitializeColor();
-        }
-        else{
-            Debug.Log("Player doesn't have a team index yet");
         }
     }
 

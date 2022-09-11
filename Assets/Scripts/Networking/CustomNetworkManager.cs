@@ -17,20 +17,27 @@ public class CustomNetworkManager : NetworkManager{
         
         // if in the lobby, spawn a lobby character
         if (sceneName == "Lobby"){
-            NetworkServer.Spawn(Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity, FindObjectOfType<Canvas>().transform), conn);
+            LobbyPlayer lobbyPlayer = Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity, FindObjectOfType<Canvas>().transform).GetComponent<LobbyPlayer>();
+
+            VirtualPlayer virtualPlayer = conn.identity.GetComponent<VirtualPlayer>();
+            lobbyPlayer.SetVirtualPlayer(virtualPlayer);
+            virtualPlayer.SetLobbyPlayer(lobbyPlayer);
+            
+            NetworkServer.Spawn(lobbyPlayer.gameObject, conn);
+
         }
     }
 
     public override void OnServerSceneChanged(string sceneName){
         if (sceneName != "Assets/Scenes/Lobby.unity" && sceneName != "Assets/Scenes/Menu.unity"){
             foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
-                SetupPlayer(connectionToClient);
+                StartCoroutine(SetupPlayer(connectionToClient));
             }
         }}
 
 
     [Server]
-    private void SetupPlayer(NetworkConnectionToClient connectionToClient){
+    private IEnumerator SetupPlayer(NetworkConnectionToClient connectionToClient){
         
         Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
@@ -51,6 +58,9 @@ public class CustomNetworkManager : NetworkManager{
         player.secondaryWeapon = sW;
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
+        
+        yield return new WaitForEndOfFrame();
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player);
     }
 
 }
