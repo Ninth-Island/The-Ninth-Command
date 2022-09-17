@@ -70,7 +70,7 @@ public class Character : CustomObject{
     protected virtual void CmdServerJump(){ // happens only as called
         
         Vector2 velocity = body.velocity;
-        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer"))){
+        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"))){
             Airborne = true;
             body.velocity = new Vector2(velocity.x, velocity.y + jumpVelocity);
             SortSound(0); 
@@ -89,9 +89,15 @@ public class Character : CustomObject{
         FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
         
         if (!_suppressGroundCheck){
-            RaycastHit2D groundCheck = Physics2D.Raycast(transform.position, Vector2.down, 4, LayerMask.GetMask("Ground", "Platform", "Vehicle"));
-
-            Airborne = !groundCheck.collider; // if the raycast hit something set to not airborne and vice versa
+            RaycastHit2D[] results = new RaycastHit2D[3];
+            Physics2D.RaycastNonAlloc(transform.position, Vector2.down,  results, 4, LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"));
+            
+            Airborne = true;
+            foreach (RaycastHit2D result in results){
+                if (result && result.collider.gameObject != gameObject && result.collider.gameObject != _feetCollider.gameObject){
+                    Airborne = false;
+                }
+            }
         }
     }
 

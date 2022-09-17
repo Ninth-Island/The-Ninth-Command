@@ -62,6 +62,7 @@ public class LobbyPlayer : NetworkBehaviour{
     public void CmdSetTeamIndex(int teamIndex){
         if (teamIndex > 0 && teamIndex < 13){
             _teamIndex = teamIndex;
+            _customNetworkManager.NetworkManagerSetTeamIndex(connectionToClient, teamIndex);
         }
     }
 
