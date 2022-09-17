@@ -28,7 +28,6 @@ public class CustomObject : NetworkBehaviour{
     }
 
     public override void OnStartClient(){
-        
     }
 
     public override void OnStartServer(){

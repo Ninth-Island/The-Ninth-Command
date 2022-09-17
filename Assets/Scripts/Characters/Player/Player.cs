@@ -180,6 +180,11 @@ public partial class Player : Character{
         }
     }
 
+    [ClientRpc]
+    public void InitialWeaponOnClient(BasicWeapon pW){ // this is mostly for an edge case error
+        primaryWeapon = pW;
+    }
+
     /*
     * ================================================================================================================
     *                                               Movement

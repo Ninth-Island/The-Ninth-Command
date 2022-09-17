@@ -22,6 +22,9 @@ public class LobbyPlayer : NetworkBehaviour{
     [SyncVar(hook = nameof(ClientHandleHelmetColor))] private Color _helmetColor;
     [SyncVar(hook = nameof(ClientHandleArmsColor))] private Color _armsColor;
     [SyncVar(hook = nameof(ClientHandlePrimaryColor))] private Color _primaryColor;
+
+
+    private CustomNetworkManager _customNetworkManager;
     
     private TMP_Text[] _playerJoinButtons;
 
@@ -37,10 +40,59 @@ public class LobbyPlayer : NetworkBehaviour{
 
     private TMP_Text _name;
     private bool _started = false;
-
+    
 
 
     #region Server
+
+    private void Start(){
+        _customNetworkManager = FindObjectOfType<CustomNetworkManager>();
+    }
+    
+
+    [Command]
+    public void CmdSetUsername(string enteredName){
+        if (enteredName.Length < 15 && enteredName.Length > 1){
+            _username = enteredName;
+            _customNetworkManager.NetworkManagerSetUsername(connectionToClient, enteredName);
+        }
+    }
+
+    [Command]
+    public void CmdSetTeamIndex(int teamIndex){
+        if (teamIndex > 0 && teamIndex < 13){
+            _teamIndex = teamIndex;
+        }
+    }
+
+    [Command]
+    public void CmdSetReady(bool setReady){
+        _isReady = setReady;
+    }
+
+    [Command]
+    public void CmdSetColor(int piece, Color color){
+        if (piece >= 0 && piece < 4){
+            ClientHandleColorChanged(piece, color);
+            _customNetworkManager.NetworkManagerSetColors(connectionToClient, _colors);
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    private void CmdInitializeColor(){
+        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
+            ClientHandleColorChanged(i, _readyPreviewImages[i].color);
+            ClientHandleColorChanged(i, _notReadyPreviewImages[i].color); 
+            _customNetworkManager.NetworkManagerSetColors(connectionToClient, _colors);
+        }
+    }
+
+
+
+    #endregion
+
+    #region Client
+
 
     public override void OnStartClient(){
 
@@ -94,49 +146,8 @@ public class LobbyPlayer : NetworkBehaviour{
 
     }
 
-
-
-    [Command]
-    public void CmdSetUsername(string enteredName){
-        if (enteredName.Length < 15 && enteredName.Length > 1){
-            _username = enteredName;
-        }
-    }
-
-    [Command]
-    public void CmdSetTeamIndex(int teamIndex){
-        if (teamIndex > 0 && teamIndex < 13){
-            _teamIndex = teamIndex;
-        }
-    }
-
-    [Command]
-    public void CmdSetReady(bool setReady){
-        _isReady = setReady;
-    }
-
-    [Command]
-    public void CmdSetColor(int piece, Color color){
-        if (piece >= 0 && piece < 4){
-            ClientHandleColorChanged(piece, color);
-        }
-    }
-
-    [Command(requiresAuthority = false)]
-    private void CmdInitializeColor(){
-        for (int i = 0; i < _notReadyPreviewImages.Length; i++){
-            ClientHandleColorChanged(i, _readyPreviewImages[i].color);
-            ClientHandleColorChanged(i, _notReadyPreviewImages[i].color); 
-        }
-    }
-
-
-
-    #endregion
-
-    #region Client
-
-
+    
+    
     [ClientRpc]
     private void ClientHandleColorChanged(int pieceIndex, Color color){
         if (_started){
@@ -238,13 +249,8 @@ public class LobbyPlayer : NetworkBehaviour{
             ClientHandleChangeTeamIndex(0, _teamIndex);
             ClientHandleToggleReady(false, _isReady);
 
-
-
             
             CmdInitializeColor();
-        }
-        else{
-            Debug.Log("Player doesn't have a team index yet");
         }
     }
 
