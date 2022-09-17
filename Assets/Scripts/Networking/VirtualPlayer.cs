@@ -11,14 +11,6 @@ public class VirtualPlayer : NetworkBehaviour{
     private LobbyPlayer _lobbyPlayer;
     private Player _gamePlayer;
 
-    private string _username;
-
-    private Color[] _colors = new[]{new Color(1, 0.5716f, 0, 1), new Color(0, 0.7961729f, 1, 1), new Color(0, 0.7961729f, 1, 1), new Color(0, 0.7961729f, 1, 1)};
-
-    
-    public override void OnStartServer(){
-        DontDestroyOnLoad(gameObject);
-    }
 
     public void SetLobbyPlayer(LobbyPlayer lobbyPlayer){
         _lobbyPlayer = lobbyPlayer;
@@ -28,26 +20,17 @@ public class VirtualPlayer : NetworkBehaviour{
         return _lobbyPlayer;
     }
 
-    public void SetUsername(string username){
-        _username = username;
-    }
-
-    public void SetColors(Color[] colors){
-        _colors = colors;
-    }
-
 
     [Server]
-    public void SetupPlayer(Player player){
-        ClientSetupPlayer(player);
+    public void SetupPlayer(Player player, string username, Color[] colors){
+        ClientSetupPlayer(player, username, colors);
+
     }
 
     [ClientRpc]
-    private void ClientSetupPlayer(Player player){
-        Debug.Log("client");
+    private void ClientSetupPlayer(Player player, string username, Color[] colors){
         _gamePlayer = player;
-        _gamePlayer.name = _username;
-        Color[] colors = _colors;
+        gameObject.name = username;
         
         Transform sprites = _gamePlayer.transform.GetChild(1);
         sprites.GetChild(0).GetComponent<SpriteRenderer>().color = colors[3]; // body

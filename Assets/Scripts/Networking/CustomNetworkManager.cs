@@ -11,6 +11,11 @@ public class CustomNetworkManager : NetworkManager{
     [SerializeField] private GameObject lobbyPlayerPrefab;
     [SerializeField] private GameObject gamePlayerPrefab;
 
+    private Dictionary<NetworkConnectionToClient, Color[]> _colors = new Dictionary<NetworkConnectionToClient, Color[]>();
+    private Dictionary<NetworkConnectionToClient, string> _usernames = new Dictionary<NetworkConnectionToClient, string>();
+
+    public bool allPlayersReady;
+
     public override void OnServerAddPlayer(NetworkConnectionToClient conn){
         base.OnServerAddPlayer(conn);
         string sceneName = SceneManager.GetActiveScene().name;
@@ -19,25 +24,39 @@ public class CustomNetworkManager : NetworkManager{
         if (sceneName == "Lobby"){
             LobbyPlayer lobbyPlayer = Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity, FindObjectOfType<Canvas>().transform).GetComponent<LobbyPlayer>();
 
-            VirtualPlayer virtualPlayer = conn.identity.GetComponent<VirtualPlayer>();
-            lobbyPlayer.SetVirtualPlayer(virtualPlayer);
-            virtualPlayer.SetLobbyPlayer(lobbyPlayer);
-            
+            conn.identity.GetComponent<VirtualPlayer>().SetLobbyPlayer(lobbyPlayer);
+
             NetworkServer.Spawn(lobbyPlayer.gameObject, conn);
 
+            _colors.Add(conn, null);
+            _usernames.Add(conn, null);
         }
     }
 
     public override void OnServerSceneChanged(string sceneName){
         if (sceneName != "Assets/Scenes/Lobby.unity" && sceneName != "Assets/Scenes/Menu.unity"){
-            foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
-                StartCoroutine(SetupPlayer(connectionToClient));
-            }
-        }}
+            StartCoroutine(SetupPlayers());
+        }
+    }
+
+    private IEnumerator SetupPlayers(){
+        
+        foreach (NetworkConnectionToClient networkConnectionToClient in NetworkServer.connections.Values){
+            yield return new WaitUntil(() => networkConnectionToClient.isReady);
+        }
+
+        
+        foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
+            SetupPlayer(connectionToClient);
+        }
+
+        yield return new WaitForSeconds(Time.fixedDeltaTime);
+        allPlayersReady = true;
+    }
 
 
     [Server]
-    private IEnumerator SetupPlayer(NetworkConnectionToClient connectionToClient){
+    private void SetupPlayer(NetworkConnectionToClient connectionToClient){
         
         Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
@@ -56,11 +75,25 @@ public class CustomNetworkManager : NetworkManager{
 
         player.primaryWeapon = pW;
         player.secondaryWeapon = sW;
+        player.InitialWeaponOnClient(pW);
+        
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
-        
-        yield return new WaitForEndOfFrame();
-        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player);
+
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, _usernames[connectionToClient], _colors[connectionToClient]);
+
     }
+
+    [Server]
+    public void NetworkManagerSetColors(NetworkConnectionToClient connectionToClient, Color[] colors){
+        _colors[connectionToClient] = colors;
+    }
+    
+    [Server]
+    public void NetworkManagerSetUsername(NetworkConnectionToClient connectionToClient, string username){
+        _usernames[connectionToClient] = username;
+    }
+    
+    
 
 }

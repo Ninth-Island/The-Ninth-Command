@@ -15,7 +15,7 @@ public class ActiveMod : WeaponMod{
 
     protected override void Update(){
         base.Update();
-        IsReady = _player.primaryWeapon == WeaponAttachedTo;
+        //IsReady = _player.primaryWeapon == WeaponAttachedTo;
     }
 }
 
