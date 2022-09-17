@@ -231,7 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
+  body: {fileID: 5345319634674317829}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 0}
   parent: {fileID: 0}

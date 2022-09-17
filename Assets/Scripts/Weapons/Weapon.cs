@@ -8,7 +8,7 @@ public class Weapon : CustomObject{
 
     
     [Header("Weapon")]
-    [SerializeField] protected Character wielder;
+    [SerializeField] public Character wielder;
 
     [Command]
     public void CmdReady(){
@@ -17,9 +17,11 @@ public class Weapon : CustomObject{
    
 
     [Command(requiresAuthority = false)]
-    public void CmdPickup(Character character, int[] path){
+    public void CmdPickup(Character character, BasicWeapon oldWeapon, int[] path){
         if (Vector2.Distance(character.transform.position, transform.position) <= 10){
+            oldWeapon.Drop();
             ServerPickup(character, path);
+            ServerAssignPrimaryWeapon(character);
         }
     }
 
@@ -43,14 +45,18 @@ public class Weapon : CustomObject{
         spriteRenderer.sortingLayerID = layer;
         spriteRenderer.sortingOrder = 4;
     }
- 
+
+    [Server]
+    protected virtual void ServerAssignPrimaryWeapon(Character character){
+        
+    }
     [Server]
     protected virtual void ServerReady(){
         
     }
     
-    [Command]
-    public virtual void CmdDrop(){
+    [Server]
+    protected virtual void Drop(){
         body.simulated = true;
         gameObject.layer = LayerMask.NameToLayer("Objects");
         parent = null;

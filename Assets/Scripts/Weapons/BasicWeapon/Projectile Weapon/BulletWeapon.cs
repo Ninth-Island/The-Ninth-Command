@@ -54,6 +54,12 @@ public class BulletWeapon : ProjectileWeapon{
     }
 
     [Server]
+    public override void StopReloading(){
+        base.StopReloading();
+        reloading = false;
+    }
+
+    [Server]
     private void ServerReload(){
         if (magazinesLeft > 0 && bulletsLeft < magazineSize){
             if (!reloading){

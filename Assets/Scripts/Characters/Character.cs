@@ -20,7 +20,7 @@ public class Character : CustomObject{
 * 
 * ================================================================================================================
 */
-    
+    [SyncVar] public BasicWeapon primaryWeapon;
     [SyncVar] [SerializeField] protected int health;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float jumpVelocity = 18;

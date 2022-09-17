@@ -76,9 +76,14 @@ public class EnergyWeapon : ProjectileWeapon{
             base.CmdReload();
         }
     }
-    
 
-    
+    [Server]
+    public override void StopReloading(){
+        base.StopReloading();
+        _isCooling = false;
+    }
+
+
     [Server]
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();

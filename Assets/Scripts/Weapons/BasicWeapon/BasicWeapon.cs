@@ -33,6 +33,11 @@ public class BasicWeapon : Weapon{
     protected virtual void HandleMagazineDecrement(){
         AudioManager.PlaySound(0, allowInterrupt);
     }
+
+    [Server]
+    public virtual void StopReloading(){
+        StopAllCoroutines();
+    }
     
     [Client]
     public virtual void RefreshText(){
@@ -43,14 +48,16 @@ public class BasicWeapon : Weapon{
     public virtual void CmdReload(){
         AudioManager.PlaySound(1, false);
     }
-    
 
+    [Server]
+    protected override void ServerAssignPrimaryWeapon(Character character){
+        character.primaryWeapon = this;
+    }
 
 
     [Server]
     protected override void ServerReady(){
         base.ServerReady();
-        
         activelyWielded = true;
         RefreshText();
         AudioManager.PlaySound(2, allowInterrupt);
@@ -72,9 +79,9 @@ public class BasicWeapon : Weapon{
         }
     }
 
-    [Command]
-    public override void CmdDrop(){
-        base.CmdDrop();
+    [Server]
+    protected override void Drop(){
+        base.Drop();
         wielder = null;
         activelyWielded = false;
     }
