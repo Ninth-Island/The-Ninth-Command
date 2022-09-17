@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5345319634674317829}
   - component: {fileID: 5345319634674317827}
   - component: {fileID: -3690854172917014554}
-  - component: {fileID: 4344139094648447087}
+  - component: {fileID: -8408075157668320071}
   - component: {fileID: 4318819626735042361}
-  - component: {fileID: 8277051916386808194}
+  - component: {fileID: -5647615703237410864}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -153,7 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
+  body: {fileID: 5345319634674317829}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 0}
   parent: {fileID: 0}
@@ -164,9 +164,9 @@ MonoBehaviour:
   fuseTimer: 2
   knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}
-  impactGrenade: 0
-  propulsion: 1
-  acceleration: 1.1
+  impactGrenade: 1
+  propulsion: 0
+  acceleration: 0
   cat: 0
 --- !u!114 &-3690854172917014554
 MonoBehaviour:
@@ -196,7 +196,7 @@ MonoBehaviour:
     waitTillNext: 0
     loop: 0
   source: {fileID: 0}
---- !u!82 &4344139094648447087
+--- !u!82 &-8408075157668320071
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -307,9 +307,9 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 1074378ac8cb2cc49a8610e6794528c7
+  m_AssetId: 2adc6301e3659ab4cace4d850949fdac
   hasSpawned: 0
---- !u!114 &8277051916386808194
+--- !u!114 &-5647615703237410864
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

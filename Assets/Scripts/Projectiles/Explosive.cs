@@ -83,7 +83,6 @@ public class Explosive : Projectile{
     [Server]
     IEnumerator Fuse(){
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        gameObject.layer = _firedLayer - 4;
         yield return new WaitForSeconds(fuseTimer);
         
         Explode();

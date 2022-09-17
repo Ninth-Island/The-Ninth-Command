@@ -10,8 +10,8 @@ public class WeaponMod : MonoBehaviour{
     protected AudioManager AudioManager;
 
     
-    protected /*override*/virtual void Start(){
-        WeaponAttachedTo = transform.parent.GetComponent<ProjectileWeapon>();
+    protected virtual void Start(){
+        //WeaponAttachedTo = transform.parent.GetComponent<ProjectileWeapon>();
         AudioManager = GetComponent<AudioManager>();
         
     }
