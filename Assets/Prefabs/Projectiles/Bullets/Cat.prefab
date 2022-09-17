@@ -553,7 +553,7 @@ MonoBehaviour:
   syncInterval: 0.1
   body: {fileID: 0}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 5374961542717239266}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   sticky: 0

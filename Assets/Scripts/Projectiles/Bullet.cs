@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class Bullet : Projectile{
@@ -14,16 +15,25 @@ public class Bullet : Projectile{
 */
 
     [SerializeField] private GameObject deadBullet;
+    private Level _level;
 
 
-    protected override void OnCollisionEnter2D(Collision2D other){
-        base.OnCollisionEnter2D(other);
-        GameObject DB = Instantiate(deadBullet, transform.position, transform.rotation);
-        DB.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
-        StartCoroutine(ServerDestroy(DB, 2));
-        StartCoroutine(ServerDestroy(gameObject, 0));
+    public override void OnStartServer(){
+        base.OnStartServer();
+        _level = FindObjectOfType<Level>();
     }
 
+    [Server]
+    protected override void OnCollisionEnter2D(Collision2D other){
+        base.OnCollisionEnter2D(other);
+        GameObject db = Instantiate(deadBullet, transform.position, transform.rotation);
+        NetworkServer.Spawn(db);
+        db.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
+        _level.StartCoroutine(ServerDestroy(db, 2));
+        StartCoroutine(ServerDestroy(gameObject, 0));
+    }
+    
+    [Server]
     public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         base.SetValues(damage, speed, angle, piercing, firedLayer, name);
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class Bolt : Projectile
@@ -13,12 +14,13 @@ public class Bolt : Projectile
 * 
 * ================================================================================================================
 */
-    
+    [Server]
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
         StartCoroutine(ServerDestroy(gameObject, 0));
     }
 
+    [Server]
     public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         base.SetValues(damage, speed, angle, piercing, firedLayer, name);
     }

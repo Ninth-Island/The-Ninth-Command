@@ -13,6 +13,7 @@ public class CustomNetworkManager : NetworkManager{
 
     private Dictionary<NetworkConnectionToClient, Color[]> _colors = new Dictionary<NetworkConnectionToClient, Color[]>();
     private Dictionary<NetworkConnectionToClient, string> _usernames = new Dictionary<NetworkConnectionToClient, string>();
+    private Dictionary<NetworkConnectionToClient, int> _teamIndices = new Dictionary<NetworkConnectionToClient, int>();
 
     public bool allPlayersReady;
 
@@ -30,6 +31,7 @@ public class CustomNetworkManager : NetworkManager{
 
             _colors.Add(conn, null);
             _usernames.Add(conn, null);
+            _teamIndices.Add(conn, 0);
         }
     }
 
@@ -80,7 +82,7 @@ public class CustomNetworkManager : NetworkManager{
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
 
-        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, _usernames[connectionToClient], _colors[connectionToClient]);
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, _usernames[connectionToClient], _colors[connectionToClient], _teamIndices[connectionToClient]);
 
     }
 
@@ -92,6 +94,11 @@ public class CustomNetworkManager : NetworkManager{
     [Server]
     public void NetworkManagerSetUsername(NetworkConnectionToClient connectionToClient, string username){
         _usernames[connectionToClient] = username;
+    }
+    
+    [Server]
+    public void NetworkManagerSetTeamIndex(NetworkConnectionToClient connectionToClient, int teamIndex){
+        _teamIndices[connectionToClient] = teamIndex;
     }
     
     
