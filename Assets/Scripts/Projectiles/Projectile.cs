@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,47 +26,23 @@ public class Projectile : CustomObject{
     private Collider2D _collider;
     private int _damage;
     private bool _piercing;
-    private LineRenderer _lineRenderer;
 
     protected int _firedLayer;
 
     [SerializeField] protected bool _live = true;
     
-    
-    
-
-    // Update is called once per frame
-    protected override void Update(){
-        /*int positionCount = _lineRenderer.positionCount + 1;
-        _lineRenderer.positionCount = positionCount;
-        Debug.Log(positionCount);
-        _lineRenderer.SetPosition(positionCount, transform.position);
-    */
-    }
-
-    protected override void FixedUpdate(){
-        
-    }
-
-    public override void OnStartClient(){
-        base.OnStartClient();
-    }
 
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
-        //_lineRenderer = transform.GetChild(0).GetComponent<LineRenderer>();
         Start();
         if (_live && isServer){
             StartCoroutine(ServerDestroy(gameObject, lifetime));
         }
     }
-    /*
-     * ================================================================================================================
-      *                                        Collision Logic
-     * ================================================================================================================
-     */
+    
     
 
+    [Server]
     protected virtual void OnCollisionEnter2D(Collision2D other){
         if (sticky){
             transform.parent = other.gameObject.transform;
@@ -85,45 +62,40 @@ public class Projectile : CustomObject{
     }
 
 
-    /*
-     * ================================================================================================================
-      *                                        Set Values for Instantiators
-     * ================================================================================================================
-     */
-    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+    [Server]
+    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
         _damage = damage;
-        gameObject.name = name + " " + gameObject;
+        name = setName + " " + gameObject;
         gameObject.layer = firedLayer - 4;
         _firedLayer = firedLayer;
         _piercing = piercing;
 
         Awake();
-        
-        /*Debug.Log(_lineRenderer.positionCount);
-        _lineRenderer.positionCount = 1;
-        _lineRenderer.SetPosition(0, transform.position);
-        */
+        ClientSetupBulletRotation(angle);
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
-        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
     }
-    
+
+    [ClientRpc]
+    private void ClientSetupBulletRotation(float angle){
+        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
+        StartCoroutine(ClientHandlePostBulletCreation());
+    }
+
+    [Client]
+    private IEnumerator ClientHandlePostBulletCreation(){
+        yield return null;
+        spriteRenderer.enabled = true;
+    }
+
     /*
      * ================================================================================================================
       *                                        Other
      * ================================================================================================================
      */
     
-    
+    [Server]
     public Collider2D GetCollider(){
         return _collider;
-    }
-
-    public int GetDamage(){
-        return _damage;
-    }
-
-    public bool GetLive(){
-        return _live;
     }
 
 }

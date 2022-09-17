@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Mirror;
 using Pathfinding.Ionic.Zip;
 using Unity.Mathematics;
 using UnityEngine;
@@ -34,7 +35,7 @@ public class Explosive : Projectile{
     private SpriteRenderer _spriteRenderer;
     
     // Start is called before the first frame update
-    public override void OnStartClient(){
+    protected override void Start(){
         base.OnStartClient();
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -46,6 +47,7 @@ public class Explosive : Projectile{
         }
 
     }
+    [Server]
     public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         base.SetValues(damage, speed, angle, piercing, firedLayer, name);
         if (_live){
@@ -53,7 +55,8 @@ public class Explosive : Projectile{
         }
     }
 
-    protected override void FixedUpdate(){
+    protected override void ServerFixedUpdate(){
+        base.ServerFixedUpdate();
         if (propulsion && _spriteRenderer.enabled){ // if propulsion rocket and active
             
             if (body.velocity.magnitude <= 150){
@@ -63,8 +66,9 @@ public class Explosive : Projectile{
     }
 
 
-    public void Explode(){
-       _audioManager.PlaySound(0, false);
+    [Server]
+    public void Explode(){ 
+        _audioManager.PlaySound(0, false);
         _spriteRenderer.enabled = false;
         body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
@@ -76,6 +80,7 @@ public class Explosive : Projectile{
       *                                        For Sticky bombs, grenades and non-instant explosives
      * ================================================================================================================
      */
+    [Server]
     IEnumerator Fuse(){
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         gameObject.layer = _firedLayer - 4;
@@ -95,7 +100,7 @@ public class Explosive : Projectile{
 
 
 
-
+    [Server]
     protected override void OnCollisionEnter2D(Collision2D other){
         if (cat){
             PhysicsMaterial2D material = new PhysicsMaterial2D();
