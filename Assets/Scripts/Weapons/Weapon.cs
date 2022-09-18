@@ -35,15 +35,16 @@ public class Weapon : CustomObject{
         wielder = character;
         body.simulated = false;
         
-        SetSpriteLayer(character.spriteRenderer.sortingLayerID);
+        SetSpriteLayer(character.spriteRenderer.sortingLayerID, character);
 
         ServerReady();
     }
 
     [ClientRpc]
-    private void SetSpriteLayer(int layer){
+    private void SetSpriteLayer(int layer, Character setWielder){
         spriteRenderer.sortingLayerID = layer;
         spriteRenderer.sortingOrder = 4;
+        wielder = setWielder;
     }
 
     [Server]

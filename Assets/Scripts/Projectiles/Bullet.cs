@@ -23,13 +23,11 @@ public class Bullet : Projectile{
         _level = FindObjectOfType<Level>();
     }
 
-    [Server]
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
         GameObject db = Instantiate(deadBullet, transform.position, transform.rotation);
-        NetworkServer.Spawn(db);
         db.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
-        _level.StartCoroutine(ServerDestroy(db, 2));
+        Destroy(db, 2f);
         StartCoroutine(ServerDestroy(gameObject, 0));
     }
     

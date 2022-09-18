@@ -7,14 +7,14 @@ public class BulletWeapon : ProjectileWeapon{
 
 
     [Header("Bullet Weapon")]
-    [SerializeField] private int magazinesLeft;
-    [SerializeField] private int magazineSize;
+    [SyncVar][SerializeField] private int magazinesLeft;
+    [SyncVar][SerializeField] private int magazineSize;
     [SerializeField] private float reloadTime; // less frame dependent
     [SerializeField] private GameObject bulletShell;
     
-    [SerializeField]    private int bulletsLeft;
+    [SyncVar][SerializeField]    private int bulletsLeft;
 
-    private bool reloading;
+    [SyncVar] private bool reloading;
     
 
 
@@ -35,18 +35,8 @@ public class BulletWeapon : ProjectileWeapon{
     [Server]
     protected override void CreateProjectile(float angle){
         base.CreateProjectile(angle);
-        if (bulletShell){
-            StartCoroutine(CreateShell());
-        }
     }
 
-    [Server]
-    private IEnumerator CreateShell(){
-        GameObject gO = Instantiate(bulletShell, transform.position, transform.rotation);
-        NetworkServer.Spawn(gO);
-        yield return new WaitForSeconds(1);
-        NetworkServer.Destroy(gO);
-    }
 
     [Command]
     public override void CmdReload(){
@@ -74,9 +64,9 @@ public class BulletWeapon : ProjectileWeapon{
     [Server] 
     public IEnumerator ReloadRoutine(){
         reloading = true;
+        SetReloadingText(connectionToClient, "Reloading...");
         
         wielder.Reload();
-        wielder.SetReloadingText("Reloading...");
 
 
         yield return new WaitForSeconds(reloadTime);
@@ -85,7 +75,6 @@ public class BulletWeapon : ProjectileWeapon{
         
         bulletsLeft = magazineSize;
         magazinesLeft--;
-        RefreshText();
         wielder.FinishReload();
         reloading = false;
 
@@ -104,19 +93,24 @@ public class BulletWeapon : ProjectileWeapon{
         base.HandleMagazineDecrement();
         bulletsLeft--;
     }
- 
-    
-    
 
-    [Client]
-    public override void RefreshText(){
-        if (wielder){
+
+    protected override void RefreshText(){
+        if (reloading){
+            wielder.SetReloadingText("Reloading...");
+        }
+        else{
             wielder.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, 0, 0, 1);
         }
+        
     }
 
 
-    
+    [TargetRpc]
+    private void SetReloadingText(NetworkConnection target, string text){
+        wielder.SetReloadingText(text);
+    }
+
     public override void OnStartClient(){
         base.OnStartClient();
     }

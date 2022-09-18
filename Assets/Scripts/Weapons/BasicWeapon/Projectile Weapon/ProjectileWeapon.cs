@@ -42,7 +42,6 @@ public class ProjectileWeapon : BasicWeapon{
 
                 CreateProjectile(angle);
                 HandleMagazineDecrement();
-                RefreshText();
 
                 framesLeftTillNextShot = shotDelay;
                 shotInSolvo++;
@@ -89,4 +88,6 @@ public class ProjectileWeapon : BasicWeapon{
             framesLeftTillNextSalvo--;
         }
     }
+    
+   
 }

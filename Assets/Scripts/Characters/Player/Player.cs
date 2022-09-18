@@ -209,6 +209,7 @@ public partial class Player : Character{
         primaryWeapon.StopReloading();
         FinishReload();
         ClientReceiveSwap();
+        UpdateHUD();
     }
 
     [ClientRpc]
@@ -220,7 +221,6 @@ public partial class Player : Character{
 
         secondaryWeapon.activelyWielded = false;
         secondaryWeapon.spriteRenderer.enabled = false;
-        UpdateHUD();
 
         _swappedWeapon = true;
         Invoke(nameof(ResetSwappedWeapon), 0.25f);
@@ -271,7 +271,6 @@ public partial class Player : Character{
                 BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
                 
                 newWeapon.CmdPickup(this, primaryWeapon, new []{1, 3});
-                UpdateHUD();
             }
         }
     

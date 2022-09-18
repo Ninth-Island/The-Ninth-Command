@@ -15,7 +15,7 @@ public class BasicWeapon : Weapon{
     [SerializeField] private bool allowInterrupt = false;
     public Transform firingPoint;
 
-    public bool activelyWielded = false;
+    [SyncVar] public bool activelyWielded = false;
     
 
     [Command]
@@ -38,10 +38,17 @@ public class BasicWeapon : Weapon{
     public virtual void StopReloading(){
         StopAllCoroutines();
     }
-    
-    [Client]
-    public virtual void RefreshText(){
+
+    protected virtual void RefreshText(){
         
+    }
+    
+     
+    protected override void ClientUpdate(){
+        base.ClientUpdate();
+        if (activelyWielded){
+            RefreshText();
+        }
     }
 
     [Command]
@@ -59,7 +66,7 @@ public class BasicWeapon : Weapon{
     protected override void ServerReady(){
         base.ServerReady();
         activelyWielded = true;
-        RefreshText();
+        wielder.UpdateHUD();
         AudioManager.PlaySound(2, allowInterrupt);
     }
 

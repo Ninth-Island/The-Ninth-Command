@@ -41,9 +41,8 @@ public class Projectile : CustomObject{
     
     
 
-    [Server]
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        if (sticky){
+        if (isServer && sticky){
             transform.parent = other.gameObject.transform;
             body.velocity = new Vector2(0, 0);
             body.simulated = false;
