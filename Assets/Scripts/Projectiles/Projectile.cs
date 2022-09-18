@@ -27,7 +27,6 @@ public class Projectile : CustomObject{
     private int _damage;
     private bool _piercing;
 
-    protected int _firedLayer;
 
     [SerializeField] protected bool _live = true;
     
@@ -42,9 +41,8 @@ public class Projectile : CustomObject{
     
     
 
-    [Server]
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        if (sticky){
+        if (isServer && sticky){
             transform.parent = other.gameObject.transform;
             body.velocity = new Vector2(0, 0);
             body.simulated = false;
@@ -67,25 +65,19 @@ public class Projectile : CustomObject{
         _damage = damage;
         name = setName + " " + gameObject;
         gameObject.layer = firedLayer - 4;
-        _firedLayer = firedLayer;
         _piercing = piercing;
 
         Awake();
-        ClientSetupBulletRotation(angle);
+        StartCoroutine(ServerSetupProjectile(angle, speed));
+    }
+
+    [Server]
+    private IEnumerator ServerSetupProjectile(float angle, float speed){
+        yield return new WaitForEndOfFrame();
+        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
     }
 
-    [ClientRpc]
-    private void ClientSetupBulletRotation(float angle){
-        transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
-        StartCoroutine(ClientHandlePostBulletCreation());
-    }
-
-    [Client]
-    private IEnumerator ClientHandlePostBulletCreation(){
-        yield return null;
-        spriteRenderer.enabled = true;
-    }
 
     /*
      * ================================================================================================================

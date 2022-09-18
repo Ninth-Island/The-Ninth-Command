@@ -125,7 +125,7 @@ MonoBehaviour:
   maxDamage: 0
   minDamage: 0
   yScale: 12
-  xScale: 5
+  xScale: 7
 --- !u!58 &3296336755945427862
 CircleCollider2D:
   m_ObjectHideFlags: 0

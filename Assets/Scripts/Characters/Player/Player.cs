@@ -19,7 +19,6 @@ public partial class Player : Character{
 */
 
     [Header("Basic Weapons")] 
-    [SyncVar] public BasicWeapon primaryWeapon;
     [SyncVar] public BasicWeapon secondaryWeapon;
     
     public BasicWeapon primaryWeaponPrefab;
@@ -207,7 +206,10 @@ public partial class Player : Character{
 
     [Command]
     private void CmdServerTellClientsSwap(){
+        primaryWeapon.StopReloading();
+        FinishReload();
         ClientReceiveSwap();
+        UpdateHUD();
     }
 
     [ClientRpc]
@@ -219,7 +221,6 @@ public partial class Player : Character{
 
         secondaryWeapon.activelyWielded = false;
         secondaryWeapon.spriteRenderer.enabled = false;
-        UpdateHUD();
 
         _swappedWeapon = true;
         Invoke(nameof(ResetSwappedWeapon), 0.25f);
@@ -268,15 +269,13 @@ public partial class Player : Character{
             pickupText.SetText("(G) " + nearestObject.name);
             if (Input.GetKeyDown(KeyCode.G)){
                 BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
-                primaryWeapon.CmdDrop();
                 
-                primaryWeapon = newWeapon;
-                newWeapon.CmdPickup(this, new []{1, 3}); 
-                UpdateHUD();
+                newWeapon.CmdPickup(this, primaryWeapon, new []{1, 3});
             }
         }
     
     }
+    
 
     [Client]
     public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){ // HUD stuff

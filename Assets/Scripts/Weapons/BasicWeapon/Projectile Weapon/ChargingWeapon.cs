@@ -23,9 +23,9 @@ public class ChargingWeapon : ProjectileWeapon
 
     [SerializeField] float percentagePerShot;
 
-    [SerializeField] protected float energy;
+    [SyncVar][SerializeField] protected float energy;
 
-    public float heat = 0;
+    [SyncVar]public float heat = 0;
     public bool coolingDown;
 
     private bool _hasReleased = true;
@@ -68,9 +68,9 @@ public class ChargingWeapon : ProjectileWeapon
             AudioManager.PlaySound(5, false);
             _hasReleased = true;
         }
-        RefreshText();
     }
 
+    
     protected override void FixedUpdate(){
 
         base.FixedUpdate();
@@ -118,11 +118,9 @@ public class ChargingWeapon : ProjectileWeapon
     * ================================================================================================================
     */
 
-    [Client]
-    public override void RefreshText(){
-        if (wielder){
-            wielder.SetWeaponValues(0, 0, 0, energy, heat, 3);
-        }
+    protected override void RefreshText(){
+        wielder.SetWeaponValues(0, 0, 0, energy, heat, 3);
+        
     }
 
     public override void OnStartClient(){

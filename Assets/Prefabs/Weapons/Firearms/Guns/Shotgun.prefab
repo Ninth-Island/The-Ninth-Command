@@ -225,9 +225,8 @@ MonoBehaviour:
   allowInterrupt: 1
   firingPoint: {fileID: 0}
   activelyWielded: 0
-  looping: 0
   shotDelay: 0
-  salvoDelay: 0
+  salvoDelay: 40
   shotsPerSalvo: 10
   instability: 0.5
   projectileTemplate: {fileID: -5604932223983771090, guid: 923d37021f28fd641968c6f282acd0ce,
@@ -236,8 +235,8 @@ MonoBehaviour:
   projectileSpeed: 100
   piercing: 0
   magazinesLeft: 200
-  magazineSize: 10
-  reloadTime: 0.5
+  magazineSize: 100
+  reloadTime: 2
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
   bulletsLeft: 0

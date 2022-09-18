@@ -15,7 +15,7 @@ public class BasicWeapon : Weapon{
     [SerializeField] private bool allowInterrupt = false;
     public Transform firingPoint;
 
-    public bool activelyWielded = false;
+    [SyncVar] public bool activelyWielded = false;
     
 
     [Command]
@@ -33,26 +33,40 @@ public class BasicWeapon : Weapon{
     protected virtual void HandleMagazineDecrement(){
         AudioManager.PlaySound(0, allowInterrupt);
     }
-    
-    [Client]
-    public virtual void RefreshText(){
+
+    [Server]
+    public virtual void StopReloading(){
+        StopAllCoroutines();
+    }
+
+    protected virtual void RefreshText(){
         
+    }
+    
+     
+    protected override void ClientUpdate(){
+        base.ClientUpdate();
+        if (activelyWielded){
+            RefreshText();
+        }
     }
 
     [Command]
     public virtual void CmdReload(){
         AudioManager.PlaySound(1, false);
     }
-    
 
+    [Server]
+    protected override void ServerAssignPrimaryWeapon(Character character){
+        character.primaryWeapon = this;
+    }
 
 
     [Server]
     protected override void ServerReady(){
         base.ServerReady();
-        
         activelyWielded = true;
-        RefreshText();
+        wielder.UpdateHUD();
         AudioManager.PlaySound(2, allowInterrupt);
     }
 
@@ -72,9 +86,9 @@ public class BasicWeapon : Weapon{
         }
     }
 
-    [Command]
-    public override void CmdDrop(){
-        base.CmdDrop();
+    [Server]
+    protected override void Drop(){
+        base.Drop();
         wielder = null;
         activelyWielded = false;
     }

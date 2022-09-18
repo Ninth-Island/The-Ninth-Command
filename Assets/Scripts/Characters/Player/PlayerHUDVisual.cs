@@ -81,10 +81,12 @@ public partial class Player : Character
         pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
     }
 
-    private void UpdateHUD(){ // called when smth changes like weapon swap
+    [ClientRpc]
+    public override void UpdateHUD(){ // called when smth changes like weapon swap
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
+        Debug.Log(primaryWeapon);
 
         SetNotifText(primaryWeapon.name);
         SetArmType(primaryWeapon.armType);

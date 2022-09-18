@@ -32,13 +32,11 @@ public class Explosive : Projectile{
 
     
     
-    private SpriteRenderer _spriteRenderer;
     
     // Start is called before the first frame update
     protected override void Start(){
         base.OnStartClient();
 
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _audioManager = GetComponent<AudioManager>();
         
 
@@ -57,7 +55,7 @@ public class Explosive : Projectile{
 
     protected override void ServerFixedUpdate(){
         base.ServerFixedUpdate();
-        if (propulsion && _spriteRenderer.enabled){ // if propulsion rocket and active
+        if (propulsion && spriteRenderer.enabled){ // if propulsion rocket and active
             
             if (body.velocity.magnitude <= 150){
                 body.velocity *= acceleration;
@@ -69,12 +67,25 @@ public class Explosive : Projectile{
     [Server]
     public void Explode(){ 
         _audioManager.PlaySound(0, false);
-        _spriteRenderer.enabled = false;
+        if (spriteRenderer){
+            spriteRenderer.enabled = false;
+        }
+
         body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
+        ClientExplode();
         StartCoroutine(ServerDestroy(gameObject, 1));
     }
 
+    [ClientRpc]
+    private void ClientExplode(){
+        if (spriteRenderer){
+            spriteRenderer.enabled = false;
+        }
+        Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
+    }
+
+    
     /*
      * ================================================================================================================
       *                                        For Sticky bombs, grenades and non-instant explosives
@@ -83,7 +94,6 @@ public class Explosive : Projectile{
     [Server]
     IEnumerator Fuse(){
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
-        gameObject.layer = _firedLayer - 4;
         yield return new WaitForSeconds(fuseTimer);
         
         Explode();

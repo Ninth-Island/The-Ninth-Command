@@ -193,19 +193,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a17de3c158fe7b4f904c6e8ab41a81f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteLayer: 0
+  syncMode: 0
+  syncInterval: 0.1
   body: {fileID: 0}
-  pickupRange: 8
+  Collider: {fileID: 0}
+  spriteRenderer: {fileID: 7220625419050319209}
+  parent: {fileID: 0}
+  localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
-  AudioManager: {fileID: 0}
-  spriteRenderer: {fileID: 0}
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 37
   allowInterrupt: 0
   firingPoint: {fileID: 6490357384886991533}
   activelyWielded: 0
-  looping: 0
   shotDelay: 0
   salvoDelay: 1
   shotsPerSalvo: 20

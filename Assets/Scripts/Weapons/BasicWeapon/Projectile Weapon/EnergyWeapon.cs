@@ -22,8 +22,8 @@ public class EnergyWeapon : ProjectileWeapon{
     [SerializeField] private float coolDown;
     
     //max is 100
-    public float _energy = 100;
-    public float _heat = 0;
+    [SyncVar]public float _energy = 100;
+    [SyncVar]public float _heat = 0;
 
     private bool _isCooling;
 
@@ -37,15 +37,8 @@ public class EnergyWeapon : ProjectileWeapon{
         }
     }
 
-
-    [Server]
-    protected override void Update(){
-        base.Update();
-        if (activelyWielded){
-            RefreshText();
-        }
-    }
-
+    
+    
     protected override void FixedUpdate(){
         base.FixedUpdate();
 
@@ -76,9 +69,14 @@ public class EnergyWeapon : ProjectileWeapon{
             base.CmdReload();
         }
     }
-    
 
-    
+    [Server]
+    public override void StopReloading(){
+        base.StopReloading();
+        _isCooling = false;
+    }
+
+
     [Server]
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
@@ -95,13 +93,11 @@ public class EnergyWeapon : ProjectileWeapon{
             _isCooling = true;
         }
     }
-    
 
-    [Client]
-    public override void RefreshText(){
-        if (wielder){
-            wielder.SetWeaponValues(0, 0, 0, _energy, _heat, 2);
-        }
+
+    protected override void RefreshText(){
+        wielder.SetWeaponValues(0, 0, 0, _energy, _heat, 2);
+        
     }
 
     public override void OnStartClient(){

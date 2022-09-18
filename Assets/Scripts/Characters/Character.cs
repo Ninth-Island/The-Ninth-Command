@@ -20,7 +20,7 @@ public class Character : CustomObject{
 * 
 * ================================================================================================================
 */
-    
+    [SyncVar] public BasicWeapon primaryWeapon;
     [SyncVar] [SerializeField] protected int health;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float jumpVelocity = 18;
@@ -223,12 +223,10 @@ public class Character : CustomObject{
     
     [Client]
     public virtual void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){
-
     }
     
     [Client]
     public virtual void SetReloadingText(string text){
-        
     }
     
     [Server]
@@ -236,4 +234,10 @@ public class Character : CustomObject{
         return _feetCollider;
     }
 
+    
+    
+    [ClientRpc]
+    public virtual void UpdateHUD(){ // called when smth changes like weapon swap
+        
+    }
 }
