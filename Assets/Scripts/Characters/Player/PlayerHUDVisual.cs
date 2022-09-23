@@ -86,7 +86,6 @@ public partial class Player : Character
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
-        Debug.Log(primaryWeapon);
 
         SetNotifText(primaryWeapon.name);
         SetArmType(primaryWeapon.armType);

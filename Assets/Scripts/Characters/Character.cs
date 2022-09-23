@@ -40,6 +40,8 @@ public class Character : CustomObject{
 
     private bool _suppressGroundCheck;
 
+    public bool characterClientReady;
+
 
     
     #region Server
@@ -239,5 +241,17 @@ public class Character : CustomObject{
     [ClientRpc]
     public virtual void UpdateHUD(){ // called when smth changes like weapon swap
         
+    }
+
+    public override void OnStartClient(){
+        base.OnStartClient();
+        if (hasAuthority){
+            CmdSetReady();
+        }
+    }
+
+    [Command]
+    private void CmdSetReady(){
+        characterClientReady = true;
     }
 }

@@ -72,7 +72,7 @@ public class BasicWeapon : Weapon{
 
     [Server]
     public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Character w, int[] path){
-        yield return new WaitUntil(() => NetworkClient.ready);
+        yield return new WaitUntil(() => w.characterClientReady);
         ClientInitializeWeapon(isThePrimaryWeapon, w);
         ServerPickup(w, path);
     }

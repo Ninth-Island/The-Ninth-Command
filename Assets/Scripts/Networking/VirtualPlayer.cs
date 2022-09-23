@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class VirtualPlayer : NetworkBehaviour{
 
@@ -37,16 +38,27 @@ public class VirtualPlayer : NetworkBehaviour{
     private void ClientSetupPlayer(Player player, string username, Color[] colors, int teamIndex){
         _gamePlayer = player;
         gameObject.name = username;
-        TextMeshProUGUI floatingName = player.transform.GetChild(8).GetChild(0).GetComponent<TextMeshProUGUI>();
+        Image bg = player.transform.GetChild(8).GetChild(0).GetComponent<Image>();
+        TextMeshProUGUI floatingName = bg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         floatingName.text = username;
-        
-        if (teamIndex > 6){
-            floatingName.color = Color.red;
-        }
-        else{
-            floatingName.color = Color.cyan;
-        }
 
+        if (teamIndex > 6){
+            if (hasAuthority){
+                floatingName.color = Color.magenta;
+            }
+            else{
+                floatingName.color = Color.red;
+            }
+        } 
+        else{
+            if (hasAuthority){
+                floatingName.color = Color.green; 
+            }
+            else{
+                floatingName.color = Color.cyan;
+            }
+        }
+        
         Transform sprites = _gamePlayer.transform.GetChild(1);
         sprites.GetChild(0).GetComponent<SpriteRenderer>().color = colors[3]; // body
         

@@ -53,7 +53,6 @@ public class Weapon : CustomObject{
     }
     [Server]
     protected virtual void ServerReady(){
-        
     }
     
     [Server]

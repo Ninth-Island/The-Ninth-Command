@@ -114,9 +114,8 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-    protected override void Start(){
-        base.Start();
-
+    public override void OnStartClient(){
+        
         HUDVisualStart();
         ControlStart();
 
@@ -124,6 +123,8 @@ public partial class Player : Character{
             _virtualCamera[0].Priority = 10;
             HUD.gameObject.SetActive(true);
         }
+        base.OnStartClient();
+
     }
 
     
