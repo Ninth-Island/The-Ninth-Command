@@ -28,9 +28,11 @@ public class Bullet : Projectile{
         GameObject db = Instantiate(deadBullet, transform.position, transform.rotation);
         db.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
         Destroy(db, 2f);
-        StartCoroutine(ServerDestroy(gameObject, 0));
+        if (isServer){
+            StartCoroutine(ServerDestroy(gameObject, 0));
+        }
     }
-    
+
     [Server]
     public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         base.SetValues(damage, speed, angle, piercing, firedLayer, name);
