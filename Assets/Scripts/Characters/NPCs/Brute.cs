@@ -13,11 +13,6 @@ public class Brute : NPC{
 
     protected override void Update(){
         base.Update();
-        
-        Animator.SetBool(_aNames.Running, false);
-        if (Math.Abs(body.velocity.x) > 0 && !Airborne){
-            Animator.SetBool(_aNames.Running, true);
-        }
     }
 
     protected override void FixedUpdate(){

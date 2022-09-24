@@ -28,7 +28,6 @@ public partial class Player : Character{
         
         transform.position = position;
         transform.rotation = rotation;
-        transform.localScale = scale;
         
         body.velocity = velocity;
     }
@@ -40,18 +39,24 @@ public partial class Player : Character{
             CmdSetServerValues(Input.GetAxis("Horizontal"), true, 0, _requestCounter);
             
             SetAnimatedBoolOnAll(_aNames.jumping, true);
+            SetAnimatedBoolOnAll(_aNames.crouching, false);
             _isCrouching = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S)){
+            _isCrouching = !_isCrouching;
+            SetAnimatedBoolOnAll(_aNames.crouching, _isCrouching);
         }
     }
 
     private void ClientMoveFixedUpdate(){
-        base.ClientFixedUpdate();
         if (hasAuthority){
             float input = Input.GetAxis("Horizontal");
-            Animator.SetBool(_aNames.running, input != 0);
-            Animator.SetBool(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
+            SetAnimatedBoolOnAll(_aNames.running, input != 0);
+            SetAnimatedBoolOnAll(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
             Move(input);
-
+            RotateArm(GetBarrelToMouseRotation());
+            CmdRotateArm(GetBarrelToMouseRotation());
             CmdSetServerValues(input, false, 0, _requestCounter);
         }
     }
@@ -92,7 +97,7 @@ public partial class Player : Character{
         Vector2 velocity = body.velocity;
         if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"))){
             Airborne = true;
-            body.velocity = new Vector2(velocity.x, velocity.y + jumpVelocity);
+            body.velocity = new Vector2(velocity.x, jumpVelocity);
             SortSound(0); 
 
             /*
@@ -101,6 +106,47 @@ public partial class Player : Character{
             inside this area, so the ground check needs to be temporarily suppresses right after jumping
             */
             StartCoroutine(ResetGroundCheck());
+        }
+    }
+    
+    
+    
+    
+    [Command]
+    private void CmdRotateArm(float rotation){
+        RotateArmClientRpc(rotation);
+    }
+
+    [ClientRpc]
+    private void RotateArmClientRpc(float rotation){
+        RotateArm(rotation);
+    }
+
+    private void RotateArm(float rotation){
+        if (_armOverride == false){
+            arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
+            arm.transform.localScale = new Vector3(1, 1);
+        }
+        else{
+            arm.transform.localRotation = Quaternion.Euler(0, 0, -30);
+            if (Mathf.Sign(transform.localScale.x) < 0){
+                arm.transform.rotation = Quaternion.Euler(0, 0, -150);
+    
+            }
+            arm.transform.localScale = new Vector3(1, 1);
+        }
+
+        helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        helmet.transform.localScale = new Vector3(1, 1);
+
+
+        if (rotation > 90 && rotation < 270){
+            arm.transform.localScale = new Vector3(-1, -1);
+            helmet.transform.localScale = new Vector3(-1, -1);
+            transform.localScale = new Vector3(-1, 1);
+        }
+        else{
+            transform.localScale = new Vector3(1, 1);
         }
     }
 }

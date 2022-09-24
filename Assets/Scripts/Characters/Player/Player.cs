@@ -81,6 +81,7 @@ public partial class Player : Character{
     }
 
     protected override void ClientFixedUpdate(){
+        base.ClientFixedUpdate();
         ClientMoveFixedUpdate();
         
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
@@ -98,7 +99,6 @@ public partial class Player : Character{
         
         SetAnimatedBoolOnAll(_aNames.jumping, Airborne);
 
-        CmdRotateArm(GetBarrelToMouseRotation());
 
         ClientHandleWeapon();
 

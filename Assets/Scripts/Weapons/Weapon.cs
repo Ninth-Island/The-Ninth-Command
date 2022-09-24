@@ -28,23 +28,28 @@ public class Weapon : CustomObject{
     [Server]
     protected void ServerPickup(Character character, int[] path){
         netIdentity.AssignClientAuthority(character.connectionToClient);    
+        
+        Pickup(character, path);        
+        ClientPickup(character.spriteRenderer.sortingLayerID, character, path);
+
+        ServerReady();
+    }
+
+    private void Pickup(Character character, int[] path){
         parent = character.transform;
         for (int i = 0; i < path.Length; i++){
             parent = parent.GetChild(path[i]);
         }
         wielder = character;
         body.simulated = false;
-        
-        SetSpriteLayer(character.spriteRenderer.sortingLayerID, character);
 
-        ServerReady();
     }
 
     [ClientRpc]
-    private void SetSpriteLayer(int layer, Character setWielder){
+    private void ClientPickup(int layer, Character setWielder, int[] path){
+        Pickup(setWielder, path);
         spriteRenderer.sortingLayerID = layer;
         spriteRenderer.sortingOrder = 4;
-        wielder = setWielder;
     }
 
     [Server]

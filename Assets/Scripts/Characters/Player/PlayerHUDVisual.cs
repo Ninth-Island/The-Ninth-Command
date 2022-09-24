@@ -92,35 +92,6 @@ public partial class Player : Character
     }
 
     
-    
-    [Command]
-    private void CmdRotateArm(float rotation){
-        if (_armOverride == false){
-            arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
-            arm.transform.localScale = new Vector3(1, 1);
-        }
-        else{
-            arm.transform.localRotation = Quaternion.Euler(0, 0, -30);
-            if (Mathf.Sign(transform.localScale.x) < 0){
-                arm.transform.rotation = Quaternion.Euler(0, 0, -150);
-    
-            }
-            arm.transform.localScale = new Vector3(1, 1);
-        }
-
-        helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
-        helmet.transform.localScale = new Vector3(1, 1);
-
-
-        if (rotation > 90 && rotation < 270){
-            arm.transform.localScale = new Vector3(-1, -1);
-            helmet.transform.localScale = new Vector3(-1, -1);
-            transform.localScale = new Vector3(-1, 1);
-        }
-        else{
-            transform.localScale = new Vector3(1, 1);
-        }
-    }
 
     public void SetArmType(int armType){
         _armRenderer.sprite = ArmTypes[armType];
