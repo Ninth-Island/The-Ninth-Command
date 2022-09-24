@@ -34,47 +34,7 @@ public partial class Player : Character{
     private float _firingAngle;
     
     #region Server
-
-    [Server]
-    protected override void ServerMove(){
-        
-
-        XMove = Mathf.Clamp(XMove, -1, 1);
-        Animator.SetBool(_aNames.running, XMove != 0);
-
-        if (XMove != 0 && !InputsFrozen && !FallingKnocked){
-
-            Animator.SetBool(_aNames.runningBackwards, Math.Sign(XMove) != Math.Sign(transform.localScale.x));
-            
-            if (_isCrouching){
-                body.velocity = new Vector2(moveSpeed / 2 * XMove, body.velocity.y);
-                SortSound(2);
-            }
-            else{
-                body.velocity = new Vector2(moveSpeed * XMove, body.velocity.y);
-            }
-            
-        }
-
-    }
     
-    [Command]
-    protected override void CmdServerJump(){
-        base.CmdServerJump();
-        Animator.SetBool(_aNames.jumping, true);
-        _isCrouching = false;
-    }
-
-    [Command]
-    private void CmdAnimatorUpdateAirborne(){ // only using authoritative animations for ease
-        Animator.SetBool(_aNames.jumping, Airborne);
-    }
-    
-    [Command]
-    private void CmdToggleIsCrouching(){
-        _isCrouching = !_isCrouching;
-        Animator.SetBool(_aNames.crouching, _isCrouching);
-    }
 
     [Command]
     private void CmdSetFiring(bool firing, float angle){
@@ -87,26 +47,6 @@ public partial class Player : Character{
 
     #region Client
 
-
-    
-    [Client]
-    protected override void ClientHandleMove(){
-        CmdSetXMoveServer(Input.GetAxis("Horizontal"));
-    }
-
-    [Client]
-    protected override void ClientHandleJump(){
-        if (Input.GetKeyDown(KeyCode.W)){
-            CmdServerJump();
-        }
-    }
-
-    [Client]
-    private void CheckCrouch(){
-        if (Input.GetKeyDown(KeyCode.S)){
-            CmdToggleIsCrouching();
-        }
-    }
 
     /*
     * ================================================================================================================
@@ -131,14 +71,18 @@ public partial class Player : Character{
     protected override void ServerFixedUpdate(){
         base.ServerFixedUpdate();
 
-        //ControlFixedUpdate();
-
+        ControlFixedUpdate();
+        ServerFixedMove();
         if (_attemptingToFire){
             primaryWeapon.ServerHandleFiring(_firingAngle);
             
         }
+        
+    }
 
-        // just for sounds
+    protected override void ClientFixedUpdate(){
+        ClientMoveFixedUpdate();
+        
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
             _hardLanding = true;
         }
@@ -146,16 +90,14 @@ public partial class Player : Character{
             _hardLanding = false;
         }
     }
-
     
     protected override void ClientUpdate(){
         base.ClientUpdate();
-
+        ClientMoveUpdate();
         CheckSwap();
-        CheckCrouch();
-
-        CmdAnimatorUpdateAirborne(); // has to happen on update in case walks off edge without jumping
         
+        SetAnimatedBoolOnAll(_aNames.jumping, Airborne);
+
         CmdRotateArm(GetBarrelToMouseRotation());
 
         ClientHandleWeapon();
@@ -350,6 +292,20 @@ public partial class Player : Character{
         base.Hit(damage);
     }
 
+    private void SetAnimatedBoolOnAll(string animationName, bool setTo){
+        Animator.SetBool(animationName, setTo);
+        CmdSetAnimatedBoolOnServer(animationName, setTo);
+    }
+
+    [Command]
+    private void CmdSetAnimatedBoolOnServer(string animationName, bool setTo){
+        SetAnimatedBoolOnClientRpc(animationName, setTo);
+    }
+
+    [ClientRpc]
+    private void SetAnimatedBoolOnClientRpc(string animationName, bool setTo){
+        Animator.SetBool(animationName, setTo);
+    }
     #endregion
     
 

@@ -28,7 +28,7 @@ public class Character : CustomObject{
     [SerializeField] private PhysicsMaterial2D[] materials;
 
     protected int MaxHealth; // for healthbar and respawns
-    private BoxCollider2D _feetCollider; // for ground checks
+    protected BoxCollider2D FeetCollider; // for ground checks
     
     protected Animator Animator;
     
@@ -36,7 +36,6 @@ public class Character : CustomObject{
     protected bool FallingKnocked = false; // for falling too fast
     protected bool InputsFrozen = false; // for death
     
-    protected float XMove;
 
     private bool _suppressGroundCheck;
 
@@ -49,44 +48,9 @@ public class Character : CustomObject{
     
     protected override void ServerFixedUpdate(){
         base.ServerFixedUpdate();
-        ServerMove();
         CheckStates();
-        
     }
     
-    
-    [Command]
-    protected void CmdSetXMoveServer(float xMove){
-        XMove = xMove;
-    }
-
-    [Server]
-    protected virtual void ServerMove(){ // happens on fixed update
-        XMove = Mathf.Clamp(XMove, -1, 1);
-        if (XMove != 0 && !InputsFrozen && !FallingKnocked){
-            body.velocity = new Vector2(moveSpeed * XMove, body.velocity.y);
-        }
-    }
-
-    [Command]
-    protected virtual void CmdServerJump(){ // happens only as called
-        
-        Vector2 velocity = body.velocity;
-        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"))){
-            Airborne = true;
-            body.velocity = new Vector2(velocity.x, velocity.y + jumpVelocity);
-            SortSound(0); 
-            
-            /*
-            the player has a little bit of area where they're not technically touching the ground but need to act like it 
-            for the game to look good like when going down a slope. Because of this, right after jumping the player is still
-            inside this area, so the ground check needs to be temporarily suppresses right after jumping
-            */
-            StartCoroutine(ResetGroundCheck());
-        }
-    }
-
-    [Server]
     private void CheckStates(){ // happens on fixed update
         FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
         
@@ -96,28 +60,22 @@ public class Character : CustomObject{
             
             Airborne = true;
             foreach (RaycastHit2D result in results){
-                if (result && result.collider.gameObject != gameObject && result.collider.gameObject != _feetCollider.gameObject){
+                if (result && result.collider.gameObject != gameObject && result.collider.gameObject != FeetCollider.gameObject){
                     Airborne = false;
                 }
             }
         }
     }
 
-
-    [Server]
-    private IEnumerator ResetGroundCheck(){
+    
+    protected IEnumerator ResetGroundCheck(){
         _suppressGroundCheck = true;
         yield return new WaitForSeconds(0.2f);
         _suppressGroundCheck = false;
     }
 
-    [Command]
-    protected void CmdAnimatorSetBool(string state, bool setTo){
-        Animator.SetBool(state, setTo);
-    }
-    
-    
-    
+
+
 
     #endregion
 
@@ -132,27 +90,19 @@ public class Character : CustomObject{
         AudioManager = GetComponent<AudioManager>();
         
         MaxHealth = health;
-        _feetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         
     }
     
     protected override void ClientUpdate(){
-        /*Client calls command on server when jump key is pressed (checked for in update)*/
         base.ClientUpdate();
-        ClientHandleMove();
-        ClientHandleJump();
     }
 
-
-    [Client]
-    protected virtual void ClientHandleMove(){
-        
+    protected override void ClientFixedUpdate(){
+        base.ClientFixedUpdate();
+        CheckStates();
     }
-
-    [Client]
-    protected virtual void ClientHandleJump(){
-        
-    }
+    
 
     
     #endregion
@@ -205,13 +155,13 @@ public class Character : CustomObject{
 
     [Client]
     private PhysicsMaterial2D GetMaterialTouching(){
-        if (_feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
             Collider2D[] output = new Collider2D[1];
             
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Ground", "Platform"));
             
-            _feetCollider.OverlapCollider(filter, output);
+            FeetCollider.OverlapCollider(filter, output);
             if (output[0] != null){
                 return output[0].attachedRigidbody.sharedMaterial;
             }
@@ -233,7 +183,7 @@ public class Character : CustomObject{
     
     [Server]
     public BoxCollider2D GetFeetCollider(){ // needed to ignore collisions
-        return _feetCollider;
+        return FeetCollider;
     }
 
     

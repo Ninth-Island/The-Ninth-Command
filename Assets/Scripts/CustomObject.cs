@@ -36,10 +36,10 @@ public class CustomObject : NetworkBehaviour{
 
 
     protected virtual void FixedUpdate(){
-        if (isClientOnly){
+        if (isClient){
             ClientFixedUpdate();
         }
-        else{
+        if (isServer){
             ServerFixedUpdate();
         }
     }
