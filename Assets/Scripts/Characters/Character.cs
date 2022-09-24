@@ -30,7 +30,7 @@ public class Character : CustomObject{
     protected int MaxHealth; // for healthbar and respawns
     protected BoxCollider2D FeetCollider; // for ground checks
     
-    protected Animator Animator;
+    [SerializeField] protected Animator Animator;
     
     protected bool Airborne = true;
     protected bool FallingKnocked = false; // for falling too fast
@@ -85,10 +85,7 @@ public class Character : CustomObject{
     
     protected override void Start(){
         base.Start();
-        
-        Animator = GetComponent<Animator>();
-        AudioManager = GetComponent<AudioManager>();
-        
+
         MaxHealth = health;
         FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         

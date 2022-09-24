@@ -6617,6 +6617,7 @@ MonoBehaviour:
   body: {fileID: 3757039344788581442}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 3208046358155570110}
+  AudioManager: {fileID: 1723963982361676133}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   primaryWeapon: {fileID: 0}
@@ -6628,6 +6629,7 @@ MonoBehaviour:
   - {fileID: 6200000, guid: 01c9ac2c2a68ec5469f41f40987b1703, type: 2}
   - {fileID: 6200000, guid: 4a9d23ed61bc2ee4d9bb280431b6c169, type: 2}
   - {fileID: 6200000, guid: 721799b3543ddcd43a5eba3b5613cd36, type: 2}
+  Animator: {fileID: 3757039344788581447}
   characterClientReady: 0
   secondaryWeapon: {fileID: 0}
   primaryWeaponPrefab: {fileID: 272140532128219954, guid: 5182bae11f7ee56488b75156107145e0,

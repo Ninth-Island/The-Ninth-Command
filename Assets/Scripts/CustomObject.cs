@@ -13,7 +13,7 @@ public class CustomObject : NetworkBehaviour{
     public Rigidbody2D body;
     public Collider2D Collider;
     public SpriteRenderer spriteRenderer;
-    protected AudioManager AudioManager;
+    [SerializeField] protected AudioManager AudioManager;
 
     public Transform parent;
     public Vector2 localPos;
