@@ -77,7 +77,6 @@ public class CustomObject : NetworkBehaviour{
             _angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
             StartCoroutine(ServerPositionUpdateHasParent());
         }
-
     }
     
     

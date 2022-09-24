@@ -3,17 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public partial class Player : Character{
     
-    private float _lastHorizontalInput;
-    private bool _lastInputJumped;
-    private float _lastRotationInput;
-    private float _lastArmRotation;
+    private float _lastHorizontalInput; // for server
+    private bool _lastInputJumped; // for server
+    private float _lastRotationInput; // for server
+    private float _lastArmRotation; // for server
+    private int _lastRequest; // for server
     
-    private int _requestCounter;
+    private int _requestCounter; // for client
+
+    private List<PlayerInput> _pastInputs = new List<PlayerInput>();
 
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
+
 
     
     [Command]
@@ -22,6 +27,7 @@ public partial class Player : Character{
         _lastInputJumped = lastInputJumped;
         _lastRotationInput = lastRotationInput;
         _lastArmRotation = lastArmRotation;
+        _lastRequest = requestCounter;
         if (lastInputJumped){
             ServerJump();
         }
@@ -32,9 +38,35 @@ public partial class Player : Character{
         
         transform.position = position;
         transform.rotation = rotation;
-        // dont use scale cuz the arm controls it. It introduces a miniscule amount of aim lag but it's negligible. 
-        RotateArm(armRotation);
+        RotateArm(armRotation); // fancier way of doing scale
         body.velocity = velocity;
+        ;
+        if (hasAuthority){
+            List<PlayerInput> inputsToRemove = new List<PlayerInput>();
+            foreach (PlayerInput playerInput in _pastInputs){
+                if (playerInput.RequestNumber < requestCounter){
+                    inputsToRemove.Add(playerInput);
+                }
+            }
+
+            foreach (PlayerInput toRemove in inputsToRemove){
+                _pastInputs.Remove(toRemove);
+            }
+            
+            // at this stage, you have a list of every input since the last one confirmed by the server
+            // now you want to loop over every past input and simulate physics using it
+            Physics.autoSimulation = false;
+            foreach (PlayerInput pastInput in _pastInputs){
+                Move(pastInput.HorizontalInput);
+                if (pastInput.JumpInput){
+                    Jump();
+                }
+
+                Physics.Simulate(Time.fixedDeltaTime);
+            }
+            Physics.autoSimulation = true;
+        }
+
     }
 
 
@@ -42,7 +74,7 @@ public partial class Player : Character{
         
         if (Input.GetKeyDown(KeyCode.W)){
             Jump();
-            CmdSetServerValues(Input.GetAxis("Horizontal"), true, 0, _lastArmAngle, _requestCounter);
+            ClientSendServerInputs(Input.GetAxis("Horizontal"), true, 0, _lastArmAngle, _requestCounter);
             
             SetAnimatedBoolOnAll(_aNames.jumping, true);
             SetAnimatedBoolOnAll(_aNames.crouching, false);
@@ -61,9 +93,8 @@ public partial class Player : Character{
             SetAnimatedBoolOnAll(_aNames.running, input != 0);
             SetAnimatedBoolOnAll(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
             Move(input);
-            RotateArm(_lastArmAngle);/*
-            CmdRotateArm(GetBarrelToMouseRotation());*/
-            CmdSetServerValues(input, false, 0, _lastArmAngle, _requestCounter);
+            RotateArm(_lastArmAngle);
+            ClientSendServerInputs(input, false, 0, _lastArmAngle, _requestCounter);
         }
     }
 
@@ -95,7 +126,7 @@ public partial class Player : Character{
 
     [Server]
     private void ServerRefreshForClients(){
-        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastArmRotation, body.velocity, _requestCounter);
+        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastArmRotation, body.velocity, _lastRequest);
     }
 
     private void ServerJump(){
@@ -145,6 +176,29 @@ public partial class Player : Character{
         }
         else{
             transform.localScale = new Vector3(1, 1);
+        }
+    }
+
+    private void ClientSendServerInputs(float horizontalInput, bool jumpInput, float rotation, float armRotationInput, int requestNumber){
+        _pastInputs.Add(new PlayerInput(horizontalInput, jumpInput, rotation, armRotationInput, requestNumber));
+        CmdSetServerValues(horizontalInput, jumpInput, rotation, armRotationInput, requestNumber);
+        _requestCounter++;
+    }
+
+    private class PlayerInput{
+        public readonly float HorizontalInput;
+        public readonly bool JumpInput;
+        public readonly float Rotation;
+        public readonly float ArmRotationInput;
+        public readonly float RequestNumber;
+
+        
+        public PlayerInput(float horizontalInput, bool jumpInput, float rotation, float armRotationInput, int RequestNumber){
+            HorizontalInput = horizontalInput;
+            JumpInput = jumpInput;
+            Rotation = rotation;
+            ArmRotationInput = armRotationInput;
+            this.RequestNumber = RequestNumber;
         }
     }
 }

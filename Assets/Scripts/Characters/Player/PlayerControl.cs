@@ -51,7 +51,7 @@ public partial class Player : Character{
 
     
     private Camera _mainCamera;
-    private CinemachineVirtualCamera[] _virtualCamera;
+    private CinemachineVirtualCamera[] _virtualCameras;
     
     private CursorControl _cursorControl;
     private ANames _aNames = new ANames();
@@ -85,10 +85,10 @@ public partial class Player : Character{
         
         
         _mainCamera = Camera.main;
-        _virtualCamera = new CinemachineVirtualCamera[3];
-        _virtualCamera[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
-        _virtualCamera[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
-        _virtualCamera[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
+        _virtualCameras = new CinemachineVirtualCamera[3];
+        _virtualCameras[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        _virtualCameras[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
+        _virtualCameras[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
         _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
 
 
@@ -133,9 +133,9 @@ public partial class Player : Character{
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
 
         if (!Input.GetKey(KeyCode.LeftShift)){
-            _virtualCamera[0].Priority = 10;
-            _virtualCamera[1].Priority = 0;
-            _virtualCamera[2].Priority = 0;
+            _virtualCameras[0].Priority = 10;
+            _virtualCameras[1].Priority = 0;
+            _virtualCameras[2].Priority = 0;
         }
 
         if (Input.GetKey(KeyCode.LeftShift)){
@@ -156,7 +156,6 @@ public partial class Player : Character{
     
     
     private void CheckBindings(){
-        Animator.speed = 1f;
 
         foreach (KeyCode keyCode in Bindings.Keys){
             if (Input.GetKey(keyCode)){
@@ -217,9 +216,9 @@ public partial class Player : Character{
             
             
             
-            _virtualCamera[0].Priority = 0;
-            _virtualCamera[1].Priority = 0;
-            _virtualCamera[2].Priority = 10;
+            _virtualCameras[0].Priority = 0;
+            _virtualCameras[1].Priority = 0;
+            _virtualCameras[2].Priority = 10;
             
         }
     }

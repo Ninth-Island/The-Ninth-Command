@@ -60,7 +60,7 @@ public partial class Player : Character{
         ControlStart();
 
         if (hasAuthority){
-            _virtualCamera[0].Priority = 10;
+            _virtualCameras[0].Priority = 10;
             HUD.gameObject.SetActive(true);
         }
         base.OnStartClient();
@@ -71,7 +71,7 @@ public partial class Player : Character{
     protected override void ServerFixedUpdate(){
         base.ServerFixedUpdate();
 
-        ControlFixedUpdate();
+        //ControlFixedUpdate();
         ServerFixedMove();
         if (_attemptingToFire){
             primaryWeapon.ServerHandleFiring(_firingAngle);
