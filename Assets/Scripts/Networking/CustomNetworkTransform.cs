@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public partial class Player : Character{
-    
+
     private float _lastHorizontalInput; // for server
     private bool _lastInputJumped; // for server
     private float _lastRotationInput; // for server
@@ -16,6 +16,8 @@ public partial class Player : Character{
     private int _requestCounter; // for client
 
     private List<PlayerInput> _pastInputs = new List<PlayerInput>();
+
+    private Vector3 _targetPosition;
 
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
 
@@ -35,12 +37,14 @@ public partial class Player : Character{
 
     [ClientRpc]
     private void SetClientPositionRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int requestCounter){
+
+        if (hasAuthority && Vector3.Distance(transform.position, position) > 2 || !hasAuthority){
+            transform.position = position;
+            transform.rotation = rotation;
+            RotateArm(armRotation); // fancier way of doing scale
+            body.velocity = velocity;
+        }
         
-        transform.position = position;
-        transform.rotation = rotation;
-        RotateArm(armRotation); // fancier way of doing scale
-        body.velocity = velocity;
-        ;
         if (hasAuthority){
             List<PlayerInput> inputsToRemove = new List<PlayerInput>();
             foreach (PlayerInput playerInput in _pastInputs){

@@ -6537,7 +6537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3757039344788581446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.07, y: 6.42, z: 0}
+  m_LocalPosition: {x: 0, y: 6.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6654,6 +6654,7 @@ MonoBehaviour:
   heatCounter: {fileID: 8860708423069770690}
   arm: {fileID: 5998771371942015238}
   helmet: {fileID: 3208046356692886527}
+  damping: 2
 --- !u!114 &1723963982361676133
 MonoBehaviour:
   m_ObjectHideFlags: 0
