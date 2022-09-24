@@ -36,6 +36,7 @@ public class CustomObject : NetworkBehaviour{
         base.OnStartServer();
     }
 
+    
 
     protected virtual void FixedUpdate(){
         if (isClient){

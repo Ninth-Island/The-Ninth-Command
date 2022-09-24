@@ -9,34 +9,40 @@ public partial class Player : Character{
     private float _lastHorizontalInput;
     private bool _lastInputJumped;
     private float _lastRotationInput;
+    private float _lastArmRotation;
     
     private int _requestCounter;
 
+    private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
+
     
     [Command]
-    private void CmdSetServerValues(float lastHorizontalInput, bool lastInputJumped, float lastRotationInput, int requestCounter){
+    private void CmdSetServerValues(float lastHorizontalInput, bool lastInputJumped, float lastRotationInput, float lastArmRotation, int requestCounter){
         _lastHorizontalInput = lastHorizontalInput;
         _lastInputJumped = lastInputJumped;
         _lastRotationInput = lastRotationInput;
+        _lastArmRotation = lastArmRotation;
         if (lastInputJumped){
             ServerJump();
         }
     }
 
     [ClientRpc]
-    private void SetClientPositionRpc(Vector3 position, Quaternion rotation, Vector3 scale, Vector2 velocity, int requestCounter){
+    private void SetClientPositionRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int requestCounter){
         
         transform.position = position;
         transform.rotation = rotation;
-        
+        // dont use scale cuz the arm controls it. It introduces a miniscule amount of aim lag but it's negligible. 
+        RotateArm(armRotation);
         body.velocity = velocity;
     }
 
 
     private void ClientMoveUpdate(){
+        
         if (Input.GetKeyDown(KeyCode.W)){
             Jump();
-            CmdSetServerValues(Input.GetAxis("Horizontal"), true, 0, _requestCounter);
+            CmdSetServerValues(Input.GetAxis("Horizontal"), true, 0, _lastArmAngle, _requestCounter);
             
             SetAnimatedBoolOnAll(_aNames.jumping, true);
             SetAnimatedBoolOnAll(_aNames.crouching, false);
@@ -55,21 +61,22 @@ public partial class Player : Character{
             SetAnimatedBoolOnAll(_aNames.running, input != 0);
             SetAnimatedBoolOnAll(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
             Move(input);
-            RotateArm(GetBarrelToMouseRotation());
-            CmdRotateArm(GetBarrelToMouseRotation());
-            CmdSetServerValues(input, false, 0, _requestCounter);
+            RotateArm(_lastArmAngle);/*
+            CmdRotateArm(GetBarrelToMouseRotation());*/
+            CmdSetServerValues(input, false, 0, _lastArmAngle, _requestCounter);
         }
     }
 
     private void ServerFixedMove(){ // fixed update
         
         Move(_lastHorizontalInput);
+        RotateArm(_lastArmRotation);
 
     }
 
     [ServerCallback]
     private void LateUpdate(){
-        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, body.velocity, _requestCounter);
+        ServerRefreshForClients();
     }
 
     private void Move(float input){
@@ -86,10 +93,14 @@ public partial class Player : Character{
 
     }
 
+    [Server]
+    private void ServerRefreshForClients(){
+        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastArmRotation, body.velocity, _requestCounter);
+    }
+
     private void ServerJump(){
         Jump();
-        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, body.velocity, _requestCounter);
-
+        ServerRefreshForClients();
     }
 
     private void Jump(){
@@ -107,19 +118,6 @@ public partial class Player : Character{
             */
             StartCoroutine(ResetGroundCheck());
         }
-    }
-    
-    
-    
-    
-    [Command]
-    private void CmdRotateArm(float rotation){
-        RotateArmClientRpc(rotation);
-    }
-
-    [ClientRpc]
-    private void RotateArmClientRpc(float rotation){
-        RotateArm(rotation);
     }
 
     private void RotateArm(float rotation){

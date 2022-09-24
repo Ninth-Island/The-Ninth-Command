@@ -82,6 +82,7 @@ public partial class Player : Character{
 
     protected override void ClientFixedUpdate(){
         base.ClientFixedUpdate();
+        _lastArmAngle = GetBarrelToMouseRotation();
         ClientMoveFixedUpdate();
         
         if (Math.Abs(body.velocity.x) > 20 || Math.Abs(body.velocity.y) > 70){
@@ -94,6 +95,7 @@ public partial class Player : Character{
     
     protected override void ClientUpdate(){
         base.ClientUpdate();
+        _lastArmAngle = GetBarrelToMouseRotation();
         ClientMoveUpdate();
         CheckSwap();
         
@@ -115,7 +117,7 @@ public partial class Player : Character{
         }
 
         if (Input.GetKey(KeyCode.Mouse0)){
-            CmdSetFiring(true, GetBarrelToMouseRotation() * Mathf.Deg2Rad);
+            CmdSetFiring(true, _lastArmAngle * Mathf.Deg2Rad);
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0)){
             CmdSetFiring(false, 0);
