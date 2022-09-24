@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: -8156854511448159046}
   - component: {fileID: -4859062489807996913}
   - component: {fileID: 4318819626735042361}
-  - component: {fileID: -2612919210371535010}
   m_Layer: 0
   m_Name: Railgun Bolt
   m_TagString: Untagged
@@ -387,37 +386,3 @@ MonoBehaviour:
   visible: 0
   m_AssetId: cc6908cf129d1d04eb7af2fd0c81a8a7
   hasSpawned: 0
---- !u!114 &-2612919210371535010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5345319634674317825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.02
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 1
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}

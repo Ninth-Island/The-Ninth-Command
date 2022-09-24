@@ -50,7 +50,7 @@ public class VirtualPlayer : NetworkBehaviour{
                 floatingName.color = Color.red;
             }
         } 
-        else{
+        else if (teamIndex > 0){
             if (hasAuthority){
                 floatingName.color = Color.green; 
             }

@@ -13,10 +13,12 @@ public class CustomObject : NetworkBehaviour{
     public Rigidbody2D body;
     public Collider2D Collider;
     public SpriteRenderer spriteRenderer;
-    protected AudioManager AudioManager;
+    [SerializeField] protected AudioManager AudioManager;
 
     public Transform parent;
     public Vector2 localPos;
+
+    private float _angle;
 
 
     protected virtual void Start(){
@@ -34,12 +36,13 @@ public class CustomObject : NetworkBehaviour{
         base.OnStartServer();
     }
 
+    
 
     protected virtual void FixedUpdate(){
-        if (isClientOnly){
+        if (isClient){
             ClientFixedUpdate();
         }
-        else{
+        if (isServer){
             ServerFixedUpdate();
         }
     }
@@ -61,7 +64,6 @@ public class CustomObject : NetworkBehaviour{
 
     [Server]
     protected virtual void ServerFixedUpdate(){
-        StartCoroutine(ServerPositionUpdateHasParent());
     }
 
     [Client]
@@ -71,33 +73,32 @@ public class CustomObject : NetworkBehaviour{
     
     [Client]
     protected virtual void ClientFixedUpdate(){
-        
+        if (parent){
+            _angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
+            StartCoroutine(ServerPositionUpdateHasParent());
+        }
     }
     
-    [Server]
+    
     private IEnumerator ServerPositionUpdateHasParent(){
-        if (parent){
 
-            yield return new WaitForFixedUpdate();
-            if (parent){
+        yield return new WaitForFixedUpdate();
             
-                float angle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad;
 
-                float yMultiplier = 1;
-                if (parent.localScale.x < 0){
-                    yMultiplier = -1;
-                }
-            
-                Vector2 xOffsetPoint = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * localPos.x;
-                Vector3 offset = new Vector3(
-                    localPos.y * Mathf.Cos(angle - Mathf.PI / 2) + xOffsetPoint.x,
-                    localPos.y * yMultiplier * Mathf.Sin(angle - Mathf.PI / 2) + xOffsetPoint.y);
-
-                transform.position = parent.position + offset;
-                transform.rotation = parent.rotation;
-                transform.localScale = parent.lossyScale;
-            }
+        float yMultiplier = 1;
+        if (parent.localScale.x < 0){
+            yMultiplier = -1;
         }
+    
+        Vector2 xOffsetPoint = new Vector2(Mathf.Cos(_angle), Mathf.Sin(_angle)) * localPos.x;
+        Vector3 offset = new Vector3(
+            localPos.y * Mathf.Cos(_angle - Mathf.PI / 2) + xOffsetPoint.x,
+            localPos.y * yMultiplier * Mathf.Sin(_angle - Mathf.PI / 2) + xOffsetPoint.y);
+
+        transform.position = parent.position + offset;
+        transform.rotation = parent.rotation;
+        transform.localScale = parent.lossyScale;
+        
     }
 
     [Server]

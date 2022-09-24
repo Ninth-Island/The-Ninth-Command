@@ -47,7 +47,6 @@ GameObject:
   - component: {fileID: 7920543007619545138}
   - component: {fileID: 1710343724834172659}
   - component: {fileID: 4652327226055670398}
-  - component: {fileID: 8250104975768768745}
   m_Layer: 13
   m_Name: Battle Rifle
   m_TagString: Weapon
@@ -223,7 +222,6 @@ MonoBehaviour:
   allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
-  looping: 0
   shotDelay: 3
   salvoDelay: 30
   shotsPerSalvo: 3
@@ -411,40 +409,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: d534440ec332f74449b643816b7fcdee
   hasSpawned: 0
---- !u!114 &8250104975768768745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4506013158996176201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  clientAuthority: 0
-  sendInterval: 0.02
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 1
-  interpolatePosition: 1
-  interpolateRotation: 1
-  interpolateScale: 0
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1001 &1020323869725198645
 PrefabInstance:
   m_ObjectHideFlags: 0
