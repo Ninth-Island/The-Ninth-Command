@@ -138,6 +138,10 @@ public partial class Player : Character{
         Animator.SetBool(animationName, setTo);
     }
     
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 2d66961aea6a644ab4ea4b5a77be714cf394d70f
     private void Transform(float x){ // for animation events
         Vector2 pos = transform.position;
         transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
