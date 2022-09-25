@@ -77,8 +77,7 @@ public partial class Player : Character{
     private void ServerPlayerNetworkedMovementFixedUpdate(){ // fixed update
         
         Move(_lastInput.HorizontalInput);
-        RotateArm(_lastInput.HorizontalInput);
-        Debug.Log(helmet.eulerAngles.z);
+        RotateArm(_lastInput.ArmRotationInput);
 
     }
 

@@ -81,7 +81,7 @@ public partial class Player : Character{
         primaryWeapon.StopReloading();
         FinishReload();
         ClientReceiveSwap();
-        UpdateHUD();
+        HUDPickupWeapon();
     }
 
     [ClientRpc]

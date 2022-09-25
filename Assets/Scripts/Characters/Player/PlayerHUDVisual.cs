@@ -96,7 +96,7 @@ public partial class Player : Character
     }
 
     [ClientRpc]
-    public override void UpdateHUD(){ // called when smth changes like weapon swap
+    public override void HUDPickupWeapon(){ // called when smth changes like weapon swap
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
@@ -135,8 +135,4 @@ public partial class Player : Character
         pickupText.SetText(setText);
     }
     
-    private void Transform(float x){ 
-        Vector2 pos = transform.position;
-        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
-    }
 }

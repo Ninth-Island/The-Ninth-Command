@@ -92,6 +92,12 @@ public partial class Player : Character{
     private void SetAnimatedBoolOnClientRpc(string animationName, bool setTo){
         Animator.SetBool(animationName, setTo);
     }
+    
+    
+    private void Transform(float x){ // for animation events
+        Vector2 pos = transform.position;
+        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
+    }
 
     #endregion
 
