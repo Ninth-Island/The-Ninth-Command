@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Mirror;
 using TMPro;
 using UnityEngine;
@@ -47,37 +48,50 @@ public partial class Player : Character
     private GameObject[] sprites = new GameObject[7];
 
     
+    private Camera _mainCamera;
+    private CinemachineVirtualCamera[] _virtualCameras;
+    
 
     [Client]
-    private void HUDVisualStart(){
-        _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
-        for (int i = 0; i < spritesParent.transform.childCount; i++){
-            sprites[i] = spritesParent.transform.GetChild(i).gameObject;
+    private void ClientHUDVisualStart(){
+
+        if (hasAuthority){
+            _mainCamera = Camera.main;
+            _virtualCameras = new CinemachineVirtualCamera[3];
+            _virtualCameras[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+            _virtualCameras[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
+            _virtualCameras[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
+
+            _virtualCameras[0].Priority = 10;
+            HUD.gameObject.SetActive(true);
         }
-        
-        
+
         // HUD
         weaponImage = HUD.transform.GetChild(2).GetComponent<Image>();
         ammoCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
         magCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
-        
+    
         energyCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
         heatCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
 
-        
+    
         _notificationText = HUD.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         _notificationText.SetText("");
         pickupText = HUD.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         pickupText.SetText("");
-        
-        
+    
+    
         Transform energyGauge = HUD.transform.GetChild(4);
         _energySlider = energyGauge.GetChild(2).GetComponent<Slider>();
         _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
 
+        _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
+        for (int i = 0; i < spritesParent.transform.childCount; i++){
+            sprites[i] = spritesParent.transform.GetChild(i).gameObject;
+        }
     }
 
-    private void HUDUpdate(){ // every frame
+    private void ClientHUDUpdate(){ // every frame
         pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
     }
 

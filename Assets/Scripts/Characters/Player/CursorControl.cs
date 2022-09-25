@@ -9,17 +9,14 @@ public class CursorControl : MonoBehaviour{
     
     [SerializeField] private Texture2D[] Images;
 
-    
-    private Camera mainCam;
+    private Camera _mainCam;
     private Player _player;
-    private CinemachineVirtualCamera vc;
-
-
-
+    private CinemachineVirtualCamera _vc;
+    
 
     private void Awake(){
-        mainCam = Camera.main;
-        vc = transform.parent.transform.GetChild(3).GetComponent<CinemachineVirtualCamera>();
+        _mainCam = Camera.main;
+        _vc = transform.parent.transform.GetChild(3).GetComponent<CinemachineVirtualCamera>();
 
         _player = transform.parent.GetComponent<Player>();
 
@@ -34,20 +31,20 @@ public class CursorControl : MonoBehaviour{
         float y = Mathf.Clamp(GetMousePosition().y, playerPos.y - zoomRange, playerPos.y + zoomRange);
         Vector2 pos = new Vector2(x, y);
         transform.position = pos;
-        vc.Follow = transform;
+        _vc.Follow = transform;
 
     }
 
     public void ResetCamera(){
-        vc.Follow = _player.transform;
-        vc.transform.position = _player.transform.position;
+        _vc.Follow = _player.transform;
+        _vc.transform.position = _player.transform.position;
     }
 
     public void SetCursorType(int type){ ;
         Cursor.SetCursor(Images[type], new Vector2(32, 32), CursorMode.ForceSoftware);
     }
     public Vector3 GetMousePosition(){
-        return mainCam.ScreenToWorldPoint(Input.mousePosition);
+        return _mainCam.ScreenToWorldPoint(Input.mousePosition);
     }
 
 

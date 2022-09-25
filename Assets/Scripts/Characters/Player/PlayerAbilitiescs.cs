@@ -50,11 +50,7 @@ public partial class Player : Character{
     private Dictionary<KeyCode, Action> Bindings = new Dictionary<KeyCode, Action>();
 
     
-    private Camera _mainCamera;
-    private CinemachineVirtualCamera[] _virtualCameras;
     
-    private CursorControl _cursorControl;
-    private ANames _aNames = new ANames();
 
 
 
@@ -74,23 +70,13 @@ public partial class Player : Character{
 
 
     [Client]
-    protected virtual void ControlStart(){
+    protected virtual void ClientAbilityStart(){
 
         _externalJetpack = transform.GetChild(2).gameObject;
         _jetPackEffects = _externalJetpack.transform.GetChild(0).GetComponent<ParticleSystem>();
         _foot1 = _externalJetpack.transform.GetChild(1).GetComponent<TrailRenderer>(); 
         _foot2 = _externalJetpack.transform.GetChild(2).GetComponent<TrailRenderer>();        
-
-
         
-        
-        _mainCamera = Camera.main;
-        _virtualCameras = new CinemachineVirtualCamera[3];
-        _virtualCameras[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
-        _virtualCameras[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
-        _virtualCameras[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
-        _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
-
 
         Bindings.Add(KeyCode.LeftShift, UseJetPack);
         Bindings.Add(KeyCode.LeftAlt, Dash);
@@ -98,7 +84,7 @@ public partial class Player : Character{
     }
     
     [Client]
-    protected virtual void ControlUpdate(){
+    protected virtual void ClientPlayerAbilitiesUpdate(){
         if (_fadeTimer > 0){
             _fadeTimer --;   
         }
@@ -121,11 +107,12 @@ public partial class Player : Character{
     }
 
 
-    [Client]
-    private void ControlFixedUpdate(){/*
+    [Server]
+    private void ServerAbilitiesFixedUpdate(){/*
         heat = Mathf.Clamp(heat + heatCharge, 0, MaxHeat);
         energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);*/
 
+        /*
         body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         CheckBindings();
@@ -147,6 +134,7 @@ public partial class Player : Character{
 
         _foot1.emitting = Input.GetKey(KeyCode.Space) && Airborne;
         _foot2.emitting = Input.GetKey(KeyCode.Space) && Airborne;
+        */
 
 
     }
@@ -274,35 +262,5 @@ public partial class Player : Character{
     }
     
 
-    public bool IsTouching(Vector2 pos1, Vector2 pos2, float xAffordance, float yAffordance){
-        if (Math.Abs(pos1.x - pos2.x) < xAffordance && Math.Abs(pos1.y - pos2.y) < yAffordance){
-            return true;
-        }
-        return false;
-    }
-    
-    
-    
-    public float GetPlayerToMouseRotation(){
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 3f){
-            return 0;
-        }
-        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
-        if (ang < 0){
-            return 360 + ang;
-        }
-        return ang;
-    }
-
-    private float GetBarrelToMouseRotation(){
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 12f){
-            return 0;
-        }
-        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
-        if (ang < 0){
-            return 360 + ang;
-        }
-        return ang;
-    }
 }
 
