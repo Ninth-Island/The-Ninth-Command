@@ -66,7 +66,7 @@ public class BasicWeapon : Weapon{
     protected override void ServerReady(){
         base.ServerReady();
         activelyWielded = true;
-        wielder.UpdateHUD();
+        wielder.HUDPickupWeapon();
         AudioManager.PlaySound(2, allowInterrupt);
     }
 

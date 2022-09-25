@@ -21,6 +21,9 @@ public class Character : CustomObject{
 * ================================================================================================================
 */
     [SyncVar] public BasicWeapon primaryWeapon;
+
+    public BasicWeapon primaryWeaponPrefab;
+
     [SyncVar] [SerializeField] protected int health;
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float jumpVelocity = 18;
@@ -46,11 +49,13 @@ public class Character : CustomObject{
     #region Server
 
     
+    [Server]
     protected override void ServerFixedUpdate(){
         base.ServerFixedUpdate();
         CheckStates();
     }
     
+    // needed for client and server
     private void CheckStates(){ // happens on fixed update
         FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
         
@@ -91,6 +96,7 @@ public class Character : CustomObject{
         
     }
     
+    [Client]
     protected override void ClientUpdate(){
         base.ClientUpdate();
     }
@@ -186,10 +192,11 @@ public class Character : CustomObject{
     
     
     [ClientRpc]
-    public virtual void UpdateHUD(){ // called when smth changes like weapon swap
+    public virtual void HUDPickupWeapon(){ // called when smth changes like weapon swap
         
     }
 
+    [Client]
     public override void OnStartClient(){
         base.OnStartClient();
         if (hasAuthority){
