@@ -82,28 +82,30 @@ public partial class Player : Character{
         Bindings.Add(KeyCode.LeftAlt, Dash);
         Bindings.Add(KeyCode.Space, Fly);
     }
-    
+
     [Client]
     protected virtual void ClientPlayerAbilitiesUpdate(){
-        if (_fadeTimer > 0){
-            _fadeTimer --;   
-        }
-        else{
-            float alpha = _notificationText.color.a;
-            if (alpha > 0){
-                SetColor(0, 0, 0, _notificationText.color.a - fadeSpeed);
+        if (hasAuthority){
+            if (_fadeTimer > 0){
+                _fadeTimer--;
             }
-        }
-        
-        
-        if (Input.GetKeyUp(KeyCode.LeftShift)){
-            if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] ||
-                AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
-                AudioManager.PlaySound(22, true);
+            else{
+                float alpha = _notificationText.color.a;
+                if (alpha > 0){
+                    SetColor(0, 0, 0, _notificationText.color.a - fadeSpeed);
+                }
             }
-        }
 
-        pickupText.transform.position = Input.mousePosition;
+
+            if (Input.GetKeyUp(KeyCode.LeftShift)){
+                if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] ||
+                    AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
+                    AudioManager.PlaySound(22, true);
+                }
+            }
+
+            pickupText.transform.position = Input.mousePosition;
+        }
     }
 
 

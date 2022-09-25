@@ -40,6 +40,7 @@ public class VirtualPlayer : NetworkBehaviour{
         gameObject.name = username;
         Image bg = player.transform.GetChild(8).GetChild(0).GetComponent<Image>();
         TextMeshProUGUI floatingName = bg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        
         floatingName.text = username;
 
         if (teamIndex > 6){
