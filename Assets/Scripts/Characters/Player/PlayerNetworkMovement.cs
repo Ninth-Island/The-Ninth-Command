@@ -1,15 +1,36 @@
 using System;
 using System.Collections.Generic;
 using Mirror;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public partial class Player : Character{
+
+
+
+    
+    private bool _isCrouching;
 
 
     
     private bool _isCrouching;
 
     [SyncVar] private bool _hardLanding; // used for sound
+
+    //for server to know where client's trying to go
+    private PlayerInput _lastInput;
+    private PlayerKeyPresses _lastPress;
+    
+    // for client predictive movement
+    private int _inputRequestCounter; 
+    private List<PlayerInput> _pastInputs = new List<PlayerInput>();
+    private PlayerInput _currentInput;
+
+    private int _pressRequestCounter;
+    private List<PlayerKeyPresses> _pastPresses = new List<PlayerKeyPresses>();
+    private PlayerKeyPresses _currentPress;
+
+
 
     [Client] // handles key presses like jumping and animations
     private void ClientMoveUpdate(){
@@ -22,9 +43,15 @@ public partial class Player : Character{
             ClientSetAnimatedBoolOnAll(_aNames.crouching, false);
         }
 
+
         if (Input.GetKeyDown(KeyCode.S) && !Airborne){
             SetCrouching(!_isCrouching);
             _currentPress.CrouchInput = true;
+
+        if (Input.GetKeyDown(KeyCode.S)){
+            _isCrouching = !_isCrouching;
+            _currentPress.CrouchInput = _isCrouching;
+            ClientSetAnimatedBoolOnAll(_aNames.crouching, _isCrouching);
 
         }
         ClientSetAnimatedBoolOnAll(_aNames.jumping, Airborne);
@@ -58,6 +85,12 @@ public partial class Player : Character{
 
     }
 
+    // just called directly when info is received
+    private void ServerJump(){
+        Jump();
+        ServerRefreshPositionForClients();
+    }
+
     
     // after update, sends information back to clients    
     [ServerCallback]
@@ -68,8 +101,13 @@ public partial class Player : Character{
     
     // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
     [Server]
+
     private void ServerRefreshPositionForClients(){ // will need to receive primary weapon info
         SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _isCrouching, _lastInput.RequestNumber);
+
+    private void ServerRefreshPositionForClients(){
+        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _lastInput.RequestNumber);
+
     }
 
     
@@ -86,6 +124,7 @@ public partial class Player : Character{
         }
 
         _isCrouching = isCrouching;
+        
         
         if (hasAuthority){
             // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
@@ -109,7 +148,9 @@ public partial class Player : Character{
     [Client]
     private void ClientPositionReconciliation(int requestCounter){
 
+
         DeletePastInputs(requestCounter);
+
         
         // at this stage, you have a list of every input since the last one confirmed by the server
         // now you want to loop over every past input and simulate physics using it
@@ -152,6 +193,15 @@ public partial class Player : Character{
         }
     }
 
+            
+        // at this stage, you have a list of every input since the last one confirmed by the server
+        // now you want to loop over every past input and simulate physics using it
+        Physics.autoSimulation = false;
+        foreach (PlayerInput pastInput in _pastInputs){
+            Move(pastInput.HorizontalInput);
+            
+
+
     [Client]
     private void ClientHandleKeyPressesReconciliation(PlayerKeyPresses pastPress){
         if (pastPress.JumpInput){
@@ -164,6 +214,11 @@ public partial class Player : Character{
         if (pastPress.ReloadInput){
                 
         }
+    }
+
+    [Client]
+    private void ClientStateReconciliation(int requestCounter){
+        
     }
 
 
@@ -191,7 +246,11 @@ public partial class Player : Character{
         Vector2 velocity = body.velocity;
         if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"))){
             Airborne = true;
+
             SetCrouching(false);
+
+            _isCrouching = false;
+
             body.velocity = new Vector2(velocity.x, jumpVelocity);
             SortSound(0); 
 
@@ -264,6 +323,41 @@ public partial class Player : Character{
         }
         else{
             _hardLanding = false;
+        }
+    }
+
+
+
+    // a simple container for some information
+    private struct PlayerInput{ // for constant things
+        public float HorizontalInput;
+        public float Rotation;
+        public float ArmRotationInput;
+        
+        public int RequestNumber;
+        
+        public PlayerInput(float horizontalInput, float rotation, float armRotationInput, int requestNumber){
+            HorizontalInput = horizontalInput;
+            Rotation = rotation;
+            ArmRotationInput = armRotationInput;
+            
+            RequestNumber = requestNumber;
+        }
+    }
+
+    private struct PlayerKeyPresses{ // for button presses
+        public bool JumpInput;
+        public bool CrouchInput;
+        public bool ReloadInput;
+
+        public int RequestNumber;
+
+        public PlayerKeyPresses(bool jumpInput, bool crouchInput, bool reloadInput, int requestNumber){
+            JumpInput = jumpInput;
+            CrouchInput = crouchInput;
+            ReloadInput = reloadInput;
+
+            RequestNumber = requestNumber;
         }
     }
 

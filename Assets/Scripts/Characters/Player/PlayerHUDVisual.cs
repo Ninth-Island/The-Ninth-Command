@@ -104,12 +104,19 @@ public partial class Player : Character
 
     [ClientRpc]
     public override void HUDPickupWeapon(){ // called when smth changes like weapon swap
+
         if (hasAuthority){
             weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
             _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
             SetNotifText(primaryWeapon.name);
         }
+
+
+        weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
+        _cursorControl.SetCursorType(primaryWeapon.cursorType);
+        
+        SetNotifText(primaryWeapon.name);
 
         SetArmType(primaryWeapon.armType);
     }
