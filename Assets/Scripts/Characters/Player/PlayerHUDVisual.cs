@@ -12,16 +12,32 @@ public partial class Player : Character
     
     [Header("Visuals")]
     [SerializeField] private GameObject spritesParent;
-
     [SerializeField] private Sprite[] ArmTypes;
 
 
-    [Header("HUD and Visuals")]
+    [Header("HUD")]
     [SerializeField] protected Canvas HUD;
     [SerializeField] private TMP_Text pingDisplay;
-    
-    
 
+    
+    
+    private Camera _mainCamera;
+    private CinemachineVirtualCamera[] _virtualCameras;
+
+    
+    // sprites
+    public Transform arm;
+    public Transform helmet;
+
+    private SpriteRenderer _armRenderer;
+    private bool _armOverride;
+    
+    private Color[] _colors = new Color[3];
+    private GameObject[] sprites = new GameObject[7];
+
+    
+    
+    //HUD
     private TextMeshProUGUI _notificationText;
     private float _fadeTimer;
     private float fadeDelay = 50;
@@ -38,19 +54,6 @@ public partial class Player : Character
     
     
     
-    public Transform arm;
-    public Transform helmet;
-
-    private SpriteRenderer _armRenderer;
-    private bool _armOverride;
-    
-    private Color[] _colors = new Color[3];
-    private GameObject[] sprites = new GameObject[7];
-
-    
-    private Camera _mainCamera;
-    private CinemachineVirtualCamera[] _virtualCameras;
-    
 
     [Client]
     private void ClientHUDVisualStart(){
@@ -64,31 +67,35 @@ public partial class Player : Character
 
             _virtualCameras[0].Priority = 10;
             HUD.gameObject.SetActive(true);
+
+            
+            // HUD
+            weaponImage = HUD.transform.GetChild(2).GetComponent<Image>();
+            ammoCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+            magCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
+    
+            energyCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+            heatCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
+
+    
+            _notificationText = HUD.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            _notificationText.SetText("");
+            pickupText = HUD.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            pickupText.SetText("");
+    
+    
+            Transform energyGauge = HUD.transform.GetChild(4);
+            _energySlider = energyGauge.GetChild(2).GetComponent<Slider>();
+            _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
+
         }
 
-        // HUD
-        weaponImage = HUD.transform.GetChild(2).GetComponent<Image>();
-        ammoCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-        magCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
-    
-        energyCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
-        heatCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
-
-    
-        _notificationText = HUD.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _notificationText.SetText("");
-        pickupText = HUD.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        pickupText.SetText("");
-    
-    
-        Transform energyGauge = HUD.transform.GetChild(4);
-        _energySlider = energyGauge.GetChild(2).GetComponent<Slider>();
-        _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
-
+        
         _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
         }
+        
     }
 
     private void ClientHUDUpdate(){ // every frame
@@ -99,8 +106,7 @@ public partial class Player : Character
     public override void HUDPickupWeapon(){ // called when smth changes like weapon swap
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _cursorControl.SetCursorType(primaryWeapon.cursorType);
-
-
+        
         SetNotifText(primaryWeapon.name);
         SetArmType(primaryWeapon.armType);
     }
@@ -112,7 +118,7 @@ public partial class Player : Character
     }
 
     
-    public override void Reload(){ // for melee weapons
+    public override void Reload(){ // for reloading and holding melee
         _armOverride = true;
     }
 
@@ -134,5 +140,4 @@ public partial class Player : Character
     public void SetPickupText(string setText){
         pickupText.SetText(setText);
     }
-    
 }

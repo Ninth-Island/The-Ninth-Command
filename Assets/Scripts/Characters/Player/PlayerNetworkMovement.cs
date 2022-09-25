@@ -2,42 +2,47 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public partial class Player : Character{
 
+
     
-    
-    [SyncVar] private bool _isCrouching;
+    private bool _isCrouching;
 
     [SyncVar] private bool _hardLanding; // used for sound
     
 
     //for server to know where client's trying to go
     private PlayerInput _lastInput;
+    private PlayerKeyPresses _lastPress;
     
     // for client predictive movement
-    private int _requestCounter; // for client
+    private int _inputRequestCounter; 
     private List<PlayerInput> _pastInputs = new List<PlayerInput>();
-    private Vector3 _targetPosition;
+    private PlayerInput _currentInput;
 
-    
-    
+    private int _pressRequestCounter;
+    private List<PlayerKeyPresses> _pastPresses = new List<PlayerKeyPresses>();
+    private PlayerKeyPresses _currentPress;
+
+
     [Client] // handles key presses like jumping and animations
     private void ClientMoveUpdate(){
         
         if (Input.GetKeyDown(KeyCode.W)){
             Jump();
-            ClientSendServerInputs(Input.GetAxis("Horizontal"), true, 0, _lastArmAngle, _requestCounter);
+            _currentPress.JumpInput = true;
             
             ClientSetAnimatedBoolOnAll(_aNames.jumping, true);
             ClientSetAnimatedBoolOnAll(_aNames.crouching, false);
-            _isCrouching = false;
         }
 
         if (Input.GetKeyDown(KeyCode.S)){
             _isCrouching = !_isCrouching;
+            _currentPress.CrouchInput = _isCrouching;
             ClientSetAnimatedBoolOnAll(_aNames.crouching, _isCrouching);
         }
         ClientSetAnimatedBoolOnAll(_aNames.jumping, Airborne);
@@ -52,30 +57,20 @@ public partial class Player : Character{
             ClientSetAnimatedBoolOnAll(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
             Move(input);
             RotateArm(_lastArmAngle);
-            ClientSendServerInputs(input, false, 0, _lastArmAngle, _requestCounter);
+            _currentInput.HorizontalInput = input;
+            _currentInput.Rotation = 0;
+            _currentInput.ArmRotationInput = _lastArmAngle;
+            _currentInput.RequestNumber = _inputRequestCounter;
         }
     }
-    
-    // takes current inputs and remembers them and sends info to server
-    private void ClientSendServerInputs(float horizontalInput, bool jumpInput, float rotation, float armRotationInput, int requestNumber){
-        _pastInputs.Add(new PlayerInput(horizontalInput, jumpInput, rotation, armRotationInput, requestNumber));
-        CmdSetServerValues(horizontalInput, jumpInput, rotation, armRotationInput, requestNumber);
-        _requestCounter++;
-    }
+     // all inputs in the fixed update frame are registered as currentInput
+     // all keypresses in the update frame are registered as currentPress
+     // at the end of fixedUpdate and Update, they're collectively sent to the server at once using methods in Player
 
-    
-    [Command] // server remembers only the most recent inputs
-    private void CmdSetServerValues(float lastHorizontalInput, bool lastInputJumped, float lastRotationInput, float lastArmRotation, int requestCounter){
-        
-        _lastInput = new PlayerInput(lastHorizontalInput, lastInputJumped, lastRotationInput, lastArmRotation, requestCounter);
-        if (lastInputJumped){
-            ServerJump();
-        }
-    }
-
+     
+     
     [Server] // every physics update uses latest input to move player
     private void ServerPlayerNetworkedMovementFixedUpdate(){ // fixed update
-        
         Move(_lastInput.HorizontalInput);
         RotateArm(_lastInput.ArmRotationInput);
 
@@ -84,19 +79,19 @@ public partial class Player : Character{
     // just called directly when info is received
     private void ServerJump(){
         Jump();
-        ServerRefreshForClients();
+        ServerRefreshPositionForClients();
     }
     
     // after update, sends information back to clients    
     [ServerCallback]
     private void LateUpdate(){
-        ServerRefreshForClients();
+        ServerRefreshPositionForClients();
     }
 
     
     // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
     [Server]
-    private void ServerRefreshForClients(){
+    private void ServerRefreshPositionForClients(){
         SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _lastInput.RequestNumber);
     }
 
@@ -113,16 +108,28 @@ public partial class Player : Character{
             body.velocity = velocity;
         }
         
+        
         if (hasAuthority){
             // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
-            ClientReconciliation(requestCounter);
+            ClientPositionReconciliation(requestCounter);
         }
+    }
+
+    
+    [Server]
+    private void ServerRefreshStatesForClients(PlayerKeyPresses playerKeyPresses){
+        SetClientStatesRpc(playerKeyPresses.JumpInput, playerKeyPresses.CrouchInput, playerKeyPresses.ReloadInput);
+    }
+
+    [ClientRpc]
+    private void SetClientStatesRpc(bool jumpInput, bool crouchInput, bool reloadInput){
+        
     }
 
     
     // this is where most of the magic happens, it's hard to explain
     [Client]
-    private void ClientReconciliation(int requestCounter){
+    private void ClientPositionReconciliation(int requestCounter){
         
         List<PlayerInput> inputsToRemove = new List<PlayerInput>();
 
@@ -141,14 +148,17 @@ public partial class Player : Character{
         Physics.autoSimulation = false;
         foreach (PlayerInput pastInput in _pastInputs){
             Move(pastInput.HorizontalInput);
-            if (pastInput.JumpInput){
-                Jump();
-            }
+            
 
             Physics.Simulate(Time.fixedDeltaTime);
         }
         
         Physics.autoSimulation = true;
+    }
+
+    [Client]
+    private void ClientStateReconciliation(int requestCounter){
+        
     }
 
 
@@ -175,6 +185,7 @@ public partial class Player : Character{
         Vector2 velocity = body.velocity;
         if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"))){
             Airborne = true;
+            _isCrouching = false;
             body.velocity = new Vector2(velocity.x, jumpVelocity);
             SortSound(0); 
 
@@ -188,6 +199,7 @@ public partial class Player : Character{
     }
 
     private void RotateArm(float rotation){
+       
         if (_armOverride == false){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
@@ -245,21 +257,36 @@ public partial class Player : Character{
     }
 
     // a simple container for some information
-    struct PlayerInput{
-        public readonly float HorizontalInput;
-        public readonly bool JumpInput;
-        public readonly float Rotation;
-        public readonly float ArmRotationInput;
-        public readonly int RequestNumber;
-
-        public PlayerInput(float horizontalInput, bool jumpInput, float rotation, float armRotationInput, int requestNumber){
+    private struct PlayerInput{ // for constant things
+        public float HorizontalInput;
+        public float Rotation;
+        public float ArmRotationInput;
+        
+        public int RequestNumber;
+        
+        public PlayerInput(float horizontalInput, float rotation, float armRotationInput, int requestNumber){
             HorizontalInput = horizontalInput;
-            JumpInput = jumpInput;
             Rotation = rotation;
-            ArmRotationInput = armRotationInput; 
+            ArmRotationInput = armRotationInput;
+            
             RequestNumber = requestNumber;
         }
+    }
 
+    private struct PlayerKeyPresses{ // for button presses
+        public bool JumpInput;
+        public bool CrouchInput;
+        public bool ReloadInput;
+
+        public int RequestNumber;
+
+        public PlayerKeyPresses(bool jumpInput, bool crouchInput, bool reloadInput, int requestNumber){
+            JumpInput = jumpInput;
+            CrouchInput = crouchInput;
+            ReloadInput = reloadInput;
+
+            RequestNumber = requestNumber;
+        }
     }
     
 }
