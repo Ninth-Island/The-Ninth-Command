@@ -42,6 +42,8 @@ public partial class Player : Character{
         ClientPlayerWeaponUpdate();
         ClientHUDUpdate();
         
+        ClientSendServerKeyPresses(_currentPress);
+        
     }
     
     
@@ -52,6 +54,9 @@ public partial class Player : Character{
         _lastArmAngle = GetBarrelToMouseRotation();
         
         ClientMoveFixedUpdate();
+        
+        ClientSendServerInputs(_currentInput);
+
     }
   
     
@@ -70,6 +75,51 @@ public partial class Player : Character{
     public override void Hit(int damage){
         base.Hit(damage);
     }
+
+
+    #region Send Info to Server
+
+    
+    [Client]
+    private void ClientSendServerInputs(PlayerInput playerInput){
+        _pastInputs.Add(playerInput); // remember all inputs for later client prediction
+        CmdSetServerValues(playerInput.HorizontalInput, playerInput.Rotation, playerInput.ArmRotationInput, playerInput.RequestNumber);
+        _inputRequestCounter++;
+    }
+
+    [Client]
+    private void ClientSendServerKeyPresses(PlayerKeyPresses keyPresses){
+        _pastPresses.Add(new PlayerKeyPresses(keyPresses.JumpInput, keyPresses.CrouchInput, keyPresses.CrouchInput, keyPresses.RequestNumber));
+        CmdSetServerPresses(keyPresses.JumpInput, keyPresses.CrouchInput, keyPresses.ReloadInput);
+        _pressRequestCounter++;
+    }
+    
+    
+    [Command] // server remembers only the most recent inputs
+    private void CmdSetServerValues(float lastHorizontalInput, float lastRotationInput, float lastArmRotation, int requestCounter){
+        // remembers to use later in server's fixed update
+        _lastInput = new PlayerInput(lastHorizontalInput, lastRotationInput, lastArmRotation, requestCounter);
+    }
+
+    
+    [Command]
+    private void CmdSetServerPresses(bool jumpInput, bool crouchInput, bool reloadInput){
+        _lastPress = new PlayerKeyPresses(jumpInput, crouchInput, reloadInput);
+        // same but since they're right now things they can be handled right now
+        if (jumpInput){
+            ServerJump();
+        }
+
+        _isCrouching = crouchInput;
+
+        if (reloadInput){
+            primaryWeapon.CmdReload();
+        }
+        
+        ServerRefreshStatesForClients();
+    }
+
+    #endregion
 
 
     #region Animation
@@ -91,6 +141,11 @@ public partial class Player : Character{
     [ClientRpc]
     private void SetAnimatedBoolOnClientRpc(string animationName, bool setTo){
         Animator.SetBool(animationName, setTo);
+    }
+    
+    private void Transform(float x){ // for animation events
+        Vector2 pos = transform.position;
+        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
     }
 
     #endregion

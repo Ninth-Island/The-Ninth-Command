@@ -192,7 +192,7 @@ public class Character : CustomObject{
     
     
     [ClientRpc]
-    public virtual void UpdateHUD(){ // called when smth changes like weapon swap
+    public virtual void HUDPickupWeapon(){ // called when smth changes like weapon swap
         
     }
 
