@@ -6537,7 +6537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3757039344788581446}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 6.42, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6621,6 +6621,8 @@ MonoBehaviour:
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   primaryWeapon: {fileID: 0}
+  primaryWeaponPrefab: {fileID: 272140532128219954, guid: 5182bae11f7ee56488b75156107145e0,
+    type: 3}
   health: 100
   moveSpeed: 15
   jumpVelocity: 30
@@ -6631,11 +6633,6 @@ MonoBehaviour:
   - {fileID: 6200000, guid: 721799b3543ddcd43a5eba3b5613cd36, type: 2}
   Animator: {fileID: 3757039344788581447}
   characterClientReady: 0
-  secondaryWeapon: {fileID: 0}
-  primaryWeaponPrefab: {fileID: 272140532128219954, guid: 5182bae11f7ee56488b75156107145e0,
-    type: 3}
-  secondaryWeaponPrefab: {fileID: 8529665086193386107, guid: 39f0ac7b484275441b2c1bb13454c675,
-    type: 3}
   spritesParent: {fileID: 3208046358017332010}
   ArmTypes:
   - {fileID: -7887873344414462056, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
@@ -6646,15 +6643,17 @@ MonoBehaviour:
   - {fileID: 2415256495891508668, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   HUD: {fileID: 8860708422122634720}
   pingDisplay: {fileID: 8225003235141414255}
+  arm: {fileID: 5998771371942015238}
+  helmet: {fileID: 3208046356692886527}
   pickupText: {fileID: 8860708422789013638}
   weaponImage: {fileID: 8860708421633477349}
   ammoCounter: {fileID: 8860708422222153801}
   magCounter: {fileID: 8860708421801018242}
   energyCounter: {fileID: 8860708422107641069}
   heatCounter: {fileID: 8860708423069770690}
-  arm: {fileID: 5998771371942015238}
-  helmet: {fileID: 3208046356692886527}
-  damping: 2
+  secondaryWeapon: {fileID: 0}
+  secondaryWeaponPrefab: {fileID: 8529665086193386107, guid: 39f0ac7b484275441b2c1bb13454c675,
+    type: 3}
 --- !u!114 &1723963982361676133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7995,7 +7994,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -607890577
+  m_SortingLayerID: -1295259193
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &6240171950597155245
