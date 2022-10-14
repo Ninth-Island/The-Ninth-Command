@@ -27,6 +27,7 @@ public class Projectile : CustomObject{
     private int _damage;
     private bool _piercing;
 
+    private Character _firer;
 
     [SerializeField] protected bool _live = true;
     
@@ -64,7 +65,10 @@ public class Projectile : CustomObject{
     }
 
     
-    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
+    public virtual void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
+        _firer = firer;
+
+        
         _damage = damage;
         name = setName + " " + gameObject;
         gameObject.layer = firedLayer - 4;

@@ -56,12 +56,12 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
-
+        
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
 
-        projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
-
+        projectile.SetValues(wielder, projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
+        
     }
 
     public override void OnStartClient(){

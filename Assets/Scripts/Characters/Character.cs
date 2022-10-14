@@ -45,6 +45,9 @@ public class Character : CustomObject{
     public bool characterClientReady;
 
 
+    // server keeps track of this and sends it to clients
+    public List<ProjectileProperties> projectiles;
+
     
     #region Server
 
@@ -208,4 +211,6 @@ public class Character : CustomObject{
     private void CmdSetReady(){
         characterClientReady = true;
     }
+    
+    
 }

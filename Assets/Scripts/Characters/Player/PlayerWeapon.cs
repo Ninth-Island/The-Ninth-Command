@@ -24,7 +24,8 @@ public partial class Player : Character{
     
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
 
-
+ 
+    
     
     [Client]
     private void ClientPlayerWeaponUpdate(){
@@ -210,4 +211,12 @@ public partial class Player : Character{
         return ang;
     }
 
+}
+
+public struct ProjectileProperties{
+    public Vector3 Position;
+    public float Rotation;
+        
+    public Projectile Prefab;
+        
 }
