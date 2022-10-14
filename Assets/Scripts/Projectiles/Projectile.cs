@@ -34,15 +34,19 @@ public class Projectile : CustomObject{
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
         Start();
-        if (_live && isServer){
-            StartCoroutine(ServerDestroy(gameObject, lifetime));
+
+        if (_live){
+            Destroy(gameObject, lifetime);
         }
+        /*if (_live && isServer){
+            StartCoroutine(ServerDestroy(gameObject, lifetime));
+        }*/
     }
     
     
 
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        if (isServer && sticky){
+        if (sticky){
             transform.parent = other.gameObject.transform;
             body.velocity = new Vector2(0, 0);
             body.simulated = false;
@@ -59,8 +63,7 @@ public class Projectile : CustomObject{
         
     }
 
-
-    [Server]
+    
     public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
         _damage = damage;
         name = setName + " " + gameObject;
@@ -71,7 +74,7 @@ public class Projectile : CustomObject{
         StartCoroutine(ServerSetupProjectile(angle, speed));
     }
 
-    [Server]
+    
     private IEnumerator ServerSetupProjectile(float angle, float speed){
         yield return new WaitForEndOfFrame();
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
@@ -84,8 +87,7 @@ public class Projectile : CustomObject{
       *                                        Other
      * ================================================================================================================
      */
-    
-    [Server]
+
     public Collider2D GetCollider(){
         return _collider;
     }

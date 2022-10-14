@@ -14,13 +14,13 @@ public class Bolt : Projectile
 * 
 * ================================================================================================================
 */
-    [Server]
+
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
-        StartCoroutine(ServerDestroy(gameObject, 0));
+        Destroy(gameObject);
     }
 
-    [Server]
+
     public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         base.SetValues(damage, speed, angle, piercing, firedLayer, name);
     }

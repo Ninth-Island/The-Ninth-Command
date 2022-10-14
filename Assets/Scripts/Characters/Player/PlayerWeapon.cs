@@ -29,30 +29,37 @@ public partial class Player : Character{
     [Client]
     private void ClientPlayerWeaponUpdate(){
         if (Input.GetKey(KeyCode.R)){
-            primaryWeapon.CmdReload();
+            _currentInput.ReloadInput = true;
+            primaryWeapon.Reload();
         }
 
         if (Input.GetKey(KeyCode.Mouse0)){
-            ClientAttemptFire();
+            _attemptingToFire = true;
+            _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
+
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0)){
-            CmdSetFiring(false, 0);
+            _attemptingToFire = false;
+            _firingAngle = 0;
         }
         
         ClientCheckSwap();
         CheckForPickup();
     }
 
-    [Client]
-    private void ClientAttemptFire(){
-        // try to shoot, if can shoot, server try to shoot
-        CmdSetFiring(true, _lastArmAngle * Mathf.Deg2Rad);
-    }
-
     [Server]
     private void ServerPlayerWeaponFixedUpdate(){
+        if (_lastInput.FiringInput){
+            primaryWeapon.HandleFiring(_lastInput.FiringAngle);
+        }
+    }
+
+    [Client]
+    private void ClientPlayerWeaponFixedUpdate(){
         if (_attemptingToFire){
-            primaryWeapon.ServerHandleFiring(_firingAngle);
+            primaryWeapon.HandleFiring(_firingAngle);
+            _currentInput.FiringAngle = _firingAngle;
+            _currentInput.FiringInput = true;
         }
     }
 
@@ -60,12 +67,7 @@ public partial class Player : Character{
     private void ClientWeaponControlStart(){
         _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
     }
-
-    [Command]
-    private void CmdSetFiring(bool firing, float angle){
-        _attemptingToFire = firing;
-        _firingAngle = angle;
-    }
+    
 
 
 

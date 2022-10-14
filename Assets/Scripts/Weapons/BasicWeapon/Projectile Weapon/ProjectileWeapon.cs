@@ -32,9 +32,8 @@ public class ProjectileWeapon : BasicWeapon{
     private float shootingAngle;
 
     
-
-    [Server]
-    public override void ServerHandleFiring(float angle){
+    
+    public override void HandleFiring(float angle){
         shootingAngle = angle;
         if (framesLeftTillNextSalvo <= 0){
 
@@ -54,13 +53,14 @@ public class ProjectileWeapon : BasicWeapon{
     }
 
 
-    [Server]
+
     protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
-        NetworkServer.Spawn(projectile.gameObject);
+        
+        //NetworkServer.Spawn(projectile.gameObject);
         projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
 
     }
@@ -77,17 +77,23 @@ public class ProjectileWeapon : BasicWeapon{
         base.Update();
     }
 
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
-        if (isServer){
-            if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
-                ServerHandleFiring(shootingAngle);
+    protected override void ClientFixedUpdate(){
+        base.ClientFixedUpdate();
+        if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
+            HandleFiring(shootingAngle);
                 
-            }
-            framesLeftTillNextShot--;
-            framesLeftTillNextSalvo--;
         }
+        framesLeftTillNextShot--;
+        framesLeftTillNextSalvo--;
     }
-    
-   
+
+    protected override void ServerFixedUpdate(){
+        base.ServerFixedUpdate();
+        if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
+            HandleFiring(shootingAngle);
+                
+        }
+        framesLeftTillNextShot--;
+        framesLeftTillNextSalvo--;
+    }
 }

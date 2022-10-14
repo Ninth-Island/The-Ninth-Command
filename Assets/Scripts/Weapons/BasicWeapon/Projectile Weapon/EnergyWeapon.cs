@@ -28,11 +28,11 @@ public class EnergyWeapon : ProjectileWeapon{
     private bool _isCooling;
 
 
-    [Server]
-    public override void ServerHandleFiring(float angle){
+
+    public override void HandleFiring(float angle){
         if (!_isCooling){
             if (_energy >= percentagePerShot){
-                base.ServerHandleFiring(angle);
+                base.HandleFiring(angle);
             }
         }
     }
@@ -57,8 +57,7 @@ public class EnergyWeapon : ProjectileWeapon{
         
     }
 
-    [Command]
-    public override void CmdReload(){
+    public override void Reload(){
         
         if (!_isCooling && _heat > 10){
             _isCooling = true;
@@ -66,7 +65,7 @@ public class EnergyWeapon : ProjectileWeapon{
             
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            base.CmdReload();
+            base.Reload();
         }
     }
 
@@ -76,8 +75,7 @@ public class EnergyWeapon : ProjectileWeapon{
         _isCooling = false;
     }
 
-
-    [Server]
+    
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         

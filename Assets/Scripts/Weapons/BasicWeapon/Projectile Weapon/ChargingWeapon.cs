@@ -36,8 +36,8 @@ public class ChargingWeapon : ProjectileWeapon
      *                                               Firing Stuff
      * ================================================================================================================
      */
-    [Server]
-    public override void ServerHandleFiring(float angle){
+
+    public override void HandleFiring(float angle){
         if (energy > 0 && heat < 100 && !coolingDown){
             heat += chargePerFrame;
             
@@ -46,7 +46,7 @@ public class ChargingWeapon : ProjectileWeapon
             _hasReleased = false;
             if (heat >= 100){
                 AudioManager.source.Stop();
-                base.ServerHandleFiring(angle);
+                base.HandleFiring(angle);
             }
         }
         
@@ -96,12 +96,11 @@ public class ChargingWeapon : ProjectileWeapon
             
     }
 
-    [Command]
-    public override void CmdReload(){  
+
+    public override void Reload(){  
     }
     
-
-    [Server]
+    
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         energy -= percentagePerShot;

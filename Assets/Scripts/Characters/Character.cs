@@ -184,7 +184,7 @@ public class Character : CustomObject{
     public virtual void SetReloadingText(string text){
     }
     
-    [Server]
+
     public BoxCollider2D GetFeetCollider(){ // needed to ignore collisions
         return FeetCollider;
     }

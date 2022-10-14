@@ -20,16 +20,14 @@ public class BasicWeapon : Weapon{
 
     [Command]
     public void CmdAttemptFire(float angle){
-        ServerHandleFiring(angle);    
+        HandleFiring(angle);    
     }
     
-    [Server]
-    public virtual void ServerHandleFiring(float angle){
+    public virtual void HandleFiring(float angle){
         
     }
 
     
-    [Server]
     protected virtual void HandleMagazineDecrement(){
         AudioManager.PlaySound(0, allowInterrupt);
     }
@@ -51,8 +49,8 @@ public class BasicWeapon : Weapon{
         }
     }
 
-    [Command]
-    public virtual void CmdReload(){
+
+    public virtual void Reload(){
         AudioManager.PlaySound(1, false);
     }
 
