@@ -51,7 +51,10 @@ public partial class Player : Character{
         
         ClientMoveFixedUpdate();
         
-        ClientSendServerInputs(_currentInput, _currentPress);
+        
+        _currentInput.CrouchInput = _isCrouching;
+        _currentInput.RequestNumber = _inputRequestCounter;
+        ClientSendServerInputs();
 
     }
   
@@ -65,7 +68,6 @@ public partial class Player : Character{
         ServerAbilitiesFixedUpdate();
         ServerPlayerWeaponFixedUpdate();
         
-        Debug.Log(_isCrouching);
         
     }
 
@@ -80,42 +82,31 @@ public partial class Player : Character{
 
 
     [Client]
-    private void ClientSendServerInputs(PlayerInput playerInput, PlayerKeyPresses keyPresses){
+    private void ClientSendServerInputs(){
         if (hasAuthority){
-            _pastInputs.Add(playerInput); // remember all inputs for later client prediction
-            _pastPresses.Add(keyPresses);
-            CmdSetServerValues(playerInput.HorizontalInput, playerInput.Rotation, playerInput.ArmRotationInput,
-                keyPresses.JumpInput, keyPresses.CrouchInput, keyPresses.ReloadInput, playerInput.RequestNumber);
+            _pastInputs.Add(_currentInput); // remember all inputs for later client prediction
+            CmdSetServerValues(_currentInput);
 
             _inputRequestCounter++;
             _currentInput = new PlayerInput();
-            _currentPress = new PlayerKeyPresses();
         }
     }
 
 
 
     [Command] // server remembers only the most recent inputs
-    private void CmdSetServerValues(float lastHorizontalInput, float lastRotationInput, float lastArmRotation, bool jumpInput, bool crouchInput, bool reloadInput, int requestCounter){
+    private void CmdSetServerValues(PlayerInput playerInput){
         // remembers to use later in server's fixed update
-        _lastInput = new PlayerInput(lastHorizontalInput, lastRotationInput, lastArmRotation, requestCounter);
-        _lastPress = new PlayerKeyPresses(reloadInput, crouchInput, reloadInput, requestCounter);
+        _lastInput = playerInput;
         
         
-        if (jumpInput){
+        if (playerInput.JumpInput){
             Jump();
         }
 
-        if (crouchInput){
-        
-            Debug.Log(_isCrouching);
-            _isCrouching = !_isCrouching;
-        
-            Debug.Log(_isCrouching);
-            
-        }
-        
-        if (reloadInput){
+        _isCrouching = playerInput.CrouchInput;
+
+        if (playerInput.ReloadInput){
             primaryWeapon.CmdReload();
         }
     }
@@ -157,15 +148,12 @@ public partial class Player : Character{
 
     //for server to know where client's trying to go
     private PlayerInput _lastInput;
-    private PlayerKeyPresses _lastPress;
     
     // for client predictive movement
     private int _inputRequestCounter; 
     private List<PlayerInput> _pastInputs = new List<PlayerInput>();
     private PlayerInput _currentInput;
     
-    private List<PlayerKeyPresses> _pastPresses = new List<PlayerKeyPresses>();
-    private PlayerKeyPresses _currentPress;
     
     // a simple container for some information
     private struct PlayerInput{ // for constant things
@@ -173,32 +161,14 @@ public partial class Player : Character{
         public float Rotation;
         public float ArmRotationInput;
         
-        public int RequestNumber;
-        
-        public PlayerInput(float horizontalInput, float rotation, float armRotationInput, int requestNumber){
-            HorizontalInput = horizontalInput;
-            Rotation = rotation;
-            ArmRotationInput = armRotationInput;
-            
-            RequestNumber = requestNumber;
-        }
-    }
-
-    private struct PlayerKeyPresses{ // for button presses
         public bool JumpInput;
         public bool CrouchInput;
         public bool ReloadInput;
-
+        
+        
         public int RequestNumber;
-
-        public PlayerKeyPresses(bool jumpInput, bool crouchInput, bool reloadInput, int requestNumber){
-            JumpInput = jumpInput;
-            CrouchInput = crouchInput;
-            ReloadInput = reloadInput;
-
-            RequestNumber = requestNumber;
-        }
     }
+ 
 
     #endregion
 

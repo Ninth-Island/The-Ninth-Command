@@ -18,7 +18,7 @@ public partial class Player : Character{
         if (hasAuthority){
             if (Input.GetKeyDown(KeyCode.W)){
                 Jump();
-                _currentPress.JumpInput = true;
+                _currentInput.JumpInput = true;
 
                 ClientSetAnimatedBoolOnAll(_aNames.jumping, true);
                 ClientSetAnimatedBoolOnAll(_aNames.crouching, false);
@@ -26,7 +26,6 @@ public partial class Player : Character{
 
             if (Input.GetKeyDown(KeyCode.S)){
                 _isCrouching = !_isCrouching;
-                _currentPress.CrouchInput = true;
                 ClientSetAnimatedBoolOnAll(_aNames.crouching, _isCrouching);
             }
             
@@ -46,7 +45,6 @@ public partial class Player : Character{
             _currentInput.HorizontalInput = input;
             _currentInput.Rotation = 0;
             _currentInput.ArmRotationInput = _lastArmAngle;
-            _currentInput.RequestNumber = _inputRequestCounter;
         }
     }
      // all inputs in the fixed update frame are registered as currentInput
@@ -88,7 +86,6 @@ public partial class Player : Character{
             body.velocity = velocity;
         }
 
-        _isCrouching = isCrouching;
 
         
         if (hasAuthority){
@@ -110,11 +107,10 @@ public partial class Player : Character{
 
         for (int i = 0; i < _pastInputs.Count; i++){
             PlayerInput playerInput = _pastInputs[i];
-            PlayerKeyPresses playerKeyPresses = _pastPresses[i];
             
             Move(playerInput.HorizontalInput);
 
-            ClientRunKeyPresses(playerKeyPresses);
+            ClientRunKeyPresses(playerInput);
             
             Physics.Simulate(Time.fixedDeltaTime);
 
@@ -126,14 +122,12 @@ public partial class Player : Character{
     [Client]
     private void ClientRemovePastInputs(int requestCounter){
         List<PlayerInput> inputsToRemove = new List<PlayerInput>();
-        List<PlayerKeyPresses> pressesToRemove = new List<PlayerKeyPresses>();
 
         // figure out what the server knows and what needs to be resimulated
 
         for (int i = 0; i < _pastInputs.Count; i++){
             if (_pastInputs[i].RequestNumber <= requestCounter){
                 inputsToRemove.Add(_pastInputs[i]);
-                pressesToRemove.Add(_pastPresses[i]);
             }
             else{
                 break;
@@ -143,19 +137,20 @@ public partial class Player : Character{
         foreach (PlayerInput toRemove in inputsToRemove){
             _pastInputs.Remove(toRemove);
         }
-        
-        foreach (PlayerKeyPresses toRemove in pressesToRemove){
-            _pastPresses.Remove(toRemove);
-        }
     }
 
     [Client]
-    private void ClientRunKeyPresses(PlayerKeyPresses keyPresses){
-        if (keyPresses.JumpInput){
+    private void ClientRunKeyPresses(PlayerInput playerInput){ // part of reconciliation
+        if (playerInput.JumpInput){
             Jump();
         }
+        
+        /*
+        _isCrouching = playerInput.CrouchInput;
+        */
 
-        if (keyPresses.ReloadInput){
+
+        if (playerInput.ReloadInput){
             
         }
     }
