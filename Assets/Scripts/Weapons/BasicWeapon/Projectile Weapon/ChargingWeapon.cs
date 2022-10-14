@@ -23,9 +23,9 @@ public class ChargingWeapon : ProjectileWeapon
 
     [SerializeField] float percentagePerShot;
 
-    [SyncVar][SerializeField] protected float energy;
+    [SerializeField] protected float energy;
 
-    [SyncVar]public float heat = 0;
+    public float heat = 0;
     public bool coolingDown;
 
     private bool _hasReleased = true;

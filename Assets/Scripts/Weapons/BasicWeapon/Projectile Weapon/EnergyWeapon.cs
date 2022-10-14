@@ -22,8 +22,8 @@ public class EnergyWeapon : ProjectileWeapon{
     [SerializeField] private float coolDown;
     
     //max is 100
-    [SyncVar]public float _energy = 100;
-    [SyncVar]public float _heat = 0;
+    public float _energy = 100;
+    public float _heat = 0;
 
     private bool _isCooling;
 

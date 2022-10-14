@@ -51,13 +51,16 @@ public partial class Player : Character{
     private void ServerPlayerWeaponFixedUpdate(){
         if (_lastInput.FiringInput){
             primaryWeapon.HandleFiring(_lastInput.FiringAngle);
+            Debug.Log("server fire");
         }
     }
 
     [Client]
     private void ClientPlayerWeaponFixedUpdate(){
         if (_attemptingToFire){
-            primaryWeapon.HandleFiring(_firingAngle);
+            if (isClientOnly){
+                primaryWeapon.HandleFiring(_firingAngle);
+            }
             _currentInput.FiringAngle = _firingAngle;
             _currentInput.FiringInput = true;
         }
@@ -154,6 +157,7 @@ public partial class Player : Character{
     public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){ // HUD stuff
         base.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, energy, heat, type);
 
+        
         if (type == 1){ // bullet weapon
             energyCounter.SetText("");
             heatCounter.SetText("");

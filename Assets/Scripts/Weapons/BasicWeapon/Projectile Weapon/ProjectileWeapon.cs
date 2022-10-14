@@ -59,8 +59,7 @@ public class ProjectileWeapon : BasicWeapon{
 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
-        
-        //NetworkServer.Spawn(projectile.gameObject);
+
         projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
 
     }
@@ -79,12 +78,15 @@ public class ProjectileWeapon : BasicWeapon{
 
     protected override void ClientFixedUpdate(){
         base.ClientFixedUpdate();
-        if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
-            HandleFiring(shootingAngle);
-                
+        if (isClientOnly){
+            if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
+                HandleFiring(shootingAngle);
+
+            }
+
+            framesLeftTillNextShot--;
+            framesLeftTillNextSalvo--;
         }
-        framesLeftTillNextShot--;
-        framesLeftTillNextSalvo--;
     }
 
     protected override void ServerFixedUpdate(){

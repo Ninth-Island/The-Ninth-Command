@@ -7,14 +7,14 @@ public class BulletWeapon : ProjectileWeapon{
 
 
     [Header("Bullet Weapon")]
-    [SyncVar][SerializeField] private int magazinesLeft;
-    [SyncVar][SerializeField] private int magazineSize;
+    [SerializeField] private int magazinesLeft;
+    [SerializeField] private int magazineSize;
     [SerializeField] private float reloadTime; // less frame dependent
     [SerializeField] private GameObject bulletShell;
     
-    [SyncVar][SerializeField]    private int bulletsLeft;
+    [SerializeField]    private int bulletsLeft;
 
-    [SyncVar] private bool reloading;
+    private bool reloading;
     
 
 
