@@ -24,35 +24,45 @@ public partial class Player : Character{
     
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
 
-
+ 
+    
     
     [Client]
     private void ClientPlayerWeaponUpdate(){
         if (Input.GetKey(KeyCode.R)){
-            primaryWeapon.CmdReload();
+            _currentInput.ReloadInput = true;
+            primaryWeapon.Reload();
         }
 
         if (Input.GetKey(KeyCode.Mouse0)){
-            ClientAttemptFire();
+            _attemptingToFire = true;
+            _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
+
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0)){
-            CmdSetFiring(false, 0);
+            _attemptingToFire = false;
+            _firingAngle = 0;
         }
         
         ClientCheckSwap();
         CheckForPickup();
     }
 
-    [Client]
-    private void ClientAttemptFire(){
-        // try to shoot, if can shoot, server try to shoot
-        CmdSetFiring(true, _lastArmAngle * Mathf.Deg2Rad);
-    }
-
     [Server]
     private void ServerPlayerWeaponFixedUpdate(){
+        if (_lastInput.FiringInput){
+            primaryWeapon.HandleFiring(_lastInput.FiringAngle);
+        }
+    }
+
+    [Client]
+    private void ClientPlayerWeaponFixedUpdate(){
         if (_attemptingToFire){
-            primaryWeapon.ServerHandleFiring(_firingAngle);
+            if (isClientOnly){
+                primaryWeapon.HandleFiring(_firingAngle);
+            }
+            _currentInput.FiringAngle = _firingAngle;
+            _currentInput.FiringInput = true;
         }
     }
 
@@ -60,12 +70,7 @@ public partial class Player : Character{
     private void ClientWeaponControlStart(){
         _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
     }
-
-    [Command]
-    private void CmdSetFiring(bool firing, float angle){
-        _attemptingToFire = firing;
-        _firingAngle = angle;
-    }
+    
 
 
 
@@ -152,6 +157,7 @@ public partial class Player : Character{
     public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){ // HUD stuff
         base.SetWeaponValues(magazinesLeft, magazineSize, bulletsLeft, energy, heat, type);
 
+        
         if (type == 1){ // bullet weapon
             energyCounter.SetText("");
             heatCounter.SetText("");
@@ -204,4 +210,12 @@ public partial class Player : Character{
         return ang;
     }
 
+}
+
+public struct ProjectileProperties{
+    public Vector3 Position;
+    public float Rotation;
+        
+    public Projectile Prefab;
+        
 }

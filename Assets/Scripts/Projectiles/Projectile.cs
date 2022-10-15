@@ -27,6 +27,7 @@ public class Projectile : CustomObject{
     private int _damage;
     private bool _piercing;
 
+    private Character _firer;
 
     [SerializeField] protected bool _live = true;
     
@@ -34,15 +35,19 @@ public class Projectile : CustomObject{
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
         Start();
-        if (_live && isServer){
-            StartCoroutine(ServerDestroy(gameObject, lifetime));
+
+        if (_live){
+            Destroy(gameObject, lifetime);
         }
+        /*if (_live && isServer){
+            StartCoroutine(ServerDestroy(gameObject, lifetime));
+        }*/
     }
     
     
 
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        if (isServer && sticky){
+        if (sticky){
             transform.parent = other.gameObject.transform;
             body.velocity = new Vector2(0, 0);
             body.simulated = false;
@@ -59,20 +64,22 @@ public class Projectile : CustomObject{
         
     }
 
+    
+    public virtual void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
+        _firer = firer;
 
-    [Server]
-    public virtual void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
+        
         _damage = damage;
         name = setName + " " + gameObject;
         gameObject.layer = firedLayer - 4;
         _piercing = piercing;
 
         Awake();
-        StartCoroutine(ServerSetupProjectile(angle, speed));
+        StartCoroutine(SetupProjectile(angle, speed));
     }
 
-    [Server]
-    private IEnumerator ServerSetupProjectile(float angle, float speed){
+    
+    private IEnumerator SetupProjectile(float angle, float speed){
         yield return new WaitForEndOfFrame();
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
@@ -84,10 +91,10 @@ public class Projectile : CustomObject{
       *                                        Other
      * ================================================================================================================
      */
-    
-    [Server]
+
     public Collider2D GetCollider(){
         return _collider;
     }
+
 
 }

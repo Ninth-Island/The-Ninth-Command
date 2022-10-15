@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using Telepathy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnergyWeapon : ProjectileWeapon{
     
@@ -22,22 +23,21 @@ public class EnergyWeapon : ProjectileWeapon{
     [SerializeField] private float coolDown;
     
     //max is 100
-    [SyncVar]public float _energy = 100;
-    [SyncVar]public float _heat = 0;
+    public float _energy = 100;
+    public float _heat = 0;
 
     private bool _isCooling;
 
 
-    [Server]
-    public override void ServerHandleFiring(float angle){
+
+    public override void HandleFiring(float angle){
         if (!_isCooling){
             if (_energy >= percentagePerShot){
-                base.ServerHandleFiring(angle);
+                base.HandleFiring(angle);
             }
         }
     }
 
-    
     
     protected override void FixedUpdate(){
         base.FixedUpdate();
@@ -57,8 +57,7 @@ public class EnergyWeapon : ProjectileWeapon{
         
     }
 
-    [Command]
-    public override void CmdReload(){
+    public override void Reload(){
         
         if (!_isCooling && _heat > 10){
             _isCooling = true;
@@ -66,7 +65,7 @@ public class EnergyWeapon : ProjectileWeapon{
             
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            base.CmdReload();
+            base.Reload();
         }
     }
 
@@ -76,8 +75,7 @@ public class EnergyWeapon : ProjectileWeapon{
         _isCooling = false;
     }
 
-
-    [Server]
+    
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         
@@ -102,5 +100,9 @@ public class EnergyWeapon : ProjectileWeapon{
 
     public override void OnStartClient(){
         base.OnStartClient();
+    }
+
+    protected override int GetSeed(){
+        return (int)Math.Truncate(_energy);
     }
 }

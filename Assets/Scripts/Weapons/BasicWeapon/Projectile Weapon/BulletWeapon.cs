@@ -7,50 +7,35 @@ public class BulletWeapon : ProjectileWeapon{
 
 
     [Header("Bullet Weapon")]
-    [SyncVar][SerializeField] private int magazinesLeft;
-    [SyncVar][SerializeField] private int magazineSize;
+    [SerializeField] private int magazinesLeft;
+    [SerializeField] private int magazineSize;
     [SerializeField] private float reloadTime; // less frame dependent
     [SerializeField] private GameObject bulletShell;
     
-    [SyncVar][SerializeField]    private int bulletsLeft;
+    [SerializeField] private int bulletsLeft;
 
-    [SyncVar] private bool reloading;
+    private bool reloading;
     
 
 
 
 
-    [Server]
-    public override void ServerHandleFiring(float angle){
+
+    public override void HandleFiring(float angle){
         if (bulletsLeft > 0){
             if (!reloading){
-                base.ServerHandleFiring(angle);
+                base.HandleFiring(angle);
             }
         }
         else{
-            ServerReload();
+            Reload();
         }
     }
-
-    [Server]
-    protected override void CreateProjectile(float angle){
-        base.CreateProjectile(angle);
-    }
+    
 
 
-    [Command]
-    public override void CmdReload(){
-        ServerReload();
-    }
 
-    [Server]
-    public override void StopReloading(){
-        base.StopReloading();
-        reloading = false;
-    }
-
-    [Server]
-    private void ServerReload(){
+    public override void Reload(){
         if (magazinesLeft > 0 && bulletsLeft < magazineSize){
             if (!reloading){
                 StartCoroutine(ReloadRoutine());
@@ -60,11 +45,18 @@ public class BulletWeapon : ProjectileWeapon{
             AudioManager.PlayRepeating(3, 0); // dryfire
         }
     }
+
+    [Server]
+    public override void StopReloading(){
+        base.StopReloading();
+        reloading = false;
+    }
     
-    [Server] 
+    
+
     public IEnumerator ReloadRoutine(){
         reloading = true;
-        SetReloadingText(connectionToClient, "Reloading...");
+        wielder.SetReloadingText("Reloading...");
         
         wielder.Reload();
 
@@ -88,7 +80,6 @@ public class BulletWeapon : ProjectileWeapon{
     
 
 
-    [Server]
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         bulletsLeft--;
@@ -105,11 +96,7 @@ public class BulletWeapon : ProjectileWeapon{
         
     }
 
-
-    [TargetRpc]
-    private void SetReloadingText(NetworkConnection target, string text){
-        wielder.SetReloadingText(text);
-    }
+    
 
     public override void OnStartClient(){
         base.OnStartClient();
@@ -118,6 +105,11 @@ public class BulletWeapon : ProjectileWeapon{
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
+    }
+    
+    
+    protected override int GetSeed(){
+        return bulletsLeft;
     }
     
 }

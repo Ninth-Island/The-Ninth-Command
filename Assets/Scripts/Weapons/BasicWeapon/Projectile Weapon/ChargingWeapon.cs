@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ChargingWeapon : ProjectileWeapon
 {
@@ -23,9 +25,9 @@ public class ChargingWeapon : ProjectileWeapon
 
     [SerializeField] float percentagePerShot;
 
-    [SyncVar][SerializeField] protected float energy;
+    [SerializeField] protected float energy;
 
-    [SyncVar]public float heat = 0;
+    public float heat = 0;
     public bool coolingDown;
 
     private bool _hasReleased = true;
@@ -36,8 +38,8 @@ public class ChargingWeapon : ProjectileWeapon
      *                                               Firing Stuff
      * ================================================================================================================
      */
-    [Server]
-    public override void ServerHandleFiring(float angle){
+
+    public override void HandleFiring(float angle){
         if (energy > 0 && heat < 100 && !coolingDown){
             heat += chargePerFrame;
             
@@ -46,12 +48,11 @@ public class ChargingWeapon : ProjectileWeapon
             _hasReleased = false;
             if (heat >= 100){
                 AudioManager.source.Stop();
-                base.ServerHandleFiring(angle);
+                base.HandleFiring(angle);
             }
         }
         
     }
-
 
     /*
      * ================================================================================================================
@@ -96,12 +97,11 @@ public class ChargingWeapon : ProjectileWeapon
             
     }
 
-    [Command]
-    public override void CmdReload(){  
+
+    public override void Reload(){  
     }
     
-
-    [Server]
+    
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         energy -= percentagePerShot;
@@ -125,5 +125,9 @@ public class ChargingWeapon : ProjectileWeapon
 
     public override void OnStartClient(){
         base.OnStartClient();
+    }
+    
+    protected override int GetSeed(){
+        return (int)Math.Truncate(energy);
     }
 }

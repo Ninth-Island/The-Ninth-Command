@@ -45,9 +45,10 @@ public class Explosive : Projectile{
         }
 
     }
-    [Server]
-    public override void SetValues(int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        base.SetValues(damage, speed, angle, piercing, firedLayer, name);
+
+    
+    public override void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string name){
+        base.SetValues(firer, damage, speed, angle, piercing, firedLayer, name); 
         if (_live){
             StartCoroutine(Fuse());
         }
@@ -64,7 +65,7 @@ public class Explosive : Projectile{
     }
 
 
-    [Server]
+
     public void Explode(){ 
         _audioManager.PlaySound(0, false);
         if (spriteRenderer){
@@ -73,17 +74,9 @@ public class Explosive : Projectile{
 
         body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
-        ClientExplode();
-        StartCoroutine(ServerDestroy(gameObject, 1));
+        Destroy(gameObject, 0.01f);
     }
 
-    [ClientRpc]
-    private void ClientExplode(){
-        if (spriteRenderer){
-            spriteRenderer.enabled = false;
-        }
-        Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
-    }
 
     
     /*
@@ -91,7 +84,7 @@ public class Explosive : Projectile{
       *                                        For Sticky bombs, grenades and non-instant explosives
      * ================================================================================================================
      */
-    [Server]
+
     IEnumerator Fuse(){
         body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         yield return new WaitForSeconds(fuseTimer);
@@ -110,7 +103,7 @@ public class Explosive : Projectile{
 
 
 
-    [Server]
+
     protected override void OnCollisionEnter2D(Collision2D other){
         if (cat){
             PhysicsMaterial2D material = new PhysicsMaterial2D();

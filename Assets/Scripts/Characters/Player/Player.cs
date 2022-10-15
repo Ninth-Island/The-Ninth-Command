@@ -50,7 +50,7 @@ public partial class Player : Character{
         _lastArmAngle = GetBarrelToMouseRotation();
         
         ClientMoveFixedUpdate();
-        
+        ClientPlayerWeaponFixedUpdate();
         
         _currentInput.CrouchInput = _isCrouching;
         _currentInput.RequestNumber = _inputRequestCounter;
@@ -107,7 +107,7 @@ public partial class Player : Character{
         _isCrouching = playerInput.CrouchInput;
 
         if (playerInput.ReloadInput){
-            primaryWeapon.CmdReload();
+            primaryWeapon.Reload();
         }
     }
     
@@ -163,8 +163,10 @@ public partial class Player : Character{
         
         public bool JumpInput;
         public bool CrouchInput;
-        public bool ReloadInput;
         
+        public bool ReloadInput;
+        public bool FiringInput;
+        public float FiringAngle;
         
         public int RequestNumber;
     }

@@ -86,8 +86,6 @@ public partial class Player : Character{
             body.velocity = velocity;
         }
 
-
-        
         if (hasAuthority){
             // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
             ClientPositionReconciliation(requestCounter);
@@ -151,7 +149,7 @@ public partial class Player : Character{
 
 
         if (playerInput.ReloadInput){
-            
+            primaryWeapon.Reload();
         }
     }
 

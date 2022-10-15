@@ -32,15 +32,14 @@ public class ProjectileWeapon : BasicWeapon{
     private float shootingAngle;
 
     
-
-    [Server]
-    public override void ServerHandleFiring(float angle){
+    
+    public override void HandleFiring(float angle){
         shootingAngle = angle;
         if (framesLeftTillNextSalvo <= 0){
 
             if (framesLeftTillNextShot <= 0){
-
-                CreateProjectile(angle);
+                
+                CreateProjectile(angle, true, GetSeed());
                 HandleMagazineDecrement();
 
                 framesLeftTillNextShot = shotDelay;
@@ -52,19 +51,33 @@ public class ProjectileWeapon : BasicWeapon{
             }
         }        
     }
+    
+        
+    
+    private void CreateProjectile(float angle, bool original, int seed){
 
-
-    [Server]
-    protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
-
+        
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
-        NetworkServer.Spawn(projectile.gameObject);
-        projectile.SetValues(projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
 
+        
+        Random.InitState(seed);
+        projectile.SetValues(wielder, projectileDamage, projectileSpeed, angle + Random.Range(-1f, 1f) * instability, piercing, wielder.gameObject.layer, gameObject.name);
+    
+        if (isServer && original){
+            SpawnProjectileOnOtherClientsRpc(angle, seed);
+        }
     }
 
+
+    [ClientRpc]
+    private void SpawnProjectileOnOtherClientsRpc(float angle, int seed){
+        if (!hasAuthority && !isServer){
+            CreateProjectile(angle, false, seed);
+        }
+    }
+    
     public override void OnStartClient(){
         base.OnStartClient();
     }
@@ -77,17 +90,30 @@ public class ProjectileWeapon : BasicWeapon{
         base.Update();
     }
 
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
-        if (isServer){
+    protected override void ClientFixedUpdate(){
+        base.ClientFixedUpdate();
+        if (isClientOnly){
             if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
-                ServerHandleFiring(shootingAngle);
-                
+                HandleFiring(shootingAngle);
+
             }
+
             framesLeftTillNextShot--;
             framesLeftTillNextSalvo--;
         }
     }
-    
-   
+
+    protected override void ServerFixedUpdate(){
+        base.ServerFixedUpdate();
+        if (activelyWielded && shotInSolvo >= 1 && shotInSolvo < shotsPerSalvo){
+            HandleFiring(shootingAngle);
+                
+        }
+        framesLeftTillNextShot--;
+        framesLeftTillNextSalvo--;
+    }
+
+    protected virtual int GetSeed(){
+        return 0;
+    }
 }
