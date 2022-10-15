@@ -38,8 +38,8 @@ public class ProjectileWeapon : BasicWeapon{
         if (framesLeftTillNextSalvo <= 0){
 
             if (framesLeftTillNextShot <= 0){
-
-                CreateProjectile(angle);
+                
+                CreateProjectile(angle, true, GetSeed());
                 HandleMagazineDecrement();
 
                 framesLeftTillNextShot = shotDelay;
@@ -51,19 +51,33 @@ public class ProjectileWeapon : BasicWeapon{
             }
         }        
     }
+    
+        
+    
+    private void CreateProjectile(float angle, bool original, int seed){
 
-
-
-    protected virtual void CreateProjectile(float angle){
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
         
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.Collider); 
         Physics2D.IgnoreCollision(projectile.GetCollider(), wielder.GetFeetCollider());
 
-        projectile.SetValues(wielder, projectileDamage, projectileSpeed, angle + Random.Range(-instability, instability), piercing, wielder.gameObject.layer, gameObject.name);
         
+        Random.InitState(seed);
+        projectile.SetValues(wielder, projectileDamage, projectileSpeed, angle + Random.Range(-1f, 1f) * instability, piercing, wielder.gameObject.layer, gameObject.name);
+    
+        if (isServer && original){
+            SpawnProjectileOnOtherClientsRpc(angle, seed);
+        }
     }
 
+
+    [ClientRpc]
+    private void SpawnProjectileOnOtherClientsRpc(float angle, int seed){
+        if (!hasAuthority && !isServer){
+            CreateProjectile(angle, false, seed);
+        }
+    }
+    
     public override void OnStartClient(){
         base.OnStartClient();
     }
@@ -97,5 +111,9 @@ public class ProjectileWeapon : BasicWeapon{
         }
         framesLeftTillNextShot--;
         framesLeftTillNextSalvo--;
+    }
+
+    protected virtual int GetSeed(){
+        return 0;
     }
 }

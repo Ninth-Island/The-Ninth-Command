@@ -12,7 +12,7 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private float reloadTime; // less frame dependent
     [SerializeField] private GameObject bulletShell;
     
-    [SerializeField]    private int bulletsLeft;
+    [SerializeField] private int bulletsLeft;
 
     private bool reloading;
     
@@ -31,11 +31,7 @@ public class BulletWeapon : ProjectileWeapon{
             Reload();
         }
     }
-
-
-    protected override void CreateProjectile(float angle){
-        base.CreateProjectile(angle);
-    }
+    
 
 
 
@@ -109,6 +105,11 @@ public class BulletWeapon : ProjectileWeapon{
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
+    }
+    
+    
+    protected override int GetSeed(){
+        return bulletsLeft;
     }
     
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using Telepathy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnergyWeapon : ProjectileWeapon{
     
@@ -37,7 +38,6 @@ public class EnergyWeapon : ProjectileWeapon{
         }
     }
 
-    
     
     protected override void FixedUpdate(){
         base.FixedUpdate();
@@ -100,5 +100,9 @@ public class EnergyWeapon : ProjectileWeapon{
 
     public override void OnStartClient(){
         base.OnStartClient();
+    }
+
+    protected override int GetSeed(){
+        return (int)Math.Truncate(_energy);
     }
 }

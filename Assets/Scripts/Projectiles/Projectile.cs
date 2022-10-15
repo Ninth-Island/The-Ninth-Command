@@ -75,11 +75,11 @@ public class Projectile : CustomObject{
         _piercing = piercing;
 
         Awake();
-        StartCoroutine(ServerSetupProjectile(angle, speed));
+        StartCoroutine(SetupProjectile(angle, speed));
     }
 
     
-    private IEnumerator ServerSetupProjectile(float angle, float speed){
+    private IEnumerator SetupProjectile(float angle, float speed){
         yield return new WaitForEndOfFrame();
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg);
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * speed;
@@ -95,5 +95,6 @@ public class Projectile : CustomObject{
     public Collider2D GetCollider(){
         return _collider;
     }
+
 
 }

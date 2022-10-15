@@ -52,7 +52,6 @@ public partial class Player : Character{
     private void ServerPlayerWeaponFixedUpdate(){
         if (_lastInput.FiringInput){
             primaryWeapon.HandleFiring(_lastInput.FiringAngle);
-            Debug.Log("server fire");
         }
     }
 

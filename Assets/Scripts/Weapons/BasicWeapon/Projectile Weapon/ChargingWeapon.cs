@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using Mirror;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ChargingWeapon : ProjectileWeapon
 {
@@ -51,7 +53,6 @@ public class ChargingWeapon : ProjectileWeapon
         }
         
     }
-
 
     /*
      * ================================================================================================================
@@ -124,5 +125,9 @@ public class ChargingWeapon : ProjectileWeapon
 
     public override void OnStartClient(){
         base.OnStartClient();
+    }
+    
+    protected override int GetSeed(){
+        return (int)Math.Truncate(energy);
     }
 }
