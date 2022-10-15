@@ -15,10 +15,6 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private int bulletsLeft;
 
     private bool reloading;
-    
-
-
-
 
 
     public override void HandleFiring(float angle){

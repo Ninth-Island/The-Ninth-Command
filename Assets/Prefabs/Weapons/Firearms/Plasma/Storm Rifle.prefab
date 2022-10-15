@@ -200,19 +200,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
+  body: {fileID: 5424993723957404765}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 5424993723957404764}
   AudioManager: {fileID: 0}
   parent: {fileID: 0}
-  localPos: {x: 0, y: 0}
+  localPos: {x: 2.37, y: 0.26}
   wielder: {fileID: 0}
   offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 6
   allowInterrupt: 0
-  firingPoint: {fileID: 0}
-  activelyWielded: 1
+  firingPoint: {fileID: 3627656043883178012}
+  activelyWielded: 0
   shotDelay: 0
   salvoDelay: 5
   shotsPerSalvo: 1

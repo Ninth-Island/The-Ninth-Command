@@ -60,103 +60,6 @@ public partial class Player : Character{
     }
     
     
-    // after update, sends information back to clients    
-    [ServerCallback]
-    private void LateUpdate(){
-        ServerRefreshPositionForClients();
-    }
-
-    
-    // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
-    [Server]
-    private void ServerRefreshPositionForClients(){
-        SetClientPositionRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _isCrouching, _lastInput.RequestNumber);
-    }
-
-    
-    // the clients receive the information and update themselves accordingly
-    [ClientRpc]
-    private void SetClientPositionRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, bool isCrouching, int requestCounter){
-
-        // if too far away or not controlled by this player then instantly update the position
-        if (hasAuthority && Vector3.Distance(transform.position, position) > 2 || !hasAuthority){
-            transform.position = position;
-            transform.rotation = rotation;
-            RotateArm(armRotation); // fancier way of doing scale
-            body.velocity = velocity;
-        }
-
-        if (hasAuthority){
-            // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
-            ClientPositionReconciliation(requestCounter);
-        }
-    }
-
-
-    // this is where most of the magic happens, it's hard to explain
-    [Client]
-    private void ClientPositionReconciliation(int requestCounter){
-        
-        ClientRemovePastInputs(requestCounter);
-            
-        // at this stage, you have a list of every input since the last one confirmed by the server
-        // now you want to loop over every past input and simulate physics using it
-        Physics.autoSimulation = false;
-
-        for (int i = 0; i < _pastInputs.Count; i++){
-            PlayerInput playerInput = _pastInputs[i];
-            
-            Move(playerInput.HorizontalInput);
-
-            ClientRunKeyPresses(playerInput);
-            
-            Physics.Simulate(Time.fixedDeltaTime);
-
-        }
-        
-        Physics.autoSimulation = true;
-    }
-
-    [Client]
-    private void ClientRemovePastInputs(int requestCounter){
-        List<PlayerInput> inputsToRemove = new List<PlayerInput>();
-
-        // figure out what the server knows and what needs to be resimulated
-
-        for (int i = 0; i < _pastInputs.Count; i++){
-            if (_pastInputs[i].RequestNumber <= requestCounter){
-                inputsToRemove.Add(_pastInputs[i]);
-            }
-            else{
-                break;
-            }
-        }
-
-        foreach (PlayerInput toRemove in inputsToRemove){
-            _pastInputs.Remove(toRemove);
-        }
-    }
-
-    [Client]
-    private void ClientRunKeyPresses(PlayerInput playerInput){ // part of reconciliation
-        if (playerInput.JumpInput){
-            Jump();
-        }
-        
-        /*
-        _isCrouching = playerInput.CrouchInput;
-        */
-
-
-        if (playerInput.ReloadInput){
-            primaryWeapon.Reload();
-        }
-
-        if (playerInput.SwapWeapon){
-            PlayerSwapWeapon();
-        }
-    }
-
 
     #region Dumb movement
 
@@ -229,7 +132,7 @@ public partial class Player : Character{
     
     
     [ClientCallback]
-    protected override void OnCollisionEnter2D(Collision2D other){ // technically this has a part of combat, but that's handled in the parent so no need for a seperate combat partial
+    protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
         
         if (other.gameObject.CompareTag("Ground")){

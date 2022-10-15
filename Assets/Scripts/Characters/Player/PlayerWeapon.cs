@@ -8,7 +8,7 @@ public partial class Player : Character{
     
     [Header("Basic Weapons")] 
     // primary weapon in character parent
-    [SyncVar] public BasicWeapon secondaryWeapon;
+    public BasicWeapon secondaryWeapon;
     
     // primary weapon in character parent
     public BasicWeapon secondaryWeaponPrefab;
@@ -24,30 +24,9 @@ public partial class Player : Character{
     
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
 
- 
+    #region Firing
+
     
-    
-    [Client]
-    private void ClientPlayerWeaponUpdate(){
-        if (Input.GetKey(KeyCode.R)){
-            _currentInput.ReloadInput = true;
-            primaryWeapon.Reload();
-        }
-
-        if (Input.GetKey(KeyCode.Mouse0)){
-            _attemptingToFire = true;
-            _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
-
-        }
-        else if (Input.GetKeyUp(KeyCode.Mouse0)){
-            _attemptingToFire = false;
-            _firingAngle = 0;
-        }
-        
-        ClientCheckSwap();
-        CheckForPickup();
-    }
-
     [Server]
     private void ServerPlayerWeaponFixedUpdate(){
         if (_lastInput.FiringInput){
@@ -66,44 +45,12 @@ public partial class Player : Character{
         }
     }
 
-    [Client]
-    private void ClientWeaponControlStart(){
-        _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
-    }
+    #endregion
     
 
+    #region swap
 
-
-    [ClientRpc]
-    public void InitialWeaponOnClient(BasicWeapon pW){ // this is mostly for an edge case error
-        primaryWeapon = pW;
-    }
-    
-    
-    private void PlayerSwapWeapon(){
-        secondaryWeapon.Ready(); // IMPORTANT, there's a bit of delay between saying this and swapping weapons, so this is the soon to be primary
-        
-        primaryWeapon.StopReloading();
-        secondaryWeapon.StopReloading();
-        FinishReload();
-
-
-        
-        (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
-
-        primaryWeapon.spriteRenderer.enabled = true;
-
-        secondaryWeapon.activelyWielded = false;
-        secondaryWeapon.spriteRenderer.enabled = false;
-
-        _swappedWeapon = true;
-        Invoke(nameof(ResetSwappedWeapon), 0.25f);
-
-        if (isServer){ // temporary fix
-            HUDPickupWeapon();
-        }
-    }
-    
+      
     [Client]
     private void ClientCheckSwap(){
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
@@ -113,11 +60,45 @@ public partial class Player : Character{
             }
         }
     }
+
+    [ClientRpc]
+    private void PlayerSwapWeaponClientRpc(){ // for the server to update the clients after someone swaps
+        if (!hasAuthority && !isServer){
+            PlayerSwapWeapon();
+        }
+    }
+
+    // shared
+    private void PlayerSwapWeapon(){
+        
+        primaryWeapon.StopReloading();
+        FinishReload();
+
+        (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
+
+        primaryWeapon.spriteRenderer.enabled = true;
+
+        secondaryWeapon.activelyWielded = false;
+        secondaryWeapon.spriteRenderer.enabled = false;
+
+        _swappedWeapon = true;
+        Invoke(nameof(ResetSwappedWeapon), 0.25f);
+        
+        primaryWeapon.Ready();
+        SetArmType(primaryWeapon.armType);
+        HUDPickupWeapon();
+    }
     
+    // shared
     private void ResetSwappedWeapon(){
         _swappedWeapon = false;
     }
-    
+
+
+    #endregion
+
+    #region pickup
+
     [Client]
     private void CheckForPickup(){
         Vector2 mousePos = _cursorControl.GetMousePosition();
@@ -139,20 +120,32 @@ public partial class Player : Character{
         }
     }
 
+
     [Client]
     private void WeaponPickup(GameObject nearestObject){
 
         if (Vector2.Distance(transform.position, nearestObject.transform.position) < 14){
             pickupText.SetText("(G) " + nearestObject.name);
             if (Input.GetKeyDown(KeyCode.G)){
-                BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
                 
-                newWeapon.CmdPickup(this, primaryWeapon, new []{1, 3});
+                BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
+                _currentInput.PickedUp = newWeapon;
+                _currentInput.OldWeapon = primaryWeapon;
+                
+                primaryWeapon.StopReloading();
+                FinishReload();
+
+                newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
+                SetArmType(primaryWeapon.armType);
+                HUDPickupWeapon();
             }
         }
     
     }
     
+    #endregion
+
+    #region HUD stuff
 
     [Client]
     public override void SetWeaponValues(int magazinesLeft, int magazineSize, int bulletsLeft, float energy, float heat, int type){ // HUD stuff
@@ -183,7 +176,6 @@ public partial class Player : Character{
 
     [Client]
     public override void SetReloadingText(string text){
-        base.SetReloadingText(text);
         ammoCounter.SetText(text);
     }
     
@@ -211,12 +203,41 @@ public partial class Player : Character{
         return ang;
     }
 
+    #endregion
+
+    
+    [Client]
+    private void ClientPlayerWeaponUpdate(){
+        if (Input.GetKey(KeyCode.R)){
+            _currentInput.ReloadInput = true;
+            primaryWeapon.Reload();
+        }
+
+        if (Input.GetKey(KeyCode.Mouse0)){
+            _attemptingToFire = true;
+            _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
+
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0)){
+            _attemptingToFire = false;
+            _firingAngle = 0;
+        }
+        
+        ClientCheckSwap();
+        CheckForPickup();
+    }
+
+
+    [Client]
+    private void ClientWeaponControlStart(){
+        _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
+    }
+
+    [ClientRpc]
+    public void InitializeWeaponsOnClient(BasicWeapon pW, BasicWeapon sW){ // this is mostly for an edge case error
+        primaryWeapon = pW;
+        secondaryWeapon = sW;
+        primaryWeapon.activelyWielded = true;
+    }
 }
 
-public struct ProjectileProperties{
-    public Vector3 Position;
-    public float Rotation;
-        
-    public Projectile Prefab;
-        
-}

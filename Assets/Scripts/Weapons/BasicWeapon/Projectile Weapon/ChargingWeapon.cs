@@ -96,7 +96,12 @@ public class ChargingWeapon : ProjectileWeapon
             }
             
     }
-
+    public override void Ready(){
+        base.Ready();
+        if (heat > 0){
+            wielder.Reload();
+        }
+    }
 
     public override void Reload(){  
     }

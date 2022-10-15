@@ -14,6 +14,7 @@ public partial class Player : Character
     [SerializeField] private GameObject spritesParent;
     [SerializeField] private Sprite[] ArmTypes;
 
+    [SerializeField] private TextMeshProUGUI _notificationText;
 
     [Header("HUD")]
     [SerializeField] protected Canvas HUD;
@@ -34,11 +35,9 @@ public partial class Player : Character
     
     private Color[] _colors = new Color[3];
     private GameObject[] sprites = new GameObject[7];
+    
 
-    
-    
     //HUD
-    private TextMeshProUGUI _notificationText;
     private float _fadeTimer;
     private float fadeDelay = 50;
     private float fadeSpeed = 0.01f;
@@ -78,7 +77,6 @@ public partial class Player : Character
             heatCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
 
     
-            _notificationText = HUD.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             _notificationText.SetText("");
             pickupText = HUD.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             pickupText.SetText("");
@@ -102,24 +100,25 @@ public partial class Player : Character
         pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
     }
 
-    [ClientRpc]
+
+    [Client]
     public override void HUDPickupWeapon(){ // called when smth changes like weapon swap
-        if (hasAuthority){
-            weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
-            _cursorControl.SetCursorType(primaryWeapon.cursorType);
+        _cursorControl.SetCursorType(primaryWeapon.cursorType);
 
-            SetNotifText(primaryWeapon.name);
-        }
-
-        SetArmType(primaryWeapon.armType);
+        SetNotifText(primaryWeapon.name);
     }
 
-    
 
-    public void SetArmType(int armType){
+
+    [ClientRpc]
+    private void SetArmTypeClientRpc(int armyType){
+        SetArmType(armyType);
+    }
+    
+    private void SetArmType(int armType){
+        weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _armRenderer.sprite = ArmTypes[armType];
     }
-
     
     public override void Reload(){ // for reloading and holding melee
         _armOverride = true;

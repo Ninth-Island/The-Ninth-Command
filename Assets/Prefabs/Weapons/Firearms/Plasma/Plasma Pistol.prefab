@@ -159,15 +159,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
+  body: {fileID: 986607691338267656}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 986607691338267657}
   AudioManager: {fileID: 0}
   parent: {fileID: 0}
-  localPos: {x: 0, y: 0}
+  localPos: {x: 1.98, y: 0.2}
   wielder: {fileID: 0}
   offset: {x: 1.69, y: -0.42}
-  armType: 0
+  armType: 4
   cursorType: 20
   allowInterrupt: 0
   firingPoint: {fileID: 0}

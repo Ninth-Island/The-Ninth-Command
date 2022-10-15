@@ -6641,6 +6641,7 @@ MonoBehaviour:
   - {fileID: -5643868179137935686, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   - {fileID: 7364606866421688543, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   - {fileID: 2415256495891508668, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
+  _notificationText: {fileID: 8860708422789013638}
   HUD: {fileID: 8860708422122634720}
   pingDisplay: {fileID: 8225003235141414255}
   arm: {fileID: 5998771371942015238}
