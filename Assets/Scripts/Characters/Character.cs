@@ -20,7 +20,7 @@ public class Character : CustomObject{
 * 
 * ================================================================================================================
 */
-    [SyncVar] public BasicWeapon primaryWeapon;
+    public BasicWeapon primaryWeapon;
 
     public BasicWeapon primaryWeaponPrefab;
 
@@ -43,101 +43,23 @@ public class Character : CustomObject{
     private bool _suppressGroundCheck;
 
     public bool characterClientReady;
-
-
-    // server keeps track of this and sends it to clients
-    public List<ProjectileProperties> projectiles;
-
+    
     
     #region Server
 
     
-    [Server]
-    protected override void ServerFixedUpdate(){
-        base.ServerFixedUpdate();
-        CheckStates();
+    [Command]
+    private void CmdSetReady(){
+        characterClientReady = true;
     }
     
-    // needed for client and server
-    private void CheckStates(){ // happens on fixed update
-        FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
-        
-        if (!_suppressGroundCheck){
-            RaycastHit2D[] results = new RaycastHit2D[3];
-            Physics2D.RaycastNonAlloc(transform.position, Vector2.down,  results, 4, LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"));
-            
-            Airborne = true;
-            foreach (RaycastHit2D result in results){
-                if (result && result.collider.gameObject != gameObject && result.collider.gameObject != FeetCollider.gameObject){
-                    Airborne = false;
-                }
-            }
-        }
-    }
-
     
-    protected IEnumerator ResetGroundCheck(){
-        _suppressGroundCheck = true;
-        yield return new WaitForSeconds(0.2f);
-        _suppressGroundCheck = false;
-    }
-
-
-
-
     #endregion
 
 
     #region Client
-
     
-    protected override void Start(){
-        base.Start();
-
-        MaxHealth = health;
-        FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
-        
-    }
     
-    [Client]
-    protected override void ClientUpdate(){
-        base.ClientUpdate();
-    }
-
-    protected override void ClientFixedUpdate(){
-        base.ClientFixedUpdate();
-        CheckStates();
-    }
-    
-
-    
-    #endregion
-
-    
-
-    [Server]
-    public virtual void Hit(int damage){
-        health -= damage;
-        if (health <= 0){
-            InputsFrozen = true;
-            Destroy(gameObject);
-        }
-    }
-
-    [Client]
-    public virtual void Reload(){ // called by weapon
-        // the override is only a visual thing for the arm
-    }
-
-    [Client]
-    public virtual void FinishReload(){ // same as above
-        
-    }
-    
-    protected virtual void OnCollisionEnter2D(Collision2D other){
-        // just for sounds
-    }
-
     [Client]
     protected void SortSound(int type){
 
@@ -186,15 +108,11 @@ public class Character : CustomObject{
     [Client]
     public virtual void SetReloadingText(string text){
     }
-    
-
-    public BoxCollider2D GetFeetCollider(){ // needed to ignore collisions
-        return FeetCollider;
-    }
+ 
 
     
     
-    [ClientRpc]
+    [Client]
     public virtual void HUDPickupWeapon(){ // called when smth changes like weapon swap
         
     }
@@ -207,10 +125,74 @@ public class Character : CustomObject{
         }
     }
 
-    [Command]
-    private void CmdSetReady(){
-        characterClientReady = true;
+    
+    #endregion
+
+    #region Shared
+
+    protected override void Start(){
+        base.Start();
+
+        MaxHealth = health;
+        FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
+        
     }
     
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
+        CheckStates();
+    }
+    
+    
+    private void CheckStates(){ // happens on fixed update
+        FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
+        
+        if (!_suppressGroundCheck){
+            RaycastHit2D[] results = new RaycastHit2D[3];
+            Physics2D.RaycastNonAlloc(transform.position, Vector2.down,  results, 4, LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"));
+            
+            Airborne = true;
+            foreach (RaycastHit2D result in results){
+                if (result && result.collider.gameObject != gameObject && result.collider.gameObject != FeetCollider.gameObject){
+                    Airborne = false;
+                }
+            }
+        }
+    }
+
+    protected IEnumerator ResetGroundCheck(){
+        _suppressGroundCheck = true;
+        yield return new WaitForSeconds(0.2f);
+        _suppressGroundCheck = false;
+    }
+
+
+    public virtual void Hit(int damage){
+        health -= damage;
+        if (health <= 0){
+            InputsFrozen = true;
+            //Destroy(gameObject);
+        }
+    }
+
+
+    public virtual void Reload(){ // called by weapon
+        // the override is only a visual thing for the arm
+    }
+
+
+    public virtual void FinishReload(){ // same as above
+        
+    }
+    
+    protected virtual void OnCollisionEnter2D(Collision2D other){
+        // just for sounds
+        // the actual health stuff happens on the projectiles
+    }
+
+
+
+    #endregion
+
     
 }

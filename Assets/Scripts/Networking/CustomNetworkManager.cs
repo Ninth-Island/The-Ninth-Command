@@ -77,7 +77,7 @@ public class CustomNetworkManager : NetworkManager{
 
         player.primaryWeapon = pW;
         player.secondaryWeapon = sW;
-        player.InitialWeaponOnClient(pW);
+        player.InitializeWeaponsOnClient(pW, sW);
         
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
@@ -86,17 +86,17 @@ public class CustomNetworkManager : NetworkManager{
 
     }
 
-    [Server]
+
     public void NetworkManagerSetColors(NetworkConnectionToClient connectionToClient, Color[] colors){
         _colors[connectionToClient] = colors;
     }
     
-    [Server]
+
     public void NetworkManagerSetUsername(NetworkConnectionToClient connectionToClient, string username){
         _usernames[connectionToClient] = username;
     }
     
-    [Server]
+
     public void NetworkManagerSetTeamIndex(NetworkConnectionToClient connectionToClient, int teamIndex){
         _teamIndices[connectionToClient] = teamIndex;
     }

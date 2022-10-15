@@ -15,10 +15,6 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private int bulletsLeft;
 
     private bool reloading;
-    
-
-
-
 
 
     public override void HandleFiring(float angle){
@@ -45,8 +41,7 @@ public class BulletWeapon : ProjectileWeapon{
             AudioManager.PlayRepeating(3, 0); // dryfire
         }
     }
-
-    [Server]
+    
     public override void StopReloading(){
         base.StopReloading();
         reloading = false;

@@ -17,7 +17,7 @@ public class Bolt : Projectile
 
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
-        Destroy(gameObject);
+        Destroy(gameObject, 0.02f);
     }
 
 

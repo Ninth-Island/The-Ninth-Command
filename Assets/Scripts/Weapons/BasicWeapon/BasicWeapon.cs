@@ -8,14 +8,12 @@ using UnityEngine;
 
 public class BasicWeapon : Weapon{
 
-    [SerializeField] public Vector2 offset = new Vector2(1.69f, -0.42f); // this is gonna get deleted and replaced
     [SerializeField][Tooltip("Player Only")] public int armType = 0;
     [SerializeField][Tooltip("Player Only")] public int cursorType = 0;
     
     [SerializeField] private bool allowInterrupt = false;
     public Transform firingPoint;
-
-    [SyncVar] public bool activelyWielded = false;
+    public bool activelyWielded = false;
     
 
     [Command]
@@ -32,7 +30,7 @@ public class BasicWeapon : Weapon{
         AudioManager.PlaySound(0, allowInterrupt);
     }
 
-    [Server]
+
     public virtual void StopReloading(){
         StopAllCoroutines();
     }
@@ -54,57 +52,49 @@ public class BasicWeapon : Weapon{
         AudioManager.PlaySound(1, false);
     }
 
-    [Server]
-    protected override void ServerAssignPrimaryWeapon(Character character){
+
+    public override void SwapTo(Character character, BasicWeapon oldWeapon, int[] path){
+        base.SwapTo(character, oldWeapon, path);
         character.primaryWeapon = this;
+
     }
 
-
-    [Server]
-    protected override void ServerReady(){
-        base.ServerReady();
+    public override void Ready(){
         activelyWielded = true;
-        wielder.HUDPickupWeapon();
         AudioManager.PlaySound(2, allowInterrupt);
     }
 
     [Server]
     public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Character w, int[] path){
+        wielder = w;
+        netIdentity.AssignClientAuthority(w.connectionToClient);
+        ClientSetWielder(w);
+
         yield return new WaitUntil(() => w.characterClientReady);
-        ClientInitializeWeapon(isThePrimaryWeapon, w);
-        ServerPickup(w, path);
+        CancelPickup(w, path);
+        ClientInitializeWeapon(isThePrimaryWeapon, w, path);
     }
 
     [ClientRpc]
-    private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w){
-        
+    private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w, int[] path){
+        CancelPickup(w, path);
         if (!isThePrimaryWeapon){
             activelyWielded = false;
             spriteRenderer.enabled = false;
         }
     }
 
-    [Server]
+    [ClientRpc]
+    private void ClientSetWielder(Character w){
+        wielder = w;
+    }
+
+
     protected override void Drop(){
         base.Drop();
         wielder = null;
         activelyWielded = false;
     }
 
-    public override void OnStartClient(){
-        base.OnStartClient();
-    }
-
-    protected override void Update(){
-        base.Update();
-    }
-    
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
-    }
-
-    private void OnDisable(){
-        //AudioManager.source.Stop();
-    }
-    
 }
+

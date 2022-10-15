@@ -57,6 +57,13 @@ public class EnergyWeapon : ProjectileWeapon{
         
     }
 
+    public override void Ready(){
+        base.Ready();
+        if (_heat > 0){
+            wielder.Reload();
+        }
+    }
+
     public override void Reload(){
         
         if (!_isCooling && _heat > 10){
@@ -69,7 +76,7 @@ public class EnergyWeapon : ProjectileWeapon{
         }
     }
 
-    [Server]
+
     public override void StopReloading(){
         base.StopReloading();
         _isCooling = false;
@@ -98,9 +105,6 @@ public class EnergyWeapon : ProjectileWeapon{
         
     }
 
-    public override void OnStartClient(){
-        base.OnStartClient();
-    }
 
     protected override int GetSeed(){
         return (int)Math.Truncate(_energy);
