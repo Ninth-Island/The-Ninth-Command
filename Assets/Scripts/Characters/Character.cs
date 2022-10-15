@@ -115,7 +115,7 @@ public class Character : CustomObject{
 
     
 
-    [Server]
+
     public virtual void Hit(int damage){
         health -= damage;
         if (health <= 0){
@@ -124,12 +124,12 @@ public class Character : CustomObject{
         }
     }
 
-    [Client]
+
     public virtual void Reload(){ // called by weapon
         // the override is only a visual thing for the arm
     }
 
-    [Client]
+
     public virtual void FinishReload(){ // same as above
         
     }

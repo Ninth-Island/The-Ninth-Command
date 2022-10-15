@@ -32,7 +32,7 @@ public class BasicWeapon : Weapon{
         AudioManager.PlaySound(0, allowInterrupt);
     }
 
-    [Server]
+
     public virtual void StopReloading(){
         StopAllCoroutines();
     }
@@ -59,12 +59,13 @@ public class BasicWeapon : Weapon{
         character.primaryWeapon = this;
     }
 
-
-    [Server]
-    protected override void ServerReady(){
-        base.ServerReady();
+    
+    public override void Ready(){
+        base.Ready();
         activelyWielded = true;
-        wielder.HUDPickupWeapon();
+        if (isServer){ // temporary fix
+            wielder.HUDPickupWeapon();
+        }
         AudioManager.PlaySound(2, allowInterrupt);
     }
 

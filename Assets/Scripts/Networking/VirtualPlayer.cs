@@ -43,6 +43,7 @@ public class VirtualPlayer : NetworkBehaviour{
         floatingName.text = username;
 
         if (teamIndex > 6){
+            player.gameObject.layer = LayerMask.NameToLayer("Team 2");
             if (hasAuthority){
                 floatingName.color = Color.magenta;
             }
@@ -51,6 +52,7 @@ public class VirtualPlayer : NetworkBehaviour{
             }
         } 
         else if (teamIndex > 0){
+            player.gameObject.layer = LayerMask.NameToLayer("Team 1");
             if (hasAuthority){
                 floatingName.color = Color.green; 
             }

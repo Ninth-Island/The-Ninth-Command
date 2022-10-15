@@ -109,6 +109,10 @@ public partial class Player : Character{
         if (playerInput.ReloadInput){
             primaryWeapon.Reload();
         }
+
+        if (playerInput.SwapWeapon){
+            PlayerSwapWeapon();
+        }
     }
     
 
@@ -164,9 +168,11 @@ public partial class Player : Character{
         public bool JumpInput;
         public bool CrouchInput;
         
-        public bool ReloadInput;
         public bool FiringInput;
         public float FiringAngle;
+        public bool ReloadInput;
+
+        public bool SwapWeapon;
         
         public int RequestNumber;
     }

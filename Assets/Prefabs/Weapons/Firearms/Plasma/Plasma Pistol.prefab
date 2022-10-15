@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5004192726719082808}
   - component: {fileID: 997877508244943859}
   - component: {fileID: -3827493188291832266}
+  - component: {fileID: 4276439510442502478}
   m_Layer: 13
   m_Name: Plasma Pistol
   m_TagString: Weapon
@@ -161,6 +162,7 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
@@ -358,6 +360,40 @@ MonoBehaviour:
   visible: 0
   m_AssetId: bb099d7bc996dee47a8db4aeed520a14
   hasSpawned: 0
+--- !u!114 &4276439510442502478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986607691338267660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &6646759087941469859
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -1522665250973982014}
   - component: {fileID: 8377429406475007086}
   - component: {fileID: 205553246057380762}
+  - component: {fileID: 6329475723116990318}
   m_Layer: 13
   m_Name: Assault Rifle
   m_TagString: Weapon
@@ -171,6 +172,7 @@ MonoBehaviour:
   body: {fileID: 272140532128219919}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 272140532128219916}
+  AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 1.932, y: 0.22}
   wielder: {fileID: 0}
@@ -364,6 +366,40 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 5182bae11f7ee56488b75156107145e0
   hasSpawned: 0
+--- !u!114 &6329475723116990318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272140532128219913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  sendInterval: 0.05
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 0
+  bufferTimeMultiplier: 1
+  bufferSizeLimit: 64
+  catchupThreshold: 4
+  catchupMultiplier: 0.1
+  onlySyncOnChange: 1
+  bufferResetMultiplier: 5
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
 --- !u!1 &902487494462189732
 GameObject:
   m_ObjectHideFlags: 0

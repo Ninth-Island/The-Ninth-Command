@@ -69,7 +69,7 @@ public class EnergyWeapon : ProjectileWeapon{
         }
     }
 
-    [Server]
+
     public override void StopReloading(){
         base.StopReloading();
         _isCooling = false;

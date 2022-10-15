@@ -10,11 +10,7 @@ public class Weapon : CustomObject{
     [Header("Weapon")]
     [SerializeField] public Character wielder;
 
-    [Command]
-    public void CmdReady(){
-        ServerReady();
-    }
-   
+    private NetworkTransform _networkTransform;
 
     [Command(requiresAuthority = false)]
     public void CmdPickup(Character character, BasicWeapon oldWeapon, int[] path){
@@ -32,11 +28,15 @@ public class Weapon : CustomObject{
         Pickup(character, path);        
         ClientPickup(character.spriteRenderer.sortingLayerID, character, path);
 
-        ServerReady();
+        Ready();
     }
 
     private void Pickup(Character character, int[] path){
         parent = character.transform;
+        if (isServer){ // temporary fix
+            _networkTransform.enabled = false;
+        }
+
         for (int i = 0; i < path.Length; i++){
             parent = parent.GetChild(path[i]);
         }
@@ -56,8 +56,8 @@ public class Weapon : CustomObject{
     protected virtual void ServerAssignPrimaryWeapon(Character character){
         
     }
-    [Server]
-    protected virtual void ServerReady(){
+
+    public virtual void Ready(){
     }
     
     [Server]
@@ -65,6 +65,9 @@ public class Weapon : CustomObject{
         body.simulated = true;
         gameObject.layer = LayerMask.NameToLayer("Objects");
         parent = null;
+        if (isServer){ // temporary fix
+            _networkTransform.enabled = true;
+        }
 
         spriteRenderer.sortingLayerID = SortingLayer.NameToID("Objects");
         spriteRenderer.sortingOrder = 0;
@@ -81,6 +84,7 @@ public class Weapon : CustomObject{
 
     public override void OnStartServer(){
         base.OnStartServer();
+        _networkTransform = GetComponent<NetworkTransform>();
     }
 
     protected override void Update(){

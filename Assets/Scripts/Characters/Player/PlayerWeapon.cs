@@ -80,18 +80,15 @@ public partial class Player : Character{
     }
     
     
-
-    [Command]
-    private void CmdServerTellClientsSwap(){
+    private void PlayerSwapWeapon(){
+        secondaryWeapon.Ready(); // IMPORTANT, there's a bit of delay between saying this and swapping weapons, so this is the soon to be primary
+        
         primaryWeapon.StopReloading();
+        secondaryWeapon.StopReloading();
         FinishReload();
-        ClientReceiveSwap();
-        HUDPickupWeapon();
-    }
 
-    [ClientRpc]
-    private void ClientReceiveSwap(){
 
+        
         (primaryWeapon, secondaryWeapon) = (secondaryWeapon, primaryWeapon);
 
         primaryWeapon.spriteRenderer.enabled = true;
@@ -102,17 +99,21 @@ public partial class Player : Character{
         _swappedWeapon = true;
         Invoke(nameof(ResetSwappedWeapon), 0.25f);
 
+        if (isServer){ // temporary fix
+            HUDPickupWeapon();
+        }
     }
     
     [Client]
     private void ClientCheckSwap(){
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
-            secondaryWeapon.CmdReady(); // IMPORTANT, there's a bit of delay between saying this and swapping weapons, so this is the soon to be primary
-            CmdServerTellClientsSwap();
+            _currentInput.SwapWeapon = true;
+            if (isClientOnly){
+                PlayerSwapWeapon();
+            }
         }
     }
-
-    [Client]
+    
     private void ResetSwappedWeapon(){
         _swappedWeapon = false;
     }

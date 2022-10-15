@@ -151,6 +151,10 @@ public partial class Player : Character{
         if (playerInput.ReloadInput){
             primaryWeapon.Reload();
         }
+
+        if (playerInput.SwapWeapon){
+            PlayerSwapWeapon();
+        }
     }
 
 

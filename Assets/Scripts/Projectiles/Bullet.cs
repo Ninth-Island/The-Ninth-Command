@@ -25,7 +25,7 @@ public class Bullet : Projectile{
 
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
-        Destroy(gameObject);
+        Destroy(gameObject, 0.02f);
         GameObject db = Instantiate(deadBullet, transform.position, transform.rotation);
         db.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
         Destroy(db, 2f);
