@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using Pathfinding;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -54,6 +55,7 @@ public class NPC : Character{
         }
     }
 
+    [Server]
     public override void Hit(int damage){
         base.Hit(damage);
 

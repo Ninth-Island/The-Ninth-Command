@@ -20,7 +20,8 @@ public partial class Player : Character
     [SerializeField] protected Canvas HUD;
     [SerializeField] private TMP_Text pingDisplay;
 
-    
+    [SerializeField] private Slider healthSlider;
+    [SerializeField] private Slider shieldSlider;
     
     private Camera _mainCamera;
     private CinemachineVirtualCamera[] _virtualCameras;

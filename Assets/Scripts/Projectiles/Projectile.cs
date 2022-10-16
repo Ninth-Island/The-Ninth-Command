@@ -29,22 +29,15 @@ public class Projectile : CustomObject{
 
     private Character _firer;
 
-    [SerializeField] protected bool _live = true;
     
 
     protected void Awake(){
         _collider = GetComponent<Collider2D>();
         Start();
 
-        if (_live){
-            Destroy(gameObject, lifetime);
-        }
-        /*if (_live && isServer){
-            StartCoroutine(ServerDestroy(gameObject, lifetime));
-        }*/
+        Destroy(gameObject, lifetime);
     }
-    
-    
+
 
     protected virtual void OnCollisionEnter2D(Collision2D other){
         if (sticky){
@@ -53,13 +46,18 @@ public class Projectile : CustomObject{
             body.simulated = false;
         }
 
-        Character character = other.gameObject.GetComponent<Character>();
-        if (character && _live){
-            character.Hit(_damage);
+
+        if (isServer){
+            Debug.Log("hi");
+
+            Character character = other.gameObject.GetComponent<Character>();
+            if (character){
+                character.Hit(_damage);
+            }
         }
-        
+
         body.mass = 1;
-        _live = false;
+        Collider.enabled = false;
         gameObject.layer = LayerMask.NameToLayer("Dead Projectiles");
         
     }

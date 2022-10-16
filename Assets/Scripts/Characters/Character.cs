@@ -24,13 +24,16 @@ public class Character : CustomObject{
 
     public BasicWeapon primaryWeaponPrefab;
 
-    [SyncVar] [SerializeField] protected int health;
+    [SerializeField] protected int health;    
+    [SerializeField] protected int shield;
+
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float jumpVelocity = 18;
     
     [SerializeField] private PhysicsMaterial2D[] materials;
 
     protected int MaxHealth; // for healthbar and respawns
+    protected int MaxShield; // for shieldBar
     protected BoxCollider2D FeetCollider; // for ground checks
     
     [SerializeField] protected Animator Animator;
@@ -134,6 +137,7 @@ public class Character : CustomObject{
         base.Start();
 
         MaxHealth = health;
+        MaxShield = shield;
         FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         
     }
@@ -167,13 +171,10 @@ public class Character : CustomObject{
     }
 
 
+    [Server]
     public virtual void Hit(int damage){
-        health -= damage;
-        if (health <= 0){
-            InputsFrozen = true;
-            //Destroy(gameObject);
-        }
     }
+
 
 
     public virtual void Reload(){ // called by weapon

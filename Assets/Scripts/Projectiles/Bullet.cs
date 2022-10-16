@@ -22,14 +22,14 @@ public class Bullet : Projectile{
         base.OnStartServer();
         _level = FindObjectOfType<Level>();
     }
-
+    
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
         Destroy(gameObject, 0.02f);
         GameObject db = Instantiate(deadBullet, transform.position, transform.rotation);
         db.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity / 3;
         Destroy(db, 2f);
-        
+    
     }
     
     
