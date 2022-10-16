@@ -56,8 +56,7 @@ public class NPC : Character{
     }
 
     [Server]
-    public override void Hit(int damage){
-        base.Hit(damage);
+    protected override void Hit(int damage, Vector3 position, float angle){
 
         if (HealthRoutine != null){
             StopCoroutine(HealthRoutine);

@@ -122,7 +122,6 @@ public class Character : CustomObject{
 
     [Client]
     public override void OnStartClient(){
-        base.OnStartClient();
         if (hasAuthority){
             CmdSetReady();
         }
@@ -172,7 +171,7 @@ public class Character : CustomObject{
 
 
     [Server]
-    public virtual void Hit(int damage){
+    protected virtual void Hit(int damage, Vector3 position, float angle){
     }
 
 
@@ -187,8 +186,7 @@ public class Character : CustomObject{
     }
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        // just for sounds
-        // the actual health stuff happens on the projectiles
+        
     }
 
 

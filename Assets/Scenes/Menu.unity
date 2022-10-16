@@ -3439,7 +3439,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900254562}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 525b144c2f0ba5849b249e3948e67be1, type: 3}
@@ -4317,43 +4317,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1265421802 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1652111373552010671, guid: 3430303231618d04287b1091953faffa,
-    type: 3}
-  m_PrefabInstance: {fileID: 6269608959047803195}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1265421803 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3031169701325222882, guid: 3430303231618d04287b1091953faffa,
-    type: 3}
-  m_PrefabInstance: {fileID: 6269608959047803195}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1265421802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1265421806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1265421802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96b149f511061407fb54895c057b7736, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wrap: {fileID: 1265421803}
-  latencySpikeMultiplier: 1
-  latencySpikeSpeedMultiplier: 2
-  reliableLatency: 1
-  unreliableLoss: 0
-  unreliableLatency: 0
-  unreliableScramble: 0
 --- !u!1 &1513507535
 GameObject:
   m_ObjectHideFlags: 0
@@ -6290,6 +6253,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269608958687926624, guid: 3430303231618d04287b1091953faffa,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.000061035156
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3430303231618d04287b1091953faffa, type: 3}

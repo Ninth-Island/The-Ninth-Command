@@ -24,7 +24,8 @@ public class Projectile : CustomObject{
     [SerializeField] private float lifetime = 10f;
     
     private Collider2D _collider;
-    private int _damage;
+    public int damage;
+    public float initialAngle;
     private bool _piercing;
 
     private Character _firer;
@@ -45,29 +46,18 @@ public class Projectile : CustomObject{
             body.velocity = new Vector2(0, 0);
             body.simulated = false;
         }
-
-
-        if (isServer){
-            Debug.Log("hi");
-
-            Character character = other.gameObject.GetComponent<Character>();
-            if (character){
-                character.Hit(_damage);
-            }
-        }
-
-        body.mass = 1;
-        Collider.enabled = false;
-        gameObject.layer = LayerMask.NameToLayer("Dead Projectiles");
-        
+        _collider.enabled = false;
+        body.constraints = RigidbodyConstraints2D.FreezeAll;
+        gameObject.SetActive(false);
     }
 
     
-    public virtual void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string setName){
+    public virtual void SetValues(Character firer, int setDamage, float speed, float angle, bool piercing, int firedLayer, string setName){
         _firer = firer;
 
-        
-        _damage = damage;
+        initialAngle = angle;
+        Debug.Log(initialAngle);
+        damage = setDamage;
         name = setName + " " + gameObject;
         gameObject.layer = firedLayer - 4;
         _piercing = piercing;

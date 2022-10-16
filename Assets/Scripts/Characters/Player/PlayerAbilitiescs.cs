@@ -24,16 +24,22 @@ public partial class Player : Character{
 */
 
     
-    /*[Header("Heat and Energy")]
-    [SerializeField] private float MaxEnergy;
-    [SerializeField] private float energyCharge;
-    [SerializeField] private float MaxHeat;
-    [SerializeField] private float heatCharge;
+    [Header("Heat and Energy")]
+    [SerializeField] private int energy;
+    [SerializeField] private int energyCharge;
+    [SerializeField] private Slider energySlider;
+
+    [SerializeField] private int heat;
+    [SerializeField] private int heatCharge;
+    [SerializeField] private Slider overflowSlider;
     
+    [SerializeField] private int energyOverFlowHeatCharge;
     
-    
-    private float heat;
-    private float energy;*/
+    private int _maxEnergy;
+    private int _maxHeat;
+
+    [Header("Abilities")] 
+    [SerializeField] private float dashVelocity;
 
     private GameObject _externalJetpack;
 
@@ -41,13 +47,6 @@ public partial class Player : Character{
     private TrailRenderer _foot1;
     private TrailRenderer _foot2;
     
-    private Slider _energySlider;
-    private Slider _overflowSlider;
-    
-    
-    private AbilityNames _abilityNames = new AbilityNames();
-
-    private Dictionary<KeyCode, Action> Bindings = new Dictionary<KeyCode, Action>();
 
     
     
@@ -66,21 +65,9 @@ public partial class Player : Character{
     * ================================================================================================================
     */
 
-
-
-
-    [Client]
-    protected virtual void ClientAbilityStart(){
-
-        _externalJetpack = transform.GetChild(2).gameObject;
-        _jetPackEffects = _externalJetpack.transform.GetChild(0).GetComponent<ParticleSystem>();
-        _foot1 = _externalJetpack.transform.GetChild(1).GetComponent<TrailRenderer>(); 
-        _foot2 = _externalJetpack.transform.GetChild(2).GetComponent<TrailRenderer>();        
-        
-
-        Bindings.Add(KeyCode.LeftShift, UseJetPack);
-        Bindings.Add(KeyCode.LeftAlt, Dash);
-        Bindings.Add(KeyCode.Space, Fly);
+    private void ServerPlayerAbilitiesStart(){
+        _maxEnergy = energy;
+        _maxHeat = heat;
     }
     
     [Client]
@@ -108,16 +95,19 @@ public partial class Player : Character{
 
 
     [Server]
-    private void ServerAbilitiesFixedUpdate(){/*
-        heat = Mathf.Clamp(heat + heatCharge, 0, MaxHeat);
-        energy = Mathf.Clamp(energy + energyCharge, 0, MaxEnergy);*/
+    private void ServerAbilitiesFixedUpdate(){
+        if (energy >= _maxEnergy){
+            heat = Mathf.Clamp(heat + energyOverFlowHeatCharge, 0, _maxHeat);
+        }
+        else{
+            energy = Mathf.Clamp(energy + energyCharge, 0, _maxEnergy);
+        }
+        
+        heat = Mathf.Clamp(heat + heatCharge, 0, _maxHeat);
+        ClientUpdateSlidersTargetRpc(connectionToClient, energy, heat);
+        
 
-        /*
-        body.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        CheckBindings();
-
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
+        /*transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
 
         if (!Input.GetKey(KeyCode.LeftShift)){
             _virtualCameras[0].Priority = 10;
@@ -136,21 +126,17 @@ public partial class Player : Character{
         _foot2.emitting = Input.GetKey(KeyCode.Space) && Airborne;
         */
 
+    }
 
+    [TargetRpc]
+    private void ClientUpdateSlidersTargetRpc(NetworkConnection connection, int setEnergy, int setHeat){
+        energySlider.value = (float) setEnergy / _maxEnergy;
+        healthSlider.value = (float) setHeat / _maxHeat;
     }
 
 
     #endregion
     
-    
-    private void CheckBindings(){
-
-        foreach (KeyCode keyCode in Bindings.Keys){
-            if (Input.GetKey(keyCode)){
-                Bindings[keyCode].Invoke();
-            }
-        }
-    }
 
     #region LeftShift
 
@@ -192,7 +178,8 @@ public partial class Player : Character{
     }
 
     private void Fly(){
-        if (Airborne){
+        /*if (Airborne){
+            
             
             float rotation = GetPlayerToMouseRotation() - 90;
             
@@ -208,7 +195,7 @@ public partial class Player : Character{
             _virtualCameras[1].Priority = 0;
             _virtualCameras[2].Priority = 10;
             
-        }
+        }*/
     }
 
     
@@ -218,12 +205,12 @@ public partial class Player : Character{
     #region LeftControl
 
     private void Dash(){
-        //if (heat >= MaxHeat){
-            //heat = 0;
-            /*float rotation = GetPlayerToMouseRotation();
+        if (heat >= _maxHeat){
+            heat = 0;
+            float rotation = GetBarrelToMouseRotation();
             Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
-            body.velocity = dir * dashVelocity;*/
-        //}
+            body.velocity = dir * dashVelocity;
+        }
     }
 
     private void UseGrapplingHook(){
@@ -240,18 +227,6 @@ public partial class Player : Character{
     
     // similar to armor abilities, but this is the trigger for external equipment such as grav boots, jetpack, etc
 
-  
-
-    private class AbilityNames{
-        public class LeftShift{
-            public readonly string Sprint = "sprint";
-            public readonly string Dash = "Dash";
-        }
-
-        public LeftShift leftShift = new LeftShift();
-
-    }
-    
     private class ANames{
         public readonly string running = "Running";
         public readonly  string runningBackwards = "RunningBackward";

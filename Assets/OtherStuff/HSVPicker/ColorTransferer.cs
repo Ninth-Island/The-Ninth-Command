@@ -21,7 +21,6 @@ public class ColorTransferer : MonoBehaviour
         if (Time.timeScale == 1){
             //Time.timeScale = 0;
             pauseMenu = Instantiate(pauseMenuPrefab).transform.GetChild(0).gameObject;
-            pauseMenu.GetComponent<Pause>().SetColorTransferer(this);
         }
         else{
             Time.timeScale = 1;

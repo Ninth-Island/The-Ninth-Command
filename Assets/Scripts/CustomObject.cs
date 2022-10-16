@@ -28,16 +28,8 @@ public class CustomObject : NetworkBehaviour{
         AudioManager = GetComponent<AudioManager>();
     
     }
-
-    public override void OnStartClient(){
-    }
-
-    public override void OnStartServer(){
-        base.OnStartServer();
-    }
-
     
-
+    
     protected virtual void FixedUpdate(){
         if (isClient){
             ClientFixedUpdate();

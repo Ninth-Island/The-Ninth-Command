@@ -213,7 +213,6 @@ MonoBehaviour:
   parent: {fileID: 0}
   localPos: {x: 2.08, y: 0.15}
   wielder: {fileID: 0}
-  offset: {x: 2.08, y: -0.15}
   armType: 0
   cursorType: 19
   allowInterrupt: 0
@@ -225,7 +224,7 @@ MonoBehaviour:
   instability: 0
   projectileTemplate: {fileID: 5345319634674317827, guid: 203d132244d00ae489e3c060dad9bbad,
     type: 3}
-  projectileDamage: 1
+  projectileDamage: 250
   projectileSpeed: 400
   piercing: 0
   chargePerFrame: 5

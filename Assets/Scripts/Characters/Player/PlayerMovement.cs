@@ -129,12 +129,8 @@ public partial class Player : Character{
 
     
     #endregion
-    
-    
-    [ClientCallback]
-    protected override void OnCollisionEnter2D(Collision2D other){
-        base.OnCollisionEnter2D(other);
-        
+
+    private void CheckSoundsOnCollision(Collision2D other){
         if (other.gameObject.CompareTag("Ground")){
             if (_hardLanding){
                 SortSound(4);

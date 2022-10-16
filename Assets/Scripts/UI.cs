@@ -20,7 +20,6 @@ public class UI : MonoBehaviour
     private ushort _port = 7777;
     private string _ipAddress = "127.0.0.1";
     private NetworkManager _networkManager;
-
     private AudioSource _audioSource;
 
     private void Start(){
@@ -115,6 +114,23 @@ public class UI : MonoBehaviour
         _networkManager.GetComponent<KcpTransport>().Port = _port;
         NetworkManager.singleton.StartClient();
         
+    }
+
+    public void Disconnect(){
+        try{
+            _networkManager.StopHost();
+        }
+        catch (Exception e){
+            Console.WriteLine(e);
+            try{
+                _networkManager.StopClient();
+            }
+            catch (Exception f){
+                Console.WriteLine(f);
+                throw;
+            }
+            throw;
+        }
     }
     
 

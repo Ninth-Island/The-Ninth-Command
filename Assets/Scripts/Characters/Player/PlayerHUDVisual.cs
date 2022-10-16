@@ -22,6 +22,12 @@ public partial class Player : Character
 
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider shieldSlider;
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI shieldText;
+
+    [SerializeField] private GameObject damageTextPrefab;
+    [SerializeField] private GameObject shieldDamageSparks;
+    [SerializeField] private GameObject armorDamageSparks;
     
     private Camera _mainCamera;
     private CinemachineVirtualCamera[] _virtualCameras;
@@ -81,12 +87,6 @@ public partial class Player : Character
             _notificationText.SetText("");
             pickupText = HUD.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             pickupText.SetText("");
-    
-    
-            Transform energyGauge = HUD.transform.GetChild(4);
-            _energySlider = energyGauge.GetChild(2).GetComponent<Slider>();
-            _overflowSlider = energyGauge.GetChild(3).GetComponent<Slider>();
-
         }
 
         
@@ -117,7 +117,6 @@ public partial class Player : Character
     }
     
     private void SetArmType(int armType){
-        weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
         _armRenderer.sprite = ArmTypes[armType];
     }
     
