@@ -111,7 +111,7 @@ public class Explosive : Projectile{
             body.sharedMaterial = material;
             
             // don't uncomment this. Don't you dare.
-            //_audioManager.PlaySound(0, false, 0);
+            //_audioManager.PlayConstant(0, false, 0);
         }
         else{
             base.OnCollisionEnter2D(other);

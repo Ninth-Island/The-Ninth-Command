@@ -232,14 +232,13 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   body: {fileID: 5345319634674317829}
-  Collider: {fileID: 0}
+  Collider: {fileID: 8440634332580792013}
   spriteRenderer: {fileID: 0}
   AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
-  sticky: 1
+  sticky: 0
   lifetime: 10
-  _live: 1
   fuseTimer: 2
   knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}

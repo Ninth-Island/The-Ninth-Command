@@ -33,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 4057086638289053943}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6520547883633214285}
@@ -81,10 +81,11 @@ SpriteRenderer:
   m_SortingLayerID: 447239203
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 30907b1c3a8476d40b5792b119b0d2ed, type: 3}
-  m_Color: {r: 0.25688708, g: 1, b: 0, a: 1}
-  m_FlipX: 1
-  m_FlipY: 1
+  m_Sprite: {fileID: -7484144780416948975, guid: 6b447f8b5169d0f479dbfce65d7e30d1,
+    type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 10, y: 10}
   m_AdaptiveModeThreshold: 0.5
@@ -130,7 +131,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 7.5, y: 6.25}
+    oldSize: {x: 10, y: 10}
     newSize: {x: 10, y: 10}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -138,14 +139,12 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -1.6258469, y: 0.41331387}
-      - {x: -0.13063812, y: -0.84352624}
-      - {x: 1.0566559, y: -0.84778297}
-      - {x: 1.3508453, y: -0.4858092}
-      - {x: 1.3281326, y: 0.77137065}
-      - {x: 0.9993324, y: 0.95978856}
-      - {x: -0.5233879, y: 0.9821192}
-      - {x: -1.6043167, y: 0.68157375}
+    - - {x: -1.8148632, y: -2.535854}
+      - {x: -0.04833281, y: -2.551306}
+      - {x: 0.32926363, y: -1.3327831}
+      - {x: 0.21340854, y: 0.22660774}
+      - {x: -0.6618035, y: 2.5100625}
+      - {x: -2.1656737, y: 2.5111442}
 --- !u!114 &4057086638289053941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,21 +159,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
+  body: {fileID: 4057086638289053939}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 4057086638289053938}
   AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
-  offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 0
   allowInterrupt: 0
-  firingPoint: {fileID: 0}
+  firingPoint: {fileID: 6520547883633214285}
   activelyWielded: 0
   shotDelay: 0
-  salvoDelay: 0
+  salvoDelay: 2
   shotsPerSalvo: 1
   instability: 0.2
   projectileTemplate: {fileID: 3541289887624826410, guid: 672ff0455fffe1d4ca3ce4e474c952c6,
@@ -182,8 +180,8 @@ MonoBehaviour:
   projectileDamage: 5
   projectileSpeed: 80
   piercing: 0
-  percentagePerShot: 50
-  heatPerShot: 10
+  percentagePerShot: 10
+  heatPerShot: 5
   coolDown: 1
   _energy: 9976449
   _heat: 0
@@ -411,7 +409,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4985260274020404626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: 8.65, y: -0.06, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
