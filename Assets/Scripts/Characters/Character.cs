@@ -24,13 +24,16 @@ public class Character : CustomObject{
 
     public BasicWeapon primaryWeaponPrefab;
 
-    [SyncVar] [SerializeField] protected int health;
+    [SerializeField] protected int health;    
+    [SerializeField] protected int shield;
+
     [SerializeField] protected float moveSpeed;
     [SerializeField] protected float jumpVelocity = 18;
     
     [SerializeField] private PhysicsMaterial2D[] materials;
 
     protected int MaxHealth; // for healthbar and respawns
+    protected int MaxShield; // for shieldBar
     protected BoxCollider2D FeetCollider; // for ground checks
     
     [SerializeField] protected Animator Animator;
@@ -119,7 +122,6 @@ public class Character : CustomObject{
 
     [Client]
     public override void OnStartClient(){
-        base.OnStartClient();
         if (hasAuthority){
             CmdSetReady();
         }
@@ -134,6 +136,7 @@ public class Character : CustomObject{
         base.Start();
 
         MaxHealth = health;
+        MaxShield = shield;
         FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         
     }
@@ -167,13 +170,10 @@ public class Character : CustomObject{
     }
 
 
-    public virtual void Hit(int damage){
-        health -= damage;
-        if (health <= 0){
-            InputsFrozen = true;
-            //Destroy(gameObject);
-        }
+    [Server]
+    protected virtual void Hit(int damage, Vector3 position, float angle){
     }
+
 
 
     public virtual void Reload(){ // called by weapon
@@ -186,8 +186,7 @@ public class Character : CustomObject{
     }
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
-        // just for sounds
-        // the actual health stuff happens on the projectiles
+        
     }
 
 

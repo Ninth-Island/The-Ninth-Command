@@ -49,9 +49,9 @@ public class Explosive : Projectile{
     
     public override void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string name){
         base.SetValues(firer, damage, speed, angle, piercing, firedLayer, name); 
-        if (_live){
-            StartCoroutine(Fuse());
-        }
+        
+        StartCoroutine(Fuse());
+        
     }
 
     protected override void ServerFixedUpdate(){
@@ -112,6 +112,7 @@ public class Explosive : Projectile{
             
             // don't uncomment this. Don't you dare.
             //_audioManager.PlaySound(0, false, 0);
+            _audioManager.PlayConstant(0, false, 0);
         }
         else{
             base.OnCollisionEnter2D(other);

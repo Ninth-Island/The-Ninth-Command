@@ -57,6 +57,8 @@ public partial class Player : Character{
             _currentInput.SwapWeapon = true;
             if (isClientOnly){
                 PlayerSwapWeapon();
+                HUDPickupWeapon();
+                weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
             }
         }
     }
@@ -86,7 +88,6 @@ public partial class Player : Character{
         
         primaryWeapon.Ready();
         SetArmType(primaryWeapon.armType);
-        HUDPickupWeapon();
     }
     
     // shared

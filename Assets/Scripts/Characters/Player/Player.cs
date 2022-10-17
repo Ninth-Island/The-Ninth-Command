@@ -18,16 +18,17 @@ public partial class Player : Character{
     
     [Client]
     public override void OnStartClient(){
-        
         ClientHUDVisualStart();
-        ClientAbilityStart();
         ClientWeaponControlStart();
-
         base.OnStartClient();
-
     }
-    
-  
+
+    [Server]
+    public override void OnStartServer(){
+        ServerPlayerAbilitiesStart();
+    }
+
+
     [Client]
     protected override void ClientUpdate(){
         base.ClientUpdate();
@@ -65,6 +66,7 @@ public partial class Player : Character{
         base.ServerFixedUpdate();
 
         ServerPlayerNetworkedMovementFixedUpdate();
+        ServerPlayerCombatFixedUpdate();
         ServerAbilitiesFixedUpdate();
         ServerPlayerWeaponFixedUpdate();
         

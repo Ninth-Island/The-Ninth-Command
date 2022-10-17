@@ -1,6 +1,7 @@
 ﻿
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using Pathfinding;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -54,8 +55,8 @@ public class NPC : Character{
         }
     }
 
-    public override void Hit(int damage){
-        base.Hit(damage);
+    [Server]
+    protected override void Hit(int damage, Vector3 position, float angle){
 
         if (HealthRoutine != null){
             StopCoroutine(HealthRoutine);

@@ -20,12 +20,18 @@ public class UI : MonoBehaviour
     private ushort _port = 7777;
     private string _ipAddress = "127.0.0.1";
     private NetworkManager _networkManager;
-
     private AudioSource _audioSource;
 
     private void Start(){
     _networkManager = NetworkManager.singleton;
     _audioSource = GetComponent<AudioSource>();
+
+    int timesStarted = PlayerPrefs.GetInt("TimesStarted");
+    if (timesStarted == 0){
+        PlayerPrefs.SetString("IP", "127.1.0.1");
+        PlayerPrefs.SetString("Port", "7777");
+    }
+    PlayerPrefs.SetInt("TimesStarted", + 1);
     }
 
     public void SetPortHost(string port){
@@ -46,6 +52,8 @@ public class UI : MonoBehaviour
                 hostError.color = Color.green;
 
                 Debug.Log($"Successfully set port to {_port}");
+                PlayerPrefs.SetString("Port", "" + _port);
+
             }
             else{
                 hostError.text = "Port is occupied";
@@ -77,6 +85,7 @@ public class UI : MonoBehaviour
                 clientError.color = Color.green;
 
                 Debug.Log($"Successfully set port to {_port}");
+                PlayerPrefs.SetString("Port", "" + _port);
             }
             else{
                 clientError.text = "Port is occupied";
@@ -98,6 +107,7 @@ public class UI : MonoBehaviour
             clientError.color = Color.green;
             
             Debug.Log($"Successfully set Ip to {_ipAddress}");
+            PlayerPrefs.SetString("IP", _ipAddress);
         }
         else{
             clientError.text = "Invalid Ip";     
@@ -114,7 +124,13 @@ public class UI : MonoBehaviour
         _networkManager.networkAddress = _ipAddress;
         _networkManager.GetComponent<KcpTransport>().Port = _port;
         NetworkManager.singleton.StartClient();
-        
+    }
+
+
+    public void Disconnect(){
+
+        _networkManager.StopHost();
+        _networkManager.StopClient();
     }
     
 
