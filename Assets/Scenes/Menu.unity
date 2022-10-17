@@ -2477,6 +2477,7 @@ GameObject:
   - component: {fileID: 735135697}
   - component: {fileID: 735135699}
   - component: {fileID: 735135698}
+  - component: {fileID: 735135700}
   m_Layer: 5
   m_Name: Server Port Entry (1)
   m_TagString: Untagged
@@ -2623,6 +2624,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 735135696}
   m_CullTransparentMesh: 1
+--- !u!114 &735135700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 735135696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c462aa2786d6c544f8456e4acf001232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: {fileID: 735135698}
+  isPort: 1
+  isHost: 1
+  ui: {fileID: 1827648977}
 --- !u!1 &762546221
 GameObject:
   m_ObjectHideFlags: 0
@@ -3976,6 +3993,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1163437682}
   - component: {fileID: 1163437683}
+  - component: {fileID: 1163437684}
   m_Layer: 5
   m_Name: Ip address Entry
   m_TagString: Untagged
@@ -4114,6 +4132,22 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!114 &1163437684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163437681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c462aa2786d6c544f8456e4acf001232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: {fileID: 1163437683}
+  isPort: 0
+  isHost: 0
+  ui: {fileID: 1827648977}
 --- !u!1 &1190617211
 GameObject:
   m_ObjectHideFlags: 0
@@ -5829,8 +5863,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2147029246}
   - component: {fileID: 2147029247}
+  - component: {fileID: 2147029248}
   m_Layer: 5
-  m_Name: Server Port Entry
+  m_Name: Client Port Entry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5967,6 +6002,22 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
+--- !u!114 &2147029248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147029245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c462aa2786d6c544f8456e4acf001232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  field: {fileID: 2147029247}
+  isPort: 1
+  isHost: 0
+  ui: {fileID: 1827648977}
 --- !u!1001 &6269608959047803195
 PrefabInstance:
   m_ObjectHideFlags: 0
