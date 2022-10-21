@@ -54,9 +54,8 @@ public class Projectile : CustomObject{
     
     public virtual void SetValues(Character firer, int setDamage, float speed, float angle, bool piercing, int firedLayer, string setName){
         _firer = firer;
-
+        
         initialAngle = angle;
-        Debug.Log(initialAngle);
         damage = setDamage;
         name = setName + " " + gameObject;
         gameObject.layer = firedLayer - 4;

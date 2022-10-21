@@ -17,6 +17,12 @@ public class CustomNetworkManager : NetworkManager{
 
     public bool allPlayersReady;
 
+    private List<Vector3> _blueSpawns = new List<Vector3>();
+    private int _blueSpawnCounter;
+    private List<Vector3> _redSpawns = new List<Vector3>();
+    private int _redSpawnCounter;
+    
+    
     public override void OnServerAddPlayer(NetworkConnectionToClient conn){
         base.OnServerAddPlayer(conn);
         string sceneName = SceneManager.GetActiveScene().name;
@@ -37,6 +43,9 @@ public class CustomNetworkManager : NetworkManager{
 
     public override void OnServerSceneChanged(string sceneName){
         if (sceneName != "Assets/Scenes/Lobby.unity" && sceneName != "Assets/Scenes/Menu.unity"){
+            TeamsSpawns[] teamsSpawnsArray = FindObjectsOfType<TeamsSpawns>();
+            _blueSpawns = teamsSpawnsArray[0].GetSpawns();
+            _redSpawns = teamsSpawnsArray[1].GetSpawns();
             StartCoroutine(SetupPlayers());
         }
     }
@@ -82,7 +91,19 @@ public class CustomNetworkManager : NetworkManager{
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
 
-        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, _usernames[connectionToClient], _colors[connectionToClient], _teamIndices[connectionToClient]);
+        int teamIndex = _teamIndices[connectionToClient];
+        List<Vector3> spawns;
+        if (teamIndex > 6){
+            player.transform.position = _redSpawns[_redSpawnCounter];
+            spawns = _redSpawns;
+            _redSpawnCounter++;
+        }
+        else{
+            player.transform.position = _blueSpawns[_blueSpawnCounter];
+            spawns = _blueSpawns;
+            _blueSpawnCounter++;
+        }
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, _usernames[connectionToClient], _colors[connectionToClient], spawns, teamIndex);
 
     }
 

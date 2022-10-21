@@ -38,7 +38,7 @@ public partial class Player : Character
     public Transform helmet;
 
     private SpriteRenderer _armRenderer;
-    private bool _armOverride;
+    private bool _armOverrideReloading;
     
     private Color[] _colors = new Color[3];
     private GameObject[] sprites = new GameObject[7];
@@ -121,11 +121,11 @@ public partial class Player : Character
     }
     
     public override void Reload(){ // for reloading and holding melee
-        _armOverride = true;
+        _armOverrideReloading = true;
     }
 
     public override void FinishReload(){
-        _armOverride = false;
+        _armOverrideReloading = false;
     }
 
     

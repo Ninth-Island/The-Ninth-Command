@@ -34,7 +34,7 @@ public class Character : CustomObject{
 
     protected int MaxHealth; // for healthbar and respawns
     protected int MaxShield; // for shieldBar
-    protected BoxCollider2D FeetCollider; // for ground checks
+    [SerializeField] protected BoxCollider2D feetCollider; // for ground checks
     
     [SerializeField] protected Animator Animator;
     
@@ -46,6 +46,8 @@ public class Character : CustomObject{
     private bool _suppressGroundCheck;
 
     public bool characterClientReady;
+
+    public float dropoff = 0.95f;
     
     
     #region Server
@@ -86,13 +88,13 @@ public class Character : CustomObject{
 
     [Client]
     private PhysicsMaterial2D GetMaterialTouching(){
-        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
             Collider2D[] output = new Collider2D[1];
             
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Ground", "Platform"));
             
-            FeetCollider.OverlapCollider(filter, output);
+            feetCollider.OverlapCollider(filter, output);
             if (output[0] != null){
                 return output[0].attachedRigidbody.sharedMaterial;
             }
@@ -137,27 +139,57 @@ public class Character : CustomObject{
 
         MaxHealth = health;
         MaxShield = shield;
-        FeetCollider = transform.GetChild(0).GetComponent<BoxCollider2D>();
         
     }
     
     protected override void FixedUpdate(){
-        base.FixedUpdate();
         CheckStates();
+        base.FixedUpdate(); // THIS HAS to be come first. The checks states has to set velocity BEFORE player does otherwise it nerds movement speed
     }
-    
-    
+
+
     private void CheckStates(){ // happens on fixed update
         FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
-        
+
         if (!_suppressGroundCheck){
-            RaycastHit2D[] results = new RaycastHit2D[3];
-            Physics2D.RaycastNonAlloc(transform.position, Vector2.down,  results, 4, LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"));
+            RaycastHit2D[] resultsLeft = new RaycastHit2D[3];
+            RaycastHit2D[] resultsRight = new RaycastHit2D[3];
+            
+            Physics2D.RaycastNonAlloc(transform.position - new Vector3(1.4f * transform.localScale.x, 0), Vector2.down,
+                resultsLeft, 4,
+                LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3",
+                    "Team 4"));
+
+            Physics2D.RaycastNonAlloc(transform.position + new Vector3(0.73f * transform.localScale.x, 0), Vector2.down,
+                resultsRight, 4,
+                LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3",
+                    "Team 4"));
+            
+            Debug.DrawRay(transform.position + new Vector3(0.73f * transform.localScale.x, 0), Vector2.down * 4);
+            Debug.DrawRay(transform.position - new Vector3(1.4f * transform.localScale.x, 0), Vector2.down * 4);
             
             Airborne = true;
-            foreach (RaycastHit2D result in results){
-                if (result && result.collider.gameObject != gameObject && result.collider.gameObject != FeetCollider.gameObject){
+            foreach (RaycastHit2D result in resultsLeft){
+                if (result && result.collider.gameObject != gameObject &&
+                    result.collider.gameObject != feetCollider.gameObject){
                     Airborne = false;
+                    if (body.velocity.magnitude < 1f){
+                        body.velocity *= dropoff;
+                    }
+                }
+            }
+
+            if (Airborne){
+                foreach (RaycastHit2D result in resultsRight){
+                    if (result && result.collider.gameObject != gameObject &&
+                        result.collider.gameObject != feetCollider.gameObject){
+                        Airborne = false;
+    
+                        if (body.velocity.magnitude < 1f){
+                            body.velocity *= dropoff;
+                        }
+                    }
+
                 }
             }
         }
@@ -187,6 +219,11 @@ public class Character : CustomObject{
     
     protected virtual void OnCollisionEnter2D(Collision2D other){
         
+    }
+    
+    public void SetLayer(int layer){
+        gameObject.layer = layer;
+        feetCollider.gameObject.layer = layer;
     }
 
 

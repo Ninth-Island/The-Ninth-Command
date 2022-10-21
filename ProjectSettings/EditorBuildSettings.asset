@@ -14,16 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MultiplayerSandbox.unity
     guid: e3fc210cad2390147bbe4ca91eceea42
-  - enabled: 0
-    path: Assets/Scenes/MultiplayerSandbox 1.unity
-    guid: ca1d9bfdcf12796479f604f3ba7e9a3c
-  - enabled: 0
-    path: Assets/Scenes/MultiplayerSandbox 2.unity
-    guid: 1c288dc431b82f3439ffe69f2d8beb0f
-  - enabled: 0
-    path: Assets/Scenes/Single Player/Sandbox.unity
-    guid: 01f369939ed842b4fb9734742114c6e4
-  - enabled: 0
-    path: Assets/Scenes/Single Player/Jetpack Practice.unity
-    guid: 674ed32c007fcc044a6a37388f98889b
+  - enabled: 1
+    path: Assets/Scenes/Map1.unity
+    guid: f5a5b30d553b3ab489268f83c9d0db7a
   m_configObjects: {}
