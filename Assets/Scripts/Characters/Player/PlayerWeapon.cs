@@ -23,7 +23,8 @@ public partial class Player : Character{
     
     
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
-
+    
+    
     #region Firing
 
     
@@ -183,10 +184,7 @@ public partial class Player : Character{
     
     
     public float GetPlayerToMouseRotation(){
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 3f){
-            return 0;
-        }
-        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - transform.position.y, _cursorControl.GetMousePosition().x - transform.position.x) * Mathf.Rad2Deg;
+        float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - helmet.transform.position.y, _cursorControl.GetMousePosition().x - helmet.transform.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;
         }
@@ -194,9 +192,11 @@ public partial class Player : Character{
     }
 
     private float GetBarrelToMouseRotation(){
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 12f){
-            return 0;
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14){
+            return GetPlayerToMouseRotation();
         }
+        
+        
         float ang = Mathf.Atan2(_cursorControl.GetMousePosition().y - primaryWeapon.firingPoint.position.y, _cursorControl.GetMousePosition().x - primaryWeapon.firingPoint.position.x) * Mathf.Rad2Deg;
         if (ang < 0){
             return 360 + ang;
@@ -233,6 +233,7 @@ public partial class Player : Character{
     private void ClientWeaponControlStart(){
         _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
     }
+    
 
     [ClientRpc]
     public void InitializeWeaponsOnClient(BasicWeapon pW, BasicWeapon sW){ // this is mostly for an edge case error

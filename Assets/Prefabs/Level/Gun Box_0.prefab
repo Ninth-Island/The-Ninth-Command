@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9096478328113843486}
   - component: {fileID: 2071099922135655204}
   - component: {fileID: -5208334044213558918}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Gun Box_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2682459933079525395}
   - component: {fileID: 7049720825227370697}
   - component: {fileID: 6540013113200899951}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Weapon Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

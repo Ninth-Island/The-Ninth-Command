@@ -50,6 +50,7 @@ public class Weapon : CustomObject{
 
     protected virtual void Drop(){
         body.simulated = true;
+        body.bodyType = RigidbodyType2D.Dynamic;
         gameObject.layer = LayerMask.NameToLayer("Objects");
         parent = null;
         _networkTransform.enabled = true;

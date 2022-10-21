@@ -23,13 +23,13 @@ public class VirtualPlayer : NetworkBehaviour{
 
 
     [Server]
-    public void SetupPlayer(Player player, string username, Color[] colors, int teamIndex){
+    public void SetupPlayer(Player player, string username, Color[] colors, List<Vector3> spawns, int teamIndex){
         ClientSetupPlayer(player, username, colors, teamIndex);
         if (teamIndex > 6){
-            player.gameObject.layer = LayerMask.NameToLayer("Team 2");
+            player.SetLayer(LayerMask.NameToLayer("Team 2"));
         }
         else{
-            player.gameObject.layer = LayerMask.NameToLayer("Team 1");
+            player.SetLayer(LayerMask.NameToLayer("Team 1"));
         }
 
     }
@@ -43,7 +43,7 @@ public class VirtualPlayer : NetworkBehaviour{
         floatingName.text = username;
 
         if (teamIndex > 6){
-            player.gameObject.layer = LayerMask.NameToLayer("Team 2");
+            player.SetLayer(LayerMask.NameToLayer("Team 2"));
             if (hasAuthority){
                 floatingName.color = Color.magenta;
             }
@@ -52,7 +52,7 @@ public class VirtualPlayer : NetworkBehaviour{
             }
         } 
         else if (teamIndex > 0){
-            player.gameObject.layer = LayerMask.NameToLayer("Team 1");
+            player.SetLayer(LayerMask.NameToLayer("Team 1"));
             if (hasAuthority){
                 floatingName.color = Color.green; 
             }

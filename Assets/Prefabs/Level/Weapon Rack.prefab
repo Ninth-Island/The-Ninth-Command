@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6570797562358198409}
   - component: {fileID: 6713397380597321613}
   - component: {fileID: -8532255267999800590}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Weapon Rack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

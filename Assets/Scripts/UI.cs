@@ -124,6 +124,7 @@ public class UI : MonoBehaviour
         _networkManager.networkAddress = _ipAddress;
         _networkManager.GetComponent<KcpTransport>().Port = _port;
         NetworkManager.singleton.StartClient();
+        Debug.Log(_ipAddress + "   " + _port);
     }
 
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3308000605345404618}
   - component: {fileID: 7300232024954024140}
   - component: {fileID: 9038912181667733344}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Resupply_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}

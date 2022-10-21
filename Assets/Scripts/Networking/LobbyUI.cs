@@ -19,6 +19,7 @@ public class LobbyUI : MonoBehaviour{
     [SerializeField] private GameObject leftArrow;
     [SerializeField] private GameObject rightArrow;
     [SerializeField] private Sprite[] mapIcons;
+    [SerializeField] private string[] mapNames;
     [SerializeField] private Image mapPreview;
     private CustomNetworkManager _networkManager;
 
@@ -150,9 +151,7 @@ public class LobbyUI : MonoBehaviour{
                 button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
             }
             else{
-                _networkManager.ServerChangeScene("MultiplayerSandbox"/*SceneManager.GetSceneByBuildIndex(_mapChoice + 2).name*/);
-                //SceneManager.sceneLoaded += ServerChangeScene; 
-                //SceneManager.LoadScene(_mapChoice + 2);
+                _networkManager.ServerChangeScene(mapNames[_mapChoice]);
             }
         }
     }

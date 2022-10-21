@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 651150977694989288}
   - component: {fileID: 7355319845647832531}
   - component: {fileID: -2925808519781435530}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Health Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}

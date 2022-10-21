@@ -82,7 +82,7 @@ public partial class Player : Character{
     private void Jump(){
         
         Vector2 velocity = body.velocity;
-        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform", "Vehicle", "Vehicle Outer", "Team 1", "Team 2", "Team 3", "Team 4"))){
+        if (!Airborne){
             Airborne = true;
             _isCrouching = false;
             body.velocity = new Vector2(velocity.x, jumpVelocity);
@@ -99,7 +99,7 @@ public partial class Player : Character{
 
     private void RotateArm(float rotation){
        
-        if (_armOverride == false){
+        if (_armOverrideReloading == false){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
         }
@@ -115,8 +115,10 @@ public partial class Player : Character{
         helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
         helmet.transform.localScale = new Vector3(1, 1);
 
+        if (isServer && hasAuthority){
+        }
 
-        if (rotation > 90 && rotation < 270){
+        if (rotation > 90 && rotation < 270/* && (transform.position - _cursorControl.GetMousePosition()).magnitude > 13f*/){
             arm.transform.localScale = new Vector3(-1, -1);
             helmet.transform.localScale = new Vector3(-1, -1);
             transform.localScale = new Vector3(-1, 1);

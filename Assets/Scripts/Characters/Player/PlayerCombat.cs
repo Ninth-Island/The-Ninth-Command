@@ -28,8 +28,7 @@ public partial class Player : Character{
         if (isServer){
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
             if (projectile){
-                Hit(projectile.damage, other.transform.position, projectile.initialAngle); 
-                Debug.Log(projectile.initialAngle);
+                Hit(projectile.damage, other.transform.position, projectile.initialAngle);
             }
         }
     }
@@ -46,7 +45,6 @@ public partial class Player : Character{
             health -= damage;
             if (health < 0){
                 //die
-                Debug.Log("die");
             }
         }
 

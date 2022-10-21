@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1237766196196979060}
   - component: {fileID: 1232985760200727388}
   - component: {fileID: -7203888785644818750}
-  m_Layer: 13
+  m_Layer: 17
   m_Name: Antenna_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
