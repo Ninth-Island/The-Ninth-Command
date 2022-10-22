@@ -278,6 +278,7 @@ MonoBehaviour:
     priority: 0
     waitTillNext: 0
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
 --- !u!82 &3208779240681578756
 AudioSource:

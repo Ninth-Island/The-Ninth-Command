@@ -72,6 +72,10 @@ public class CustomNetworkManager : NetworkManager{
         Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
         BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
+
+        // cuts "(clone)" off the end
+        pW.name = pW.name.Remove(pW.name.Length - 7);
+        sW.name = sW.name.Remove(sW.name.Length - 7);
         
         // this is server only for hierarchy organization
         Transform container = new GameObject($"Player {connectionToClient.connectionId}").transform;

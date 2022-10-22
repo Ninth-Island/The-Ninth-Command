@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine.Audio;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +11,7 @@ public class AudioManager : MonoBehaviour{
 
 
     [SerializeField] public List<Sound> sounds;
+    [SerializeField] private GameObject newObjectSource;
 
     public AudioSource source;
 
@@ -19,6 +21,7 @@ public class AudioManager : MonoBehaviour{
     }
 
 
+    [Client]
     public void PlayRepeating(int index, float time){ // for repeated noises that are attempted to be played every frame such as firing
         Sound sound = sounds[index];
         
@@ -29,7 +32,8 @@ public class AudioManager : MonoBehaviour{
             source.time = time;
         }
     }
-
+    
+    [Client]
     public void PlaySound(int index, bool allowInterrupt){
         Sound sound = sounds[index];
 
@@ -49,7 +53,8 @@ public class AudioManager : MonoBehaviour{
         source.spatialBlend = sound.spacialBlend;
 
     }
-
+    
+    [Client]
     public void PlayConstant(int index, bool allowInterrupt, float time){ // for sounds that ramp up like charging that take time
         source.Stop();
 
@@ -73,8 +78,10 @@ public class AudioManager : MonoBehaviour{
         }
     }
 
+    
+    [Client]
     public void PlayNewSource(int index){ // creates a new audio source to avoid interference with main one
-        AudioSource newSource = gameObject.AddComponent<AudioSource>();
+        AudioSource newSource = Instantiate(newObjectSource, transform.position, Quaternion.identity).GetComponent<AudioSource>();
         newSource.clip = sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)];
         Sound sound = sounds[index];
         
@@ -84,8 +91,9 @@ public class AudioManager : MonoBehaviour{
         newSource.priority = sound.priority;
         newSource.spatialBlend = sound.spacialBlend;
         newSource.Play();
-        
-        Destroy(newSource, newSource.clip.length);
+        Debug.Log(newSource.volume);
+
+        Destroy(newSource.gameObject, newSource.clip.length);
     }
     
 

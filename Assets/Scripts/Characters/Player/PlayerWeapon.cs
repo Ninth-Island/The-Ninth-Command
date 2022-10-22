@@ -56,11 +56,13 @@ public partial class Player : Character{
     private void ClientCheckSwap(){
         if (Math.Abs(Input.GetAxis("Mouse ScrollWheel")) > 0 && !Input.GetKey(KeyCode.Mouse1) && !_swappedWeapon){
             _currentInput.SwapWeapon = true;
+            
+            HUDPickupWeapon(secondaryWeapon); // secondary weapon because this is before switching
+            weaponImage.sprite = secondaryWeapon.spriteRenderer.sprite;
             if (isClientOnly){
                 PlayerSwapWeapon();
-                HUDPickupWeapon();
-                weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
             }
+
         }
     }
 
@@ -89,6 +91,7 @@ public partial class Player : Character{
         
         primaryWeapon.Ready();
         SetArmType(primaryWeapon.armType);
+
     }
     
     // shared
@@ -109,7 +112,7 @@ public partial class Player : Character{
         pickupText.SetText("");
         if (objectScan){
             GameObject nearestObject = objectScan.collider.gameObject;
-            pickupText.transform.localPosition = Input.mousePosition - HUD.transform.localPosition;
+            pickupText.transform.position = _mainCamera.WorldToScreenPoint(nearestObject.transform.position);
             pickupText.SetText(nearestObject.name);
 
             if (nearestObject.CompareTag("Weapon")){
@@ -139,7 +142,7 @@ public partial class Player : Character{
 
                 newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
                 SetArmType(primaryWeapon.armType);
-                HUDPickupWeapon();
+                HUDPickupWeapon(primaryWeapon);
             }
         }
     

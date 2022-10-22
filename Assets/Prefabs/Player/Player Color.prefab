@@ -354,7 +354,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023890996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -391,7 +391,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.4195688, y: 1}
+    m_SensorSize: {x: 1.3789809, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6772,7 +6772,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3396871745814938335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6809,7 +6809,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.4195688, y: 1}
+    m_SensorSize: {x: 1.3789809, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6892,6 +6892,7 @@ GameObject:
   - component: {fileID: 1838690149}
   - component: {fileID: 3757039344788581447}
   - component: {fileID: 4281232738288173098}
+  - component: {fileID: -1191291183925493170}
   m_Layer: 28
   m_Name: Player Color
   m_TagString: Player
@@ -7014,7 +7015,7 @@ MonoBehaviour:
   energyOverFlowHeatCharge: 1
   dashVelocity: 20
   timeTillShieldRecharge: 200
-  shieldRechargeRate: 3
+  shieldRechargeRate: 4
   spritesParent: {fileID: 3208046358017332010}
   ArmTypes:
   - {fileID: -7887873344414462056, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
@@ -7073,7 +7074,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 55b5d6d5d38b28a4a8b1a6a84e71fddf, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7090,7 +7091,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8b6009f3703ce7742b3a0440b27a7245, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7103,7 +7104,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
     volume: 0.1
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.3
     loop: 0
@@ -7116,7 +7117,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
     volume: 0.3
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7129,7 +7130,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.4
     loop: 0
@@ -7144,9 +7145,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: eb997b926bd3dc948acf1ff5b7775f9f, type: 3}
     - {fileID: 8300000, guid: e86815adaf77b8f4d933c5cc6e852868, type: 3}
     - {fileID: 8300000, guid: 55b5d6d5d38b28a4a8b1a6a84e71fddf, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7161,9 +7162,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8b66889d68df11b4d93293d5b92dd48c, type: 3}
     - {fileID: 8300000, guid: e68a60ef23b56e64c9f32affb48949db, type: 3}
     - {fileID: 8300000, guid: 33d87b437863def4d9dc2b7c51222eb3, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -7181,7 +7182,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 086c9c65bcc4e6a4bac6e58d599378db, type: 3}
     volume: 0.1
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.3
     loop: 0
@@ -7194,7 +7195,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fa4fa8a485087e84c87095d9003f6526, type: 3}
     volume: 0.3
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7207,7 +7208,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e4df2ce90957de943928eb344209d8f3, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7221,7 +7222,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b703ebf336964ee48b5a90659585de22, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7238,7 +7239,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 25fffcfda1fe9a74ea2350a42859d4e0, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7256,7 +7257,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: a4b2656e257c03c458ab63acdd1006ea, type: 3}
     volume: 0.1
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.3
     loop: 0
@@ -7268,7 +7269,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8db63d1d5ef9389498b59dd407352e47, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.4
     loop: 0
@@ -7281,7 +7282,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 8422f968a42e5da489c832a7c4f786cb, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.4
     loop: 0
@@ -7294,7 +7295,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: dbfbd3bc8fa295f418fdbd8d13da4b8c, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7312,7 +7313,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 324b3e56c7848f14bb6d29a8847f99e0, type: 3}
     volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -7330,7 +7331,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d7c28e1fd0f8afd428a0afb6813a5ad3, type: 3}
     volume: 0.1
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.3
     loop: 0
@@ -7352,7 +7353,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 254af4bea07accf488d00de70cbf5a27, type: 3}
     volume: 0.3
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.4
     loop: 0
@@ -7367,37 +7368,65 @@ MonoBehaviour:
     - {fileID: 8300000, guid: feef31f0c52a5824b9bff9426bd3d09d, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.4
     loop: 0
-  - name: Jetpack In
+  - name: Shield Hit
     clipsList:
-    - {fileID: 8300000, guid: e16a00d37c8fb134c9d4199d22c49271, type: 3}
-    volume: 0.2
+    - {fileID: 8300000, guid: faa75639170aade4499b203e33eb004f, type: 3}
+    volume: 1
     pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0.4
     loop: 0
-  - name: Jetpack Loop
+  - name: Body Hit
     clipsList:
-    - {fileID: 8300000, guid: 7c97f8ef14ae4d54e8d4a22a6d58c295, type: 3}
-    volume: 0.2
+    - {fileID: 8300000, guid: 9d4f5b02d748e5f429ef111bc862d9dd, type: 3}
+    volume: 0.4
     pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
-    loop: 1
-  - name: Jetpack Out
-    clipsList:
-    - {fileID: 8300000, guid: a1cc48579338d7a41ac2d93de0032218, type: 3}
-    volume: 0.2
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0.4
     loop: 0
+  - name: shield charge
+    clipsList:
+    - {fileID: 8300000, guid: 5106884b9b473014da6a21988815e809, type: 3}
+    volume: 0.4
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0.4
+    loop: 0
+  - name: shield low
+    clipsList:
+    - {fileID: 8300000, guid: b64c6183d00227f419d951c5a521553c, type: 3}
+    volume: 0.4
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0.4
+    loop: 0
+  - name: shield depleted
+    clipsList:
+    - {fileID: 8300000, guid: 351928c87503c6f4297b361fd7436395, type: 3}
+    volume: 0.4
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0.4
+    loop: 0
+  - name: health low (heartbeat)
+    clipsList:
+    - {fileID: 8300000, guid: f296a99532670f24aa53e230a2201c37, type: 3}
+    volume: 0.4
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0.4
+    loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
 --- !u!82 &1838690149
 AudioSource:
@@ -7532,6 +7561,102 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 75c82abd1998fe8449bac6b6751fb637
   hasSpawned: 0
+--- !u!82 &-1191291183925493170
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3757039344788581446}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3918054334753324867
 GameObject:
   m_ObjectHideFlags: 0
@@ -7557,7 +7682,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3918054334753324867}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -100}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7594,7 +7719,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.4195688, y: 1}
+    m_SensorSize: {x: 1.3789809, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

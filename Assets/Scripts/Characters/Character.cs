@@ -46,8 +46,7 @@ public class Character : CustomObject{
     private bool _suppressGroundCheck;
 
     public bool characterClientReady;
-
-    public float dropoff = 0.95f;
+    
     
     
     #region Server
@@ -88,7 +87,7 @@ public class Character : CustomObject{
 
     [Client]
     private PhysicsMaterial2D GetMaterialTouching(){
-        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))){
+        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform"))){
             Collider2D[] output = new Collider2D[1];
             
             ContactFilter2D filter = new ContactFilter2D();
@@ -118,7 +117,7 @@ public class Character : CustomObject{
     
     
     [Client]
-    public virtual void HUDPickupWeapon(){ // called when smth changes like weapon swap
+    public virtual void HUDPickupWeapon(BasicWeapon weapon){ // called when smth changes like weapon swap
         
     }
 
@@ -173,8 +172,8 @@ public class Character : CustomObject{
                 if (result && result.collider.gameObject != gameObject &&
                     result.collider.gameObject != feetCollider.gameObject){
                     Airborne = false;
-                    if (body.velocity.magnitude < 1f){
-                        body.velocity *= dropoff;
+                    if (body.velocity.y < 1f){
+                        body.velocity *= .9f;
                     }
                 }
             }
@@ -185,8 +184,8 @@ public class Character : CustomObject{
                         result.collider.gameObject != feetCollider.gameObject){
                         Airborne = false;
     
-                        if (body.velocity.magnitude < 1f){
-                            body.velocity *= dropoff;
+                        if (body.velocity.y < 1f){
+                            body.velocity *= 0.9f;
                         }
                     }
 

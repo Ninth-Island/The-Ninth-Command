@@ -37,6 +37,7 @@ public partial class Player : Character{
         if (playerInput.SwapWeapon){
             PlayerSwapWeapon();
             PlayerSwapWeaponClientRpc();
+            
         }
 
         if (playerInput.PickedUp){
@@ -63,7 +64,6 @@ public partial class Player : Character{
 
             newWeapon.SwapTo(this, oldWeapon, new[]{1, 3});
             SetArmType(primaryWeapon.armType);
-            HUDPickupWeapon();
         }
     }
 

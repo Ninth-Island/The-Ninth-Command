@@ -32,6 +32,8 @@ public partial class Player : Character
     private Camera _mainCamera;
     private CinemachineVirtualCamera[] _virtualCameras;
 
+    private AudioSource _secondSource;
+
     
     // sprites
     public Transform arm;
@@ -89,7 +91,7 @@ public partial class Player : Character
             pickupText.SetText("");
         }
 
-        
+        _secondSource = GetComponents<AudioSource>()[1];
         _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
@@ -103,10 +105,9 @@ public partial class Player : Character
 
 
     [Client]
-    public override void HUDPickupWeapon(){ // called when smth changes like weapon swap
-        _cursorControl.SetCursorType(primaryWeapon.cursorType);
-
-        SetNotifText(primaryWeapon.name);
+    public override void HUDPickupWeapon(BasicWeapon weapon){ // called when smth changes like weapon swap
+        _cursorControl.SetCursorType(weapon.cursorType);
+        SetNotifText(weapon.name);
     }
 
 

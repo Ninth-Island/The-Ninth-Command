@@ -266,7 +266,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0f58f31e40d8c5246af20f30f3ddf70e, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 3ddfdf298ada473499fdaba2c690b722, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -288,7 +288,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 52d2ae74ae7151244b38766057b05d5f, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -304,7 +304,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e0d3541275e4fbc4f9818876e29a5470, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 1
     loop: 0
@@ -326,6 +326,7 @@ MonoBehaviour:
     priority: 128
     waitTillNext: 0
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
 --- !u!82 &3384590040524449548
 AudioSource:

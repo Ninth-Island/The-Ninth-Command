@@ -49,6 +49,16 @@ public class Projectile : CustomObject{
         _collider.enabled = false;
         body.constraints = RigidbodyConstraints2D.FreezeAll;
         gameObject.SetActive(false);
+        if (other.rigidbody && other.rigidbody.sharedMaterial){
+            if (other.rigidbody.sharedMaterial.name == "Metal"){
+                AudioManager.PlayNewSource(0);
+            }
+            else if (other.rigidbody.sharedMaterial.name == "Snow" || other.rigidbody.sharedMaterial.name == "Rock" ||
+                     other.rigidbody.sharedMaterial.name == "Grass"){
+                AudioManager.PlayNewSource(1);
+            }
+        }
+
     }
 
     

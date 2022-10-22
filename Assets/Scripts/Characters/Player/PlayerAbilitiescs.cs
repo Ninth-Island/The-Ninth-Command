@@ -89,8 +89,6 @@ public partial class Player : Character{
                 AudioManager.PlaySound(22, true);
             }
         }
-
-        pickupText.transform.position = Input.mousePosition;
     }
 
 

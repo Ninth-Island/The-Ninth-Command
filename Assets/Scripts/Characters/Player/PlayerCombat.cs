@@ -16,10 +16,11 @@ public partial class Player : Character{
         _timeLeftTillShieldRecharge--;
         if (_timeLeftTillShieldRecharge <= 0){
             shield = Mathf.Clamp(shield + shieldRechargeRate, 0, MaxShield);
-            UpdateHealthClientRpc(health, shield);
+            UpdateHealthClientRpc(health, shield, shield < MaxShield);
         }
     }
-    
+
+
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
         CheckSoundsOnCollision(other);
@@ -50,7 +51,7 @@ public partial class Player : Character{
 
         _timeLeftTillShieldRecharge = timeTillShieldRecharge;
         ClientSpawnDamageNumberClientRpc(damage, position, angle);
-        UpdateHealthClientRpc(health, shield);
+        UpdateHealthClientRpc(health, shield, false);
     }
 
     [ClientRpc]
@@ -62,15 +63,18 @@ public partial class Player : Character{
         damageNumber.shield = shieldEnough;
         if (shieldEnough){
             Instantiate(shieldDamageSparks, position, Quaternion.Euler(0, 0, angle + 180));
+            AudioManager.PlaySound(20, false);
         }
         else{
             Destroy(Instantiate(armorDamageSparks, position, Quaternion.Euler(0, 0, angle + 180)), 3f);
-            
+            AudioManager.PlaySound(21, false);
+
         }
     }
 
     [ClientRpc]
-    private void UpdateHealthClientRpc(int newHealth, int newShield){
+    private void UpdateHealthClientRpc(int newHealth, int newShield, bool shieldRegening){
+
         health = newHealth;
         shield = newShield;
         shieldSlider.value = (float) shield / MaxShield;
@@ -84,6 +88,43 @@ public partial class Player : Character{
         else{
             healthText.text = $"{health}/{MaxHealth}";
             shieldText.text = "";
+        }
+        
+        ManageHealthShieldSfx(shieldRegening);
+
+    }
+
+    [Client]
+    private void ManageHealthShieldSfx(bool shieldRegening){
+        
+        if (!shieldRegening){
+            if (shield < MaxShield / 3){ // warning beeping
+                PlayLoopedSound(23);
+            }
+            else{ // not warning, not beeping, not pounding, not regening.
+                _secondSource.Stop();
+            }
+            if (shield <= 0){ 
+                if (health < MaxHealth / 3){ // heart pounding
+                    PlayLoopedSound(25);
+                }
+                else{// really warning beeping
+                    PlayLoopedSound(24);
+                }
+            }
+
+        }
+        else{ // shield regen
+            _secondSource.timeSamples = Mathf.RoundToInt(_secondSource.clip.samples * Mathf.Clamp((float) shield / MaxShield, 0, 1)) -1;
+            PlayLoopedSound(22);
+        }
+    }
+
+    [Client]
+    private void PlayLoopedSound(int index){
+        if (!_secondSource.isPlaying || _secondSource.clip != AudioManager.sounds[index].clipsList[0]){
+            _secondSource.clip = AudioManager.sounds[index].clipsList[0];
+            _secondSource.Play();
         }
     }
 }

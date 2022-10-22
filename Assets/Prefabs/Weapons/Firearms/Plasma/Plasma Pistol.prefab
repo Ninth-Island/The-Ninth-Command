@@ -166,7 +166,6 @@ MonoBehaviour:
   parent: {fileID: 0}
   localPos: {x: 1.98, y: 0.2}
   wielder: {fileID: 0}
-  offset: {x: 1.69, y: -0.42}
   armType: 4
   cursorType: 20
   allowInterrupt: 0
@@ -246,6 +245,7 @@ MonoBehaviour:
     priority: 0
     waitTillNext: 0
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
 --- !u!82 &997877508244943859
 AudioSource:
