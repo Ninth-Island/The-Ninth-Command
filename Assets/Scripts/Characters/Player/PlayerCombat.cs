@@ -10,7 +10,7 @@ public partial class Player : Character{
     [SerializeField] private int shieldRechargeRate;
     
     private int _timeLeftTillShieldRecharge;
-
+    private bool _stoppedAudio;
 
     private void ServerPlayerCombatFixedUpdate(){
         _timeLeftTillShieldRecharge--;
@@ -40,11 +40,13 @@ public partial class Player : Character{
             shield -= damage;
             if (shield < 0){
                 health += shield;
+                shield = 0;
             }
         }
         else{
             health -= damage;
-            if (health < 0){
+            if (health <= 0){
+                health = 0;
                 //die
             }
         }
@@ -63,11 +65,11 @@ public partial class Player : Character{
         damageNumber.shield = shieldEnough;
         if (shieldEnough){
             Instantiate(shieldDamageSparks, position, Quaternion.Euler(0, 0, angle + 180));
-            AudioManager.PlaySound(20, false);
+            AudioManager.PlaySound(20);
         }
         else{
             Destroy(Instantiate(armorDamageSparks, position, Quaternion.Euler(0, 0, angle + 180)), 3f);
-            AudioManager.PlaySound(21, false);
+            AudioManager.PlaySound(21);
 
         }
     }
@@ -79,7 +81,7 @@ public partial class Player : Character{
         shield = newShield;
         shieldSlider.value = (float) shield / MaxShield;
         healthSlider.value = (float) health / MaxHealth;
-
+        Debug.Log(healthSlider.value);
         
         if (shield > 0){
             healthText.text = "";
@@ -89,43 +91,45 @@ public partial class Player : Character{
             healthText.text = $"{health}/{MaxHealth}";
             shieldText.text = "";
         }
-        
-        ManageHealthShieldSfx(shieldRegening);
-
+        if (hasAuthority){
+            ManageHealthShieldSfx(shieldRegening);
+        }
     }
 
     [Client]
     private void ManageHealthShieldSfx(bool shieldRegening){
         
         if (!shieldRegening){
+            AudioManager.isPlayingCharging = false;
+            
             if (shield < MaxShield / 3){ // warning beeping
-                PlayLoopedSound(23);
+                AudioManager.PlayLooping(23);
+                _stoppedAudio = false;
             }
             else{ // not warning, not beeping, not pounding, not regening.
-                _secondSource.Stop();
+                if (!_stoppedAudio){
+                    _stoppedAudio = true;
+                    AudioManager.source.Stop();
+                }
             }
+
             if (shield <= 0){ 
+                _stoppedAudio = false;
                 if (health < MaxHealth / 3){ // heart pounding
-                    PlayLoopedSound(25);
+                    AudioManager.PlayLooping(25);
+
                 }
                 else{// really warning beeping
-                    PlayLoopedSound(24);
+                    AudioManager.PlayLooping(24);
                 }
             }
 
         }
         else{ // shield regen
-            _secondSource.timeSamples = Mathf.RoundToInt(_secondSource.clip.samples * Mathf.Clamp((float) shield / MaxShield, 0, 1)) -1;
-            PlayLoopedSound(22);
+            AudioManager.PlayChargingNoise(22, (float)shield / MaxShield);
+            _stoppedAudio = false;
         }
     }
 
-    [Client]
-    private void PlayLoopedSound(int index){
-        if (!_secondSource.isPlaying || _secondSource.clip != AudioManager.sounds[index].clipsList[0]){
-            _secondSource.clip = AudioManager.sounds[index].clipsList[0];
-            _secondSource.Play();
-        }
-    }
 }
 

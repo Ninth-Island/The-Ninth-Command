@@ -11,7 +11,6 @@ public class BasicWeapon : Weapon{
     [SerializeField][Tooltip("Player Only")] public int armType = 0;
     [SerializeField][Tooltip("Player Only")] public int cursorType = 0;
     
-    [SerializeField] private bool allowInterrupt = false;
     public Transform firingPoint;
     public bool activelyWielded = false;
     
@@ -27,7 +26,7 @@ public class BasicWeapon : Weapon{
 
     
     protected virtual void HandleMagazineDecrement(){
-        AudioManager.PlaySound(0, allowInterrupt);
+        AudioManager.PlaySound(0);
     }
 
 
@@ -49,7 +48,7 @@ public class BasicWeapon : Weapon{
 
 
     public virtual void Reload(){
-        AudioManager.PlaySound(1, false);
+        AudioManager.PlaySound(1);
     }
 
 
@@ -61,7 +60,7 @@ public class BasicWeapon : Weapon{
 
     public override void Ready(){
         activelyWielded = true;
-        AudioManager.PlaySound(2, allowInterrupt);
+        AudioManager.PlaySound(2);
     }
 
     [Server]

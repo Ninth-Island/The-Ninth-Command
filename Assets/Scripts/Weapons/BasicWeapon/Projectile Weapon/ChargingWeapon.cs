@@ -40,18 +40,23 @@ public class ChargingWeapon : ProjectileWeapon
      */
 
     public override void HandleFiring(float angle){
-        if (energy > 0 && heat < 100 && !coolingDown){
-            heat += chargePerFrame;
-            
-            AudioManager.PlayConstant(4, false, heat / 100f);
+        if (energy > 0){
+            if (heat < 100 && !coolingDown){
+                heat += chargePerFrame;
+                AudioManager.PlayChargingNoise(4, heat / 100f);
 
-            _hasReleased = false;
-            if (heat >= 100){
-                AudioManager.source.Stop();
-                base.HandleFiring(angle);
+
+                _hasReleased = false;
+                if (heat >= 100){
+                    AudioManager.source.Stop();
+                    AudioManager.isPlayingCharging = false;
+                    base.HandleFiring(angle);
+                }    
             }
         }
-        
+        else{
+            AudioManager.PlayRepeating(3); // dryfire
+        }
     }
 
     /*
@@ -63,10 +68,11 @@ public class ChargingWeapon : ProjectileWeapon
 
     protected override void Update(){
         base.Update();
+
         
         if (isServer && !coolingDown && !_hasReleased && Input.GetKeyUp(KeyCode.Mouse0)){
             AudioManager.source.Stop();
-            AudioManager.PlaySound(5, false);
+            AudioManager.PlaySound(5);
             _hasReleased = true;
         }
     }
@@ -80,11 +86,6 @@ public class ChargingWeapon : ProjectileWeapon
 
             if (!coolingDown){ // so that after firing it cools down slower than before firing
                 heat -= cooldownSpeed;
-            }
-            else{
-                if (heat == 80){
-                    AudioManager.PlaySound(1, false);
-                }
             }
 
             if (heat <= 0){
@@ -114,6 +115,7 @@ public class ChargingWeapon : ProjectileWeapon
         if (heat >= 100){
             coolingDown = true;
             wielder.Reload();
+            StartCoroutine(AudioManager.PlaySoundDelayed(1, 1f));
         }
     }
     

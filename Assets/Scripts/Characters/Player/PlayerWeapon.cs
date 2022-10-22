@@ -195,7 +195,8 @@ public partial class Player : Character{
     }
 
     private float GetBarrelToMouseRotation(){
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14){
+
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading){
             return GetPlayerToMouseRotation();
         }
         

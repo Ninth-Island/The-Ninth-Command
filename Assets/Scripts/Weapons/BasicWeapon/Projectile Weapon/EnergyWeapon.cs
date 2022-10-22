@@ -35,6 +35,9 @@ public class EnergyWeapon : ProjectileWeapon{
             if (_energy >= percentagePerShot){
                 base.HandleFiring(angle);
             }
+            else{
+                AudioManager.PlayRepeating(3); // dryfire
+            }
         }
     }
 
@@ -51,7 +54,7 @@ public class EnergyWeapon : ProjectileWeapon{
             _heat = 0;
 
             _isCooling = false;
-            AudioManager.PlaySound(2, false);
+            AudioManager.PlaySound(2);
             wielder.FinishReload();
         }
         
@@ -94,7 +97,7 @@ public class EnergyWeapon : ProjectileWeapon{
             _heat = 99.9f;
             AudioManager.source.Stop();
             AudioManager.source.pitch = 1;
-            AudioManager.PlaySound(1, false);
+            AudioManager.PlaySound(1);
             _isCooling = true;
         }
     }

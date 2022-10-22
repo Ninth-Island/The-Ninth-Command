@@ -32,7 +32,6 @@ public partial class Player : Character
     private Camera _mainCamera;
     private CinemachineVirtualCamera[] _virtualCameras;
 
-    private AudioSource _secondSource;
 
     
     // sprites
@@ -91,7 +90,6 @@ public partial class Player : Character
             pickupText.SetText("");
         }
 
-        _secondSource = GetComponents<AudioSource>()[1];
         _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;

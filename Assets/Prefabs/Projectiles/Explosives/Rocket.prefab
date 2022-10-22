@@ -156,11 +156,13 @@ MonoBehaviour:
   body: {fileID: 5345319634674317829}
   Collider: {fileID: -7123958129457597871}
   spriteRenderer: {fileID: 5345319634674317830}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: -3690854172917014554}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   sticky: 0
   lifetime: 10
+  damage: 0
+  initialAngle: 0
   fuseTimer: 2
   knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}
@@ -195,7 +197,24 @@ MonoBehaviour:
     priority: 0
     waitTillNext: 0
     loop: 0
+  - name: Explode
+    clipsList:
+    - {fileID: 8300000, guid: 6927243690fa388478dd64dc27c1f4ee, type: 3}
+    - {fileID: 8300000, guid: ae0a2be26cb7bf24692b8c23d55f8632, type: 3}
+    - {fileID: 8300000, guid: ffd7119f392323a4bbfa491e31a3df0f, type: 3}
+    - {fileID: 8300000, guid: 11d7040dd5d0b754ab8ca207a7ed02c4, type: 3}
+    - {fileID: 8300000, guid: a1989c16397f43743aa083c0a8479b36, type: 3}
+    - {fileID: 8300000, guid: ec6696371e2062d43a3ed60cc820715b, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 0
+    waitTillNext: 0
+    loop: 0
+  newObjectSource: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
+    type: 3}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &-8408075157668320071
 AudioSource:
   m_ObjectHideFlags: 0

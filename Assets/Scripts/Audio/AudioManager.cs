@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine.Audio;
@@ -15,66 +16,61 @@ public class AudioManager : MonoBehaviour{
 
     public AudioSource source;
 
+    public bool isPlayingCharging;
 
     private void Awake(){
         source = GetComponent<AudioSource>();
     }
 
 
+    // can play any noise and not interfere
     [Client]
-    public void PlayRepeating(int index, float time){ // for repeated noises that are attempted to be played every frame such as firing
+    public void PlaySound(int index){
+        Sound sound = sounds[index];
+        SetSourceProperties(sound);
+        source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], sound.volume);
+    }
+
+    [Client]
+    public IEnumerator PlaySoundDelayed(int index, float wait){
+        yield return new WaitForSeconds(wait);
+        PlaySound(index);
+        
+    }
+    
+    // for repeated noises that are attempted to be played every frame such as dry firing
+    [Client]
+    public void PlayRepeating(int index){ 
         Sound sound = sounds[index];
         
         if (source.time >= sound.waitTillNext || !source.isPlaying){
             source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
 
             source.Play();
-            source.time = time;
         }
     }
     
     [Client]
-    public void PlaySound(int index, bool allowInterrupt){
+    public void PlayChargingNoise(int index, float time){ // for sounds that ramp up like charging that take time spartan laser, shields, etc
         Sound sound = sounds[index];
-
-        if (allowInterrupt){
+        if (!isPlayingCharging || !source.isPlaying){ // if anything on source
+            isPlayingCharging = true;
             source.Stop();
-            source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
-            source.Play();
-        }
-        else{
-            source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], sound.volume);
-        }
-        
-        source.volume = sound.volume;
-        source.pitch = sound.pitch;
-        source.loop = sound.loop;
-        source.priority = sound.priority;
-        source.spatialBlend = sound.spacialBlend;
-
-    }
-    
-    [Client]
-    public void PlayConstant(int index, bool allowInterrupt, float time){ // for sounds that ramp up like charging that take time
-        source.Stop();
-
-        Sound sound = sounds[index];
-        
-        if (!source.isPlaying || allowInterrupt && source.clip != sound.clipsList[0]){
-
-
-            source.volume = sound.volume;
-            source.pitch = sound.pitch;
-            source.loop = sound.loop;
-            source.priority = sound.priority;
-            source.spatialBlend = sound.spacialBlend;
-
+            SetSourceProperties(sound);
             source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
-            source.timeSamples = Mathf.RoundToInt(source.clip.samples * Mathf.Clamp(time, 0, 1)) -1;
-
+            source.timeSamples = Mathf.RoundToInt(source.clip.samples * Mathf.Clamp(time, 0, 1));
             source.Play();
-            
-            
+        }
+    }
+
+    [Client]
+    public void PlayLooping(int index){
+        Sound sound = sounds[index];
+        SetSourceProperties(sound);
+        if (!source.isPlaying || source.clip != sound.clipsList[0]){
+            SetSourceProperties(sound);
+            source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
+            source.Play();
         }
     }
 
@@ -87,14 +83,19 @@ public class AudioManager : MonoBehaviour{
         
         newSource.volume = sound.volume;
         newSource.pitch = sound.pitch;
-        newSource.loop = sound.loop;
         newSource.priority = sound.priority;
         newSource.spatialBlend = sound.spacialBlend;
         newSource.Play();
-        Debug.Log(newSource.volume);
 
         Destroy(newSource.gameObject, newSource.clip.length);
     }
-    
+
+    [Client]
+    private void SetSourceProperties(Sound sound){
+        source.volume = sound.volume;
+        source.pitch = sound.pitch;
+        source.priority = sound.priority;
+        source.spatialBlend = sound.spacialBlend;
+    }
 
 }

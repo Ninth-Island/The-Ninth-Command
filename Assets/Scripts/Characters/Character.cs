@@ -80,7 +80,7 @@ public class Character : CustomObject{
                 }
 
                 soundIndex += type;
-                AudioManager.PlaySound(soundIndex, false);
+                AudioManager.PlaySound(soundIndex);
             }
         }
     }
