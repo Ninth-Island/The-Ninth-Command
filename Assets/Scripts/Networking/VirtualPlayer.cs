@@ -5,6 +5,7 @@ using Mirror;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class VirtualPlayer : NetworkBehaviour{
 
@@ -37,7 +38,11 @@ public class VirtualPlayer : NetworkBehaviour{
     [ClientRpc]
     private void ClientSetupPlayer(Player player, string username, Color[] colors, int teamIndex){
         _gamePlayer = player;
+        if (username == ""){
+            username = "Player " + Random.Range(-9999999, 99999999);
+        }
         gameObject.name = username;
+        player.gameObject.name = username;
         Image bg = player.transform.GetChild(8).GetChild(0).GetComponent<Image>();
         TextMeshProUGUI floatingName = bg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         floatingName.text = username;
@@ -60,6 +65,8 @@ public class VirtualPlayer : NetworkBehaviour{
                 floatingName.color = Color.cyan;
             }
         }
+
+        player.teamIndex = teamIndex;
         
         Transform sprites = _gamePlayer.transform.GetChild(1);
         sprites.GetChild(0).GetComponent<SpriteRenderer>().color = colors[3]; // body

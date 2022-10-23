@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6288424266931365034}
   - component: {fileID: 6288424266931365035}
   - component: {fileID: 6288424266931365032}
-  - component: {fileID: 6288424266931365033}
+  - component: {fileID: 6160686736297988158}
   - component: {fileID: -8056927485497439948}
   - component: {fileID: 3389138475720532645}
   - component: {fileID: -8803313220552969517}
@@ -199,7 +199,7 @@ PolygonCollider2D:
       - {x: 2.119402, y: 0.2349}
       - {x: 1.8672638, y: 0.61592865}
       - {x: 1.4943504, y: 0.7200608}
---- !u!114 &6288424266931365033
+--- !u!114 &6160686736297988158
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -208,7 +208,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6288424266931365015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f92cdbab60213545a7f8dfab043b3cd, type: 3}
+  m_Script: {fileID: 11500000, guid: 211e3c68a085fc943922e056c80cc980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
@@ -222,11 +222,10 @@ MonoBehaviour:
   wielder: {fileID: 0}
   armType: 0
   cursorType: 2
-  allowInterrupt: 1
   firingPoint: {fileID: 0}
   activelyWielded: 0
   shotDelay: 0
-  salvoDelay: 40
+  salvoDelay: 20
   shotsPerSalvo: 10
   instability: 0.5
   projectileTemplate: {fileID: -5604932223983771090, guid: 923d37021f28fd641968c6f282acd0ce,
@@ -234,12 +233,12 @@ MonoBehaviour:
   projectileDamage: 10
   projectileSpeed: 100
   piercing: 0
-  magazinesLeft: 200
-  magazineSize: 100
+  magazinesLeft: 3
+  magazineSize: 80
   reloadTime: 2
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
-  bulletsLeft: 0
+  bulletsLeft: 80
 --- !u!114 &-8056927485497439948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +261,7 @@ MonoBehaviour:
     pitch: 1
     spacialBlend: 1
     priority: 0
-    waitTillNext: 1.44
+    waitTillNext: 0.2
     loop: 0
   - name: Reload
     clipsList:
@@ -302,6 +301,7 @@ MonoBehaviour:
     loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &3389138475720532645
 AudioSource:
   m_ObjectHideFlags: 0

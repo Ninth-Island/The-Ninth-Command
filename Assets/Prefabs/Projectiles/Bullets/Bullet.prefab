@@ -401,3 +401,4 @@ MonoBehaviour:
   newObjectSource: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
     type: 3}
   source: {fileID: 0}
+  isPlayingCharging: 0

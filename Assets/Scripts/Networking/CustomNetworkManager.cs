@@ -12,8 +12,8 @@ public class CustomNetworkManager : NetworkManager{
     [SerializeField] private GameObject gamePlayerPrefab;
 
     private Dictionary<NetworkConnectionToClient, Color[]> _colors = new Dictionary<NetworkConnectionToClient, Color[]>();
-    private Dictionary<NetworkConnectionToClient, string> _usernames = new Dictionary<NetworkConnectionToClient, string>();
-    private Dictionary<NetworkConnectionToClient, int> _teamIndices = new Dictionary<NetworkConnectionToClient, int>();
+    public Dictionary<NetworkConnectionToClient, string> Usernames = new Dictionary<NetworkConnectionToClient, string>();
+    public Dictionary<NetworkConnectionToClient, int> TeamIndices = new Dictionary<NetworkConnectionToClient, int>();
 
     public bool allPlayersReady;
 
@@ -36,8 +36,8 @@ public class CustomNetworkManager : NetworkManager{
             NetworkServer.Spawn(lobbyPlayer.gameObject, conn);
 
             _colors.Add(conn, null);
-            _usernames.Add(conn, null);
-            _teamIndices.Add(conn, 0);
+            Usernames.Add(conn, null);
+            TeamIndices.Add(conn, 0);
         }
     }
 
@@ -95,19 +95,26 @@ public class CustomNetworkManager : NetworkManager{
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
 
-        int teamIndex = _teamIndices[connectionToClient];
+        int teamIndex = TeamIndices[connectionToClient];
         List<Vector3> spawns;
         if (teamIndex > 6){
             player.transform.position = _redSpawns[_redSpawnCounter];
             spawns = _redSpawns;
             _redSpawnCounter++;
+            if (_redSpawnCounter >= _redSpawns.Count){
+                _redSpawnCounter = 0;
+            }
         }
+        
         else{
             player.transform.position = _blueSpawns[_blueSpawnCounter];
             spawns = _blueSpawns;
             _blueSpawnCounter++;
+            if (_blueSpawnCounter >= _blueSpawns.Count){
+                _blueSpawnCounter = 0;
+            }
         }
-        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, _usernames[connectionToClient], _colors[connectionToClient], spawns, teamIndex);
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, Usernames[connectionToClient], _colors[connectionToClient], spawns, teamIndex);
 
     }
 
@@ -118,12 +125,12 @@ public class CustomNetworkManager : NetworkManager{
     
 
     public void NetworkManagerSetUsername(NetworkConnectionToClient connectionToClient, string username){
-        _usernames[connectionToClient] = username;
+        Usernames[connectionToClient] = username;
     }
     
 
     public void NetworkManagerSetTeamIndex(NetworkConnectionToClient connectionToClient, int teamIndex){
-        _teamIndices[connectionToClient] = teamIndex;
+        TeamIndices[connectionToClient] = teamIndex;
     }
     
     

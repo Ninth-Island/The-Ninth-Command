@@ -20,7 +20,7 @@ public class Projectile : CustomObject{
  * ================================================================================================================
  */
 
-    [SerializeField] private bool sticky;
+    [SerializeField] protected bool sticky;
     [SerializeField] private float lifetime = 10f;
     
     private Collider2D _collider;
@@ -49,7 +49,7 @@ public class Projectile : CustomObject{
         _collider.enabled = false;
         body.constraints = RigidbodyConstraints2D.FreezeAll;
         gameObject.SetActive(false);
-        if (isClient && other.rigidbody && other.rigidbody.sharedMaterial){
+        if (other.rigidbody && other.rigidbody.sharedMaterial){
             if (other.rigidbody.sharedMaterial.name == "Metal"){
                 AudioManager.PlayNewSource(0);
             }

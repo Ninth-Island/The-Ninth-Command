@@ -135,6 +135,7 @@ public partial class Player : Character{
                 
                 BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
                 _currentInput.PickedUp = newWeapon;
+                weaponImage.sprite = newWeapon.spriteRenderer.sprite;
                 _currentInput.OldWeapon = primaryWeapon;
                 
                 primaryWeapon.StopReloading();

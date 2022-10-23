@@ -16,7 +16,7 @@ public partial class Player : Character{
         _timeLeftTillShieldRecharge--;
         if (_timeLeftTillShieldRecharge <= 0){
             shield = Mathf.Clamp(shield + shieldRechargeRate, 0, MaxShield);
-            UpdateHealthClientRpc(health, shield, shield < MaxShield);
+            UpdateHealthClientRpc(health, shield, shield < MaxShield, false);
         }
     }
 
@@ -36,11 +36,13 @@ public partial class Player : Character{
     
     [Server]
     protected override void Hit(int damage, Vector3 position, float angle){
+        bool shieldBreak = false;
         if (shield > 0){
             shield -= damage;
-            if (shield < 0){
+            if (shield <= 0){
                 health += shield;
                 shield = 0;
+                shieldBreak = true;
             }
         }
         else{
@@ -53,7 +55,7 @@ public partial class Player : Character{
 
         _timeLeftTillShieldRecharge = timeTillShieldRecharge;
         ClientSpawnDamageNumberClientRpc(damage, position, angle);
-        UpdateHealthClientRpc(health, shield, false);
+        UpdateHealthClientRpc(health, shield, false, shieldBreak);
     }
 
     [ClientRpc]
@@ -75,13 +77,12 @@ public partial class Player : Character{
     }
 
     [ClientRpc]
-    private void UpdateHealthClientRpc(int newHealth, int newShield, bool shieldRegening){
+    private void UpdateHealthClientRpc(int newHealth, int newShield, bool shieldRegening, bool shieldBreak){
 
         health = newHealth;
         shield = newShield;
         shieldSlider.value = (float) shield / MaxShield;
         healthSlider.value = (float) health / MaxHealth;
-        Debug.Log(healthSlider.value);
         
         if (shield > 0){
             healthText.text = "";
@@ -93,6 +94,10 @@ public partial class Player : Character{
         }
         if (hasAuthority){
             ManageHealthShieldSfx(shieldRegening);
+        }
+
+        if (shieldBreak){
+            AudioManager.PlaySound(26);
         }
     }
 

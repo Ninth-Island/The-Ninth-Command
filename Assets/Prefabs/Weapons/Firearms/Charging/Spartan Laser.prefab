@@ -293,14 +293,7 @@ MonoBehaviour:
     loop: 0
   - name: Dry Fire
     clipsList:
-    - {fileID: 8300000, guid: 9413c25ad050bab40b615fe31f90584b, type: 3}
-    - {fileID: 8300000, guid: ba3d3f278483c3b49921eb98e5ac67da, type: 3}
-    - {fileID: 8300000, guid: 09c2f44eb4abd9f4299fa0b581c987a3, type: 3}
-    - {fileID: 8300000, guid: 57de6f36885ccb74f809dc6e8bcb0bb3, type: 3}
-    - {fileID: 8300000, guid: 46f260785081b5f43bea3ff09fd63ddc, type: 3}
-    - {fileID: 8300000, guid: 536cee64ecff049499f5a62a5955fad0, type: 3}
-    - {fileID: 8300000, guid: fe36b47c376ef2140910d0f2ad986b7c, type: 3}
-    - {fileID: 8300000, guid: e0d3541275e4fbc4f9818876e29a5470, type: 3}
+    - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
     volume: 0.4
     pitch: 1
     spacialBlend: 1

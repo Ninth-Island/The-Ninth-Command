@@ -159,32 +159,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 986607691338267656}
+  body: {fileID: 0}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 986607691338267657}
+  spriteRenderer: {fileID: 0}
   AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 1.98, y: 0.2}
   wielder: {fileID: 0}
   armType: 4
   cursorType: 20
-  allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
   shotDelay: 0
-  salvoDelay: 20
+  salvoDelay: 10
   shotsPerSalvo: 1
-  instability: 0.5
+  instability: 0.1
   projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
     type: 3}
   projectileDamage: 1
   projectileSpeed: 80
   piercing: 0
-  percentagePerShot: 3
-  heatPerShot: 25
-  coolDown: 1
-  _energy: 100
-  _heat: 0
+  percentagePerShot: 0.8
+  heatPerShot: 12
+  coolDown: 0.8
+  _energy: 0.7999088
+  _heat: -0.79999703
 --- !u!114 &5004192726719082808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,7 +202,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f43c706e0d7900848a0d762c953fe8a8, type: 3}
     - {fileID: 8300000, guid: b3ef502c45e4e5147a56851570be680f, type: 3}
     - {fileID: 8300000, guid: f16382833b0c3314db4063bd067be3df, type: 3}
-    volume: 0.4
+    volume: 0.15
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -212,7 +211,7 @@ MonoBehaviour:
   - name: Overheat
     clipsList:
     - {fileID: 8300000, guid: be7eb1185154b2e43a079fdef36d86e0, type: 3}
-    volume: 0.4
+    volume: 0.15
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -226,7 +225,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 0ac7c2f4020b0cf40a0b7e7bfe693689, type: 3}
     - {fileID: 8300000, guid: 8a601ae44f0d8dd4a87a6b3d42aafa97, type: 3}
     - {fileID: 8300000, guid: d7ee8da67213b80449f4a87f9b192504, type: 3}
-    volume: 0.4
+    volume: 0.15
     pitch: 1
     spacialBlend: 0
     priority: 0
@@ -239,14 +238,15 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 3eae6aad8a86c0d42bbfd46fa7ee03ae, type: 3}
     - {fileID: 8300000, guid: bf2c69a6ec834564cbee7f6fa9c604f5, type: 3}
     - {fileID: 8300000, guid: 9403b038cf343da4e9f3c911396850db, type: 3}
-    volume: 0.2
+    volume: 0.05
     pitch: 1
     spacialBlend: 0
     priority: 0
-    waitTillNext: 0
+    waitTillNext: 0.4
     loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &997877508244943859
 AudioSource:
   m_ObjectHideFlags: 0

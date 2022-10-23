@@ -5695,7 +5695,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1421244621830892634
@@ -6014,7 +6014,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.24500084, y: -5.4598083}
+  m_AnchoredPosition: {x: -0.24500084, y: -5.459778}
   m_SizeDelta: {x: 1.96, y: -0.0099}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5671268410307293141
@@ -6818,6 +6818,42 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1688432759871565062}
+--- !u!1 &3643078015323233321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4791018568358500922}
+  m_Layer: 5
+  m_Name: Team Display
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4791018568358500922
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643078015323233321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8860708422122634723}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3757039344167629827
 GameObject:
   m_ObjectHideFlags: 0
@@ -7005,6 +7041,7 @@ MonoBehaviour:
   feetCollider: {fileID: 3757039344167629853}
   Animator: {fileID: 3757039344788581447}
   characterClientReady: 0
+  teamIndex: 0
   energy: 1000
   energyCharge: 1
   energySlider: {fileID: 4914701430542053342}
@@ -7025,6 +7062,8 @@ MonoBehaviour:
   - {fileID: 2415256495891508668, guid: c9f598e4e611a89469b714fb63c5dddf, type: 3}
   _notificationText: {fileID: 8860708422789013638}
   HUD: {fileID: 8860708422122634720}
+  teammateStatusPrefab: {fileID: 6669387628552432089, guid: 5407dcc095cec704b9263414bb0e4981,
+    type: 3}
   pingDisplay: {fileID: 8225003235141414255}
   healthSlider: {fileID: 7188019764618042035}
   shieldSlider: {fileID: 8228869798468368541}
@@ -7373,7 +7412,12 @@ MonoBehaviour:
     loop: 0
   - name: Shield Hit
     clipsList:
-    - {fileID: 8300000, guid: faa75639170aade4499b203e33eb004f, type: 3}
+    - {fileID: 8300000, guid: 943091f2e548c164085e67c5cc4a23aa, type: 3}
+    - {fileID: 8300000, guid: e5c19f8e82bb1684f834793b5acc0a93, type: 3}
+    - {fileID: 8300000, guid: 8758fb354f8c6a74887d4818538e32c6, type: 3}
+    - {fileID: 8300000, guid: 016a0954b11005a43a43f5b474a78c24, type: 3}
+    - {fileID: 8300000, guid: 0debc73afcebac14290edb67cd8867aa, type: 3}
+    - {fileID: 8300000, guid: b6ba2071480997b4e87eff20bd0794d1, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 1
@@ -7425,6 +7469,15 @@ MonoBehaviour:
     priority: 128
     waitTillNext: 0.4
     loop: 1
+  - name: Shield Break
+    clipsList:
+    - {fileID: 8300000, guid: 2ba75d078dbfd4042b233cb9717990d5, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
   isPlayingCharging: 0
@@ -8328,7 +8381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 0}
   m_AnchorMax: {x: 0.75, y: 1}
-  m_AnchoredPosition: {x: 0, y: 5.333893}
+  m_AnchoredPosition: {x: 0, y: 5.3338623}
   m_SizeDelta: {x: 0, y: 0.6679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7384418774450567360
@@ -9407,6 +9460,7 @@ RectTransform:
   - {fileID: 1421244623496142636}
   - {fileID: 1254352440872982985}
   - {fileID: 6954600866931856238}
+  - {fileID: 4791018568358500922}
   m_Father: {fileID: 3757039344788581440}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4318819626735042361}
   - component: {fileID: -3499921153218005856}
   m_Layer: 0
-  m_Name: Grenade
+  m_Name: Grenade (projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
   fuseTimer: 2
   knockbackPrefab: {fileID: 1699022908102386561, guid: 420fff2af95a60a45953ca90aa6017bd,
     type: 3}
+  grenade: {fileID: 5345319634674317825, guid: c4b5b51115bb77348912dfe2bb98a72d, type: 3}
   impactGrenade: 0
   propulsion: 0
   acceleration: 0

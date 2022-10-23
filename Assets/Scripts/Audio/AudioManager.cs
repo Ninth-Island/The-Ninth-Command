@@ -45,7 +45,8 @@ public class AudioManager : MonoBehaviour{
         
         if (source.time >= sound.waitTillNext || !source.isPlaying){
             source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
-
+            SetSourceProperties(sound);
+            source.time = 0;
             source.Play();
         }
     }
@@ -58,7 +59,7 @@ public class AudioManager : MonoBehaviour{
             source.Stop();
             SetSourceProperties(sound);
             source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
-            source.timeSamples = Mathf.RoundToInt(source.clip.samples * Mathf.Clamp(time, 0, 1));
+            source.timeSamples = (int)(source.clip.samples * Mathf.Clamp(time, 0, 0.99f));
             source.Play();
         }
     }
@@ -75,7 +76,6 @@ public class AudioManager : MonoBehaviour{
     }
 
     
-    [Client]
     public void PlayNewSource(int index){ // creates a new audio source to avoid interference with main one
         AudioSource newSource = Instantiate(newObjectSource, transform.position, Quaternion.identity).GetComponent<AudioSource>();
         newSource.clip = sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)];

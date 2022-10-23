@@ -14,6 +14,8 @@ public partial class Player : Character{
 * 
 * ================================================================================================================
 */
+
+    public int teamIndex;
     
     
     [Client]
@@ -21,7 +23,9 @@ public partial class Player : Character{
         ClientHUDVisualStart();
         ClientWeaponControlStart();
         base.OnStartClient();
+        Invoke(nameof(InitializeTeammateStatuses), 4);
     }
+    
 
     [Server]
     public override void OnStartServer(){

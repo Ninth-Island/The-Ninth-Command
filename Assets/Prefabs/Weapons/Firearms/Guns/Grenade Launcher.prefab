@@ -198,7 +198,6 @@ MonoBehaviour:
   wielder: {fileID: 0}
   armType: 0
   cursorType: 24
-  allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
   shotDelay: 0
@@ -207,7 +206,7 @@ MonoBehaviour:
   instability: 0
   projectileTemplate: {fileID: 5345319634674317827, guid: a5e346698f139244bae37bc256db2ada,
     type: 3}
-  projectileDamage: 500
+  projectileDamage: 0
   projectileSpeed: 70
   piercing: 0
   magazinesLeft: 100
@@ -279,6 +278,7 @@ MonoBehaviour:
     loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &5734551658049564774
 AudioSource:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ public class BulletWeapon : ProjectileWeapon{
     [SerializeField] private float reloadTime; // less frame dependent
     [SerializeField] private GameObject bulletShell;
     
-    [SerializeField] private int bulletsLeft;
+    [SerializeField] protected int bulletsLeft;
 
     private bool reloading;
 
