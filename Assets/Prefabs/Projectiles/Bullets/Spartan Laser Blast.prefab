@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5345319634674317829}
   - component: {fileID: 5302949600237173417}
   - component: {fileID: 4318819626735042361}
+  - component: {fileID: -8557309554173012507}
+  - component: {fileID: 7158032095310404224}
   m_Layer: 0
   m_Name: Spartan Laser Blast
   m_TagString: Untagged
@@ -49,7 +51,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -84,7 +86,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &5302949600237173417
 MonoBehaviour:
@@ -103,11 +105,13 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  AudioManager: {fileID: 7158032095310404224}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   sticky: 0
   lifetime: 10
-  _live: 1
+  damage: 0
+  initialAngle: 0
 --- !u!114 &4318819626735042361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,6 +129,145 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 3a422bbb78e19fa41abf443be52aedc4
   hasSpawned: 0
+--- !u!82 &-8557309554173012507
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345319634674317825}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &7158032095310404224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345319634674317825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Impact Metal
+    clipsList:
+    - {fileID: 8300000, guid: 68189f91eb8e77143a017f19d19d1930, type: 3}
+    - {fileID: 8300000, guid: 9d30272d5408268418585f3e8b25e579, type: 3}
+    - {fileID: 8300000, guid: f236cc6f409930a45bba9699c7d5cab5, type: 3}
+    - {fileID: 8300000, guid: 2f964269846be1740b302bc1801b16a9, type: 3}
+    - {fileID: 8300000, guid: 517069fee979a0043a4592e3a9c8aacf, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Impact snow
+    clipsList:
+    - {fileID: 8300000, guid: 68189f91eb8e77143a017f19d19d1930, type: 3}
+    - {fileID: 8300000, guid: 9d30272d5408268418585f3e8b25e579, type: 3}
+    - {fileID: 8300000, guid: f236cc6f409930a45bba9699c7d5cab5, type: 3}
+    - {fileID: 8300000, guid: 2f964269846be1740b302bc1801b16a9, type: 3}
+    - {fileID: 8300000, guid: 517069fee979a0043a4592e3a9c8aacf, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  newObjectSource: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
+    type: 3}
+  source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!1 &5555331452894768301
 GameObject:
   m_ObjectHideFlags: 0

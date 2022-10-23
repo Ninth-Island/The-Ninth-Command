@@ -117,8 +117,10 @@ public class LobbyUI : MonoBehaviour{
     }
 
     public void SetUsername(TMP_InputField enteredName){
-        _player.GetLobbyPlayer().CmdSetUsername(enteredName.text);
-        PlayerPrefs.SetString("username", enteredName.text);
+        if (enteredName.text.Length < 15 && enteredName.text.Length > 1){
+            _player.GetLobbyPlayer().CmdSetUsername(enteredName.text);
+            PlayerPrefs.SetString("username", enteredName.text);
+        }
     }
 
     public void SetColor0(Color color){

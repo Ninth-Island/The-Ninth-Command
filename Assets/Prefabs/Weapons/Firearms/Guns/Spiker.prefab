@@ -168,16 +168,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 2203350304549672336}
+  body: {fileID: 0}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 2203350304549672339}
+  spriteRenderer: {fileID: 0}
   AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 1.932, y: 0.22}
   wielder: {fileID: 0}
   armType: 0
   cursorType: 9
-  allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
   shotDelay: 0
@@ -189,11 +188,11 @@ MonoBehaviour:
   projectileDamage: 10
   projectileSpeed: 100
   piercing: 0
-  magazinesLeft: 2
-  magazineSize: 32
+  magazinesLeft: 3
+  magazineSize: 40
   reloadTime: 3
   bulletShell: {fileID: 0}
-  bulletsLeft: 32
+  bulletsLeft: 0
 --- !u!114 &8614085602533373021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,9 +214,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d58866dab5b0a69449423faa08d057f1, type: 3}
     - {fileID: 8300000, guid: 99dbc0d54724de2428b2d701a9185985, type: 3}
     - {fileID: 8300000, guid: e0b26d7ca3ca592408f9c3341436b9c6, type: 3}
-    volume: 0.4
+    volume: 0.3
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -228,7 +227,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 5809b160b096c7d45ae2287ddec61f83, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -239,7 +238,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2ffed76d89ce7a74fa1dbf1d0b6cfbcf, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
@@ -248,11 +247,13 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
     volume: 0.2
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.1
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &5600530962651610085
 AudioSource:
   m_ObjectHideFlags: 0

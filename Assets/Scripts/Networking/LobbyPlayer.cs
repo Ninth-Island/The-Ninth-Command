@@ -52,7 +52,7 @@ public class LobbyPlayer : NetworkBehaviour{
 
     [Command]
     public void CmdSetUsername(string enteredName){
-        if (enteredName.Length < 15 && enteredName.Length > 1){
+        if (enteredName.Length < 15 && enteredName.Length > 1 && !_customNetworkManager.Usernames.ContainsValue(enteredName)){
             _username = enteredName;
             _customNetworkManager.NetworkManagerSetUsername(connectionToClient, enteredName);
         }
@@ -60,7 +60,7 @@ public class LobbyPlayer : NetworkBehaviour{
 
     [Command]
     public void CmdSetTeamIndex(int teamIndex){
-        if (teamIndex > 0 && teamIndex < 13){
+        if (teamIndex > 0 && teamIndex < 13 && !_customNetworkManager.TeamIndices.ContainsValue(teamIndex)){
             _teamIndex = teamIndex;
             _customNetworkManager.NetworkManagerSetTeamIndex(connectionToClient, teamIndex);
         }

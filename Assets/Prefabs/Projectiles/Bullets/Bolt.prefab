@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5374961542717239264}
   - component: {fileID: 5359207005571212211}
   - component: {fileID: 6790947048901290198}
+  - component: {fileID: 6408781428298832147}
   m_Layer: 0
   m_Name: Bolt
   m_TagString: Untagged
@@ -100,11 +101,13 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 0}
+  AudioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   sticky: 0
   lifetime: 10
-  _live: 1
+  damage: 0
+  initialAngle: 0
 --- !u!114 &6790947048901290198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +125,49 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 2aff23bcecfd01c41b133666a820be2b
   hasSpawned: 0
+--- !u!114 &6408781428298832147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5374961542717239271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Impact metal
+    clipsList:
+    - {fileID: 8300000, guid: 9d4f5b02d748e5f429ef111bc862d9dd, type: 3}
+    - {fileID: 8300000, guid: 84061d65b19fcf449b6ce47534b15beb, type: 3}
+    - {fileID: 8300000, guid: 2b386db8ed1c7eb4ead4d70ed482dcd1, type: 3}
+    - {fileID: 8300000, guid: c5e606a1bfaea604db78a94c9fd8417e, type: 3}
+    - {fileID: 8300000, guid: 6eeeae31bb4c44047bafdb07a2faa995, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Impact Snow
+    clipsList:
+    - {fileID: 8300000, guid: d6db96c05d0f3dc4da28bbec63d727d3, type: 3}
+    - {fileID: 8300000, guid: 2101ed99ff8cf6c4998e956ce9071d26, type: 3}
+    - {fileID: 8300000, guid: d32b0dd866a3e814abb6f4b5b672b050, type: 3}
+    - {fileID: 8300000, guid: b2f84703efef4214e866138e920798f1, type: 3}
+    - {fileID: 8300000, guid: 37cfdf9dd278f2e43a4c0e34135bd4f0, type: 3}
+    - {fileID: 8300000, guid: 8c53d41b6b20c3346a4331b3ae2a5809, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  newObjectSource: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
+    type: 3}
+  source: {fileID: 0}
 --- !u!1 &7655604995659169605
 GameObject:
   m_ObjectHideFlags: 0

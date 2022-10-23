@@ -86,11 +86,9 @@ public partial class Player : Character{
         if (Input.GetKeyUp(KeyCode.LeftShift)){
             if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] ||
                 AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
-                AudioManager.PlaySound(22, true);
+                AudioManager.PlaySound(22);
             }
         }
-
-        pickupText.transform.position = Input.mousePosition;
     }
 
 
@@ -131,8 +129,9 @@ public partial class Player : Character{
     [TargetRpc]
     private void ClientUpdateSlidersTargetRpc(NetworkConnection connection, int setEnergy, int setHeat){
         energySlider.value = (float) setEnergy / _maxEnergy;
-        healthSlider.value = (float) setHeat / _maxHeat;
+        overflowSlider.value = (float) setHeat / _maxHeat;
     }
+    
 
 
     #endregion

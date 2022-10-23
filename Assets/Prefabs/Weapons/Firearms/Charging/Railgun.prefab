@@ -216,7 +216,6 @@ MonoBehaviour:
   wielder: {fileID: 0}
   armType: 0
   cursorType: 19
-  allowInterrupt: 0
   firingPoint: {fileID: 3117667432633647728}
   activelyWielded: 0
   shotDelay: 0
@@ -270,7 +269,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9db5ed8e3515e6a41ad295ae398ee4c8, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -282,7 +281,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -294,23 +293,23 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 04e92bdcbc9a26349bbc7b7aea750771, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
   - name: Dry Fire
     clipsList:
-    - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
+    - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 1
     loop: 0
   - name: Charge In
     clipsList:
     - {fileID: 8300000, guid: a19282be1537f7c468764490b0a0841b, type: 3}
-    volume: 0.2
+    volume: 0.1
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -325,7 +324,9 @@ MonoBehaviour:
     priority: 128
     waitTillNext: 0
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &2613044583457648136
 AudioSource:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class Explosive : Projectile{
         
 
         if (propulsion){
-            body.velocity *= 0.01f;
+            body.velocity *= 1.01f;
         }
 
     }
@@ -67,7 +67,6 @@ public class Explosive : Projectile{
 
 
     public void Explode(){ 
-        _audioManager.PlaySound(0, false);
         if (spriteRenderer){
             spriteRenderer.enabled = false;
         }
@@ -75,6 +74,9 @@ public class Explosive : Projectile{
         body.simulated = false;
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject, 0.01f);
+        if (!impactGrenade){
+            _audioManager.PlayNewSource(0);
+        }
     }
 
 
@@ -111,11 +113,23 @@ public class Explosive : Projectile{
             body.sharedMaterial = material;
             
             // don't uncomment this. Don't you dare.
-            //_audioManager.PlaySound(0, false, 0);
-            _audioManager.PlayConstant(0, false, 0);
+            _audioManager.PlaySound(0);
         }
         else{
-            base.OnCollisionEnter2D(other);
+            if (sticky){
+                transform.parent = other.gameObject.transform;
+                body.velocity = new Vector2(0, 0);
+                body.simulated = false;
+            }
+            if (other.rigidbody && other.rigidbody.sharedMaterial){
+                if (other.rigidbody.sharedMaterial.name == "Metal"){
+                    AudioManager.PlayNewSource(0);
+                }
+                else if (other.rigidbody.sharedMaterial.name == "Snow" || other.rigidbody.sharedMaterial.name == "Rock" ||
+                         other.rigidbody.sharedMaterial.name == "Grass"){
+                    AudioManager.PlayNewSource(1);
+                }
+            }
             if (impactGrenade){
                 Explode();
             }

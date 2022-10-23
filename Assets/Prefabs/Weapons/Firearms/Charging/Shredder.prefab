@@ -202,7 +202,6 @@ MonoBehaviour:
   parent: {fileID: 0}
   localPos: {x: 1.69, y: 0.42}
   wielder: {fileID: 0}
-  offset: {x: 1.69, y: -0.42}
   armType: 0
   cursorType: 37
   allowInterrupt: 0
@@ -241,9 +240,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f16382833b0c3314db4063bd067be3df, type: 3}
     - {fileID: 8300000, guid: f43c706e0d7900848a0d762c953fe8a8, type: 3}
     - {fileID: 8300000, guid: b3ef502c45e4e5147a56851570be680f, type: 3}
-    volume: 1
+    volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -252,7 +251,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d83e5353d31d9bc479a193dca27b31b6, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -263,7 +262,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 4f3bce67d2621f34998e7caa62876d33, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -272,7 +271,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 66a1aa689d3fc6f439d25e97c9a740a7, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 1
     loop: 0
@@ -294,6 +293,7 @@ MonoBehaviour:
     priority: 128
     waitTillNext: 1
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
 --- !u!82 &4541617281276091613
 AudioSource:

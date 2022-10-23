@@ -228,7 +228,6 @@ MonoBehaviour:
   wielder: {fileID: 0}
   armType: 5
   cursorType: 14
-  allowInterrupt: 0
   firingPoint: {fileID: 7749246487177832564}
   activelyWielded: 0
   shotDelay: 0
@@ -237,10 +236,10 @@ MonoBehaviour:
   instability: 0
   projectileTemplate: {fileID: 5302949600237173417, guid: 3a422bbb78e19fa41abf443be52aedc4,
     type: 3}
-  projectileDamage: 500
+  projectileDamage: 900
   projectileSpeed: 400
   piercing: 0
-  chargePerFrame: 2
+  chargePerFrame: 1.74
   cooldownSpeed: 0.5
   percentagePerShot: 20
   energy: 100
@@ -264,9 +263,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e3ff451f3cc7b9a4b923b15d05f49cf8, type: 3}
     - {fileID: 8300000, guid: 1f4d7931204df944183915ae0d909f3a, type: 3}
     - {fileID: 8300000, guid: 0f58f31e40d8c5246af20f30f3ddf70e, type: 3}
-    volume: 0.4
+    volume: 0.7
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -275,9 +274,9 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c7e427238b06bf74da45d241bf6ddcc8, type: 3}
     - {fileID: 8300000, guid: c9559272cdfc9c94ebe8096bae71a035, type: 3}
     - {fileID: 8300000, guid: 3ddfdf298ada473499fdaba2c690b722, type: 3}
-    volume: 0.4
+    volume: 0.8
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -288,30 +287,23 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 52d2ae74ae7151244b38766057b05d5f, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
   - name: Dry Fire
     clipsList:
-    - {fileID: 8300000, guid: 9413c25ad050bab40b615fe31f90584b, type: 3}
-    - {fileID: 8300000, guid: ba3d3f278483c3b49921eb98e5ac67da, type: 3}
-    - {fileID: 8300000, guid: 09c2f44eb4abd9f4299fa0b581c987a3, type: 3}
-    - {fileID: 8300000, guid: 57de6f36885ccb74f809dc6e8bcb0bb3, type: 3}
-    - {fileID: 8300000, guid: 46f260785081b5f43bea3ff09fd63ddc, type: 3}
-    - {fileID: 8300000, guid: 536cee64ecff049499f5a62a5955fad0, type: 3}
-    - {fileID: 8300000, guid: fe36b47c376ef2140910d0f2ad986b7c, type: 3}
-    - {fileID: 8300000, guid: e0d3541275e4fbc4f9818876e29a5470, type: 3}
+    - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 1
     loop: 0
   - name: Charge In
     clipsList:
     - {fileID: 8300000, guid: 65cb9f252634ded4a92b1867334eaf7c, type: 3}
-    volume: 0.2
+    volume: 0.05
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -320,13 +312,15 @@ MonoBehaviour:
   - name: Charge Out
     clipsList:
     - {fileID: 8300000, guid: b72eef247a9da2a4bad25553e8e81cbc, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
     waitTillNext: 0
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &3384590040524449548
 AudioSource:
   m_ObjectHideFlags: 0

@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 8609765344648067629}
   - component: {fileID: 8609765344648067618}
   - component: {fileID: 8609765344648067619}
-  - component: {fileID: 8609765344648067616}
+  - component: {fileID: 35363266659132786}
   - component: {fileID: -7570404451717712117}
   - component: {fileID: 8659021871769568557}
   - component: {fileID: 6978223096045847927}
@@ -194,7 +194,7 @@ PolygonCollider2D:
       - {x: 1.244278, y: 0.505126}
       - {x: 0.8864498, y: 0.50248957}
       - {x: 0.74391556, y: 0.740232}
---- !u!114 &8609765344648067616
+--- !u!114 &35363266659132786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +217,6 @@ MonoBehaviour:
   wielder: {fileID: 0}
   armType: 1
   cursorType: 4
-  allowInterrupt: 0
   firingPoint: {fileID: 0}
   activelyWielded: 0
   shotDelay: 0
@@ -231,7 +230,7 @@ MonoBehaviour:
   piercing: 0
   magazinesLeft: 2
   magazineSize: 60
-  reloadTime: 3
+  reloadTime: 2
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
   bulletsLeft: 60
@@ -250,10 +249,10 @@ MonoBehaviour:
   sounds:
   - name: Fire
     clipsList:
-    - {fileID: 8300000, guid: 48e88564b75e30946861c643be5ed0d9, type: 3}
-    volume: 0.4
+    - {fileID: 8300000, guid: 91bb9be0c1257514891532d3fec0ac39, type: 3}
+    volume: 0.5
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -264,7 +263,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d1eb31b87ec20354ebad599cd273ff8d, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -275,7 +274,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: f17aa17f99b2e4748a49ff19105841e6, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
@@ -284,11 +283,13 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 076dda0243f5a6845a7e57f0b5d5e3ff, type: 3}
     volume: 0.2
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 128
     waitTillNext: 0.1
     loop: 0
+  newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &8659021871769568557
 AudioSource:
   m_ObjectHideFlags: 0
