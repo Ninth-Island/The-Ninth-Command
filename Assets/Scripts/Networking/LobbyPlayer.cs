@@ -48,7 +48,19 @@ public class LobbyPlayer : NetworkBehaviour{
     private void Start(){
         _customNetworkManager = FindObjectOfType<CustomNetworkManager>();
     }
-    
+
+    public override void OnStartServer(){
+        if (hasAuthority){
+            StartCoroutine(ServerJoinTeam());
+        }
+    }
+
+    private IEnumerator ServerJoinTeam(){
+        yield return new WaitUntil(() => _customNetworkManager != null);
+        _teamIndex = 1;
+        _customNetworkManager.NetworkManagerSetTeamIndex(connectionToClient, 1);
+    }
+
 
     [Command]
     public void CmdSetUsername(string enteredName){
