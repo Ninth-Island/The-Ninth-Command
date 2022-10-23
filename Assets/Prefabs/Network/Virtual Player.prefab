@@ -66,3 +66,6 @@ MonoBehaviour:
   syncInterval: 0.1
   gamePlayerPrefab: {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637,
     type: 3}
+  redTeamMaterial: {fileID: 2100000, guid: 443c8a5820340674284d0a52fdb8c258, type: 2}
+  blueTeamMaterial: {fileID: 2100000, guid: b3c1e7f98fef4584ab327b866b804fa8, type: 2}
+  noTeamMaterial: {fileID: 2100000, guid: 27b014366f17b9f4693411c37c7e721c, type: 2}

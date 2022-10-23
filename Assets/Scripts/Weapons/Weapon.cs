@@ -67,7 +67,6 @@ public class Weapon : CustomObject{
     protected override void Start(){
         base.Start();       
         _networkTransform = GetComponent<NetworkTransform>();
-        Debug.Log(_networkTransform);
 
     }
 
