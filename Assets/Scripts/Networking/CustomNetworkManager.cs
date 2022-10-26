@@ -58,7 +58,7 @@ public class CustomNetworkManager : NetworkManager{
 
         
         foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
-            SetupPlayer(connectionToClient);
+            SetupPlayer(connectionToClient, connectionToClient.identity.GetComponent<VirtualPlayer>().gamePlayerPrefab);
         }
 
         yield return new WaitForSeconds(Time.fixedDeltaTime);
@@ -67,21 +67,15 @@ public class CustomNetworkManager : NetworkManager{
 
 
     [Server]
-    private void SetupPlayer(NetworkConnectionToClient connectionToClient){
+    public void SetupPlayer(NetworkConnectionToClient connectionToClient, GameObject prefab){
         
-        Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
+        Player player = Instantiate(prefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
         BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
 
         // cuts "(clone)" off the end
         pW.name = pW.name.Remove(pW.name.Length - 7);
         sW.name = sW.name.Remove(sW.name.Length - 7);
-        
-        // this is server only for hierarchy organization
-        Transform container = new GameObject($"Player {connectionToClient.connectionId}").transform;
-        player.transform.parent = container;
-        pW.transform.parent = container;
-        sW.transform.parent = container;
 
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         NetworkServer.Spawn(pW.gameObject, connectionToClient);

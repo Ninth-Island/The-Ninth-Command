@@ -36,16 +36,13 @@ public class Level : MonoBehaviour{
                 _redPoints++;
             }
             
-            StartCoroutine(Respawn(player));
+            Respawn(player);
         }
     }
 
-    private IEnumerator Respawn(Player player){
-        player.ClientRespawn();
-        yield return new WaitForSeconds(5);
-        player.ServerRespawn();
+    private void Respawn(Player player){
         if (player.teamIndex > 6){
-            player.transform.position = _redSpawns[_redSpawnCounter];
+            player.virtualPlayer.Respawn(_redSpawns[_redSpawnCounter]);
             _redSpawnCounter++;
             if (_redSpawnCounter >= _redSpawns.Count){
                 _redSpawnCounter = 0;
@@ -53,7 +50,7 @@ public class Level : MonoBehaviour{
         }
         
         else{
-            player.transform.position = _blueSpawns[_blueSpawnCounter];
+            player.virtualPlayer.Respawn(_blueSpawns[_blueSpawnCounter]);
             _blueSpawnCounter++;
             if (_blueSpawnCounter >= _blueSpawns.Count){
                 _blueSpawnCounter = 0;

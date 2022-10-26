@@ -11004,6 +11004,7 @@ MonoBehaviour:
   feetCollider: {fileID: 3757039344167629853}
   Animator: {fileID: 3757039344788581447}
   characterClientReady: 0
+  virtualPlayer: {fileID: 0}
   teamIndex: 0
   energy: 1000
   energyCharge: 1
@@ -11436,24 +11437,6 @@ MonoBehaviour:
   - name: Shield Break
     clipsList:
     - {fileID: 8300000, guid: 2ba75d078dbfd4042b233cb9717990d5, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 1
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-  - name: Beep
-    clipsList:
-    - {fileID: 8300000, guid: 98377adc4e73f264fa99e6fdf257529d, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 1
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-  - name: Boop
-    clipsList:
-    - {fileID: 8300000, guid: 8ab1fbd482096b34b8fd3dda3e94f249, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 1

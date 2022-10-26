@@ -71,7 +71,7 @@ public class AudioManager : MonoBehaviour{
         if (!source.isPlaying || source.clip != sound.clipsList[0]){
             SetSourceProperties(sound);
             source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
-            source.Stop();
+            source.time = 0f;
             source.Play();
         }
     }

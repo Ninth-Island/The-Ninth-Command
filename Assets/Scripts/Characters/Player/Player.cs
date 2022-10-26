@@ -24,7 +24,7 @@ public partial class Player : Character{
         ClientHUDVisualStart();
         ClientWeaponControlStart();
         base.OnStartClient();
-        Invoke(nameof(InitializeTeammateStatuses), 4);
+        //Invoke(nameof(InitializeTeammateStatuses), 4);
     }
     
 
