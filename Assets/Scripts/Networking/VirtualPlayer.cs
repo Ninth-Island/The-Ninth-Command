@@ -17,6 +17,12 @@ public class VirtualPlayer : NetworkBehaviour{
     private Player _gamePlayer;
 
     private Material _outline;
+    
+    
+    [SyncVar] public int modePoints;
+    [SyncVar] public int kills;
+    [SyncVar] public int deaths;
+    [SyncVar] public int score;
 
     public void SetLobbyPlayer(LobbyPlayer lobbyPlayer){
         _lobbyPlayer = lobbyPlayer;
@@ -28,7 +34,7 @@ public class VirtualPlayer : NetworkBehaviour{
 
 
     [Server]
-    public void SetupPlayer(Player player, string username, Color[] colors, List<Vector3> spawns, int teamIndex){
+    public void SetupPlayer(Player player, string username, Color[] colors, int teamIndex){
         ClientSetupPlayer(player, username, colors, teamIndex);
         if (teamIndex > 6){
             player.SetLayer(LayerMask.NameToLayer("Team 2"));
@@ -42,6 +48,7 @@ public class VirtualPlayer : NetworkBehaviour{
     [ClientRpc]
     private void ClientSetupPlayer(Player player, string username, Color[] colors, int teamIndex){
         _gamePlayer = player;
+        player.virtualPlayer = this;
         if (username == ""){
             username = "Player " + Random.Range(-9999999, 99999999);
         }
@@ -94,5 +101,5 @@ public class VirtualPlayer : NetworkBehaviour{
 
 
 
-
+// 0.3497704918 * unity units = 1 meter. 
 }

@@ -24,7 +24,6 @@ public class CustomObject : NetworkBehaviour{
     protected virtual void Start(){
         body = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
-        //sprite renderer follows a different path each time
         AudioManager = GetComponent<AudioManager>();
     
     }

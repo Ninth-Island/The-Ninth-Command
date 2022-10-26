@@ -96,10 +96,8 @@ public class CustomNetworkManager : NetworkManager{
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
 
         int teamIndex = TeamIndices[connectionToClient];
-        List<Vector3> spawns;
         if (teamIndex > 6){
             player.transform.position = _redSpawns[_redSpawnCounter];
-            spawns = _redSpawns;
             _redSpawnCounter++;
             if (_redSpawnCounter >= _redSpawns.Count){
                 _redSpawnCounter = 0;
@@ -108,13 +106,12 @@ public class CustomNetworkManager : NetworkManager{
         
         else{
             player.transform.position = _blueSpawns[_blueSpawnCounter];
-            spawns = _blueSpawns;
             _blueSpawnCounter++;
             if (_blueSpawnCounter >= _blueSpawns.Count){
                 _blueSpawnCounter = 0;
             }
         }
-        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, Usernames[connectionToClient], _colors[connectionToClient], spawns, teamIndex);
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, Usernames[connectionToClient], _colors[connectionToClient], teamIndex);
 
     }
 

@@ -28,7 +28,7 @@ public class Projectile : CustomObject{
     public float initialAngle;
     private bool _piercing;
 
-    private Character _firer;
+    public Player firer;
 
     
 
@@ -62,8 +62,8 @@ public class Projectile : CustomObject{
     }
 
     
-    public virtual void SetValues(Character firer, int setDamage, float speed, float angle, bool piercing, int firedLayer, string setName){
-        _firer = firer;
+    public virtual void SetValues(Player setFirer, int setDamage, float speed, float angle, bool piercing, int firedLayer, string setName){
+        firer = setFirer;
         
         initialAngle = angle;
         damage = setDamage;

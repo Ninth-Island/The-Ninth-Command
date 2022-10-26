@@ -15,8 +15,9 @@ public partial class Player : Character{
 * ================================================================================================================
 */
 
+    public VirtualPlayer virtualPlayer;
     public int teamIndex;
-    
+    private Level _level;
     
     [Client]
     public override void OnStartClient(){
@@ -30,18 +31,22 @@ public partial class Player : Character{
     [Server]
     public override void OnStartServer(){
         ServerPlayerAbilitiesStart();
+        _level = FindObjectOfType<Level>();
     }
 
 
     [Client]
     protected override void ClientUpdate(){
-        base.ClientUpdate();
-        
-        _lastArmAngle = GetBarrelToMouseRotation();
-        
-        ClientMoveUpdate();
-        ClientPlayerAbilitiesUpdate(); // all hud and audio stuff
-        ClientPlayerWeaponUpdate();
+        if (!_dead){
+            base.ClientUpdate();
+
+            _lastArmAngle = GetBarrelToMouseRotation();
+
+            ClientMoveUpdate();
+            ClientPlayerAbilitiesUpdate(); // all hud and audio stuff
+            ClientPlayerWeaponUpdate();
+        }
+
         ClientHUDUpdate();
         
         
@@ -50,31 +55,31 @@ public partial class Player : Character{
     
     [Client]
     protected override void ClientFixedUpdate(){
-        base.ClientFixedUpdate();
-        
-        _lastArmAngle = GetBarrelToMouseRotation();
-        
-        ClientMoveFixedUpdate();
-        ClientPlayerWeaponFixedUpdate();
-        
-        _currentInput.CrouchInput = _isCrouching;
-        _currentInput.RequestNumber = _inputRequestCounter;
-        ClientSendServerInputs();
+        if (!_dead){
+            base.ClientFixedUpdate();
 
+            _lastArmAngle = GetBarrelToMouseRotation();
+
+            ClientMoveFixedUpdate();
+            ClientPlayerWeaponFixedUpdate();
+
+            _currentInput.CrouchInput = _isCrouching;
+            _currentInput.RequestNumber = _inputRequestCounter;
+            ClientSendServerInputs();
+        }
     }
   
     
     
     [Server]
     protected override void ServerFixedUpdate(){
-        base.ServerFixedUpdate();
-
-        ServerPlayerNetworkedMovementFixedUpdate();
-        ServerPlayerCombatFixedUpdate();
-        ServerAbilitiesFixedUpdate();
-        ServerPlayerWeaponFixedUpdate();
-        
-        
+        if (!_dead){
+            base.ServerFixedUpdate();
+            ServerPlayerNetworkedMovementFixedUpdate();
+            ServerPlayerCombatFixedUpdate();
+            ServerAbilitiesFixedUpdate();
+            ServerPlayerWeaponFixedUpdate();
+        }
     }
     
 
@@ -106,6 +111,8 @@ public partial class Player : Character{
     }
 
     #endregion
+    
+    
     
 
 }

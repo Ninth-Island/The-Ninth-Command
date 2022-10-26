@@ -15,12 +15,10 @@ public class Bullet : Projectile{
 */
 
     [SerializeField] private GameObject deadBullet;
-    private Level _level;
 
 
     public override void OnStartServer(){
         base.OnStartServer();
-        _level = FindObjectOfType<Level>();
     }
     
     protected override void OnCollisionEnter2D(Collision2D other){
@@ -31,9 +29,5 @@ public class Bullet : Projectile{
         Destroy(db, 2f);
     
     }
-    
-    
-    public override void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        base.SetValues(firer, damage, speed, angle, piercing, firedLayer, name);
-    }
+
 }

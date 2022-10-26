@@ -172,13 +172,13 @@ MonoBehaviour:
   body: {fileID: 272140532128219919}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 272140532128219916}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: -1522665250973982014}
   parent: {fileID: 0}
   localPos: {x: 1.932, y: 0.22}
   wielder: {fileID: 0}
+  networkTransform: {fileID: 6329475723116990318}
   armType: 0
   cursorType: 0
-  allowInterrupt: 0
   firingPoint: {fileID: 2870688561833171534}
   activelyWielded: 0
   shotDelay: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
   instability: 0.1
   projectileTemplate: {fileID: -5604932223983771090, guid: bd0d6bbd9f1c8c948bbbf13658c448b2,
     type: 3}
-  projectileDamage: 10
+  projectileDamage: 20
   projectileSpeed: 200
   piercing: 0
   magazinesLeft: 2
@@ -253,6 +253,7 @@ MonoBehaviour:
     loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &8377429406475007086
 AudioSource:
   m_ObjectHideFlags: 0

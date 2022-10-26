@@ -222,10 +222,11 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 8546548626594045357}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: 7469975935137330819}
   parent: {fileID: 0}
   localPos: {x: 1.15, y: -0.6136}
   wielder: {fileID: 0}
+  networkTransform: {fileID: -5555057897289474489}
   armType: 5
   cursorType: 14
   firingPoint: {fileID: 7749246487177832564}

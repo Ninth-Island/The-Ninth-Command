@@ -172,13 +172,13 @@ MonoBehaviour:
   body: {fileID: 7449028600429464256}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 7449028600429464257}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: 3432605731686139888}
   parent: {fileID: 0}
   localPos: {x: 2.34, y: 0.16}
   wielder: {fileID: 0}
+  networkTransform: {fileID: -3528335614697000367}
   armType: 0
   cursorType: 16
-  allowInterrupt: 0
   firingPoint: {fileID: 5033598130610121201}
   activelyWielded: 0
   shotDelay: 60
@@ -251,6 +251,7 @@ MonoBehaviour:
     loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!82 &4316085040643082203
 AudioSource:
   m_ObjectHideFlags: 0

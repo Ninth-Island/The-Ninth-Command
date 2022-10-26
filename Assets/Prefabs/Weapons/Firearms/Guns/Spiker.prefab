@@ -168,13 +168,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  body: {fileID: 0}
+  body: {fileID: 2203350304549672336}
   Collider: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  AudioManager: {fileID: 0}
+  spriteRenderer: {fileID: 2203350304549672339}
+  AudioManager: {fileID: 8614085602533373021}
   parent: {fileID: 0}
   localPos: {x: 1.932, y: 0.22}
   wielder: {fileID: 0}
+  networkTransform: {fileID: 1187789671475010285}
   armType: 0
   cursorType: 9
   firingPoint: {fileID: 0}

@@ -8,6 +8,8 @@ public partial class Player : Character{
 
     [SerializeField] private int timeTillShieldRecharge;
     [SerializeField] private int shieldRechargeRate;
+    private bool _dead;
+    
     
     private int _timeLeftTillShieldRecharge;
     private bool _stoppedAudio;
@@ -29,13 +31,13 @@ public partial class Player : Character{
         if (isServer){
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
             if (projectile){
-                Hit(projectile.damage, other.transform.position, projectile.initialAngle);
+                Hit(projectile.firer, projectile.damage, other.transform.position, projectile.initialAngle);
             }
         }
     }
     
     [Server]
-    protected override void Hit(int damage, Vector3 position, float angle){
+    protected override void Hit(Player killer, int damage, Vector3 position, float angle){
         bool shieldBreak = false;
         if (shield > 0){
             shield -= damage;
@@ -43,13 +45,24 @@ public partial class Player : Character{
                 health += shield;
                 shield = 0;
                 shieldBreak = true;
+                if (health <= 0){
+                    health = 0;
+                    killer.virtualPlayer.kills++;
+                    killer.virtualPlayer.score += 100;
+                    ServerDie();
+                    SetAnimatedBoolOnClientRpc(_aNames.dying, true);
+                }
             }
         }
+        
         else{
             health -= damage;
             if (health <= 0){
                 health = 0;
-                //die
+                killer.virtualPlayer.kills++;
+                killer.virtualPlayer.score += 100;
+                ServerDie();
+                SetAnimatedBoolOnClientRpc(_aNames.dying, true);
             }
         }
 
@@ -120,7 +133,7 @@ public partial class Player : Character{
 
             if (shield <= 0){ 
                 _stoppedAudio = false;
-                if (health < MaxHealth / 3){ // heart pounding
+                if (health < MaxHealth / 3 && health > 0){ // heart pounding
                     AudioManager.PlayLooping(25);
 
                 }
@@ -134,6 +147,109 @@ public partial class Player : Character{
             AudioManager.PlayChargingNoise(22, (float)shield / MaxShield);
             _stoppedAudio = false;
         }
+    }
+
+    [Server]
+    private void ServerDie(){
+        primaryWeapon.netIdentity.RemoveClientAuthority();
+        secondaryWeapon.netIdentity.RemoveClientAuthority();
+        Die();
+        virtualPlayer.deaths++;
+        virtualPlayer.score -= 100;
+        _level.Die(this);
+        DieClientRpc();
+
+
+    }
+
+    [ClientRpc]
+    private void DieClientRpc(){
+        Die();
+        AudioManager.source.Stop();
+    }
+
+    //both
+    private void Die(){
+        _dead = true;
+        
+        primaryWeapon.StopReloading();
+        primaryWeapon.Drop();
+        
+        secondaryWeapon.StopReloading();
+        secondaryWeapon.Drop();
+
+        gameObject.layer = LayerMask.NameToLayer("Dead Player");
+        feetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
+    }
+
+    
+    [Server]
+    public void ServerRespawn(){
+        _dead = false;
+        BasicWeapon pW = Instantiate(primaryWeaponPrefab);
+        BasicWeapon sW = Instantiate(secondaryWeaponPrefab);
+
+        // cuts "(clone)" off the end
+        pW.name = pW.name.Remove(pW.name.Length - 7);
+        sW.name = sW.name.Remove(sW.name.Length - 7);
+        
+        NetworkServer.Spawn(pW.gameObject, connectionToClient);
+        NetworkServer.Spawn(sW.gameObject, connectionToClient);
+
+
+        primaryWeapon = pW;
+        secondaryWeapon = sW;
+        InitializeWeaponsOnClient(pW, sW);
+        
+        pW.StartCoroutine(pW.ServerInitializeWeapon(true, this, new []{1, 3}));
+        sW.StartCoroutine(sW.ServerInitializeWeapon(false, this, new []{1, 3}));
+
+        if (teamIndex > 6){
+            gameObject.layer = LayerMask.NameToLayer("Team 2");
+            feetCollider.gameObject.layer = LayerMask.NameToLayer("Team 2");
+        }
+        else{
+            gameObject.layer = LayerMask.NameToLayer("Team 1");
+            feetCollider.gameObject.layer = LayerMask.NameToLayer("Team 1");
+        }
+
+        shield = MaxShield;
+        health = MaxHealth;
+        UpdateHealthClientRpc(health, shield, false, false);
+        SetAnimatedBoolOnClientRpc(_aNames.dying, false);
+    }
+
+    [ClientRpc]
+    public void ClientRespawn(){
+        StartCoroutine(ClientRespawnBeep());
+    }
+    
+    [Client]
+    private IEnumerator ClientRespawnBeep(){
+        yield return new WaitForSeconds(1);
+
+        if (hasAuthority) AudioManager.PlaySound(27);
+        yield return new WaitForSeconds(1);
+        
+        if (hasAuthority) AudioManager.PlaySound(27);
+        yield return new WaitForSeconds(1);
+        
+        if (hasAuthority) AudioManager.PlaySound(27);
+        yield return new WaitForSeconds(1);
+        
+        if (hasAuthority) AudioManager.PlaySound(28);
+        yield return new WaitForSeconds(1);
+        
+        if (teamIndex > 6){
+            gameObject.layer = LayerMask.NameToLayer("Team 2");
+            feetCollider.gameObject.layer = LayerMask.NameToLayer("Team 2");
+        }
+        else{
+            gameObject.layer = LayerMask.NameToLayer("Team 1");
+            feetCollider.gameObject.layer = LayerMask.NameToLayer("Team 1");
+        }
+
+        _dead = false;
     }
 
 }

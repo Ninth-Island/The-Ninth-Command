@@ -16,6 +16,7 @@ public partial class Player : Character{
 
     [Header("HUD")] [SerializeField] protected Canvas HUD;
     [SerializeField] private GameObject teammateStatusPrefab;
+    [SerializeField] private GameObject scoreboard;
     [SerializeField] private TMP_Text pingDisplay;
 
     [SerializeField] private Slider healthSlider;
@@ -30,9 +31,12 @@ public partial class Player : Character{
     private Camera _mainCamera;
     private CinemachineVirtualCamera[] _virtualCameras;
 
+    private GameObject _teamBoard;
+    private GameObject _enemyTeamBoard;
+    private int _enemyTeamSize;
 
     private List<TeammateHUDElements> _team = new List<TeammateHUDElements>();
-
+    private List<PlayerPanel> _scores = new List<PlayerPanel>();
 
     // sprites
     public Transform arm;
@@ -94,39 +98,82 @@ public partial class Player : Character{
         for (int i = 0; i < spritesParent.transform.childCount; i++){
             sprites[i] = spritesParent.transform.GetChild(i).gameObject;
         }
+
+        
+        if (teamIndex > 6){
+            _teamBoard = scoreboard.transform.GetChild(1).gameObject;
+            _enemyTeamBoard = scoreboard.transform.GetChild(0).gameObject;
+        }
+        else{
+            _teamBoard = scoreboard.transform.GetChild(0).gameObject;
+            _enemyTeamBoard = scoreboard.transform.GetChild(1).gameObject;
+        }
     }
 
-
+    [Client]
     private void InitializeTeammateStatuses(){
         int position = 130;
-        if (teamIndex < 6){
-            foreach (Player player in FindObjectsOfType<Player>()){
-                if (player.teamIndex < 6 && player != this){
+        Player[] players = FindObjectsOfType<Player>();
+        
+        foreach (Player player in players){
+            if (player.teamIndex < 7 && teamIndex < 7 || player.teamIndex > 6 && teamIndex > 6){ // on same team
+                if (player != this){
                     GameObject teammateStatus = CreateTeammateStatus(position);
+                    Color helmetColor = player.helmet.GetChild(0).GetComponent<SpriteRenderer>().color;
+                    Color visorColor = player.helmet.GetChild(1).GetComponent<SpriteRenderer>().color;
 
-                    teammateStatus.transform.GetChild(0).GetComponent<Image>().color = player.helmet.GetChild(0).GetComponent<SpriteRenderer>().color; // helmet
-                    teammateStatus.transform.GetChild(1).GetComponent<Image>().color = player.helmet.GetChild(1).GetComponent<SpriteRenderer>().color; // visor
+                    teammateStatus.transform.GetChild(0).GetComponent<Image>().color = helmetColor;
+                    teammateStatus.transform.GetChild(1).GetComponent<Image>().color = visorColor; // visor
                     teammateStatus.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = player.name; // name
-                    
-                    _team.Add(new TeammateHUDElements(player, 
+
+                    _team.Add(new TeammateHUDElements(player,
                         teammateStatus.transform.GetChild(4).GetComponent<TextMeshProUGUI>(), // health text
                         teammateStatus.transform.GetChild(3).GetComponent<Slider>(), // health slider
                         teammateStatus.transform.GetChild(6).GetComponent<TextMeshProUGUI>(), // shield text
                         teammateStatus.transform.GetChild(5).GetComponent<Slider>())); // shield slider
                     position += 255;
                 }
+
+            }
+            else{ // on different team
+                _enemyTeamSize++;
             }
         }
-        if (teamIndex >= 6){
-            foreach (Player player in FindObjectsOfType<Player>()){
-                if (player.teamIndex >= 6 && player != this){
-                    
-                }
+
+        // dont need to fors.
+        int index = 1;
+        int enemyIndex = 1;
+        foreach (Player player in players){
+            if (player.teamIndex < 7 && teamIndex < 7 || player.teamIndex > 6 && teamIndex > 6){ // on same team
+                Transform playerPanel = _teamBoard.transform.GetChild(index);
+                playerPanel.gameObject.SetActive(true);
+                TextMeshProUGUI username = playerPanel.GetChild(0).GetComponent<TextMeshProUGUI>();
+                username.text = player.name;
+                _scores.Add(new PlayerPanel(player.virtualPlayer, username,
+                    playerPanel.GetChild(1).GetComponent<TextMeshProUGUI>(),
+                    playerPanel.GetChild(2).GetComponent<TextMeshProUGUI>(),
+                    playerPanel.GetChild(3).GetComponent<TextMeshProUGUI>(),
+                    playerPanel.GetChild(4).GetComponent<TextMeshProUGUI>()));
+                index++;
+            }
+            
+            else{ // on different team
+                Transform playerPanel = _enemyTeamBoard.transform.GetChild(enemyIndex);
+                playerPanel.gameObject.SetActive(true);
+                TextMeshProUGUI username = playerPanel.GetChild(0).GetComponent<TextMeshProUGUI>();
+                username.text = player.name;
+                _scores.Add(new PlayerPanel(player.virtualPlayer, username, 
+                    playerPanel.GetChild(1).GetComponent<TextMeshProUGUI>(), 
+                    playerPanel.GetChild(2).GetComponent<TextMeshProUGUI>(), 
+                    playerPanel.GetChild(3).GetComponent<TextMeshProUGUI>(), 
+                    playerPanel.GetChild(4).GetComponent<TextMeshProUGUI>()));
+                enemyIndex++;
             }
         }
+        PlayerUpdateHUD();
     }
     private GameObject CreateTeammateStatus(int position){
-        GameObject teammateStatus = Instantiate(teammateStatusPrefab, HUD.transform.GetChild(6));
+        GameObject teammateStatus = Instantiate(teammateStatusPrefab, HUD.transform.GetChild(5));
         teammateStatus.GetComponent<RectTransform>().anchoredPosition = new Vector3(position, -40);
         
         return teammateStatus;  
@@ -151,6 +198,13 @@ public partial class Player : Character{
 
             teammateHUDElements.HealthSlider.value = (float) teammateHealth / teammateMaxHealth;
             teammateHUDElements.ShieldSlider.value = (float) teammateShield / teammateMaxShield;
+
+        }
+        
+        scoreboard.SetActive(false);
+        if (Input.GetKey(KeyCode.Tab)){
+            PlayerUpdateHUD();
+            scoreboard.SetActive(true);
         }
     }
 
@@ -195,6 +249,16 @@ public partial class Player : Character{
         pickupText.SetText(setText);
     }
 
+    [Client]
+    private void PlayerUpdateHUD(){
+        foreach (PlayerPanel score in _scores){
+            score.ModePoints.text = "" + score.VirtualPlayer.modePoints;
+            score.Kills.text = "" + score.VirtualPlayer.kills;
+            score.Deaths.text = "" + score.VirtualPlayer.deaths;
+            score.Score.text = "" + score.VirtualPlayer.score;
+        }
+    }
+
     private class TeammateHUDElements{
         public Player Player;
         
@@ -206,7 +270,7 @@ public partial class Player : Character{
         
         public TeammateHUDElements(Player player, TextMeshProUGUI healthText, Slider healthSlider, TextMeshProUGUI shieldText, Slider shieldSlider){
             Player = player;
-
+            
             HealthText = healthText;
             HealthSlider = healthSlider;
 
@@ -215,4 +279,23 @@ public partial class Player : Character{
         }
 
     }
+    
+    private class PlayerPanel{
+        public VirtualPlayer VirtualPlayer;
+        public TextMeshProUGUI Username;
+        public TextMeshProUGUI ModePoints;
+        public TextMeshProUGUI Kills;
+        public TextMeshProUGUI Deaths;
+        public TextMeshProUGUI Score;
+
+        public PlayerPanel(VirtualPlayer virtualPlayer, TextMeshProUGUI username, TextMeshProUGUI modePoints, TextMeshProUGUI kills, TextMeshProUGUI deaths, TextMeshProUGUI score){
+            VirtualPlayer = virtualPlayer;
+            Username = username;
+            ModePoints = modePoints;
+            Kills = kills;
+            Deaths = deaths;
+            Score = score;
+        }
+    }
+
 }

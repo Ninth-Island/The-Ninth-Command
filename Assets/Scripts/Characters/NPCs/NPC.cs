@@ -56,7 +56,7 @@ public class NPC : Character{
     }
 
     [Server]
-    protected override void Hit(int damage, Vector3 position, float angle){
+    protected override void Hit(Player player, int damage, Vector3 position, float angle){
 
         if (HealthRoutine != null){
             StopCoroutine(HealthRoutine);

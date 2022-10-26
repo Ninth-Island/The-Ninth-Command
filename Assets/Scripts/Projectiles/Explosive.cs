@@ -47,9 +47,9 @@ public class Explosive : Projectile{
     }
 
     
-    public override void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        base.SetValues(firer, damage, speed, angle, piercing, firedLayer, name); 
-        
+   
+    public override void SetValues(Player setFirer, int setDamage, float speed, float angle, bool piercing, int firedLayer, string setName){
+        base.SetValues(setFirer, setDamage, speed, angle, piercing, firedLayer, setName);
         StartCoroutine(Fuse());
         
     }

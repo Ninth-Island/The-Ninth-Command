@@ -202,7 +202,7 @@ public class Character : CustomObject{
 
 
     [Server]
-    protected virtual void Hit(int damage, Vector3 position, float angle){
+    protected virtual void Hit(Player player, int damage, Vector3 position, float angle){
     }
 
 
