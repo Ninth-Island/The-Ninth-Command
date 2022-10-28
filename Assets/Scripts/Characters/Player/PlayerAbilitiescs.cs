@@ -22,21 +22,7 @@ public partial class Player : Character{
 * 
 * ================================================================================================================
 */
-
     
-    [Header("Heat and Energy")]
-    [SerializeField] private int energy;
-    [SerializeField] private int energyCharge;
-    [SerializeField] private Slider energySlider;
-
-    [SerializeField] private int heat;
-    [SerializeField] private int heatCharge;
-    [SerializeField] private Slider overflowSlider;
-    
-    [SerializeField] private int energyOverFlowHeatCharge;
-    
-    private int _maxEnergy;
-    private int _maxHeat;
 
     [Header("Abilities")] 
     [SerializeField] private float dashVelocity;
@@ -64,12 +50,7 @@ public partial class Player : Character{
     * 
     * ================================================================================================================
     */
-
-    private void ServerPlayerAbilitiesStart(){
-        _maxEnergy = energy;
-        _maxHeat = heat;
-    }
-    
+        
     [Client]
     protected virtual void ClientPlayerAbilitiesUpdate(){
         if (_fadeTimer > 0){
@@ -94,15 +75,7 @@ public partial class Player : Character{
 
     [Server]
     private void ServerAbilitiesFixedUpdate(){
-        if (energy >= _maxEnergy){
-            heat = Mathf.Clamp(heat + energyOverFlowHeatCharge, 0, _maxHeat);
-        }
-        else{
-            energy = Mathf.Clamp(energy + energyCharge, 0, _maxEnergy);
-        }
         
-        heat = Mathf.Clamp(heat + heatCharge, 0, _maxHeat);
-        ClientUpdateSlidersTargetRpc(connectionToClient, energy, heat);
         
 
         /*transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
@@ -126,12 +99,6 @@ public partial class Player : Character{
 
     }
 
-    [TargetRpc]
-    private void ClientUpdateSlidersTargetRpc(NetworkConnection connection, int setEnergy, int setHeat){
-        energySlider.value = (float) setEnergy / _maxEnergy;
-        overflowSlider.value = (float) setHeat / _maxHeat;
-    }
-    
 
 
     #endregion
@@ -204,12 +171,9 @@ public partial class Player : Character{
     #region LeftControl
 
     private void Dash(){
-        if (heat >= _maxHeat){
-            heat = 0;
-            float rotation = GetBarrelToMouseRotation();
-            Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
-            body.velocity = dir * dashVelocity;
-        }
+        float rotation = GetBarrelToMouseRotation();
+        Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
+        body.velocity = dir * dashVelocity;
     }
 
     private void UseGrapplingHook(){

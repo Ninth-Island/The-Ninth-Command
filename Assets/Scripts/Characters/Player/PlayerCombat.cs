@@ -162,7 +162,7 @@ public partial class Player : Character{
         Die();
         virtualPlayer.deaths++;
         virtualPlayer.score -= 100;
-        _level.Die(this);
+        _modeManager.Die(this);
         DieClientRpc();
 
 

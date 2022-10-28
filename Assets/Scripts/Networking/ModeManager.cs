@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level : MonoBehaviour{
+public class ModeManager : MonoBehaviour{
     [SerializeField] private int gameMode; 
     /* 0 = slayer
      * 1 = capture the flag
@@ -11,7 +11,6 @@ public class Level : MonoBehaviour{
      * 3 = siege (destroy enemy base)
      * 4 = deliver the explosive
      */
-
     private List<Vector3> _blueSpawns = new List<Vector3>();
     private int _blueSpawnCounter;
     private List<Vector3> _redSpawns = new List<Vector3>();
@@ -19,14 +18,11 @@ public class Level : MonoBehaviour{
     
     private int _redPoints;
     private int _bluePoints;
-
     private void Start(){
         TeamsSpawns[] teamsSpawnsArray = FindObjectsOfType<TeamsSpawns>();
         _blueSpawns = teamsSpawnsArray[0].GetSpawns();
         _redSpawns = teamsSpawnsArray[1].GetSpawns();
-
     }
-
     public void Die(Player player){
         if (gameMode == 0){
             if (player.teamIndex < 7){
@@ -39,7 +35,6 @@ public class Level : MonoBehaviour{
             Respawn(player);
         }
     }
-
     private void Respawn(Player player){
         if (player.teamIndex > 6){
             player.virtualPlayer.Respawn(_redSpawns[_redSpawnCounter]);
@@ -57,5 +52,4 @@ public class Level : MonoBehaviour{
             }
         }
     }
-
 }

@@ -17,12 +17,13 @@ public partial class Player : Character{
 
     public VirtualPlayer virtualPlayer;
     public int teamIndex;
-    private Level _level;
+    private ModeManager _modeManager;
     
     [Client]
     public override void OnStartClient(){
         ClientHUDVisualStart();
         ClientWeaponControlStart();
+        
         base.OnStartClient();
         //Invoke(nameof(InitializeTeammateStatuses), 4);
     }
@@ -30,8 +31,7 @@ public partial class Player : Character{
 
     [Server]
     public override void OnStartServer(){
-        ServerPlayerAbilitiesStart();
-        _level = FindObjectOfType<Level>();
+        _modeManager = FindObjectOfType<ModeManager>();
     }
 
 
