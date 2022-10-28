@@ -10,6 +10,9 @@ using Random = UnityEngine.Random;
 public class VirtualPlayer : NetworkBehaviour{
 
     public GameObject gamePlayerPrefab;
+    
+    [SerializeField] private GameObject teammateStatusPrefab;
+    [SerializeField] private GameObject scoreboard;
     [SerializeField] private Material redTeamMaterial;
     [SerializeField] private Material blueTeamMaterial;
     [SerializeField] private Material noTeamMaterial;
@@ -23,6 +26,12 @@ public class VirtualPlayer : NetworkBehaviour{
     public string username;
     public Color[] colors;
     public int teamIndex;
+
+    public int health;
+    private int _maxHealth;
+
+    public int shield;
+    private int _maxShield;
     
     [SyncVar] public int modePoints;
     [SyncVar] public int kills;
@@ -30,6 +39,12 @@ public class VirtualPlayer : NetworkBehaviour{
     [SyncVar] public int score;
 
     private AudioManager _audioManager;
+    
+    
+    private List<PlayerPanel> _scores = new List<PlayerPanel>();
+    private GameObject _teamBoard;
+    private GameObject _enemyTeamBoard;
+    private int _enemyTeamSize;
 
     public override void OnStartClient(){
         _audioManager = GetComponent<AudioManager>();
@@ -40,6 +55,99 @@ public class VirtualPlayer : NetworkBehaviour{
         _networkManager = FindObjectOfType<CustomNetworkManager>();
     }
 
+    
+    
+    
+    [Client]
+    private void InitializeTeammateStatuses(){
+        if (teamIndex > 6){
+            _teamBoard = scoreboard.transform.GetChild(1).gameObject;
+            _enemyTeamBoard = scoreboard.transform.GetChild(0).gameObject;
+        }
+        else{
+            _teamBoard = scoreboard.transform.GetChild(0).gameObject;
+            _enemyTeamBoard = scoreboard.transform.GetChild(1).gameObject;
+        }
+
+        if (hasAuthority){
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        int position = -20;
+        VirtualPlayer[] players = FindObjectsOfType<VirtualPlayer>();
+        
+        foreach (VirtualPlayer otherVirtualPlayer in players){
+            if (otherVirtualPlayer.teamIndex < 7 && teamIndex < 7 || otherVirtualPlayer.teamIndex > 6 && teamIndex > 6){ // on same team
+                if (this != otherVirtualPlayer){ // not this object
+                    GameObject teammateStatus = CreateTeammateStatus(position);
+                    Color helmetColor = otherVirtualPlayer.gamePlayer.helmet.GetChild(0).GetComponent<SpriteRenderer>().color;
+                    Color visorColor = otherVirtualPlayer.gamePlayer.helmet.GetChild(1).GetComponent<SpriteRenderer>().color;
+
+                    teammateStatus.transform.GetChild(0).GetComponent<Image>().color = helmetColor;
+                    teammateStatus.transform.GetChild(1).GetComponent<Image>().color = visorColor; // visor
+                    teammateStatus.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = otherVirtualPlayer.name; // name
+
+                    Team.Add(new TeammateHUDElements(otherVirtualPlayer,
+                        teammateStatus.transform.GetChild(4).GetComponent<TextMeshProUGUI>(), // health text
+                        teammateStatus.transform.GetChild(3).GetComponent<Slider>(), // health slider
+                        teammateStatus.transform.GetChild(6).GetComponent<TextMeshProUGUI>(), // shield text
+                        teammateStatus.transform.GetChild(5).GetComponent<Slider>())); // shield slider
+                    position -= 40;
+                }
+
+            }
+            else{ // on different team
+                _enemyTeamSize++;
+            }
+        }
+
+        // dont need to fors.
+        int index = 1;
+        int enemyIndex = 1;
+        foreach (VirtualPlayer otherVirtualPlayer in players){
+            if (otherVirtualPlayer.teamIndex < 7 && teamIndex < 7 || otherVirtualPlayer.teamIndex > 6 && teamIndex > 6){ // on same team
+                Transform playerPanel = _teamBoard.transform.GetChild(index);
+                playerPanel.gameObject.SetActive(true);
+                TextMeshProUGUI usrname = playerPanel.GetChild(0).GetComponent<TextMeshProUGUI>();
+                usrname.text = otherVirtualPlayer.name;
+                _scores.Add(new PlayerPanel(otherVirtualPlayer, usrname,
+                    playerPanel.GetChild(1).GetComponent<TextMeshProUGUI>(),
+                    playerPanel.GetChild(2).GetComponent<TextMeshProUGUI>(),
+                    playerPanel.GetChild(3).GetComponent<TextMeshProUGUI>(),
+                    playerPanel.GetChild(4).GetComponent<TextMeshProUGUI>()));
+                index++;
+            }
+            
+            else{ // on different team
+                Transform playerPanel = _enemyTeamBoard.transform.GetChild(enemyIndex);
+                playerPanel.gameObject.SetActive(true);
+                TextMeshProUGUI usrname = playerPanel.GetChild(0).GetComponent<TextMeshProUGUI>();
+                usrname.text = otherVirtualPlayer.name;
+                _scores.Add(new PlayerPanel(otherVirtualPlayer, usrname, 
+                    playerPanel.GetChild(1).GetComponent<TextMeshProUGUI>(), 
+                    playerPanel.GetChild(2).GetComponent<TextMeshProUGUI>(), 
+                    playerPanel.GetChild(3).GetComponent<TextMeshProUGUI>(), 
+                    playerPanel.GetChild(4).GetComponent<TextMeshProUGUI>()));
+                enemyIndex++;
+            }
+        }
+        PlayerUpdateHUD();
+    }
+    private GameObject CreateTeammateStatus(int position){
+        GameObject teammateStatus = Instantiate(teammateStatusPrefab, transform.GetChild(0).GetChild(0));
+        teammateStatus.GetComponent<RectTransform>().anchoredPosition = new Vector3(65, position);
+        
+        return teammateStatus;  
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public void SetLobbyPlayer(LobbyPlayer lobbyPlayer){
         _lobbyPlayer = lobbyPlayer;
     }
@@ -108,6 +216,9 @@ public class VirtualPlayer : NetworkBehaviour{
         teamIndex = setTeamIndex;
         
         player.virtualPlayer = this;
+        
+        _maxHealth = player.maxHealth;
+        _maxShield = player.maxShield;
         if (setUsername == ""){
             setUsername = "Player " + Random.Range(-9999999, 99999999);
         }
@@ -142,7 +253,7 @@ public class VirtualPlayer : NetworkBehaviour{
         }
 
         player.teamIndex = setTeamIndex;
-
+        player.HUDPickupWeapon(player.primaryWeapon);
         Transform sprites = gamePlayer.transform.GetChild(1);
 
         SetupSpriteRenderer(sprites.GetChild(0).GetComponent<SpriteRenderer>(), setColors[3]); // body
@@ -150,11 +261,98 @@ public class VirtualPlayer : NetworkBehaviour{
         SetupSpriteRenderer(sprites.GetChild(3).GetChild(0).GetComponent<SpriteRenderer>(), setColors[2]); // arms armed
         SetupSpriteRenderer(sprites.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>(), setColors[1]); // helmet
         SetupSpriteRenderer(sprites.GetChild(2).GetChild(1).GetComponent<SpriteRenderer>(), setColors[0]); // visor
+        
+        Invoke(nameof(InitializeTeammateStatuses), 1f);
+
     }
 
     private void SetupSpriteRenderer(SpriteRenderer spriteRenderer, Color color){
         spriteRenderer.color = color;
         //spriteRenderer.material = _outline;
+    }
+
+    [ClientCallback]
+    private void Update(){
+        scoreboard.SetActive(false);
+        if (Input.GetKey(KeyCode.Tab)){
+            PlayerUpdateHUD();
+            scoreboard.SetActive(true);
+        }
+        
+          
+        foreach (TeammateHUDElements teammateHUDElements in Team){
+            int teammateHealth = teammateHUDElements.VirtualPlayer.health;
+            int teammateMaxHealth = teammateHUDElements.VirtualPlayer._maxHealth;
+            
+            int teammateShield = teammateHUDElements.VirtualPlayer.shield;
+            int teammateMaxShield = teammateHUDElements.VirtualPlayer._maxShield;
+            
+            if (teammateShield > 0){
+                teammateHUDElements.HealthText.text = "";
+                teammateHUDElements.ShieldText.text = $"{teammateShield}/{teammateMaxShield}";
+            }
+            else{
+                teammateHUDElements.HealthText.text = $"{teammateHealth}/{teammateMaxHealth}";
+                teammateHUDElements.ShieldText.text = "";
+            }
+
+            teammateHUDElements.HealthSlider.value = (float) teammateHealth / teammateMaxHealth;
+            teammateHUDElements.ShieldSlider.value = (float) teammateShield / teammateMaxShield;
+
+        }
+    }
+
+    [Client]
+    private void PlayerUpdateHUD(){
+        foreach (PlayerPanel panel in _scores){
+            panel.ModePoints.text = "" + panel.VirtualPlayer.modePoints;
+            panel.Kills.text = "" + panel.VirtualPlayer.kills;
+            panel.Deaths.text = "" + panel.VirtualPlayer.deaths;
+            panel.Score.text = "" + panel.VirtualPlayer.score;
+        }
+      
+
+    }
+    
+        
+    
+    private class PlayerPanel{
+        public VirtualPlayer VirtualPlayer;
+        public TextMeshProUGUI Username;
+        public TextMeshProUGUI ModePoints;
+        public TextMeshProUGUI Kills;
+        public TextMeshProUGUI Deaths;
+        public TextMeshProUGUI Score;
+
+        public PlayerPanel(VirtualPlayer virtualPlayer, TextMeshProUGUI username, TextMeshProUGUI modePoints, TextMeshProUGUI kills, TextMeshProUGUI deaths, TextMeshProUGUI score){
+            VirtualPlayer = virtualPlayer;
+            Username = username;
+            ModePoints = modePoints;
+            Kills = kills;
+            Deaths = deaths;
+            Score = score;
+        }
+    }
+
+}
+
+public class TeammateHUDElements{
+    public VirtualPlayer VirtualPlayer;
+        
+    public TextMeshProUGUI HealthText;
+    public Slider HealthSlider;
+
+    public TextMeshProUGUI ShieldText;
+    public Slider ShieldSlider;
+        
+    public TeammateHUDElements(VirtualPlayer virtualPlayer, TextMeshProUGUI healthText, Slider healthSlider, TextMeshProUGUI shieldText, Slider shieldSlider){
+        VirtualPlayer = virtualPlayer;
+            
+        HealthText = healthText;
+        HealthSlider = healthSlider;
+
+        ShieldText = shieldText;
+        ShieldSlider = shieldSlider;
     }
 
 

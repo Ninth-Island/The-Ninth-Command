@@ -32,8 +32,8 @@ public class Character : CustomObject{
     
     [SerializeField] private PhysicsMaterial2D[] materials;
 
-    protected int MaxHealth; // for healthbar and respawns
-    protected int MaxShield; // for shieldBar
+    public int maxHealth; // for healthbar and respawns
+    public int maxShield; // for shieldBar
     [SerializeField] protected BoxCollider2D feetCollider; // for ground checks
     
     [SerializeField] protected Animator Animator;
@@ -136,8 +136,9 @@ public class Character : CustomObject{
     protected override void Start(){
         base.Start();
 
-        MaxHealth = health;
-        MaxShield = shield;
+        maxHealth = health;
+        maxShield = shield;
+        
         
     }
     

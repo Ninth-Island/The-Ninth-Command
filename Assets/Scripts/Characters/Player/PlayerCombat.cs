@@ -14,11 +14,15 @@ public partial class Player : Character{
     private int _timeLeftTillShieldRecharge;
     private bool _stoppedAudio;
 
+    protected override void Start(){
+        base.Start();
+    }
+
     private void ServerPlayerCombatFixedUpdate(){
         _timeLeftTillShieldRecharge--;
         if (_timeLeftTillShieldRecharge <= 0){
-            shield = Mathf.Clamp(shield + shieldRechargeRate, 0, MaxShield);
-            UpdateHealthClientRpc(health, shield, shield < MaxShield, false);
+            shield = Mathf.Clamp(shield + shieldRechargeRate, 0, maxShield);
+            UpdateHealthClientRpc(health, shield, shield < maxShield, false);
         }
     }
 
@@ -94,15 +98,17 @@ public partial class Player : Character{
 
         health = newHealth;
         shield = newShield;
-        shieldSlider.value = (float) shield / MaxShield;
-        healthSlider.value = (float) health / MaxHealth;
+        virtualPlayer.health = health;
+        virtualPlayer.shield = shield;
+        shieldSlider.value = (float) shield / maxShield;
+        healthSlider.value = (float) health / maxHealth;
         
         if (shield > 0){
             healthText.text = "";
-            shieldText.text = $"{shield}/{MaxShield}";
+            shieldText.text = $"{shield}/{maxShield}";
         }
         else{
-            healthText.text = $"{health}/{MaxHealth}";
+            healthText.text = $"{health}/{maxHealth}";
             shieldText.text = "";
         }
         if (hasAuthority){
@@ -120,7 +126,7 @@ public partial class Player : Character{
         if (!shieldRegening){
             AudioManager.isPlayingCharging = false;
             
-            if (shield < MaxShield / 3){ // warning beeping
+            if (shield < maxShield / 3){ // warning beeping
                 AudioManager.PlayLooping(23);
                 _stoppedAudio = false;
             }
@@ -133,7 +139,7 @@ public partial class Player : Character{
 
             if (shield <= 0){ 
                 _stoppedAudio = false;
-                if (health < MaxHealth / 3 && health > 0){ // heart pounding
+                if (health < maxHealth / 3 && health > 0){ // heart pounding
                     AudioManager.PlayLooping(25);
 
                 }
@@ -144,7 +150,7 @@ public partial class Player : Character{
 
         }
         else{ // shield regen
-            AudioManager.PlayChargingNoise(22, (float)shield / MaxShield);
+            AudioManager.PlayChargingNoise(22, (float)shield / maxShield);
             _stoppedAudio = false;
         }
     }
