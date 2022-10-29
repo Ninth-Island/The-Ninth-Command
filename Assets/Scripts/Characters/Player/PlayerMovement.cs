@@ -5,11 +5,14 @@ using UnityEngine;
 
 public partial class Player : Character{
 
-
+    [Header("Movement")]
+    [SerializeField] private float sprintAmplifier;
     
     private bool _isCrouching;
+    private bool _isSprinting;
+    private int _direction;
 
-    [SyncVar] private bool _hardLanding; // used for sound
+    private bool _hardLanding; // used for sound
     
 
 
@@ -28,6 +31,17 @@ public partial class Player : Character{
                 _isCrouching = !_isCrouching;
                 ClientSetAnimatedBoolOnAll(_aNames.crouching, _isCrouching);
             }
+
+            if (Input.GetKeyDown(KeyCode.LeftShift)){
+                _isSprinting = true;
+                _isCrouching = false;
+                ClientSetAnimatorSpeedOnAll(sprintAmplifier * (moveSpeed / 15));
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftShift)){
+                _isSprinting = false;
+                ClientSetAnimatorSpeedOnAll(moveSpeed / 15f);
+            }
             
         }
 
@@ -39,12 +53,17 @@ public partial class Player : Character{
         if (hasAuthority){
             float input = Input.GetAxis("Horizontal");
             ClientSetAnimatedBoolOnAll(_aNames.running, input != 0);
-            ClientSetAnimatedBoolOnAll(_aNames.runningBackwards, Math.Sign(input) != Math.Sign(transform.localScale.x));
+            ClientSetAnimatedBoolOnAll(_aNames.runningBackwards, Math.Sign(input) != _direction);
+            
+
             Move(input);
             RotateArm(_lastArmAngle);
             _currentInput.HorizontalInput = input;
             _currentInput.Rotation = 0;
             _currentInput.ArmRotationInput = _lastArmAngle;
+            
+            
+            
         }
     }
      // all inputs in the fixed update frame are registered as currentInput
@@ -55,7 +74,9 @@ public partial class Player : Character{
      
     [Server] // every physics update uses latest input to move player
     private void ServerPlayerNetworkedMovementFixedUpdate(){ // fixed update
+        
         Move(_lastInput.HorizontalInput);
+       
         RotateArm(_lastInput.ArmRotationInput);
     }
     
@@ -73,7 +94,14 @@ public partial class Player : Character{
                 SortSound(2);
             }
             else{
-                body.velocity = new Vector2(moveSpeed * input, body.velocity.y);
+                if (_isSprinting){
+                    _armOverrideSprinting = true;
+                    body.velocity = new Vector2(moveSpeed * sprintAmplifier * input, body.velocity.y);
+                }
+                else{
+                    _armOverrideSprinting = false;
+                    body.velocity = new Vector2(moveSpeed * input, body.velocity.y);
+                }
             }
         }
 
@@ -99,7 +127,7 @@ public partial class Player : Character{
 
     private void RotateArm(float rotation){
        
-        if (_armOverrideReloading == false){
+        if (_armOverrideReloading == false && _armOverrideSprinting == false){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
         }
@@ -118,13 +146,16 @@ public partial class Player : Character{
         if (isServer && hasAuthority){
         }
 
+
         if (rotation > 90 && rotation < 270/* && (transform.position - _cursorControl.GetMousePosition()).magnitude > 13f*/){
             arm.transform.localScale = new Vector3(-1, -1);
             helmet.transform.localScale = new Vector3(-1, -1);
-            transform.localScale = new Vector3(-1, 1);
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            _direction = -1;
         }
         else{
-            transform.localScale = new Vector3(1, 1);
+            transform.localScale= new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            _direction = 1;
         }
         
     }

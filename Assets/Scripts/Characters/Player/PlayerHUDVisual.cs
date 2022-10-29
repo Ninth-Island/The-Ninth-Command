@@ -9,12 +9,11 @@ using UnityEngine.UI;
 
 public partial class Player : Character{
 
-    [Header("Visuals")] [SerializeField] private GameObject spritesParent;
-    [SerializeField] private Sprite[] ArmTypes;
+    [Header("Visuals")]
+    [SerializeField] private Sprite[] armTypes;
+    [SerializeField] private TextMeshProUGUI notificationText;
 
-    [SerializeField] private TextMeshProUGUI _notificationText;
-
-    [Header("HUD")] [SerializeField] protected Canvas HUD;
+    [Header("HUD")] [SerializeField] protected Canvas hud;
     [SerializeField] private TMP_Text pingDisplay;
 
     [SerializeField] private Slider healthSlider;
@@ -26,27 +25,9 @@ public partial class Player : Character{
     [SerializeField] private GameObject shieldDamageSparks;
     [SerializeField] private GameObject armorDamageSparks;
 
-    private Camera _mainCamera;
-    private CinemachineVirtualCamera[] _virtualCameras;
-
-
-
-    // sprites
-    public Transform arm;
-    public Transform helmet;
-
-    private SpriteRenderer _armRenderer;
-    private bool _armOverrideReloading;
-
-    private Color[] _colors = new Color[3];
-    private GameObject[] sprites = new GameObject[7];
-
-
-    //HUD
-    private float _fadeTimer;
-    private float fadeDelay = 50;
-    private float fadeSpeed = 0.01f;
-
+    
+    
+    [Header("Weapon HUD")]
     public TextMeshProUGUI pickupText;
 
     public Image weaponImage;
@@ -55,8 +36,26 @@ public partial class Player : Character{
 
     public TextMeshProUGUI energyCounter;
     public TextMeshProUGUI heatCounter;
+    
 
+    [Header("Sprites")]
+    public Transform arm;
+    public Transform helmet;
 
+    public SpriteRenderer bodyRenderer;
+    public SpriteRenderer armRenderer;
+    public SpriteRenderer helmetRenderer;
+    public SpriteRenderer visorRenderer;
+
+    private bool _armOverrideReloading;
+    private bool _armOverrideSprinting;
+    //HUD
+    private float _fadeTimer;
+    private float fadeDelay = 50;
+    private float fadeSpeed = 0.01f;
+
+    private Camera _mainCamera;
+    private CinemachineVirtualCamera[] _virtualCameras;
 
 
     [Client]
@@ -70,32 +69,39 @@ public partial class Player : Character{
             _virtualCameras[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
 
             _virtualCameras[0].Priority = 10;
-            HUD.gameObject.SetActive(true);
+            hud.gameObject.SetActive(true);
 
 
             // HUD
-            weaponImage = HUD.transform.GetChild(2).GetComponent<Image>();
-            ammoCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
-            magCounter = HUD.transform.GetChild(2).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
+            weaponImage = hud.transform.GetChild(2).GetComponent<Image>();
+            ammoCounter = hud.transform.GetChild(2).transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+            magCounter = hud.transform.GetChild(2).transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
 
-            energyCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
-            heatCounter = HUD.transform.GetChild(2).transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
+            energyCounter = hud.transform.GetChild(2).transform.GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+            heatCounter = hud.transform.GetChild(2).transform.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>();
 
 
-            _notificationText.SetText("");
-            pickupText = HUD.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            notificationText.SetText("");
+            pickupText = hud.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             pickupText.SetText("");
         }
 
-        _armRenderer = arm.GetChild(0).GetComponent<SpriteRenderer>();
-        for (int i = 0; i < spritesParent.transform.childCount; i++){
-            sprites[i] = spritesParent.transform.GetChild(i).gameObject;
-        }
+        Transform p = transform.GetChild(1);
+
     }
 
     
     private void ClientHUDUpdate(){ // every frame
         pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
+        if (_fadeTimer > 0){
+            _fadeTimer --;   
+        }
+        else{
+            float alpha = notificationText.color.a;
+            if (alpha > 0){
+                SetColor(0, 0, 0, notificationText.color.a - fadeSpeed);
+            }
+        }
     }
 
 
@@ -113,7 +119,7 @@ public partial class Player : Character{
     }
     
     private void SetArmType(int armType){
-        _armRenderer.sprite = ArmTypes[armType];
+        armRenderer.sprite = armTypes[armType];
     }
     
     public override void Reload(){ // for reloading and holding melee
@@ -127,16 +133,26 @@ public partial class Player : Character{
     
     
     private void SetColor(float r, float g, float b, float a){
-        Color color = _notificationText.color;
-        _notificationText.color = new Color(color.r + r, color.g + g, color.b + b, a);
+        Color color = notificationText.color;
+        notificationText.color = new Color(color.r + r, color.g + g, color.b + b, a);
     }
     public void SetNotifText(string setText){
-        _notificationText.SetText(setText);
+        notificationText.SetText(setText);
         SetColor(0, 0, 0, 1);
         _fadeTimer = fadeDelay;
     }
     public void SetPickupText(string setText){
         pickupText.SetText(setText);
+    }
+
+    
+    private class ANames{
+        public readonly string running = "Running";
+        public readonly  string runningBackwards = "RunningBackward";
+        public readonly  string crouching = "Crouching";
+        public readonly  string jumping = "Jumping";
+        public readonly  string punching = "Punch";
+        public readonly  string dying = "Dying";
     }
 
     

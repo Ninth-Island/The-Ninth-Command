@@ -9,7 +9,7 @@ using UnityEngine.SocialPlatforms;
 public class CustomObject : NetworkBehaviour{
 
 
-
+    [Header("Custom Object")]
     public Rigidbody2D body;
     public Collider2D Collider;
     public SpriteRenderer spriteRenderer;

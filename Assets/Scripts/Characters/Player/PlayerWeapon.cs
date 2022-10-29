@@ -141,7 +141,7 @@ public partial class Player : Character{
                 primaryWeapon.StopReloading();
                 FinishReload();
 
-                newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
+                newWeapon.SwapTo(this, primaryWeapon, new []{1, 2});
                 SetArmType(primaryWeapon.armType);
                 HUDPickupWeapon(primaryWeapon);
             }
@@ -197,7 +197,7 @@ public partial class Player : Character{
 
     private float GetBarrelToMouseRotation(){
 
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading){
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _armOverrideSprinting){
             return GetPlayerToMouseRotation();
         }
         

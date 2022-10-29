@@ -15,11 +15,15 @@ public class MeleeWeapon : BasicWeapon{
     [SerializeField] private Vector2 leftRightRotationSwing;
 
 
-    public override void OnStartClient(){
-        base.OnStartClient();
+    public override void HandleFiring(float angle){
+        
     }
 
-    protected void Awake(){
-        firingPoint = transform;
+    protected override void HandleMagazineDecrement(){
+        base.HandleMagazineDecrement();
+    }
+
+    protected override void RefreshText(){
+        base.RefreshText();
     }
 }

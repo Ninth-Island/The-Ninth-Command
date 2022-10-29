@@ -5,7 +5,7 @@ using UnityEngine;
 
 public partial class Player : Character{
 
-
+    [Header("Combat")]
     [SerializeField] private int timeTillShieldRecharge;
     [SerializeField] private int shieldRechargeRate;
     private bool _dead;
@@ -47,7 +47,6 @@ public partial class Player : Character{
             shield -= damage;
             if (shield <= 0){
                 health += shield;
-                shield = 0;
                 shieldBreak = true;
                 if (health <= 0){
                     health = 0;
@@ -62,7 +61,6 @@ public partial class Player : Character{
         else{
             health -= damage;
             if (health <= 0){
-                health = 0;
                 killer.virtualPlayer.kills++;
                 killer.virtualPlayer.score += 100;
                 ServerDie();
@@ -71,6 +69,8 @@ public partial class Player : Character{
         }
 
         _timeLeftTillShieldRecharge = timeTillShieldRecharge;
+        shield = Mathf.Clamp(shield, 0, maxShield);
+        health = Mathf.Clamp(health, 0, maxHealth);
         ClientSpawnDamageNumberClientRpc(damage, position, angle);
         UpdateHealthClientRpc(health, shield, false, shieldBreak);
     }
@@ -186,6 +186,11 @@ public partial class Player : Character{
 
         gameObject.layer = LayerMask.NameToLayer("Dead Player");
         feetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
+    }
+
+    [Command]
+    private void CmdDie(){
+        ServerDie();
     }
     
 }

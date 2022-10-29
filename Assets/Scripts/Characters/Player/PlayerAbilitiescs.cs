@@ -10,36 +10,41 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public partial class Player : Character{
-    
-    /*
-* ================================================================================================================
-*                                               PlayerControl
-*
-*  Parentally unrelated to player or character.
-     *
-     * Contains HUD (canvas) control for updating HUD text and getting mouse position
-*
-* 
-* ================================================================================================================
-*/
-    
+
 
     [Header("Abilities")] 
+    
+    [SerializeField] private int armorAbility;
+    [SerializeField] private int maxCharge;
+    [SerializeField] private int chargeRate;
+    [SerializeField] private int chargeDrainPerFrame;
+    
+    [Header("Assault - Dash")]
     [SerializeField] private float dashVelocity;
 
-    private GameObject _externalJetpack;
+    [Header("Heavy - Shield Overcharge")] 
+    [SerializeField] private int overChargePerFrame;
 
-    private ParticleSystem _jetPackEffects;
-    private TrailRenderer _foot1;
-    private TrailRenderer _foot2;
+    [Header("Operator - Team Shield")] 
+    [SerializeField] private float distanceOfCharge;
+    [SerializeField] private int teamChargePerFrame;
+    [SerializeField] private GameObject fieldPrefab;
+
+
+    [Header("Pathfinder - Cloak")] 
+    [SerializeField] private float alpha;
+
+    [Header("Sharpshooter - Jetpack")] 
+    [SerializeField] private int jetPower;
+
+    private bool _isArmorAbilitying; // for prolonged ones
+    private bool _isModAbilitying;
     
+    private bool _armorAbilityActive; // for one shots that have duration
+    private bool _modAbilityActive;
 
-    
-    
+    private int _currentAbilityCharge;
 
-
-
-    #region Start and Update
 
         /*
     * ================================================================================================================
@@ -53,122 +58,59 @@ public partial class Player : Character{
         
     [Client]
     protected virtual void ClientPlayerAbilitiesUpdate(){
-        if (_fadeTimer > 0){
-            _fadeTimer --;   
+        if (Input.GetKeyDown(KeyCode.LeftControl)){
+            ArmorAbilityInstant();
         }
-        else{
-            float alpha = _notificationText.color.a;
-            if (alpha > 0){
-                SetColor(0, 0, 0, _notificationText.color.a - fadeSpeed);
+
+        if (Input.GetKey(KeyCode.LeftControl)){         
+            _currentInput.AbilityInput = true;
+
+        }
+        
+        if (Input.GetKeyUp(KeyCode.LeftControl)){         
+            _currentInput.AbilityInput = false;
+
+        }
+        
+
+        if (Input.GetKeyDown(KeyCode.Mouse5)){
+            ModAbilityInstant();
+        }
+        
+        if (Input.GetKey(KeyCode.Mouse5)){
+            _currentInput.ModInput = true;
+        }
+        
+        if (Input.GetKeyUp(KeyCode.Mouse5)){
+            _currentInput.ModInput = false;
+        }
+    }
+
+
+ 
+    private void AbilitiesFixedUpdate(){
+        if (_armorAbilityActive){
+            if (armorAbility == 1){
+                OverchargeShield();
+            }
+            else if (armorAbility == 2){
+                OverchargeTeam();
+            }
+
+            else if (armorAbility == 3){
+                Cloak();
+            }
+
+            _currentAbilityCharge -= chargeDrainPerFrame;
+            
+            if (_currentAbilityCharge <= 0){
+                _armorAbilityActive = false;
             }
         }
-        
-        
-        if (Input.GetKeyUp(KeyCode.LeftShift)){
-            if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] ||
-                AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
-                AudioManager.PlaySound(22);
-            }
-        }
-    }
-
-
-    [Server]
-    private void ServerAbilitiesFixedUpdate(){
-        
-        
-
-        /*transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, 0), 8);
-
-        if (!Input.GetKey(KeyCode.LeftShift)){
-            _virtualCameras[0].Priority = 10;
-            _virtualCameras[1].Priority = 0;
-            _virtualCameras[2].Priority = 0;
-        }
-
-        if (Input.GetKey(KeyCode.LeftShift)){
-            _jetPackEffects.Play();
-        }
         else{
-            _jetPackEffects.Stop();
+            _currentAbilityCharge += Mathf.Clamp(_currentAbilityCharge, 0, maxCharge);
         }
-
-        _foot1.emitting = Input.GetKey(KeyCode.Space) && Airborne;
-        _foot2.emitting = Input.GetKey(KeyCode.Space) && Airborne;
-        */
-
     }
-
-
-
-    #endregion
-    
-
-    #region LeftShift
-
-    
-    private void Sprint(){/*
-        body.velocity = new Vector2(moveSpeed * sprintAmplifier * Input.GetAxis("Horizontal"), body.velocity.y);
-        Animator.speed = 1.3f;*/
-    }
-    
-    
-    private void UseJetPack(){
-        /*Animator.SetBool(_aNames.jumping, true);
-        if (AudioManager.source.clip == AudioManager.sounds[20].clipsList[0] || AudioManager.source.clip == AudioManager.sounds[21].clipsList[0]){
-            if (AudioManager.source.time >= AudioManager.source.clip.length - 0.1f)
-                AudioManager.PlaySound(21, true);
-        }
-        else{
-            AudioManager.PlaySound(20, true);
-        }
-
-        if (!Input.GetKey(KeyCode.Space)){            
-            
-            
-            _virtualCamera[0].Priority = 0;
-            _virtualCamera[1].Priority = 10;
-            _virtualCamera[2].Priority = 0;
-
-            body.AddForce(Vector2.up * jetPower, ForceMode2D.Impulse);
-            if (Input.GetAxis("Horizontal") != 0){
-                Sprint();
-            }
-        }
-        else{            
-            float rotation = GetPlayerToMouseRotation();
-            rotation *= Mathf.Deg2Rad;
-            body.AddForce(new Vector2(Mathf.Cos(rotation), Mathf.Sin(rotation)).normalized * jetPower, ForceMode2D.Impulse);
-        }*/
-
-    }
-
-    private void Fly(){
-        /*if (Airborne){
-            
-            
-            float rotation = GetPlayerToMouseRotation() - 90;
-            
-            //_virtualCamera[2].m_Lens.Dutch = transform.rotation.z * Mathf.Rad2Deg;
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, rotation), 16);
-            body.constraints = RigidbodyConstraints2D.None;
-
-            
-            
-            
-            _virtualCameras[0].Priority = 0;
-            _virtualCameras[1].Priority = 0;
-            _virtualCameras[2].Priority = 10;
-            
-        }*/
-    }
-
-    
-
-    #endregion
-
-    #region LeftControl
 
     private void Dash(){
         float rotation = GetBarrelToMouseRotation();
@@ -176,29 +118,72 @@ public partial class Player : Character{
         body.velocity = dir * dashVelocity;
     }
 
-    private void UseGrapplingHook(){
-        
+    private void OverchargeShield(){
+        shield = Mathf.Clamp(shield += overChargePerFrame, 0, maxShield);
     }
 
-    #endregion
+    private void OverchargeTeam(){
+        foreach (TeammateHUDElements element in virtualPlayer.Team){
+            Player p = element.VirtualPlayer.gamePlayer;
+            if (Vector2.Distance(p.transform.position, transform.position) < distanceOfCharge){
+                p.shield = Mathf.Clamp(p.shield += teamChargePerFrame, 0, p.maxShield);
+            }
+        }
+    }
+
+    private void Cloak(){
+        Color color = bodyRenderer.color;
+        color = new Color(color.r, color.g, color.b, 1 - ((float) _currentAbilityCharge / maxCharge));
+        bodyRenderer.color = color;
+    }
+
+    private void Jetpack(){
+        float angle = GetBarrelToMouseRotation();
+        body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * jetPower;
+    }
 
 
-    
-    private void MagBoots(){
-        //stick to walls and stuff. 
+    private void ArmorAbilityInstant(){
+        if (_currentAbilityCharge >= maxCharge){
+            if (armorAbility == 0){ // dash
+                float angle = GetBarrelToMouseRotation();
+                body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dashVelocity;
+                _currentAbilityCharge = 0;
+            }
+            else{
+                _armorAbilityActive = true;
+            }
+
+        }
+    }
+
+    private void ArmorAbilityLong(){
+        if (_isArmorAbilitying && chargeDrainPerFrame > 0){
+            _currentAbilityCharge -= chargeDrainPerFrame;
+            if (armorAbility == 4){ //jetpack
+                Jetpack();
+            }
+        }
     }
     
-    // similar to armor abilities, but this is the trigger for external equipment such as grav boots, jetpack, etc
-
-    private class ANames{
-        public readonly string running = "Running";
-        public readonly  string runningBackwards = "RunningBackward";
-        public readonly  string crouching = "Crouching";
-        public readonly  string jumping = "Jumping";
-        public readonly  string punching = "Punch";
-        public readonly  string dying = "Dying";
+    private void ModAbilityInstant(){
+        Debug.Log("instant mod ability");
     }
+
+    private void ModAbilityLong(){
+        if (_isModAbilitying){
+            Debug.Log("continous mod");
+        }
+    }
+
     
+    protected override void FixedUpdate(){
+        base.FixedUpdate();
+        ArmorAbilityLong();
+        ModAbilityLong();
+        AbilitiesFixedUpdate();
+    }
+
 
 }
 

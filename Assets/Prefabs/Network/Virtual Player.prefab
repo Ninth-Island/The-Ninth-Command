@@ -4130,7 +4130,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8175,7 +8175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7585916190892471967
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8725,11 +8725,11 @@ RectTransform:
   - {fileID: 1263331714263792739}
   - {fileID: 7570047674740414847}
   m_Father: {fileID: 2837403487010510144}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -123, y: -243}
+  m_AnchoredPosition: {x: -123, y: -341}
   m_SizeDelta: {x: 395.6667, y: 154.85382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &5877767958313639749
@@ -10792,7 +10792,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -10993,6 +10993,9 @@ MonoBehaviour:
   gamePlayerPrefabs:
   - {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}
   - {fileID: 1159809310353494809, guid: e669cd9e63d516d4ea308052a1dd9e2a, type: 3}
+  - {fileID: 4188153754483526395, guid: 127427234d8057945ab5a61883bb3ec2, type: 3}
+  - {fileID: 5774716353924859426, guid: a1435836371682948ba752abae1ad162, type: 3}
+  - {fileID: 1936347390239665945, guid: 34d7c8a81a601f54786052209689ac95, type: 3}
   teammateStatusPrefab: {fileID: 6669387628552432089, guid: 5407dcc095cec704b9263414bb0e4981,
     type: 3}
   scoreboard: {fileID: 4610806853620853399}
@@ -12283,11 +12286,11 @@ RectTransform:
   - {fileID: 2900694414401105776}
   - {fileID: 3205187251631090540}
   m_Father: {fileID: 2837403487010510144}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -123, y: -341}
+  m_AnchoredPosition: {x: -123, y: -243}
   m_SizeDelta: {x: 395.6667, y: 154.85382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8086280315022377075
@@ -14323,8 +14326,8 @@ RectTransform:
   m_Children:
   - {fileID: 654515116923855235}
   - {fileID: 2875298973011002540}
-  - {fileID: 3148592259429569776}
   - {fileID: 5593631918063935107}
+  - {fileID: 3148592259429569776}
   - {fileID: 263058998136840884}
   m_Father: {fileID: 7585916190892471967}
   m_RootOrder: 2

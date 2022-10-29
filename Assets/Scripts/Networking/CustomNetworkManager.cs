@@ -88,8 +88,8 @@ public class CustomNetworkManager : NetworkManager{
         player.secondaryWeapon = sW;
         player.InitializeWeaponsOnClient(pW, sW);
         
-        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
-        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
+        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 2}));
+        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 2}));
 
         int teamIndex = TeamIndices[connectionToClient];
         if (teamIndex > 6){

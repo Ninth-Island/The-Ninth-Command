@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Mirror;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -51,6 +52,9 @@ public class VirtualPlayer : NetworkBehaviour{
     public override void OnStartClient(){
         _audioManager = GetComponent<AudioManager>();
         _classSelection = transform.GetChild(0).GetChild(2).gameObject;
+        if (hasAuthority && SceneManager.GetActiveScene().buildIndex > 1){
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
     public override void OnStartServer(){
@@ -70,10 +74,6 @@ public class VirtualPlayer : NetworkBehaviour{
         else{
             _teamBoard = scoreboard.transform.GetChild(0).gameObject;
             _enemyTeamBoard = scoreboard.transform.GetChild(1).gameObject;
-        }
-
-        if (hasAuthority){
-            transform.GetChild(0).gameObject.SetActive(true);
         }
 
         int position = -20;
@@ -172,9 +172,9 @@ public class VirtualPlayer : NetworkBehaviour{
 
     [Client]
     private IEnumerator ClientRespawn(){
-        
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         _classSelection.SetActive(true);
+        yield return new WaitForSeconds(2);
         _audioManager.PlaySound(0);
         yield return new WaitForSeconds(1);
         
@@ -264,20 +264,15 @@ public class VirtualPlayer : NetworkBehaviour{
         player.HUDPickupWeapon(player.primaryWeapon);
         Transform sprites = gamePlayer.transform.GetChild(1);
 
-        SetupSpriteRenderer(sprites.GetChild(0).GetComponent<SpriteRenderer>(), setColors[3]); // body
-        SetupSpriteRenderer(sprites.GetChild(1).GetComponent<SpriteRenderer>(), setColors[2]); // arms unarmed
-        SetupSpriteRenderer(sprites.GetChild(3).GetChild(0).GetComponent<SpriteRenderer>(), setColors[2]); // arms armed
-        SetupSpriteRenderer(sprites.GetChild(2).GetChild(0).GetComponent<SpriteRenderer>(), setColors[1]); // helmet
-        SetupSpriteRenderer(sprites.GetChild(2).GetChild(1).GetComponent<SpriteRenderer>(), setColors[0]); // visor
+        player.bodyRenderer.color = setColors[3]; // body
+        player.armRenderer.color = setColors[2]; // arms armed
+        player.helmetRenderer.color = setColors[1]; // helmet
+        player.visorRenderer.color = setColors[0]; // visor
         
         Invoke(nameof(InitializeTeammateStatuses), 1f);
 
     }
 
-    private void SetupSpriteRenderer(SpriteRenderer spriteRenderer, Color color){
-        spriteRenderer.color = color;
-        //spriteRenderer.material = _outline;
-    }
 
     [ClientCallback]
     private void Update(){
