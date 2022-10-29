@@ -14,34 +14,42 @@ public partial class Player : Character{
 * 
 * ================================================================================================================
 */
-
+    [Header("Player")]
+    public VirtualPlayer virtualPlayer;
     public int teamIndex;
-    
+    private ModeManager _modeManager;
     
     [Client]
     public override void OnStartClient(){
         ClientHUDVisualStart();
         ClientWeaponControlStart();
+        
         base.OnStartClient();
-        Invoke(nameof(InitializeTeammateStatuses), 4);
     }
     
 
     [Server]
     public override void OnStartServer(){
-        ServerPlayerAbilitiesStart();
+        _modeManager = FindObjectOfType<ModeManager>();
     }
 
 
     [Client]
     protected override void ClientUpdate(){
-        base.ClientUpdate();
-        
-        _lastArmAngle = GetBarrelToMouseRotation();
-        
-        ClientMoveUpdate();
-        ClientPlayerAbilitiesUpdate(); // all hud and audio stuff
-        ClientPlayerWeaponUpdate();
+        if (!_dead){
+            base.ClientUpdate();
+
+            _lastArmAngle = GetBarrelToMouseRotation();
+
+            ClientMoveUpdate();
+            ClientPlayerAbilitiesUpdate(); // all hud and audio stuff
+            ClientPlayerWeaponUpdate();
+
+            if (Input.GetKeyDown(KeyCode.O)){
+                CmdDie();
+            }
+        }
+
         ClientHUDUpdate();
         
         
@@ -50,31 +58,31 @@ public partial class Player : Character{
     
     [Client]
     protected override void ClientFixedUpdate(){
-        base.ClientFixedUpdate();
-        
-        _lastArmAngle = GetBarrelToMouseRotation();
-        
-        ClientMoveFixedUpdate();
-        ClientPlayerWeaponFixedUpdate();
-        
-        _currentInput.CrouchInput = _isCrouching;
-        _currentInput.RequestNumber = _inputRequestCounter;
-        ClientSendServerInputs();
+        if (!_dead){
+            base.ClientFixedUpdate();
 
+            _lastArmAngle = GetBarrelToMouseRotation();
+
+            ClientMoveFixedUpdate();
+            ClientPlayerWeaponFixedUpdate();
+
+            _currentInput.CrouchInput = _isCrouching;
+            _currentInput.SprintInput = _isSprinting;
+            _currentInput.RequestNumber = _inputRequestCounter;
+            ClientSendServerInputs();
+        }
     }
   
     
     
     [Server]
     protected override void ServerFixedUpdate(){
-        base.ServerFixedUpdate();
-
-        ServerPlayerNetworkedMovementFixedUpdate();
-        ServerPlayerCombatFixedUpdate();
-        ServerAbilitiesFixedUpdate();
-        ServerPlayerWeaponFixedUpdate();
-        
-        
+        if (!_dead){
+            base.ServerFixedUpdate();
+            ServerPlayerNetworkedMovementFixedUpdate();
+            ServerPlayerCombatFixedUpdate();
+            ServerPlayerWeaponFixedUpdate();
+        }
     }
     
 
@@ -86,7 +94,7 @@ public partial class Player : Character{
     
     [Client]
     private void ClientSetAnimatedBoolOnAll(string animationName, bool setTo){
-        Animator.SetBool(animationName, setTo);
+        animator.SetBool(animationName, setTo);
         CmdSetAnimatedBoolOnServer(animationName, setTo);
     }
 
@@ -97,15 +105,34 @@ public partial class Player : Character{
 
     [ClientRpc]
     private void SetAnimatedBoolOnClientRpc(string animationName, bool setTo){
-        Animator.SetBool(animationName, setTo);
+        animator.SetBool(animationName, setTo);
+    }
+
+    [Client]
+    private void ClientSetAnimatorSpeedOnAll(float speed){
+        animator.speed = speed;
+        CmdSetAnimatedBoolOnServer(speed);
+    }
+
+    [Command]
+    private void CmdSetAnimatedBoolOnServer(float speed){
+        SetAnimatorSpeedClientRpc(speed);
+    }
+
+    [ClientRpc]
+    private void SetAnimatorSpeedClientRpc(float speed){
+        animator.speed = speed;
     }
     
     private void Transform(float x){ // for animation events
         Vector2 pos = transform.position;
-        transform.position = new Vector3(pos.x + x * transform.localScale.x, pos.y);
+        transform.position = new Vector3(pos.x + x * _direction, pos.y);
     }
 
+
     #endregion
+    
+    
     
 
 }

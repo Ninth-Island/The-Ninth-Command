@@ -89,10 +89,11 @@ public class BasicWeapon : Weapon{
     }
 
 
-    protected override void Drop(){
+    public override void Drop(){
         base.Drop();
         wielder = null;
         activelyWielded = false;
+        spriteRenderer.enabled = true;
     }
 
 }

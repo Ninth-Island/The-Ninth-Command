@@ -28,10 +28,22 @@ public partial class Player : Character{
             Jump();
         }
 
-        _isCrouching = playerInput.CrouchInput;
+        _isCrouching = playerInput.CrouchInput && !playerInput.SprintInput;
+        _isSprinting = playerInput.SprintInput;
 
+        _isArmorAbilitying = playerInput.AbilityPressed;
+        _isModAbilitying = playerInput.ModPressed;
+        
         if (playerInput.ReloadInput){
             primaryWeapon.Reload();
+        }
+
+        if (playerInput.AbilityInput){
+            ArmorAbilityInstant();
+        }
+
+        if (playerInput.ModInput){
+            ModAbilityInstant();
         }
 
         if (playerInput.SwapWeapon){
@@ -43,7 +55,7 @@ public partial class Player : Character{
         if (playerInput.PickedUp){
             if (Vector2.Distance(playerInput.PickedUp.transform.position, transform.position) < 14 && playerInput.PickedUp.gameObject.layer == LayerMask.NameToLayer("Objects")){
 
-                playerInput.PickedUp.SwapTo(this, playerInput.OldWeapon, new[]{1, 3});
+                playerInput.PickedUp.SwapTo(this, playerInput.OldWeapon, new[]{1, 2});
                 PlayerPickUpWeaponClientRpc(playerInput.PickedUp, playerInput.OldWeapon);
                 
                 playerInput.PickedUp.netIdentity.AssignClientAuthority(connectionToClient);
@@ -51,7 +63,7 @@ public partial class Player : Character{
                 
             }
             else{
-                playerInput.OldWeapon.CancelPickup(this, new []{1, 3});
+                playerInput.OldWeapon.CancelPickup(this, new []{1, 2});
             }
         }
     }
@@ -62,7 +74,7 @@ public partial class Player : Character{
             primaryWeapon.StopReloading();        
             FinishReload();
 
-            newWeapon.SwapTo(this, oldWeapon, new[]{1, 3});
+            newWeapon.SwapTo(this, oldWeapon, new[]{1, 2});
             SetArmType(primaryWeapon.armType);
         }
     }
@@ -77,13 +89,13 @@ public partial class Player : Character{
     // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
     [Server]
     private void ServerOverrideActualValuesForClients(){
-        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _isCrouching, _lastInput.RequestNumber);
+        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _lastInput.RequestNumber);
     }
 
     
     // the clients receive the information and update themselves accordingly
     [ClientRpc]
-    private void SetClientValuesRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, bool isCrouching, int requestCounter){
+    private void SetClientValuesRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int requestCounter){
 
         // if too far away or not controlled by this player then instantly update the position
         if (hasAuthority && Vector3.Distance(transform.position, position) > 2 || !hasAuthority){
@@ -112,7 +124,9 @@ public partial class Player : Character{
 
         for (int i = 0; i < _pastInputs.Count; i++){
             PlayerInput playerInput = _pastInputs[i];
-            
+            if (playerInput.SprintInput){
+                _isCrouching = false;
+            }
             Move(playerInput.HorizontalInput);
 
             ClientRunKeyPresses(playerInput);
@@ -150,18 +164,19 @@ public partial class Player : Character{
             Jump();
         }
         
-        /*
-        _isCrouching = playerInput.CrouchInput;
-        */
 
 
         if (playerInput.ReloadInput){
             primaryWeapon.Reload();
         }
 
-        /*if (playerInput.SwapWeapon){
-            PlayerSwapWeapon();
-        }*/
+        if (playerInput.AbilityInput){
+            ArmorAbilityInstant();
+        }
+
+        if (playerInput.ModInput){
+            ModAbilityInstant();
+        }
     }
     
    
@@ -182,6 +197,13 @@ public partial class Player : Character{
         
         public bool JumpInput;
         public bool CrouchInput;
+        public bool SprintInput;
+        
+        public bool AbilityInput; // for one time press
+        public bool ModInput;
+
+        public bool AbilityPressed; // for continuous press
+        public bool ModPressed;
         
         public bool FiringInput;
         public float FiringAngle;

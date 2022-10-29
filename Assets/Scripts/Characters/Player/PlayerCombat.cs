@@ -5,18 +5,24 @@ using UnityEngine;
 
 public partial class Player : Character{
 
-
+    [Header("Combat")]
     [SerializeField] private int timeTillShieldRecharge;
     [SerializeField] private int shieldRechargeRate;
+    private bool _dead;
+    
     
     private int _timeLeftTillShieldRecharge;
     private bool _stoppedAudio;
 
+    protected override void Start(){
+        base.Start();
+    }
+
     private void ServerPlayerCombatFixedUpdate(){
         _timeLeftTillShieldRecharge--;
         if (_timeLeftTillShieldRecharge <= 0){
-            shield = Mathf.Clamp(shield + shieldRechargeRate, 0, MaxShield);
-            UpdateHealthClientRpc(health, shield, shield < MaxShield, false);
+            shield = Mathf.Clamp(shield + shieldRechargeRate, 0, maxShield);
+            UpdateHealthClientRpc(health, shield, shield < maxShield, false);
         }
     }
 
@@ -29,31 +35,42 @@ public partial class Player : Character{
         if (isServer){
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
             if (projectile){
-                Hit(projectile.damage, other.transform.position, projectile.initialAngle);
+                Hit(projectile.firer, projectile.damage, other.transform.position, projectile.initialAngle);
             }
         }
     }
     
     [Server]
-    protected override void Hit(int damage, Vector3 position, float angle){
+    protected override void Hit(Player killer, int damage, Vector3 position, float angle){
         bool shieldBreak = false;
         if (shield > 0){
             shield -= damage;
             if (shield <= 0){
                 health += shield;
-                shield = 0;
                 shieldBreak = true;
+                if (health <= 0){
+                    health = 0;
+                    killer.virtualPlayer.kills++;
+                    killer.virtualPlayer.score += 100;
+                    ServerDie();
+                    SetAnimatedBoolOnClientRpc(_aNames.dying, true);
+                }
             }
         }
+        
         else{
             health -= damage;
             if (health <= 0){
-                health = 0;
-                //die
+                killer.virtualPlayer.kills++;
+                killer.virtualPlayer.score += 100;
+                ServerDie();
+                SetAnimatedBoolOnClientRpc(_aNames.dying, true);
             }
         }
 
         _timeLeftTillShieldRecharge = timeTillShieldRecharge;
+        shield = Mathf.Clamp(shield, 0, maxShield);
+        health = Mathf.Clamp(health, 0, maxHealth);
         ClientSpawnDamageNumberClientRpc(damage, position, angle);
         UpdateHealthClientRpc(health, shield, false, shieldBreak);
     }
@@ -81,15 +98,17 @@ public partial class Player : Character{
 
         health = newHealth;
         shield = newShield;
-        shieldSlider.value = (float) shield / MaxShield;
-        healthSlider.value = (float) health / MaxHealth;
+        virtualPlayer.health = health;
+        virtualPlayer.shield = shield;
+        shieldSlider.value = (float) shield / maxShield;
+        healthSlider.value = (float) health / maxHealth;
         
         if (shield > 0){
             healthText.text = "";
-            shieldText.text = $"{shield}/{MaxShield}";
+            shieldText.text = $"{shield}/{maxShield}";
         }
         else{
-            healthText.text = $"{health}/{MaxHealth}";
+            healthText.text = $"{health}/{maxHealth}";
             shieldText.text = "";
         }
         if (hasAuthority){
@@ -107,7 +126,7 @@ public partial class Player : Character{
         if (!shieldRegening){
             AudioManager.isPlayingCharging = false;
             
-            if (shield < MaxShield / 3){ // warning beeping
+            if (shield < maxShield / 3){ // warning beeping
                 AudioManager.PlayLooping(23);
                 _stoppedAudio = false;
             }
@@ -120,7 +139,7 @@ public partial class Player : Character{
 
             if (shield <= 0){ 
                 _stoppedAudio = false;
-                if (health < MaxHealth / 3){ // heart pounding
+                if (health < maxHealth / 3 && health > 0){ // heart pounding
                     AudioManager.PlayLooping(25);
 
                 }
@@ -131,10 +150,48 @@ public partial class Player : Character{
 
         }
         else{ // shield regen
-            AudioManager.PlayChargingNoise(22, (float)shield / MaxShield);
+            AudioManager.PlayChargingNoise(22, (float)shield / maxShield);
             _stoppedAudio = false;
         }
     }
 
+    [Server]
+    private void ServerDie(){
+        primaryWeapon.netIdentity.RemoveClientAuthority();
+        secondaryWeapon.netIdentity.RemoveClientAuthority();
+        Die();
+        virtualPlayer.deaths++;
+        virtualPlayer.score -= 100;
+        _modeManager.Die(this);
+        DieClientRpc();
+
+
+    }
+
+    [ClientRpc]
+    private void DieClientRpc(){
+        Die();
+        AudioManager.source.Stop();
+    }
+
+    //both
+    private void Die(){
+        _dead = true;
+        
+        primaryWeapon.StopReloading();
+        primaryWeapon.Drop();
+        
+        secondaryWeapon.StopReloading();
+        secondaryWeapon.Drop();
+
+        gameObject.layer = LayerMask.NameToLayer("Dead Player");
+        feetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
+    }
+
+    [Command]
+    private void CmdDie(){
+        ServerDie();
+    }
+    
 }
 

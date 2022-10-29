@@ -20,8 +20,9 @@ public class Character : CustomObject{
 * 
 * ================================================================================================================
 */
+    [Header("Character")]
+    
     public BasicWeapon primaryWeapon;
-
     public BasicWeapon primaryWeaponPrefab;
 
     [SerializeField] protected int health;    
@@ -32,11 +33,11 @@ public class Character : CustomObject{
     
     [SerializeField] private PhysicsMaterial2D[] materials;
 
-    protected int MaxHealth; // for healthbar and respawns
-    protected int MaxShield; // for shieldBar
+    [HideInInspector] public int maxHealth; // for healthbar and respawns
+    [HideInInspector] public int maxShield; // for shieldBar
     [SerializeField] protected BoxCollider2D feetCollider; // for ground checks
     
-    [SerializeField] protected Animator Animator;
+    [SerializeField] protected Animator animator;
     
     protected bool Airborne = true;
     protected bool FallingKnocked = false; // for falling too fast
@@ -45,7 +46,7 @@ public class Character : CustomObject{
 
     private bool _suppressGroundCheck;
 
-    public bool characterClientReady;
+    [HideInInspector] public bool characterClientReady;
     
     
     
@@ -136,8 +137,9 @@ public class Character : CustomObject{
     protected override void Start(){
         base.Start();
 
-        MaxHealth = health;
-        MaxShield = shield;
+        maxHealth = health;
+        maxShield = shield;
+        
         
     }
     
@@ -202,7 +204,7 @@ public class Character : CustomObject{
 
 
     [Server]
-    protected virtual void Hit(int damage, Vector3 position, float angle){
+    protected virtual void Hit(Player player, int damage, Vector3 position, float angle){
     }
 
 

@@ -56,7 +56,7 @@ public class NPC : Character{
     }
 
     [Server]
-    protected override void Hit(int damage, Vector3 position, float angle){
+    protected override void Hit(Player player, int damage, Vector3 position, float angle){
 
         if (HealthRoutine != null){
             StopCoroutine(HealthRoutine);
@@ -70,7 +70,7 @@ public class NPC : Character{
         Vector3 scale = healthFill.transform.localScale;
         Vector3 pos = healthFill.transform.localPosition;
 
-        float newScale = (float) health / MaxHealth;
+        float newScale = (float) health / maxHealth;
         float newPos = 2 - newScale * 2;
         if (transform.localScale.x > 0){
             newPos *= -1;

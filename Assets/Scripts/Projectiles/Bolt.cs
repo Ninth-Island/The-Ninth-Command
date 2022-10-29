@@ -19,10 +19,7 @@ public class Bolt : Projectile
         base.OnCollisionEnter2D(other);
         Destroy(gameObject, 0.02f);
     }
+    
 
-
-    public override void SetValues(Character firer, int damage, float speed, float angle, bool piercing, int firedLayer, string name){
-        base.SetValues(firer, damage, speed, angle, piercing, firedLayer, name);
-    }
 
 }

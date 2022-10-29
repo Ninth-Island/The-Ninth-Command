@@ -59,7 +59,7 @@ public class ProjectileWeapon : BasicWeapon{
         Projectile projectile = Instantiate(projectileTemplate, firingPoint.position, Quaternion.identity);
         
         Random.InitState(seed);
-        projectile.SetValues(wielder, projectileDamage, projectileSpeed, angle + Random.Range(-1f, 1f) * instability, piercing, wielder.gameObject.layer, gameObject.name);
+        projectile.SetValues((Player)wielder, projectileDamage, projectileSpeed, angle + Random.Range(-1f, 1f) * instability, piercing, wielder.gameObject.layer, gameObject.name);
     
         if (isServer && original){
             SpawnProjectileOnOtherClientsRpc(angle, seed);

@@ -10,7 +10,7 @@ public class Weapon : CustomObject{
     [Header("Weapon")]
     [SerializeField] public Character wielder;
 
-    private NetworkTransform _networkTransform;
+    [SerializeField] private NetworkTransform networkTransform;
 
     
     public virtual void SwapTo(Character character, BasicWeapon oldWeapon, int[] path){
@@ -32,7 +32,7 @@ public class Weapon : CustomObject{
 
     private void Pickup(Character character, int[] path){
         parent = character.transform;
-        _networkTransform.enabled = false;
+        networkTransform.enabled = false;
         
         for (int i = 0; i < path.Length; i++){
             parent = parent.GetChild(path[i]);
@@ -46,32 +46,19 @@ public class Weapon : CustomObject{
 
     public virtual void Ready(){
     }
-    
 
-    protected virtual void Drop(){
+
+    public virtual void Drop(){
         body.simulated = true;
         body.bodyType = RigidbodyType2D.Dynamic;
         gameObject.layer = LayerMask.NameToLayer("Objects");
         parent = null;
-        _networkTransform.enabled = true;
+        networkTransform.enabled = true;
         
 
         spriteRenderer.sortingLayerID = SortingLayer.NameToID("Objects");
         spriteRenderer.sortingOrder = 0;
     }
-    
-
-
-    #region Start Update
-
-    protected override void Start(){
-        base.Start();       
-        _networkTransform = GetComponent<NetworkTransform>();
-        Debug.Log(_networkTransform);
-
-    }
-
-    #endregion
     
     
 }

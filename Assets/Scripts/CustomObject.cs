@@ -9,7 +9,7 @@ using UnityEngine.SocialPlatforms;
 public class CustomObject : NetworkBehaviour{
 
 
-
+    [Header("Custom Object")]
     public Rigidbody2D body;
     public Collider2D Collider;
     public SpriteRenderer spriteRenderer;
@@ -24,7 +24,6 @@ public class CustomObject : NetworkBehaviour{
     protected virtual void Start(){
         body = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
-        //sprite renderer follows a different path each time
         AudioManager = GetComponent<AudioManager>();
     
     }

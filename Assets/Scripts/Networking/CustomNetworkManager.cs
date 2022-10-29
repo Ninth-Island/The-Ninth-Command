@@ -58,30 +58,26 @@ public class CustomNetworkManager : NetworkManager{
 
         
         foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
-            SetupPlayer(connectionToClient);
+            connectionToClient.identity.GetComponent<VirtualPlayer>().Respawn();
+            //SetupPlayer(connectionToClient, connectionToClient.identity.GetComponent<VirtualPlayer>().gamePlayerPrefab);
         }
 
         yield return new WaitForSeconds(Time.fixedDeltaTime);
+        FindObjectOfType<ModeManager>().AllPlayersReady();
         allPlayersReady = true;
     }
 
 
     [Server]
-    private void SetupPlayer(NetworkConnectionToClient connectionToClient){
+    public void SetupPlayer(NetworkConnectionToClient connectionToClient, GameObject prefab){
         
-        Player player = Instantiate(gamePlayerPrefab).GetComponent<Player>();
+        Player player = Instantiate(prefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
         BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
 
         // cuts "(clone)" off the end
         pW.name = pW.name.Remove(pW.name.Length - 7);
         sW.name = sW.name.Remove(sW.name.Length - 7);
-        
-        // this is server only for hierarchy organization
-        Transform container = new GameObject($"Player {connectionToClient.connectionId}").transform;
-        player.transform.parent = container;
-        pW.transform.parent = container;
-        sW.transform.parent = container;
 
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         NetworkServer.Spawn(pW.gameObject, connectionToClient);
@@ -92,14 +88,12 @@ public class CustomNetworkManager : NetworkManager{
         player.secondaryWeapon = sW;
         player.InitializeWeaponsOnClient(pW, sW);
         
-        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
-        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
+        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 2}));
+        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 2}));
 
         int teamIndex = TeamIndices[connectionToClient];
-        List<Vector3> spawns;
         if (teamIndex > 6){
             player.transform.position = _redSpawns[_redSpawnCounter];
-            spawns = _redSpawns;
             _redSpawnCounter++;
             if (_redSpawnCounter >= _redSpawns.Count){
                 _redSpawnCounter = 0;
@@ -108,13 +102,12 @@ public class CustomNetworkManager : NetworkManager{
         
         else{
             player.transform.position = _blueSpawns[_blueSpawnCounter];
-            spawns = _blueSpawns;
             _blueSpawnCounter++;
             if (_blueSpawnCounter >= _blueSpawns.Count){
                 _blueSpawnCounter = 0;
             }
         }
-        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, Usernames[connectionToClient], _colors[connectionToClient], spawns, teamIndex);
+        connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, Usernames[connectionToClient], _colors[connectionToClient], teamIndex);
 
     }
 
