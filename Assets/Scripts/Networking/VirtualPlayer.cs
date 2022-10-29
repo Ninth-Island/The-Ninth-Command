@@ -9,7 +9,9 @@ using Random = UnityEngine.Random;
 
 public class VirtualPlayer : NetworkBehaviour{
 
-    public GameObject gamePlayerPrefab;
+    public GameObject[] gamePlayerPrefabs;
+    private GameObject _classSelection;
+    private int _classChoice;
     
     [SerializeField] private GameObject teammateStatusPrefab;
     [SerializeField] private GameObject scoreboard;
@@ -48,6 +50,7 @@ public class VirtualPlayer : NetworkBehaviour{
 
     public override void OnStartClient(){
         _audioManager = GetComponent<AudioManager>();
+        _classSelection = transform.GetChild(0).GetChild(2).gameObject;
     }
 
     public override void OnStartServer(){
@@ -157,7 +160,7 @@ public class VirtualPlayer : NetworkBehaviour{
     }
 
     [Server]
-    public void Respawn(Vector3 position){
+    public void Respawn(){
         ClientRespawnTargetRpc(connectionToClient);
         StartCoroutine(ServerRespawn());
     }
@@ -171,6 +174,7 @@ public class VirtualPlayer : NetworkBehaviour{
     private IEnumerator ClientRespawn(){
         
         yield return new WaitForSeconds(3);
+        _classSelection.SetActive(true);
         _audioManager.PlaySound(0);
         yield return new WaitForSeconds(1);
         
@@ -182,14 +186,18 @@ public class VirtualPlayer : NetworkBehaviour{
         
         _audioManager.PlaySound(1);
         yield return new WaitForSeconds(1);
+        _classSelection.SetActive(false);
 
     }
 
     [Server]
     private IEnumerator ServerRespawn(){
         yield return new WaitForSeconds(7);
-        NetworkServer.Destroy(gamePlayer.gameObject);
-        _networkManager.SetupPlayer(connectionToClient, gamePlayerPrefab);
+        if (gamePlayer){
+            NetworkServer.Destroy(gamePlayer.gameObject);
+        }
+
+        _networkManager.SetupPlayer(connectionToClient, gamePlayerPrefabs[_classChoice]);
     }
 
 
@@ -333,6 +341,17 @@ public class VirtualPlayer : NetworkBehaviour{
             Score = score;
         }
     }
+    
+    [Client]
+    public void SelectClass(int choice){
+        _classChoice = choice;
+        CmdSetChoice(choice);
+    }
+
+    [Command]
+    private void CmdSetChoice(int choice){
+        _classChoice = choice;
+    }
 
 }
 
@@ -354,7 +373,6 @@ public class TeammateHUDElements{
         ShieldText = shieldText;
         ShieldSlider = shieldSlider;
     }
-
 
 
 

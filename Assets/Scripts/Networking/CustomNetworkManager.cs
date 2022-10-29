@@ -58,7 +58,8 @@ public class CustomNetworkManager : NetworkManager{
 
         
         foreach (NetworkConnectionToClient connectionToClient in NetworkServer.connections.Values){
-            SetupPlayer(connectionToClient, connectionToClient.identity.GetComponent<VirtualPlayer>().gamePlayerPrefab);
+            connectionToClient.identity.GetComponent<VirtualPlayer>().Respawn();
+            //SetupPlayer(connectionToClient, connectionToClient.identity.GetComponent<VirtualPlayer>().gamePlayerPrefab);
         }
 
         yield return new WaitForSeconds(Time.fixedDeltaTime);

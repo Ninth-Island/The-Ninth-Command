@@ -15,10 +15,6 @@ public class ModeManager : NetworkBehaviour{
      * 3 = siege (destroy enemy base)
      * 4 = deliver the explosive
      */
-    private List<Vector3> _blueSpawns = new List<Vector3>();
-    private int _blueSpawnCounter;
-    private List<Vector3> _redSpawns = new List<Vector3>();
-    private int _redSpawnCounter;
 
     [SerializeField] private float timeLeft;
 
@@ -35,9 +31,6 @@ public class ModeManager : NetworkBehaviour{
     
     
     private void Start(){
-        TeamsSpawns[] teamsSpawnsArray = FindObjectsOfType<TeamsSpawns>();
-        _blueSpawns = teamsSpawnsArray[0].GetSpawns();
-        _redSpawns = teamsSpawnsArray[1].GetSpawns();
 
         _blueSlider = transform.GetChild(0).transform.GetChild(0).GetComponent<Slider>();
         _blueText = _blueSlider.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
@@ -56,27 +49,9 @@ public class ModeManager : NetworkBehaviour{
                 _redPoints++;
             }
             UpdateScoreClientRpc(_bluePoints, _redPoints);
-            Respawn(player);
+            player.virtualPlayer.Respawn();
         }
     }
-    private void Respawn(Player player){
-        if (player.teamIndex > 6){
-            player.virtualPlayer.Respawn(_redSpawns[_redSpawnCounter]);
-            _redSpawnCounter++;
-            if (_redSpawnCounter >= _redSpawns.Count){
-                _redSpawnCounter = 0;
-            }
-        }
-        
-        else{
-            player.virtualPlayer.Respawn(_blueSpawns[_blueSpawnCounter]);
-            _blueSpawnCounter++;
-            if (_blueSpawnCounter >= _blueSpawns.Count){
-                _blueSpawnCounter = 0;
-            }
-        }
-    }
-
     [Server]
     public void AllPlayersReady(){
         UpdateScoreClientRpc(_bluePoints, _redPoints);

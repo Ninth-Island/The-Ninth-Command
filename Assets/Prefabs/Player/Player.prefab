@@ -6268,7 +6268,7 @@ GameObject:
   - component: {fileID: 3757039344788581447}
   - component: {fileID: 4281232738288173098}
   m_Layer: 28
-  m_Name: Player Color
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6384,13 +6384,6 @@ MonoBehaviour:
   characterClientReady: 0
   virtualPlayer: {fileID: 0}
   teamIndex: 0
-  energy: 1000
-  energyCharge: 1
-  energySlider: {fileID: 0}
-  heat: 1000
-  heatCharge: 1
-  overflowSlider: {fileID: 0}
-  energyOverFlowHeatCharge: 1
   dashVelocity: 20
   timeTillShieldRecharge: 200
   shieldRechargeRate: 4
