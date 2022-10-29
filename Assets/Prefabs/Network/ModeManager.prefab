@@ -88,7 +88,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -468,6 +468,7 @@ GameObject:
   - component: {fileID: 8797730648896006403}
   - component: {fileID: 7678152061848231953}
   - component: {fileID: 941874261354500128}
+  - component: {fileID: 9154836931773780192}
   m_Layer: 0
   m_Name: ModeManager
   m_TagString: Untagged
@@ -508,7 +509,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da39a904e49e6ce43bb528b3ebb8a1df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   gameMode: 0
+  timeLeft: 300
+  maxScore: 50
 --- !u!223 &941874261354500128
 Canvas:
   m_ObjectHideFlags: 0
@@ -530,6 +535,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 1
   m_TargetDisplay: 0
+--- !u!114 &9154836931773780192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4499204349179261701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 8e4d3ad7b8cf6d44d949a0042864f514
+  hasSpawned: 0
 --- !u!1 &4630420162943026891
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,7 +640,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -688,9 +710,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '40/50
-
-'
+  m_text: 0/0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f79fa8f6015728f4b80910f8c9c5fcf1, type: 2}
   m_sharedMaterial: {fileID: -8391555180647953106, guid: f79fa8f6015728f4b80910f8c9c5fcf1,
@@ -978,9 +998,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '40/50
-
-'
+  m_text: 0/0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f79fa8f6015728f4b80910f8c9c5fcf1, type: 2}
   m_sharedMaterial: {fileID: -8391555180647953106, guid: f79fa8f6015728f4b80910f8c9c5fcf1,

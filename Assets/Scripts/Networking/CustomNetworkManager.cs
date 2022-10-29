@@ -62,6 +62,7 @@ public class CustomNetworkManager : NetworkManager{
         }
 
         yield return new WaitForSeconds(Time.fixedDeltaTime);
+        FindObjectOfType<ModeManager>().AllPlayersReady();
         allPlayersReady = true;
     }
 
