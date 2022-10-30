@@ -96,6 +96,8 @@ public partial class Player : Character{
             else{
                 if (_isSprinting){
                     _armOverrideSprinting = true;
+                    _attemptingToFire = false;
+                    _firingAngle = 0;
                     body.velocity = new Vector2(moveSpeed * sprintAmplifier * input, body.velocity.y);
                 }
                 else{
@@ -126,7 +128,6 @@ public partial class Player : Character{
     }
 
     private void RotateArm(float rotation){
-       
         if (_armOverrideReloading == false && _armOverrideSprinting == false){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
@@ -157,7 +158,6 @@ public partial class Player : Character{
             transform.localScale= new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y);
             _direction = 1;
         }
-        
     }
 
     

@@ -55,7 +55,7 @@ public partial class Player : Character{
         if (playerInput.PickedUp){
             if (Vector2.Distance(playerInput.PickedUp.transform.position, transform.position) < 14 && playerInput.PickedUp.gameObject.layer == LayerMask.NameToLayer("Objects")){
 
-                playerInput.PickedUp.SwapTo(this, playerInput.OldWeapon, new[]{1, 2});
+                playerInput.PickedUp.SwapTo(this, playerInput.OldWeapon, new[]{1, 3});
                 PlayerPickUpWeaponClientRpc(playerInput.PickedUp, playerInput.OldWeapon);
                 
                 playerInput.PickedUp.netIdentity.AssignClientAuthority(connectionToClient);
@@ -63,7 +63,7 @@ public partial class Player : Character{
                 
             }
             else{
-                playerInput.OldWeapon.CancelPickup(this, new []{1, 2});
+                playerInput.OldWeapon.CancelPickup(this, new []{1, 3});
             }
         }
     }
@@ -74,7 +74,7 @@ public partial class Player : Character{
             primaryWeapon.StopReloading();        
             FinishReload();
 
-            newWeapon.SwapTo(this, oldWeapon, new[]{1, 2});
+            newWeapon.SwapTo(this, oldWeapon, new[]{1, 3});
             SetArmType(primaryWeapon.armType);
         }
     }
