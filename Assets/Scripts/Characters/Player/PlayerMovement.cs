@@ -88,7 +88,6 @@ public partial class Player : Character{
 
     private void Move(float input){
         if (input != 0 && !InputsFrozen && !FallingKnocked){
-
             if (_isCrouching){
                 body.velocity = new Vector2(moveSpeed / 2 * input, body.velocity.y);
                 SortSound(2);

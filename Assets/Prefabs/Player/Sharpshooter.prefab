@@ -84,12 +84,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: jetPower
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: armorAbility
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sprintAmplifier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: chargeDrainPerFrame
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,

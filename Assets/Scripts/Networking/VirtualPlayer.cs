@@ -233,7 +233,7 @@ public class VirtualPlayer : NetworkBehaviour{
 
         gameObject.name = setUsername;
         player.gameObject.name = setUsername;
-        Image bg = player.transform.GetChild(8).GetChild(0).GetComponent<Image>();
+        Image bg = player.transform.GetChild(6).GetChild(0).GetComponent<Image>();
         TextMeshProUGUI floatingName = bg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         floatingName.text = setUsername;
 

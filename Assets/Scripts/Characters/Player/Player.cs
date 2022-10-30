@@ -131,7 +131,6 @@ public partial class Player : Character{
         transform.position = new Vector3(pos.x + x * _direction, pos.y);
     }
 
-
     #endregion
     
     

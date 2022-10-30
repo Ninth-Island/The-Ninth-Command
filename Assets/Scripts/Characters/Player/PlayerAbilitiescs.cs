@@ -30,10 +30,11 @@ public partial class Player : Character{
     [SerializeField] private float distanceOfCharge;
     [SerializeField] private int teamChargePerFrame;
     [SerializeField] private GameObject fieldPrefab;
-
+    [SerializeField] private float fieldScale;
+    [SerializeField] private Vector2 fieldOffset;
 
     [Header("Pathfinder - Cloak")] 
-    [SerializeField] private float alpha;
+    [SerializeField] private float cloakedMoveSpeed;
 
     [Header("Sharpshooter - Jetpack")] 
     [SerializeField] private int jetPower;
@@ -59,31 +60,38 @@ public partial class Player : Character{
         
     [Client]
     protected virtual void ClientPlayerAbilitiesUpdate(){
+        
         if (Input.GetKeyDown(KeyCode.LeftControl)){
-            ArmorAbilityInstant();
+            if (isClientOnly){
+                ArmorAbilityInstant();
+            }
+            _currentInput.AbilityInput = true;
         }
 
         if (Input.GetKey(KeyCode.LeftControl)){         
-            _currentInput.AbilityInput = true;
+            _currentInput.AbilityPressed = true;
 
         }
         
         if (Input.GetKeyUp(KeyCode.LeftControl)){         
-            _currentInput.AbilityInput = false;
+            _currentInput.AbilityPressed = false;
 
         }
-        
 
-        if (Input.GetKeyDown(KeyCode.Mouse5)){
-            ModAbilityInstant();
+
+        if (isClientOnly && Input.GetKeyDown(KeyCode.Mouse5)){
+            if (isClientOnly){
+                ModAbilityInstant();
+                _currentInput.ModInput = true;
+            }
         }
-        
+
         if (Input.GetKey(KeyCode.Mouse5)){
-            _currentInput.ModInput = true;
+            _currentInput.ModPressed = true;
         }
         
         if (Input.GetKeyUp(KeyCode.Mouse5)){
-            _currentInput.ModInput = false;
+            _currentInput.ModPressed = false;
         }
         abilityChargeSlider.value = (float) _currentAbilityCharge / maxCharge;
     }
@@ -91,22 +99,27 @@ public partial class Player : Character{
 
  
     private void AbilitiesFixedUpdate(){
-        if (_armorAbilityActive){
-            if (armorAbility == 1){
-                OverchargeShield();
-            }
-            else if (armorAbility == 2){
-                OverchargeTeam();
-            }
+        if (armorAbility != 4){
+            if (_armorAbilityActive){
+                if (armorAbility == 1){
+                    OverchargeShield();
+                }
+                else if (armorAbility == 2){
+                    OverchargeTeam();
+                }
 
-            else if (armorAbility == 3){
-                Cloak();
-            }
+                else if (armorAbility == 3){
+                    Cloak();
+                }
 
-            _currentAbilityCharge -= chargeDrainPerFrame;
-            
-            if (_currentAbilityCharge <= 0){
-                _armorAbilityActive = false;
+                _currentAbilityCharge -= chargeDrainPerFrame;
+
+                if (_currentAbilityCharge <= 0){
+                    _armorAbilityActive = false;
+                }
+            }
+            else{
+                _currentAbilityCharge = Mathf.Clamp(_currentAbilityCharge + chargeRate, 0, maxCharge);
             }
         }
         else{
@@ -120,7 +133,7 @@ public partial class Player : Character{
         float angle = arm.transform.rotation.eulerAngles.z;
         Destroy(Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
         angle *= Mathf.Deg2Rad;
-        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dashVelocity;
+        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * dashVelocity;
     }
 
     private void OverchargeShield(){
@@ -135,21 +148,31 @@ public partial class Player : Character{
             Player p = element.VirtualPlayer.gamePlayer;
             if (Vector2.Distance(p.transform.position, transform.position) < distanceOfCharge){
                 p.shield = Mathf.Clamp(p.shield += teamChargePerFrame, 0, p.maxShield);
-                p.UpdateHealthClientRpc(p.health, p.shield, true, false);
-
+                if (isServer){
+                    p.UpdateHealthClientRpc(p.health, p.shield, true, false);
+                }
             }
         }
     }
 
     private void Cloak(){
-        Color color = bodyRenderer.color;
-        color = new Color(color.r, color.g, color.b, 1 - ((float) _currentAbilityCharge / maxCharge));
-        bodyRenderer.color = color;
+        float a = 1 - ((float) _currentAbilityCharge / maxCharge);
+        
+        SetCamoColor(bodyRenderer, a);
+        SetCamoColor(armRenderer, a);
+        SetCamoColor(helmetRenderer, a);
+        SetCamoColor(visorRenderer, a);
+        SetCamoColor(primaryWeapon.spriteRenderer, a);
+    }
+
+    private void SetCamoColor(SpriteRenderer sR, float a){
+        Color color = sR.color;
+        color = new Color(color.r, color.g, color.b, a);
+        sR.color = color;
     }
 
     private void Jetpack(){
-        float angle = GetBarrelToMouseRotation();
-        body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * jetPower;
+        body.velocity += new Vector2(0, jetPower);
     }
 
 
@@ -157,18 +180,41 @@ public partial class Player : Character{
         if (_currentAbilityCharge >= maxCharge){
             if (armorAbility == 0){ // dash
                 Dash();
-                Debug.Log(_currentAbilityCharge);
                 _currentAbilityCharge = 0;
 
             }
             else{
                 _armorAbilityActive = true;
+                if (armorAbility == 1 || armorAbility == 2){
+                    GameObject field = Instantiate(fieldPrefab, transform);
+                    field.transform.localPosition = fieldOffset;
+                    field.transform.localScale = new Vector3(fieldScale, fieldScale);
+                    Destroy(field, (float) maxCharge / chargeDrainPerFrame / 50);
+                } 
+                else if (armorAbility == 3){
+                    StartCoroutine(ResetCloak());
+                }
             }
         }
     }
 
+    private IEnumerator ResetCloak(){
+        float tempSpeed = moveSpeed;
+        moveSpeed = cloakedMoveSpeed;
+        floatingCanvas.SetActive(false);
+        yield return new WaitForSeconds((float) maxCharge / chargeDrainPerFrame / 50);
+        SetCamoColor(bodyRenderer, 1);
+        SetCamoColor(armRenderer, 1);
+        SetCamoColor(helmetRenderer, 1);
+        SetCamoColor(visorRenderer, 1);
+        SetCamoColor(primaryWeapon.spriteRenderer, 1);
+        moveSpeed = tempSpeed;
+
+        floatingCanvas.SetActive(true);
+    }
+
     private void ArmorAbilityLong(){
-        if (_isArmorAbilitying && chargeDrainPerFrame > 0){
+        if (_isArmorAbilitying && _currentAbilityCharge > 0){
             _currentAbilityCharge -= chargeDrainPerFrame;
             if (armorAbility == 4){ //jetpack
                 Jetpack();

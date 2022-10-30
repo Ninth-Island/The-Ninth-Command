@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1055543247759068449, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055543247759068449, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2846512729550612653, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -100,7 +110,17 @@ PrefabInstance:
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sprintAmplifier
-      value: 2
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: cloakedMoveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: chargeDrainPerFrame
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
@@ -123,6 +143,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId
       value: a1435836371682948ba752abae1ad162
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366117061052451726, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366117061052451726, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8631338928208673247, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}
