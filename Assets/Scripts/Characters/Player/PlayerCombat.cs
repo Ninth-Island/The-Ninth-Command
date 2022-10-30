@@ -14,9 +14,6 @@ public partial class Player : Character{
     private int _timeLeftTillShieldRecharge;
     private bool _stoppedAudio;
 
-    protected override void Start(){
-        base.Start();
-    }
 
     private void ServerPlayerCombatFixedUpdate(){
         _timeLeftTillShieldRecharge--;

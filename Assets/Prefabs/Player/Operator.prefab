@@ -64,8 +64,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
-      propertyPath: sprintAmplifier
+      propertyPath: maxCharge
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: fieldScale
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: fieldPrefab
+      value: 
+      objectReference: {fileID: 3110500547035796, guid: 31ac1184afb394645af397b2cc83b49a,
+        type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: armorAbility
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sprintAmplifier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: distanceOfCharge
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: teamChargePerFrame
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: chargeDrainPerFrame
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}

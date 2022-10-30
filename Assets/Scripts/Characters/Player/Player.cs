@@ -65,6 +65,7 @@ public partial class Player : Character{
 
             ClientMoveFixedUpdate();
             ClientPlayerWeaponFixedUpdate();
+            ClientPlayerAbilitiesFixedUpdate();
 
             _currentInput.CrouchInput = _isCrouching;
             _currentInput.SprintInput = _isSprinting;
@@ -82,6 +83,7 @@ public partial class Player : Character{
             ServerPlayerNetworkedMovementFixedUpdate();
             ServerPlayerCombatFixedUpdate();
             ServerPlayerWeaponFixedUpdate();
+            ServerPlayerAbilitiesFixedUpdate();
         }
     }
     
@@ -128,7 +130,6 @@ public partial class Player : Character{
         Vector2 pos = transform.position;
         transform.position = new Vector3(pos.x + x * _direction, pos.y);
     }
-
 
     #endregion
     

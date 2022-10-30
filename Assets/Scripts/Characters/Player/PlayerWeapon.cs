@@ -141,7 +141,7 @@ public partial class Player : Character{
                 primaryWeapon.StopReloading();
                 FinishReload();
 
-                newWeapon.SwapTo(this, primaryWeapon, new []{1, 2});
+                newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
                 SetArmType(primaryWeapon.armType);
                 HUDPickupWeapon(primaryWeapon);
             }
@@ -219,7 +219,7 @@ public partial class Player : Character{
             primaryWeapon.Reload();
         }
 
-        if (Input.GetKey(KeyCode.Mouse0)){
+        if (Input.GetKey(KeyCode.Mouse0) && !_armOverrideSprinting){
             _attemptingToFire = true;
             _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
 

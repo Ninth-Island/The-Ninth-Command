@@ -16,6 +16,7 @@ public partial class Player : Character{
     [Header("HUD")] [SerializeField] protected Canvas hud;
     [SerializeField] private TMP_Text pingDisplay;
 
+    [SerializeField] private GameObject floatingCanvas;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider shieldSlider;
     [SerializeField] private TextMeshProUGUI healthText;
@@ -24,6 +25,10 @@ public partial class Player : Character{
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private GameObject shieldDamageSparks;
     [SerializeField] private GameObject armorDamageSparks;
+
+    public Sprite[] abilityIcons;
+    [SerializeField] private Slider abilityChargeSlider;
+    public Image abilityImage;
 
     
     
@@ -55,20 +60,22 @@ public partial class Player : Character{
     private float fadeSpeed = 0.01f;
 
     private Camera _mainCamera;
-    private CinemachineVirtualCamera[] _virtualCameras;
+    private CinemachineVirtualCamera _virtualCamera;
 
 
+    protected override void Start(){
+        base.Start();
+        _virtualCamera = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        if (hasAuthority){
+            _virtualCamera.Priority = 10;
+        }
+    }
+    
     [Client]
     private void ClientHUDVisualStart(){
 
         if (hasAuthority){
             _mainCamera = Camera.main;
-            _virtualCameras = new CinemachineVirtualCamera[3];
-            _virtualCameras[0] = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
-            _virtualCameras[1] = transform.GetChild(5).GetComponent<CinemachineVirtualCamera>();
-            _virtualCameras[2] = transform.GetChild(6).GetComponent<CinemachineVirtualCamera>();
-
-            _virtualCameras[0].Priority = 10;
             hud.gameObject.SetActive(true);
 
 
@@ -144,7 +151,7 @@ public partial class Player : Character{
     public void SetPickupText(string setText){
         pickupText.SetText(setText);
     }
-
+    
     
     private class ANames{
         public readonly string running = "Running";

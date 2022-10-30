@@ -98,8 +98,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: maxCharge
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: moveSpeed
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: fieldScale
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: fieldPrefab
+      value: 
+      objectReference: {fileID: 3110500547035796, guid: 31ac1184afb394645af397b2cc83b49a,
+        type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: armorAbility
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
@@ -108,7 +129,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: fieldOffset.x
+      value: -0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: fieldOffset.y
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: sprintAmplifier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: overChargePerFrame
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: chargeDrainPerFrame
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
