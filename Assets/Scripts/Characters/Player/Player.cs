@@ -65,6 +65,7 @@ public partial class Player : Character{
 
             ClientMoveFixedUpdate();
             ClientPlayerWeaponFixedUpdate();
+            ClientPlayerAbilitiesFixedUpdate();
 
             _currentInput.CrouchInput = _isCrouching;
             _currentInput.SprintInput = _isSprinting;
@@ -82,6 +83,7 @@ public partial class Player : Character{
             ServerPlayerNetworkedMovementFixedUpdate();
             ServerPlayerCombatFixedUpdate();
             ServerPlayerWeaponFixedUpdate();
+            ServerPlayerAbilitiesFixedUpdate();
         }
     }
     

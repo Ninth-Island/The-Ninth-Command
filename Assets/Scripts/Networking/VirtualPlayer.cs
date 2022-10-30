@@ -268,7 +268,8 @@ public class VirtualPlayer : NetworkBehaviour{
         player.armRenderer.color = setColors[2]; // arms armed
         player.helmetRenderer.color = setColors[1]; // helmet
         player.visorRenderer.color = setColors[0]; // visor
-        
+
+        player.abilityImage.sprite = player.abilityIcons[_classChoice];
         Invoke(nameof(InitializeTeammateStatuses), 1f);
 
     }

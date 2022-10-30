@@ -21,6 +21,7 @@ public partial class Player : Character{
     
     [Header("Assault - Dash")]
     [SerializeField] private float dashVelocity;
+    [SerializeField] private GameObject dashParticles;
 
     [Header("Heavy - Shield Overcharge")] 
     [SerializeField] private int overChargePerFrame;
@@ -43,7 +44,7 @@ public partial class Player : Character{
     private bool _armorAbilityActive; // for one shots that have duration
     private bool _modAbilityActive;
 
-    private int _currentAbilityCharge;
+    private int _currentAbilityCharge = 0;
 
 
         /*
@@ -84,6 +85,7 @@ public partial class Player : Character{
         if (Input.GetKeyUp(KeyCode.Mouse5)){
             _currentInput.ModInput = false;
         }
+        abilityChargeSlider.value = (float) _currentAbilityCharge / maxCharge;
     }
 
 
@@ -108,18 +110,24 @@ public partial class Player : Character{
             }
         }
         else{
-            _currentAbilityCharge += Mathf.Clamp(_currentAbilityCharge, 0, maxCharge);
+            _currentAbilityCharge = Mathf.Clamp(_currentAbilityCharge + chargeRate, 0, maxCharge);
         }
     }
+    
 
     private void Dash(){
-        float rotation = GetBarrelToMouseRotation();
-        Vector2 dir = new Vector2(Mathf.Cos(rotation * Mathf.Deg2Rad), Mathf.Sin(rotation * Mathf.Deg2Rad)).normalized;
-        body.velocity = dir * dashVelocity;
+
+        float angle = arm.transform.rotation.eulerAngles.z;
+        Destroy(Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
+        angle *= Mathf.Deg2Rad;
+        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dashVelocity;
     }
 
     private void OverchargeShield(){
         shield = Mathf.Clamp(shield += overChargePerFrame, 0, maxShield);
+        if (isServer){
+            UpdateHealthClientRpc(health, shield, true, false);
+        }
     }
 
     private void OverchargeTeam(){
@@ -127,6 +135,8 @@ public partial class Player : Character{
             Player p = element.VirtualPlayer.gamePlayer;
             if (Vector2.Distance(p.transform.position, transform.position) < distanceOfCharge){
                 p.shield = Mathf.Clamp(p.shield += teamChargePerFrame, 0, p.maxShield);
+                p.UpdateHealthClientRpc(p.health, p.shield, true, false);
+
             }
         }
     }
@@ -146,14 +156,14 @@ public partial class Player : Character{
     private void ArmorAbilityInstant(){
         if (_currentAbilityCharge >= maxCharge){
             if (armorAbility == 0){ // dash
-                float angle = GetBarrelToMouseRotation();
-                body.velocity += new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * dashVelocity;
+                Dash();
+                Debug.Log(_currentAbilityCharge);
                 _currentAbilityCharge = 0;
+
             }
             else{
                 _armorAbilityActive = true;
             }
-
         }
     }
 
@@ -176,13 +186,18 @@ public partial class Player : Character{
         }
     }
 
-    
-    protected override void FixedUpdate(){
-        base.FixedUpdate();
+    private void ClientPlayerAbilitiesFixedUpdate(){
+        if (isClientOnly){
+            ArmorAbilityLong();
+            ModAbilityLong();
+            AbilitiesFixedUpdate();
+        }
+    }
+
+    private void ServerPlayerAbilitiesFixedUpdate(){
         ArmorAbilityLong();
         ModAbilityLong();
-        AbilitiesFixedUpdate();
-    }
+        AbilitiesFixedUpdate();}
 
 
 }

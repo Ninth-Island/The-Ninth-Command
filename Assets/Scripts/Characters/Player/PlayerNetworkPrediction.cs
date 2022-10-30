@@ -89,13 +89,13 @@ public partial class Player : Character{
     // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
     [Server]
     private void ServerOverrideActualValuesForClients(){
-        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _lastInput.RequestNumber);
+        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _currentAbilityCharge, _lastInput.RequestNumber);
     }
 
     
     // the clients receive the information and update themselves accordingly
     [ClientRpc]
-    private void SetClientValuesRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int requestCounter){
+    private void SetClientValuesRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int currentAbilityCharge, int requestCounter){
 
         // if too far away or not controlled by this player then instantly update the position
         if (hasAuthority && Vector3.Distance(transform.position, position) > 2 || !hasAuthority){
@@ -103,6 +103,7 @@ public partial class Player : Character{
             transform.rotation = rotation;
             RotateArm(armRotation); // fancier way of doing scale
             body.velocity = velocity;
+            _currentAbilityCharge = currentAbilityCharge;
         }
 
         if (hasAuthority){

@@ -25,6 +25,10 @@ public partial class Player : Character{
     [SerializeField] private GameObject shieldDamageSparks;
     [SerializeField] private GameObject armorDamageSparks;
 
+    public Sprite[] abilityIcons;
+    [SerializeField] private Slider abilityChargeSlider;
+    public Image abilityImage;
+
     
     
     [Header("Weapon HUD")]
