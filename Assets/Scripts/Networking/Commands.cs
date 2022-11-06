@@ -11,5 +11,9 @@ public class Commands : MonoBehaviour
             NetworkManager.singleton.StopClient();
             NetworkManager.singleton.StopHost();
         }
+
+        if (Input.GetKeyDown(KeyCode.I)){
+            Time.timeScale = 4;
+        }
     }
 }

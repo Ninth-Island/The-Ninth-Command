@@ -55,6 +55,7 @@ public class ModeManager : NetworkBehaviour{
     [Server]
     public void AllPlayersReady(){
         UpdateScoreClientRpc(_bluePoints, _redPoints);
+        ServerSetTimeOnClientsRpc(timeLeft);
     }
 
     [ClientRpc]
@@ -68,7 +69,27 @@ public class ModeManager : NetworkBehaviour{
 
     private void Update(){
         timeLeft -= Time.deltaTime;
-        int minutes = Mathf.RoundToInt(timeLeft) / 60;
-        _timerText.text = $"{minutes}:{Mathf.RoundToInt(timeLeft) - minutes * 60}";
+        int minutesInt = Mathf.RoundToInt(timeLeft) / 60;
+        int secondsInt = Mathf.RoundToInt(timeLeft) - minutesInt * 60;
+
+        string seconds = secondsInt.ToString();
+        if (secondsInt < 10){
+            seconds = "0" + seconds;
+        }
+
+        if (secondsInt <= 0){
+            seconds = "00";
+        }
+        string minutes = minutesInt.ToString();
+
+        if (minutesInt <= 0){
+            minutes = "0";
+        }
+        _timerText.text = $"{minutes}:{seconds}";
+    }
+    
+    [ClientRpc]
+    private void ServerSetTimeOnClientsRpc(float setTimeLeft){
+        timeLeft = setTimeLeft;
     }
 }

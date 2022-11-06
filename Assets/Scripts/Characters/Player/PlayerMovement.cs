@@ -142,19 +142,16 @@ public partial class Player : Character{
 
         helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
         helmet.transform.localScale = new Vector3(1, 1);
+        
 
-        if (isServer && hasAuthority){
-        }
-
-
-        if (rotation > 90 && rotation < 270/* && (transform.position - _cursorControl.GetMousePosition()).magnitude > 13f*/){
+        if (rotation > 90 && rotation < 270){
             arm.transform.localScale = new Vector3(-1, -1);
             helmet.transform.localScale = new Vector3(-1, -1);
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
             _direction = -1;
         }
         else{
-            transform.localScale= new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            transform.localScale = new Vector3( Mathf.Abs(transform.localScale.x), transform.localScale.y);
             _direction = 1;
         }
     }
