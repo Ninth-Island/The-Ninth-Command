@@ -7,6 +7,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1055543247759068449, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055543247759068449, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581440, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_RootOrder
@@ -64,8 +74,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: shield
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: maxCharge
-      value: 500
+      value: 1250
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: maxHealth
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: maxShield
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
@@ -85,11 +110,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
-      propertyPath: sprintAmplifier
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
-        type: 3}
       propertyPath: distanceOfCharge
       value: 25
       objectReference: {fileID: 0}
@@ -101,7 +121,7 @@ PrefabInstance:
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: chargeDrainPerFrame
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
@@ -109,6 +129,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4057086638289053941, guid: 7118adeca38e5974ea557ac518d35b79,
         type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: characterClientReady
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: secondaryWeaponPrefab
@@ -124,6 +149,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AssetId
       value: 127427234d8057945ab5a61883bb3ec2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366117061052451726, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366117061052451726, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}

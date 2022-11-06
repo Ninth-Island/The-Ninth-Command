@@ -154,6 +154,7 @@ public partial class Player : Character{
 
     [Server]
     private void ServerDie(){
+        primaryWeapon.StopReloading();
         primaryWeapon.netIdentity.RemoveClientAuthority();
         secondaryWeapon.netIdentity.RemoveClientAuthority();
         Die();

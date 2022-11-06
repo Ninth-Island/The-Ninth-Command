@@ -38,6 +38,7 @@ public partial class Player : Character{
 
     [Header("Sharpshooter - Jetpack")] 
     [SerializeField] private int jetPower;
+    [SerializeField] private float maximumRise;
 
     private bool _isArmorAbilitying; // for prolonged ones
     private bool _isModAbilitying;
@@ -62,10 +63,12 @@ public partial class Player : Character{
     protected virtual void ClientPlayerAbilitiesUpdate(){
         
         if (Input.GetKeyDown(KeyCode.LeftControl)){
+            float angle = GetBarrelToMouseRotation();
             if (isClientOnly){
-                ArmorAbilityInstant();
+                ArmorAbilityInstant(angle);
             }
             _currentInput.AbilityInput = true;
+            _currentInput.Angle = angle;
         }
 
         if (Input.GetKey(KeyCode.LeftControl)){         
@@ -128,12 +131,11 @@ public partial class Player : Character{
     }
     
 
-    private void Dash(){
-
-        float angle = arm.transform.rotation.eulerAngles.z;
+    private void Dash(float angle){
         Destroy(Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
         angle *= Mathf.Deg2Rad;
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * dashVelocity;
+        FallingKnocked = true;
     }
 
     private void OverchargeShield(){
@@ -172,25 +174,33 @@ public partial class Player : Character{
     }
 
     private void Jetpack(){
-        body.velocity += new Vector2(0, jetPower);
+        body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y + jetPower, -maximumRise, maximumRise));
     }
 
+   
 
-    private void ArmorAbilityInstant(){
+    [ClientRpc]
+    private void CreateFieldClientRpc(Transform p, Vector2 offset, float scale, float time){
+        GameObject field = Instantiate(fieldPrefab, p);
+        field.transform.localPosition = offset;
+        field.transform.localScale = new Vector3(scale, scale);
+        Destroy(field, time);
+    }
+
+    private void ArmorAbilityInstant(float angle){
         if (_currentAbilityCharge >= maxCharge){
             if (armorAbility == 0){ // dash
-                Dash();
+                Dash(angle);
                 _currentAbilityCharge = 0;
 
             }
             else{
                 _armorAbilityActive = true;
                 if (armorAbility == 1 || armorAbility == 2){
-                    GameObject field = Instantiate(fieldPrefab, transform);
-                    field.transform.localPosition = fieldOffset;
-                    field.transform.localScale = new Vector3(fieldScale, fieldScale);
-                    Destroy(field, (float) maxCharge / chargeDrainPerFrame / 50);
-                } 
+                    if (isServer){
+                        CreateFieldClientRpc(transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
+                    }
+                }
                 else if (armorAbility == 3){
                     StartCoroutine(ResetCloak());
                 }

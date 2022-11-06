@@ -39,7 +39,7 @@ public partial class Player : Character{
         }
 
         if (playerInput.AbilityInput){
-            ArmorAbilityInstant();
+            ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
@@ -97,19 +97,21 @@ public partial class Player : Character{
     [ClientRpc]
     private void SetClientValuesRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int currentAbilityCharge, int requestCounter){
 
-        // if too far away or not controlled by this player then instantly update the position
-        if (hasAuthority && Vector3.Distance(transform.position, position) > 2 || !hasAuthority){
+        // if its too far away (simulation lost track then dead reckon it
+        // the simulation breaks down at high velocities which occasionally occur
+        if (Vector3.Distance(transform.position, position) > 2 + 0.32f * body.velocity.magnitude){
+            Debug.Log(Vector2.Distance(transform.position, position));
             transform.position = position;
-            transform.rotation = rotation;
-            RotateArm(armRotation); // fancier way of doing scale
-            body.velocity = velocity;
-            _currentAbilityCharge = currentAbilityCharge;
         }
 
-        if (hasAuthority){
-            // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
-            ClientReconciliation(requestCounter);
-        }
+        transform.rotation = rotation;
+        RotateArm(armRotation); // fancier way of doing scale
+        body.velocity = velocity;
+        _currentAbilityCharge = currentAbilityCharge;
+
+       
+        // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
+        ClientReconciliation(requestCounter);
     }
 
 
@@ -172,7 +174,7 @@ public partial class Player : Character{
         }
 
         if (playerInput.AbilityInput){
-            ArmorAbilityInstant();
+            ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
@@ -202,6 +204,7 @@ public partial class Player : Character{
         
         public bool AbilityInput; // for one time press
         public bool ModInput;
+        public float Angle;
 
         public bool AbilityPressed; // for continuous press
         public bool ModPressed;

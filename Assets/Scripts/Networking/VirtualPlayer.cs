@@ -262,6 +262,7 @@ public class VirtualPlayer : NetworkBehaviour{
 
         player.teamIndex = setTeamIndex;
         player.HUDPickupWeapon(player.primaryWeapon);
+        player.weaponImage.sprite = player.primaryWeapon.spriteRenderer.sprite;
         Transform sprites = gamePlayer.transform.GetChild(1);
 
         player.bodyRenderer.color = setColors[3]; // body

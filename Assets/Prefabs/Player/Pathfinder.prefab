@@ -94,6 +94,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: health
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: shield
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: moveSpeed
       value: 20
       objectReference: {fileID: 0}
@@ -134,6 +144,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6160686736297988158, guid: f21df384f46e4c747a6cf4d24e9e9580,
         type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: timeTillShieldRecharge
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_Name
