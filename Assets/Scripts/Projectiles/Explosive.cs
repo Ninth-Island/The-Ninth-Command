@@ -75,7 +75,7 @@ public class Explosive : Projectile{
         Instantiate(knockbackPrefab, transform.position, Quaternion.Euler(0, 0, 0));
         Destroy(gameObject, 0.01f);
         if (!impactGrenade){
-            _audioManager.PlayNewSource(0);
+            _audioManager.PlayNewSource(0, -1);
         }
     }
 
@@ -123,11 +123,11 @@ public class Explosive : Projectile{
             }
             if (other.rigidbody && other.rigidbody.sharedMaterial){
                 if (other.rigidbody.sharedMaterial.name == "Metal"){
-                    AudioManager.PlayNewSource(0);
+                    AudioManager.PlayNewSource(0, -1);
                 }
                 else if (other.rigidbody.sharedMaterial.name == "Snow" || other.rigidbody.sharedMaterial.name == "Rock" ||
                          other.rigidbody.sharedMaterial.name == "Grass"){
-                    AudioManager.PlayNewSource(1);
+                    AudioManager.PlayNewSource(1, -1);
                 }
             }
             if (impactGrenade){

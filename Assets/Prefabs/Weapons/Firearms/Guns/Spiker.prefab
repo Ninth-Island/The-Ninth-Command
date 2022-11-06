@@ -181,13 +181,13 @@ MonoBehaviour:
   firingPoint: {fileID: 0}
   activelyWielded: 0
   shotDelay: 0
-  salvoDelay: 5
+  salvoDelay: 2
   shotsPerSalvo: 1
   instability: 0.1
   projectileTemplate: {fileID: -5604932223983771090, guid: bd0d6bbd9f1c8c948bbbf13658c448b2,
     type: 3}
-  projectileDamage: 10
-  projectileSpeed: 100
+  projectileDamage: 15
+  projectileSpeed: 50
   piercing: 0
   magazinesLeft: 3
   magazineSize: 40

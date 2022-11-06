@@ -17,6 +17,16 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].name
+      value: Cloak
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].clipsList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ebc56e2ab1c97064dad13b307897d422, type: 3}
     - target: {fileID: 2846512729550612653, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_LocalScale.x

@@ -70,7 +70,7 @@ public partial class Player : Character{
             _virtualCamera.Priority = 10;
         }
     }
-    
+
     [Client]
     private void ClientHUDVisualStart(){
 
@@ -93,11 +93,12 @@ public partial class Player : Character{
             pickupText.SetText("");
         }
 
-        Transform p = transform.GetChild(1);
-
+        if (jetpack){
+            jetpack.Stop();
+        }
     }
 
-    
+
     private void ClientHUDUpdate(){ // every frame
         pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
         if (_fadeTimer > 0){

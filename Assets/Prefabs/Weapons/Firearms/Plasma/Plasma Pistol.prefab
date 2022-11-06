@@ -177,7 +177,7 @@ MonoBehaviour:
   instability: 0.1
   projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
     type: 3}
-  projectileDamage: 1
+  projectileDamage: 30
   projectileSpeed: 80
   piercing: 0
   percentagePerShot: 0.8

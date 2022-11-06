@@ -130,7 +130,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.7, y: 0.7}
+    oldSize: {x: 6.3636365, y: 6.3636365}
     newSize: {x: 0.7, y: 0.7}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -195,7 +195,7 @@ MonoBehaviour:
   instability: 0.05
   projectileTemplate: {fileID: -5604932223983771090, guid: bd0d6bbd9f1c8c948bbbf13658c448b2,
     type: 3}
-  projectileDamage: 20
+  projectileDamage: 16
   projectileSpeed: 200
   piercing: 0
   magazinesLeft: 3

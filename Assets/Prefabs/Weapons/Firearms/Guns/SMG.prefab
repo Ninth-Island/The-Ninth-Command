@@ -227,14 +227,14 @@ MonoBehaviour:
   projectileTemplate: {fileID: -5604932223983771090, guid: 31cb229e9234b7c46a2f98a62f5d917a,
     type: 3}
   projectileDamage: 5
-  projectileSpeed: 200
+  projectileSpeed: 100
   piercing: 0
   magazinesLeft: 2
-  magazineSize: 60
+  magazineSize: 180
   reloadTime: 2
   bulletShell: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
-  bulletsLeft: 60
+  bulletsLeft: 180
 --- !u!114 &-7570404451717712117
 MonoBehaviour:
   m_ObjectHideFlags: 0

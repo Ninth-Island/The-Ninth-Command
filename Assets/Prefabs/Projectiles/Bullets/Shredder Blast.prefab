@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 5345319634674317831}
   - component: {fileID: 8440634332580792013}
   - component: {fileID: 5345319634674317829}
-  - component: {fileID: -3131308856314885559}
+  - component: {fileID: 5302949600237173417}
   - component: {fileID: 4318819626735042361}
   - component: {fileID: -8557309554173012507}
   - component: {fileID: 7158032095310404224}
   m_Layer: 0
-  m_Name: EnergizerBeam
+  m_Name: Shredder Blast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79,7 +79,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.0001
+  m_Mass: 10000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -88,7 +88,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!114 &-3131308856314885559
+--- !u!114 &5302949600237173417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5345319634674317825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a6a1128197897b4097b4ae7ffe6bcfe, type: 3}
+  m_Script: {fileID: 11500000, guid: b7fccd8ded044ea45886415adbf5ee2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
@@ -105,11 +105,11 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 0}
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: 7158032095310404224}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   sticky: 0
-  lifetime: 10
+  lifetime: 1
   damage: 0
   initialAngle: 0
   firer: {fileID: 0}
@@ -128,7 +128,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 2d6844bcd20bf80458578a988d600cb6
+  m_AssetId: 5240b0e55a5a555458b023c777db3408
   hasSpawned: 0
 --- !u!82 &-8557309554173012507
 AudioSource:
@@ -239,27 +239,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Impact metal
+  - name: Impact Metal
     clipsList:
-    - {fileID: 8300000, guid: 9d4f5b02d748e5f429ef111bc862d9dd, type: 3}
-    - {fileID: 8300000, guid: 84061d65b19fcf449b6ce47534b15beb, type: 3}
-    - {fileID: 8300000, guid: 2b386db8ed1c7eb4ead4d70ed482dcd1, type: 3}
-    - {fileID: 8300000, guid: c5e606a1bfaea604db78a94c9fd8417e, type: 3}
-    - {fileID: 8300000, guid: 6eeeae31bb4c44047bafdb07a2faa995, type: 3}
-    volume: 0.5
+    - {fileID: 8300000, guid: 68189f91eb8e77143a017f19d19d1930, type: 3}
+    - {fileID: 8300000, guid: 9d30272d5408268418585f3e8b25e579, type: 3}
+    - {fileID: 8300000, guid: f236cc6f409930a45bba9699c7d5cab5, type: 3}
+    - {fileID: 8300000, guid: 2f964269846be1740b302bc1801b16a9, type: 3}
+    - {fileID: 8300000, guid: 517069fee979a0043a4592e3a9c8aacf, type: 3}
+    volume: 1
     pitch: 1
     spacialBlend: 1
     priority: 128
     waitTillNext: 0
     loop: 0
-  - name: Impact Snow
+  - name: Impact snow
     clipsList:
-    - {fileID: 8300000, guid: d6db96c05d0f3dc4da28bbec63d727d3, type: 3}
-    - {fileID: 8300000, guid: 2101ed99ff8cf6c4998e956ce9071d26, type: 3}
-    - {fileID: 8300000, guid: d32b0dd866a3e814abb6f4b5b672b050, type: 3}
-    - {fileID: 8300000, guid: b2f84703efef4214e866138e920798f1, type: 3}
-    - {fileID: 8300000, guid: 37cfdf9dd278f2e43a4c0e34135bd4f0, type: 3}
-    - {fileID: 8300000, guid: 8c53d41b6b20c3346a4331b3ae2a5809, type: 3}
+    - {fileID: 8300000, guid: 68189f91eb8e77143a017f19d19d1930, type: 3}
+    - {fileID: 8300000, guid: 9d30272d5408268418585f3e8b25e579, type: 3}
+    - {fileID: 8300000, guid: f236cc6f409930a45bba9699c7d5cab5, type: 3}
+    - {fileID: 8300000, guid: 2f964269846be1740b302bc1801b16a9, type: 3}
+    - {fileID: 8300000, guid: 517069fee979a0043a4592e3a9c8aacf, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 1
@@ -347,7 +346,7 @@ TrailRenderer:
   m_Time: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.35
+    widthMultiplier: 0.7
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -365,8 +364,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.56984854, g: 0, b: 1, a: 1}
-      key1: {r: 0.5686275, g: 0, b: 1, a: 0}
+      key0: {r: 1, g: 0.89455295, b: 0, a: 1}
+      key1: {r: 1, g: 0.8980392, b: 0, a: 0}
       key2: {r: 1, g: 0.8980392, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -478,7 +477,7 @@ TrailRenderer:
   m_Time: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -496,8 +495,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0, b: 1, a: 1}
-      key1: {r: 0, g: 0, b: 1, a: 0}
+      key0: {r: 1, g: 0, b: 0.06774902, a: 1}
+      key1: {r: 1, g: 0, b: 0.07058824, a: 0}
       key2: {r: 1, g: 0, b: 0.07058824, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -609,7 +608,7 @@ TrailRenderer:
   m_Time: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.2
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -740,7 +739,7 @@ TrailRenderer:
   m_Time: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.75
+    widthMultiplier: 1.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -758,8 +757,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.26138687, g: 0, b: 1, a: 1}
-      key1: {r: 0.2627451, g: 0, b: 1, a: 0}
+      key0: {r: 1, g: 0.3764706, b: 0, a: 1}
+      key1: {r: 1, g: 0.3764706, b: 0, a: 0}
       key2: {r: 1, g: 0.3764706, b: 0, a: 0}
       key3: {r: 1, g: 0.3764706, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

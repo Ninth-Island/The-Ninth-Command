@@ -39,6 +39,7 @@ public partial class Player : Character{
     [Header("Sharpshooter - Jetpack")] 
     [SerializeField] private int jetPower;
     [SerializeField] private float maximumRise;
+    [SerializeField] private ParticleSystem jetpack;
 
     private bool _isArmorAbilitying; // for prolonged ones
     private bool _isModAbilitying;
@@ -47,6 +48,8 @@ public partial class Player : Character{
     private bool _modAbilityActive;
 
     private int _currentAbilityCharge = 0;
+
+    private int _jetpackPhase;
 
 
         /*
@@ -73,12 +76,16 @@ public partial class Player : Character{
 
         if (Input.GetKey(KeyCode.LeftControl)){         
             _currentInput.AbilityPressed = true;
-
         }
         
         if (Input.GetKeyUp(KeyCode.LeftControl)){         
             _currentInput.AbilityPressed = false;
-
+            if (_jetpackPhase != 0){
+                AudioManager.source.Stop();
+                AudioManager.PlaySound(29);
+                _jetpackPhase = 0;
+                jetpack.Stop();
+            }
         }
 
 
@@ -136,6 +143,8 @@ public partial class Player : Character{
         angle *= Mathf.Deg2Rad;
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * dashVelocity;
         FallingKnocked = true;
+        
+        AudioManager.PlaySound(27);
     }
 
     private void OverchargeShield(){
@@ -158,7 +167,7 @@ public partial class Player : Character{
     }
 
     private void Cloak(){
-        float a = 1 - ((float) _currentAbilityCharge / maxCharge);
+        float a = 1 - ((float) _currentAbilityCharge * 3 / maxCharge);
         
         SetCamoColor(bodyRenderer, a);
         SetCamoColor(armRenderer, a);
@@ -174,10 +183,23 @@ public partial class Player : Character{
     }
 
     private void Jetpack(){
+        if (_jetpackPhase == 0){
+            AudioManager.PlayLooping(27);
+            StartCoroutine(SetNextJetpackNoise());
+            jetpack.Play();
+        }
+
+        if (_jetpackPhase == 2){
+            AudioManager.PlayLooping(28);
+        }
         body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y + jetPower, -maximumRise, maximumRise));
     }
 
-   
+    private IEnumerator SetNextJetpackNoise(){
+        _jetpackPhase = 1;
+        yield return new WaitForSeconds(4.061f);
+        _jetpackPhase = 2;
+    }
 
     [ClientRpc]
     private void CreateFieldClientRpc(Transform p, Vector2 offset, float scale, float time){
@@ -185,6 +207,8 @@ public partial class Player : Character{
         field.transform.localPosition = offset;
         field.transform.localScale = new Vector3(scale, scale);
         Destroy(field, time);
+        
+        AudioManager.PlayNewSource(27, time);
     }
 
     private void ArmorAbilityInstant(float angle){
@@ -212,6 +236,9 @@ public partial class Player : Character{
         float tempSpeed = moveSpeed;
         moveSpeed = cloakedMoveSpeed;
         floatingCanvas.SetActive(false);
+        
+        AudioManager.PlaySound(27);
+        
         yield return new WaitForSeconds((float) maxCharge / chargeDrainPerFrame / 50);
         SetCamoColor(bodyRenderer, 1);
         SetCamoColor(armRenderer, 1);
