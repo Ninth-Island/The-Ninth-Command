@@ -38,6 +38,7 @@ public partial class Player : Character{
 
     [Header("Sharpshooter - Jetpack")] 
     [SerializeField] private int jetPower;
+    [SerializeField] private float maximumRise;
 
     private bool _isArmorAbilitying; // for prolonged ones
     private bool _isModAbilitying;
@@ -134,6 +135,7 @@ public partial class Player : Character{
         Destroy(Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
         angle *= Mathf.Deg2Rad;
         body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * dashVelocity;
+        FallingKnocked = true;
     }
 
     private void OverchargeShield(){
@@ -172,13 +174,10 @@ public partial class Player : Character{
     }
 
     private void Jetpack(){
-        body.velocity += new Vector2(0, jetPower);
+        body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y + jetPower, -maximumRise, maximumRise));
     }
 
-    [Command]
-    private void CmdClientCreateField(Transform p, Vector2 offset, float scale, float time){
-        CreateFieldClientRpc(p, offset, scale, time);
-    }
+   
 
     [ClientRpc]
     private void CreateFieldClientRpc(Transform p, Vector2 offset, float scale, float time){
@@ -198,8 +197,10 @@ public partial class Player : Character{
             else{
                 _armorAbilityActive = true;
                 if (armorAbility == 1 || armorAbility == 2){
-                    CmdClientCreateField(transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
-                } 
+                    if (isServer){
+                        CreateFieldClientRpc(transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
+                    }
+                }
                 else if (armorAbility == 3){
                     StartCoroutine(ResetCloak());
                 }
