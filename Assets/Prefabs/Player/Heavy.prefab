@@ -11,6 +11,21 @@ PrefabInstance:
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.3195691
       objectReference: {fileID: 0}
+    - target: {fileID: 232772953592415363, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_text
+      value: 1500/1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 232772953592415363, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 0.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 232772953592415363, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 0.82
+      objectReference: {fileID: 0}
     - target: {fileID: 1055543247759068449, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -98,6 +113,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: health
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: shield
+      value: 1500
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: maxCharge
       value: 1000
       objectReference: {fileID: 0}
@@ -149,6 +174,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: shieldRechargeRate
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: chargeDrainPerFrame
       value: 2
       objectReference: {fileID: 0}
@@ -164,6 +194,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6160686736297988158, guid: f21df384f46e4c747a6cf4d24e9e9580,
         type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: timeTillShieldRecharge
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_Name
@@ -188,6 +223,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.3195691
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382299514578727193, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 7.1657
+      objectReference: {fileID: 0}
+    - target: {fileID: 6382299514578727193, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.4172
       objectReference: {fileID: 0}
     - target: {fileID: 8938858847034497830, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}

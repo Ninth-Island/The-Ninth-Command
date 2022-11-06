@@ -39,7 +39,7 @@ public partial class Player : Character{
         }
 
         if (playerInput.AbilityInput){
-            ArmorAbilityInstant();
+            ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
@@ -172,7 +172,7 @@ public partial class Player : Character{
         }
 
         if (playerInput.AbilityInput){
-            ArmorAbilityInstant();
+            ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
@@ -202,6 +202,7 @@ public partial class Player : Character{
         
         public bool AbilityInput; // for one time press
         public bool ModInput;
+        public float Angle;
 
         public bool AbilityPressed; // for continuous press
         public bool ModPressed;

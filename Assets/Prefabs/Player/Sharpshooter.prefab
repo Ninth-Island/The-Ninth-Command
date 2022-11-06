@@ -84,6 +84,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: shield
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: jetPower
       value: 5
       objectReference: {fileID: 0}
@@ -96,6 +101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: sprintAmplifier
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: shieldRechargeRate
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
@@ -114,6 +124,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4506013158996176203, guid: d534440ec332f74449b643816b7fcdee,
         type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: timeTillShieldRecharge
+      value: 400
+      objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_Name
