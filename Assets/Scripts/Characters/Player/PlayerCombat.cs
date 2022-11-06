@@ -40,32 +40,37 @@ public partial class Player : Character{
     [Server]
     protected override void Hit(Player killer, int damage, Vector3 position, float angle){
         bool shieldBreak = false;
-        if (shield > 0){
+        if (damage < 0){
             shield -= damage;
-            if (shield <= 0){
-                health += shield;
-                shieldBreak = true;
+        }
+        else{
+            if (shield > 0){
+                shield -= damage;
+                if (shield <= 0){
+                    health += shield;
+                    shieldBreak = true;
+                    if (health <= 0){
+                        health = 0;
+                        killer.virtualPlayer.kills++;
+                        killer.virtualPlayer.score += 100;
+                        ServerDie();
+                        SetAnimatedBoolOnClientRpc(_aNames.dying, true);
+                    }
+                }
+            }
+        
+            else{
+                health -= damage;
                 if (health <= 0){
-                    health = 0;
                     killer.virtualPlayer.kills++;
                     killer.virtualPlayer.score += 100;
                     ServerDie();
                     SetAnimatedBoolOnClientRpc(_aNames.dying, true);
                 }
             }
+            _timeLeftTillShieldRecharge = timeTillShieldRecharge;
         }
         
-        else{
-            health -= damage;
-            if (health <= 0){
-                killer.virtualPlayer.kills++;
-                killer.virtualPlayer.score += 100;
-                ServerDie();
-                SetAnimatedBoolOnClientRpc(_aNames.dying, true);
-            }
-        }
-
-        _timeLeftTillShieldRecharge = timeTillShieldRecharge;
         shield = Mathf.Clamp(shield, 0, maxShield);
         health = Mathf.Clamp(health, 0, maxHealth);
         ClientSpawnDamageNumberClientRpc(damage, position, angle);

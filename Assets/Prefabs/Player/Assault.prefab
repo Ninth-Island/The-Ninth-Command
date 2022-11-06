@@ -6309,6 +6309,7 @@ MonoBehaviour:
   cloakedMoveSpeed: 0
   jetPower: 0
   maximumRise: 0
+  jetpack: {fileID: 0}
   timeTillShieldRecharge: 200
   shieldRechargeRate: 4
   armTypes:
@@ -6423,7 +6424,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 0.3
+    volume: 0.6
     pitch: 1
     spacialBlend: 1
     priority: 0
