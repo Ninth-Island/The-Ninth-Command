@@ -22,13 +22,16 @@ public class Character : CustomObject{
 */
     [Header("Character")]
     
+    public VirtualPlayer virtualPlayer;
+    public int teamIndex;
+    
     public BasicWeapon primaryWeapon;
     public BasicWeapon primaryWeaponPrefab;
 
-    [SerializeField] protected int health;    
-    [SerializeField] protected int shield;
+    public int health;    
+    public int shield;
 
-    [SerializeField] protected float moveSpeed;
+    public float moveSpeed;
     [SerializeField] protected float jumpVelocity = 18;
     
     [SerializeField] private PhysicsMaterial2D[] materials;
@@ -40,7 +43,7 @@ public class Character : CustomObject{
     [SerializeField] protected Animator animator;
     
     protected bool Airborne = true;
-    protected bool FallingKnocked = false; // for falling too fast
+    [HideInInspector] public bool fallingKnocked = false; // for falling too fast
     protected bool InputsFrozen = false; // for death
     
 
@@ -150,7 +153,7 @@ public class Character : CustomObject{
 
 
     private void CheckStates(){ // happens on fixed update
-        FallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
+        fallingKnocked = !(Math.Abs(body.velocity.x) < moveSpeed * 1.2); // if moving slow enough, return control to plr
 
         if (!_suppressGroundCheck){
             RaycastHit2D[] resultsLeft = new RaycastHit2D[3];

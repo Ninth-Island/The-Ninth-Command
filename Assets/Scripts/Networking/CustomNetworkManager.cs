@@ -73,22 +73,28 @@ public class CustomNetworkManager : NetworkManager{
         Player player = Instantiate(prefab).GetComponent<Player>();
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
         BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
+        ArmorAbility aa = Instantiate(player.defaultAbility);
 
         // cuts "(clone)" off the end
         pW.name = pW.name.Remove(pW.name.Length - 7);
         sW.name = sW.name.Remove(sW.name.Length - 7);
+        aa.name = aa.name.Remove(aa.name.Length - 7);
 
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         NetworkServer.Spawn(pW.gameObject, connectionToClient);
         NetworkServer.Spawn(sW.gameObject, connectionToClient);
+        NetworkServer.Spawn(aa.gameObject, connectionToClient);
 
 
         player.primaryWeapon = pW;
         player.secondaryWeapon = sW;
-        player.InitializeWeaponsOnClient(pW, sW);
+        player.armorAbility = aa;
+        player.InitializeEquipmentOnClient(pW, sW, aa);
         
         pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
+        aa.netIdentity.AssignClientAuthority(player.connectionToClient);
+        aa.HideOnStart();
 
         int teamIndex = TeamIndices[connectionToClient];
         if (teamIndex > 6){

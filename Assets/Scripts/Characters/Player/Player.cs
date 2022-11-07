@@ -15,8 +15,6 @@ public partial class Player : Character{
 * ================================================================================================================
 */
     [Header("Player")]
-    public VirtualPlayer virtualPlayer;
-    public int teamIndex;
     private ModeManager _modeManager;
     
     [Client]

@@ -412,7 +412,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3339286, y: 1}
+    m_SensorSize: {x: 0.7636081, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6274,6 +6274,8 @@ MonoBehaviour:
   AudioManager: {fileID: 1723963982361676133}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
+  virtualPlayer: {fileID: 0}
+  teamIndex: 0
   primaryWeapon: {fileID: 0}
   primaryWeaponPrefab: {fileID: 272140532128219954, guid: 5182bae11f7ee56488b75156107145e0,
     type: 3}
@@ -6290,26 +6292,12 @@ MonoBehaviour:
   maxShield: 0
   feetCollider: {fileID: 3757039344167629853}
   animator: {fileID: 3757039344788581447}
+  fallingKnocked: 0
   characterClientReady: 0
-  virtualPlayer: {fileID: 0}
-  teamIndex: 0
-  armorAbility: 0
-  maxCharge: 150
-  chargeRate: 1
-  chargeDrainPerFrame: 0
-  dashVelocity: 70
-  dashParticles: {fileID: 4871316015169746979, guid: eb7ab4c57399ed640a006b07e36704f7,
+  armorAbility: {fileID: 0}
+  defaultAbility: {fileID: 5559020643151988897, guid: 358c9033f288287428b8f2b067ff1497,
     type: 3}
-  overChargePerFrame: 0
-  distanceOfCharge: 0
-  teamChargePerFrame: 0
-  fieldPrefab: {fileID: 0}
-  fieldScale: 0
-  fieldOffset: {x: 0, y: 0}
-  cloakedMoveSpeed: 0
-  jetPower: 0
-  maximumRise: 0
-  jetpack: {fileID: 0}
+  _isArmorAbilitying: 0
   timeTillShieldRecharge: 200
   shieldRechargeRate: 4
   armTypes:

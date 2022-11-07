@@ -12,7 +12,7 @@ public class VirtualPlayer : NetworkBehaviour{
 
     public GameObject[] gamePlayerPrefabs;
     private GameObject _classSelection;
-    private int _classChoice;
+    public int classChoice;
     
     [SerializeField] private GameObject teammateStatusPrefab;
     [SerializeField] private GameObject scoreboard;
@@ -197,7 +197,7 @@ public class VirtualPlayer : NetworkBehaviour{
             NetworkServer.Destroy(gamePlayer.gameObject);
         }
 
-        _networkManager.SetupPlayer(connectionToClient, gamePlayerPrefabs[_classChoice]);
+        _networkManager.SetupPlayer(connectionToClient, gamePlayerPrefabs[classChoice]);
     }
 
 
@@ -270,7 +270,7 @@ public class VirtualPlayer : NetworkBehaviour{
         player.helmetRenderer.color = setColors[1]; // helmet
         player.visorRenderer.color = setColors[0]; // visor
 
-        player.abilityImage.sprite = player.abilityIcons[_classChoice];
+        player.abilityImage.sprite = player.abilityIcons[classChoice];
         Invoke(nameof(InitializeTeammateStatuses), 1f);
 
     }
@@ -341,13 +341,13 @@ public class VirtualPlayer : NetworkBehaviour{
     
     [Client]
     public void SelectClass(int choice){
-        _classChoice = choice;
+        classChoice = choice;
         CmdSetChoice(choice);
     }
 
     [Command]
     private void CmdSetChoice(int choice){
-        _classChoice = choice;
+        classChoice = choice;
     }
 
 }

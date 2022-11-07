@@ -118,6 +118,9 @@ public partial class Player : Character{
             if (nearestObject.CompareTag("Weapon")){
                 WeaponPickup(nearestObject);
             }
+            if (nearestObject.CompareTag("Armor Ability")){
+                ArmorAbilityPickup(nearestObject);
+            }
 
             if (nearestObject.CompareTag("Vehicle")){
                 VehicleEmbark(nearestObject);
@@ -136,7 +139,7 @@ public partial class Player : Character{
                 BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
                 _currentInput.PickedUp = newWeapon;
                 weaponImage.sprite = newWeapon.spriteRenderer.sprite;
-                _currentInput.OldWeapon = primaryWeapon;
+                _currentInput.OldEquipment = primaryWeapon;
                 
                 primaryWeapon.StopReloading();
                 FinishReload();
@@ -144,6 +147,26 @@ public partial class Player : Character{
                 newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
                 SetArmType(primaryWeapon.armType);
                 HUDPickupWeapon(primaryWeapon);
+            }
+        }
+    
+    }
+    [Client]
+    private void ArmorAbilityPickup(GameObject nearestObject){
+
+        if (Vector2.Distance(transform.position, nearestObject.transform.position) < 14){
+            pickupText.SetText("(G) " + nearestObject.name);
+            if (Input.GetKeyDown(KeyCode.G)){
+                
+                ArmorAbility newAbility = nearestObject.GetComponent<ArmorAbility>();
+                _currentInput.PickedUp = newAbility;
+                abilityImage.sprite = newAbility.spriteRenderer.sprite;
+                _currentInput.OldEquipment = armorAbility;
+                _currentInput.PickUpType = 1;
+                newAbility.SwapTo(this, primaryWeapon, Array.Empty<int>());
+
+                SetNotifText(newAbility.name);
+
             }
         }
     
@@ -197,7 +220,7 @@ public partial class Player : Character{
 
     private float GetBarrelToMouseRotation(){
 
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _armOverrideSprinting){
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _isSprinting){
             return GetPlayerToMouseRotation();
         }
         
@@ -219,7 +242,7 @@ public partial class Player : Character{
             primaryWeapon.Reload();
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && !_armOverrideSprinting){
+        if (Input.GetKey(KeyCode.Mouse0) && !_isSprinting){
             _attemptingToFire = true;
             _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
 
@@ -241,9 +264,10 @@ public partial class Player : Character{
     
 
     [ClientRpc]
-    public void InitializeWeaponsOnClient(BasicWeapon pW, BasicWeapon sW){ // this is mostly for an edge case error
+    public void InitializeEquipmentOnClient(BasicWeapon pW, BasicWeapon sW, ArmorAbility aa){ // this is mostly for an edge case error
         primaryWeapon = pW;
         secondaryWeapon = sW;
+        armorAbility = aa;
         primaryWeapon.activelyWielded = true;
     }
 }

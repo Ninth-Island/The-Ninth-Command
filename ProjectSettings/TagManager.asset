@@ -10,6 +10,7 @@ TagManager:
   - Vehicle
   - Cursor
   - Team Join Button Text
+  - Armor Ability
   layers:
   - Default
   - TransparentFX

@@ -96,7 +96,7 @@ public partial class Player : Character{
     }
 
     [ClientRpc]
-    private void UpdateHealthClientRpc(int newHealth, int newShield, bool shieldRegening, bool shieldBreak){
+    public void UpdateHealthClientRpc(int newHealth, int newShield, bool shieldRegening, bool shieldBreak){
 
         health = newHealth;
         shield = newShield;

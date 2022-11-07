@@ -39,7 +39,7 @@ public partial class Player : Character{
         }
 
         if (playerInput.AbilityInput){
-            ArmorAbilityInstant(playerInput.Angle);
+            armorAbility.ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
@@ -55,27 +55,30 @@ public partial class Player : Character{
         if (playerInput.PickedUp){
             if (Vector2.Distance(playerInput.PickedUp.transform.position, transform.position) < 14 && playerInput.PickedUp.gameObject.layer == LayerMask.NameToLayer("Objects")){
 
-                playerInput.PickedUp.SwapTo(this, playerInput.OldWeapon, new[]{1, 3});
-                PlayerPickUpWeaponClientRpc(playerInput.PickedUp, playerInput.OldWeapon);
-                
                 playerInput.PickedUp.netIdentity.AssignClientAuthority(connectionToClient);
-                playerInput.OldWeapon.netIdentity.RemoveClientAuthority();
-                
+                playerInput.OldEquipment.netIdentity.RemoveClientAuthority();
+                playerInput.PickedUp.SwapTo(this, playerInput.OldEquipment, new[]{1, 3});
+
+                PlayerPickUpEquipmentClientRpc(playerInput.PickedUp, playerInput.OldEquipment, playerInput.PickUpType);
             }
             else{
-                playerInput.OldWeapon.CancelPickup(this, new []{1, 3});
+                playerInput.OldEquipment.CancelPickup(this, new[]{1, 3});
             }
+        
         }
     }
     
     [ClientRpc]
-    private void PlayerPickUpWeaponClientRpc(BasicWeapon newWeapon, BasicWeapon oldWeapon){
+    private void PlayerPickUpEquipmentClientRpc(Equipment newEquipment, Equipment oldEquipment, int pickedUpType){
         if (!hasAuthority){
-            primaryWeapon.StopReloading();        
-            FinishReload();
-
-            newWeapon.SwapTo(this, oldWeapon, new[]{1, 3});
-            SetArmType(primaryWeapon.armType);
+            Debug.Log(newEquipment);
+            newEquipment.SwapTo(this, oldEquipment, new[]{1, 3});
+            
+            if (pickedUpType == 0){
+                primaryWeapon.StopReloading();
+                FinishReload();
+                SetArmType(primaryWeapon.armType);
+            }
         }
     }
 
@@ -89,7 +92,7 @@ public partial class Player : Character{
     // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
     [Server]
     private void ServerOverrideActualValuesForClients(){
-        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, _currentAbilityCharge, _lastInput.RequestNumber);
+        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, armorAbility.currentAbilityCharge, _lastInput.RequestNumber);
     }
 
     
@@ -107,7 +110,7 @@ public partial class Player : Character{
         transform.rotation = rotation;
         RotateArm(armRotation); // fancier way of doing scale
         body.velocity = velocity;
-        _currentAbilityCharge = currentAbilityCharge;
+        armorAbility.currentAbilityCharge = currentAbilityCharge;
 
        
         // if not too far away then reconcile with server by remembering all previous inputs and simulating them from server
@@ -174,7 +177,7 @@ public partial class Player : Character{
         }
 
         if (playerInput.AbilityInput){
-            ArmorAbilityInstant(playerInput.Angle);
+            armorAbility.ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
@@ -215,8 +218,9 @@ public partial class Player : Character{
 
         public bool SwapWeapon;
 
-        public BasicWeapon PickedUp; // new weapon trying to pick up
-        public BasicWeapon OldWeapon; // if for some reason it fails need to go back to old one
+        public Equipment PickedUp; // new weapon trying to pick up
+        public Equipment OldEquipment; // if for some reason it fails need to go back to old one
+        public int PickUpType;
         
         public int RequestNumber;
     }

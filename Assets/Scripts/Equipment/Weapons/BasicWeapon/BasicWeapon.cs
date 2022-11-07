@@ -15,6 +15,16 @@ public class BasicWeapon : Weapon{
     public bool activelyWielded = false;
     
 
+    public virtual void Ready(){
+        activelyWielded = true;
+        AudioManager.PlaySound(2);
+    }
+
+    protected override void Pickup(Player player, int[] path){
+        base.Pickup(player, path);
+        Ready();
+    }
+
     [Command]
     public void CmdAttemptFire(float angle){
         HandleFiring(angle);    
@@ -52,31 +62,31 @@ public class BasicWeapon : Weapon{
     }
 
 
-    public override void SwapTo(Character character, BasicWeapon oldWeapon, int[] path){
-        base.SwapTo(character, oldWeapon, path);
-        character.primaryWeapon = this;
+    public override void SwapTo(Player player, Equipment oldEquipment, int[] path){
+        base.SwapTo(player, oldEquipment, path);
+        
+        spriteRenderer.sortingLayerID = player.spriteRenderer.sortingLayerID;
+        spriteRenderer.sortingOrder = 4;
+
+        player.primaryWeapon = this;
 
     }
 
-    public override void Ready(){
-        activelyWielded = true;
-        AudioManager.PlaySound(2);
-    }
 
     [Server]
-    public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Character w, int[] path){
-        wielder = w;
-        netIdentity.AssignClientAuthority(w.connectionToClient);
-        ClientSetWielder(w);
+    public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Player player, int[] path){
+        wielder = player;
+        netIdentity.AssignClientAuthority(player.connectionToClient);
+        ClientSetWielder(player);
 
-        yield return new WaitUntil(() => w.characterClientReady);
-        CancelPickup(w, path);
-        ClientInitializeWeapon(isThePrimaryWeapon, w, path);
+        yield return new WaitUntil(() => player.characterClientReady);
+        CancelPickup(player, path);
+        ClientInitializeWeapon(isThePrimaryWeapon, player, path);
     }
 
     [ClientRpc]
-    private void ClientInitializeWeapon(bool isThePrimaryWeapon, Character w, int[] path){
-        CancelPickup(w, path);
+    private void ClientInitializeWeapon(bool isThePrimaryWeapon, Player player, int[] path){
+        CancelPickup(player, path);
         if (!isThePrimaryWeapon){
             activelyWielded = false;
             spriteRenderer.enabled = false;
@@ -84,8 +94,8 @@ public class BasicWeapon : Weapon{
     }
 
     [ClientRpc]
-    private void ClientSetWielder(Character w){
-        wielder = w;
+    private void ClientSetWielder(Player player){
+        wielder = player;
     }
 
 
