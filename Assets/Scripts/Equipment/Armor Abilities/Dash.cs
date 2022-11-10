@@ -12,15 +12,14 @@ public class Dash : ArmorAbility
     public override void ArmorAbilityInstant(float angle){
         wielder.fallingKnocked = true;
         if (hasAuthority){
-            Destroy(Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
-            AudioManager.PlaySound(27);
+            Destroy(Instantiate(dashParticles, wielder.transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
+            AudioManager.PlaySound(0);
         }
         if (isServer){
             CreateDashParticlesClientRpc(angle);
         }
         angle *= Mathf.Deg2Rad;
-        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * (dashVelocity * currentAbilityCharge) / maxCharge;
-        
+        wielder.body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * (dashVelocity * currentAbilityCharge) / maxCharge;
         currentAbilityCharge = 0;
 
     }
@@ -30,7 +29,7 @@ public class Dash : ArmorAbility
         if (!hasAuthority){
             Destroy(
                 Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
-            AudioManager.PlaySound(27);
+            AudioManager.PlaySound(0);
         }
     }
 }

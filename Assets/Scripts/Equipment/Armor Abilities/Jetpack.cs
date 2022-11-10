@@ -14,7 +14,7 @@ public class Jetpack : ArmorAbility
     public override void ArmorAbilityReleased(){
         if (_jetpackPhase != 0){
             AudioManager.source.Stop();
-            AudioManager.PlaySound(29);
+            AudioManager.PlaySound(2);
             _jetpackPhase = 0;
             jetpack.Stop();
         }
@@ -31,27 +31,27 @@ public class Jetpack : ArmorAbility
     protected override void AbilityActiveFixedUpdate(){
         if (_jetpackPhase == 0){
             if (hasAuthority){
-                AudioManager.PlayLooping(27);
+                AudioManager.PlayLooping(0);
                 StartCoroutine(SetNextJetpackNoise());
                 jetpack.Play();
             }
 
             if (isServer){
-                PlaySoundClientRpc(1, 27);
+                PlaySoundClientRpc(1, 0);
             }
         }
 
         if (_jetpackPhase == 2){
             if (hasAuthority){
-                AudioManager.PlayLooping(28);
+                AudioManager.PlayLooping(1);
             }
 
             if (isServer){
-                PlaySoundClientRpc(2, 28);
+                PlaySoundClientRpc(2, 1);
             }
         }
 
-        body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y + jetPower, -maximumRise, maximumRise));
+        wielder.body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y + jetPower, -maximumRise, maximumRise));
         currentAbilityCharge -= chargeDrainPerFrame;
     }
 
@@ -75,7 +75,7 @@ public class Jetpack : ArmorAbility
             }
 
             if (type == 2){
-                AudioManager.PlayLooping(28);
+                AudioManager.PlayLooping(1);
             }
         }
     }

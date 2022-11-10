@@ -6,8 +6,8 @@ using UnityEngine;
 public class DefaultArmorAbility : ArmorAbility
 {
     public override void Drop(){
-        if (isServer){
+        /*if (isServer){
             NetworkServer.Destroy(gameObject);
-        }
+        }*/
     }
 }

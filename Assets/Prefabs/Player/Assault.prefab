@@ -6295,7 +6295,7 @@ MonoBehaviour:
   fallingKnocked: 0
   characterClientReady: 0
   armorAbility: {fileID: 0}
-  defaultAbility: {fileID: 5559020643151988897, guid: 358c9033f288287428b8f2b067ff1497,
+  defaultAbility: {fileID: -5922117739796507804, guid: 08cc0b92089b4b746ba8d2b2b9ccb75a,
     type: 3}
   _isArmorAbilitying: 0
   timeTillShieldRecharge: 200

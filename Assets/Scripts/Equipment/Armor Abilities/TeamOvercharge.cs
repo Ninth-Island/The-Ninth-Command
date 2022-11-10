@@ -17,7 +17,7 @@ public class TeamOvercharge : ArmorAbility
         if (currentAbilityCharge >= maxCharge){
             active = true;
             if (isServer){
-                CreateFieldClientRpc(transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
+                CreateFieldClientRpc(wielder.transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
             }
 
         }
@@ -44,6 +44,6 @@ public class TeamOvercharge : ArmorAbility
         field.transform.localScale = new Vector3(scale, scale);
         Destroy(field, time);
         
-        AudioManager.PlayNewSource(27, time);
+        AudioManager.PlayNewSource(0, time);
     }
 }

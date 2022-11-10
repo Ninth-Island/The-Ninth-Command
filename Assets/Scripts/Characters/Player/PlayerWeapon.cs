@@ -116,10 +116,11 @@ public partial class Player : Character{
             pickupText.SetText(nearestObject.name);
 
             if (nearestObject.CompareTag("Weapon")){
-                WeaponPickup(nearestObject);
+                ClientEquipmentPickup(nearestObject, 0);
             }
             if (nearestObject.CompareTag("Armor Ability")){
-                ArmorAbilityPickup(nearestObject);
+                ClientEquipmentPickup(nearestObject, 1);
+                //ArmorAbilityPickup(nearestObject);
             }
 
             if (nearestObject.CompareTag("Vehicle")){
@@ -128,50 +129,51 @@ public partial class Player : Character{
         }
     }
 
-
     [Client]
-    private void WeaponPickup(GameObject nearestObject){
-
+    private void ClientEquipmentPickup(GameObject nearestObject, int equipmentType){
         if (Vector2.Distance(transform.position, nearestObject.transform.position) < 14){
             pickupText.SetText("(G) " + nearestObject.name);
             if (Input.GetKeyDown(KeyCode.G)){
+                Equipment newEquipment;
+                Equipment oldEquipment;
+                int[] path;
                 
-                BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
-                _currentInput.PickedUp = newWeapon;
-                weaponImage.sprite = newWeapon.spriteRenderer.sprite;
-                _currentInput.OldEquipment = primaryWeapon;
-                
-                primaryWeapon.StopReloading();
-                FinishReload();
+                if (equipmentType == 0){
+                    BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
+                    weaponImage.sprite = newWeapon.spriteRenderer.sprite;
 
-                newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
-                SetArmType(primaryWeapon.armType);
-                HUDPickupWeapon(primaryWeapon);
+                    oldEquipment = primaryWeapon;
+                    primaryWeapon.StopReloading();
+                    FinishReload();
+
+                    newEquipment = newWeapon;
+                    
+                    SetArmType(newWeapon.armType);
+                    HUDPickupWeapon(newWeapon);
+
+                    path = new[]{1, 3};
+                }
+                else{
+                    ArmorAbility newAbility = nearestObject.GetComponent<ArmorAbility>();
+                    abilityImage.sprite = newAbility.spriteRenderer.sprite;
+
+                    oldEquipment = armorAbility;
+                    _currentInput.PickUpType = 1;
+
+                    newEquipment = newAbility;
+
+                    path = Array.Empty<int>();
+                }
+
+                _currentInput.OldEquipment = oldEquipment;
+                _currentInput.PickedUp = newEquipment;
+
+                newEquipment.SwapTo(this, oldEquipment, path);
             }
         }
-    
-    }
-    [Client]
-    private void ArmorAbilityPickup(GameObject nearestObject){
-
-        if (Vector2.Distance(transform.position, nearestObject.transform.position) < 14){
-            pickupText.SetText("(G) " + nearestObject.name);
-            if (Input.GetKeyDown(KeyCode.G)){
-                
-                ArmorAbility newAbility = nearestObject.GetComponent<ArmorAbility>();
-                _currentInput.PickedUp = newAbility;
-                abilityImage.sprite = newAbility.spriteRenderer.sprite;
-                _currentInput.OldEquipment = armorAbility;
-                _currentInput.PickUpType = 1;
-                newAbility.SwapTo(this, primaryWeapon, Array.Empty<int>());
-
-                SetNotifText(newAbility.name);
-
-            }
-        }
-    
     }
     
+
     #endregion
 
     #region HUD stuff
@@ -269,6 +271,7 @@ public partial class Player : Character{
         secondaryWeapon = sW;
         armorAbility = aa;
         primaryWeapon.activelyWielded = true;
+        aa.wielder = this;
     }
 }
 

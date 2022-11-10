@@ -238,7 +238,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: 
+    clipsList: []
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
   newObjectSource: {fileID: 0}
   source: {fileID: 0}
   isPlayingCharging: 0

@@ -13,6 +13,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 732b981364c3c1649bce81ab9d1b3257,
         type: 3}
+    - target: {fileID: 6443376113692937935, guid: 358c9033f288287428b8f2b067ff1497,
+        type: 3}
+      propertyPath: newObjectSource
+      value: 
+      objectReference: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
+        type: 3}
+    - target: {fileID: 6443376113692937935, guid: 358c9033f288287428b8f2b067ff1497,
+        type: 3}
+      propertyPath: sounds.Array.data[0].clipsList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6443376113692937935, guid: 358c9033f288287428b8f2b067ff1497,
+        type: 3}
+      propertyPath: sounds.Array.data[0].clipsList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f9f4644d868687e40a8c21db75a985f7, type: 3}
     - target: {fileID: 8092386675953988467, guid: 358c9033f288287428b8f2b067ff1497,
         type: 3}
       propertyPath: m_AssetId
@@ -123,17 +139,17 @@ MonoBehaviour:
   wielder: {fileID: 0}
   networkTransform: {fileID: 707532323456358908}
   abilityIndex: 2
-  maxCharge: 150
-  chargeRate: 5
-  chargeDrainPerFrame: 5
+  maxCharge: 1250
+  chargeRate: 1
+  chargeDrainPerFrame: 3
   previewIcon: {fileID: 8070107932448158149}
   currentAbilityCharge: 0
   active: 0
-  distanceOfCharge: 20
-  teamChargePerFrame: 5
+  distanceOfCharge: 25
+  teamChargePerFrame: 10
   fieldPrefab: {fileID: 3110500547035796, guid: 31ac1184afb394645af397b2cc83b49a,
     type: 3}
-  fieldScale: 5
+  fieldScale: 10
   fieldOffset: {x: 0, y: 0}
 --- !u!212 &6755872349672494494 stripped
 SpriteRenderer:

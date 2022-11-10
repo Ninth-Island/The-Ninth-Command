@@ -9,6 +9,7 @@ public partial class Player : Character{
     private void ClientSendServerInputs(){
         if (hasAuthority){
             _pastInputs.Add(_currentInput); // remember all inputs for later client prediction
+
             CmdSetServerValues(_currentInput);
 
             _inputRequestCounter++;
@@ -54,7 +55,7 @@ public partial class Player : Character{
 
         if (playerInput.PickedUp){
             if (Vector2.Distance(playerInput.PickedUp.transform.position, transform.position) < 14 && playerInput.PickedUp.gameObject.layer == LayerMask.NameToLayer("Objects")){
-
+                
                 playerInput.PickedUp.netIdentity.AssignClientAuthority(connectionToClient);
                 playerInput.OldEquipment.netIdentity.RemoveClientAuthority();
                 playerInput.PickedUp.SwapTo(this, playerInput.OldEquipment, new[]{1, 3});

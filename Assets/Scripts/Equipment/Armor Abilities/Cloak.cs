@@ -50,7 +50,7 @@ public class Cloak : ArmorAbility
             PlaySound(0);
         }
         if (hasAuthority){
-            AudioManager.PlaySound(27);
+            AudioManager.PlaySound(0);
         }
 
         yield return new WaitForSeconds((float) maxCharge / chargeDrainPerFrame / 50);

@@ -5011,9 +5011,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
-      propertyPath: armorAbility
-      value: 4
-      objectReference: {fileID: 0}
+      propertyPath: defaultAbility
+      value: 
+      objectReference: {fileID: 4854727584179910632, guid: e7aa80cdde9601e46b973514af69d683,
+        type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sprintAmplifier

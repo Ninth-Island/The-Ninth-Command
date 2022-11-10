@@ -165,11 +165,6 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
-      propertyPath: armorAbility
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
-        type: 3}
       propertyPath: jumpVelocity
       value: 30
       objectReference: {fileID: 0}
@@ -183,6 +178,12 @@ PrefabInstance:
       propertyPath: fieldOffset.y
       value: 0.47
       objectReference: {fileID: 0}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: defaultAbility
+      value: 
+      objectReference: {fileID: 4034813115509361089, guid: aff11a6dd0d2eb14f9892655c3d6f182,
+        type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sprintAmplifier

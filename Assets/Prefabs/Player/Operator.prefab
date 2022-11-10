@@ -126,9 +126,10 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
-      propertyPath: armorAbility
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: defaultAbility
+      value: 
+      objectReference: {fileID: 1233282515981557922, guid: 3370ca87095d60f4583caea9fb191030,
+        type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: distanceOfCharge
