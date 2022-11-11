@@ -120,7 +120,6 @@ public partial class Player : Character{
             }
             if (nearestObject.CompareTag("Armor Ability")){
                 ClientEquipmentPickup(nearestObject, 1);
-                //ArmorAbilityPickup(nearestObject);
             }
 
             if (nearestObject.CompareTag("Vehicle")){
@@ -136,8 +135,7 @@ public partial class Player : Character{
             if (Input.GetKeyDown(KeyCode.G)){
                 Equipment newEquipment;
                 Equipment oldEquipment;
-                int[] path;
-                
+                int[] path ={0};
                 if (equipmentType == 0){
                     BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
                     weaponImage.sprite = newWeapon.spriteRenderer.sprite;
@@ -152,6 +150,7 @@ public partial class Player : Character{
                     HUDPickupWeapon(newWeapon);
 
                     path = new[]{1, 3};
+
                 }
                 else{
                     ArmorAbility newAbility = nearestObject.GetComponent<ArmorAbility>();
@@ -162,7 +161,6 @@ public partial class Player : Character{
 
                     newEquipment = newAbility;
 
-                    path = Array.Empty<int>();
                 }
 
                 _currentInput.OldEquipment = oldEquipment;
@@ -272,6 +270,8 @@ public partial class Player : Character{
         armorAbility = aa;
         primaryWeapon.activelyWielded = true;
         aa.wielder = this;
+
+        weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
     }
 }
 

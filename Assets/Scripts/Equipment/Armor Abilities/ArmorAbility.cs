@@ -57,7 +57,23 @@ public class ArmorAbility : Equipment{
         }
     }
 
-    
+
+    [Server]
+    public IEnumerator ServerInitializeArmorAbility(Player player, int[] path){
+        wielder = player;
+        netIdentity.AssignClientAuthority(player.connectionToClient);
+        ClientSetWielder(player);
+
+        yield return new WaitUntil(() => player.characterClientReady);
+        CancelPickup(player, path);
+        ClientInitializeEquipment(false, player, path);
+    }
+
+    protected override void ClientInitializeEquipment(bool isThePrimaryWeapon, Player player, int[] path){
+        base.ClientInitializeEquipment(isThePrimaryWeapon, player, path);
+        spriteRenderer.enabled = false;
+    }
+
     protected void PlaySound(int index){
         if (hasAuthority){
             AudioManager.PlaySound(index);

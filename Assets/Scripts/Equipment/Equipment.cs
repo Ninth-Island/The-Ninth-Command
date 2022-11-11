@@ -51,6 +51,30 @@ public class Equipment : CustomObject
         spriteRenderer.sortingOrder = 0;
     }
 
+    
+    
+    [Server]
+    public virtual IEnumerator ServerInitializeEquipment(bool isThePrimaryWeapon, Player player, int[] path){
+        wielder = player;
+        netIdentity.AssignClientAuthority(player.connectionToClient);
+        ClientSetWielder(player);
+
+        yield return new WaitUntil(() => player.characterClientReady);
+        CancelPickup(player, path);
+        ClientInitializeEquipment(isThePrimaryWeapon, player, path);
+
+        spriteRenderer.enabled = false;
+    }
+    
+    [ClientRpc]
+    protected virtual void ClientInitializeEquipment(bool isThePrimaryWeapon, Player player, int[] path){
+        CancelPickup(player, path);
+    }
+    
+    [ClientRpc]
+    protected void ClientSetWielder(Player player){
+        wielder = player;
+    }
 
     
 }

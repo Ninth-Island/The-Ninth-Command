@@ -187,6 +187,8 @@ public partial class Player : Character{
         secondaryWeapon.StopReloading();
         secondaryWeapon.Drop();
 
+        armorAbility.StopAllCoroutines();
+        armorAbility.Drop();
         gameObject.layer = LayerMask.NameToLayer("Dead Player");
         feetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
     }

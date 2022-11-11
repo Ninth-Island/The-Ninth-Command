@@ -58,7 +58,11 @@ public partial class Player : Character{
                 
                 playerInput.PickedUp.netIdentity.AssignClientAuthority(connectionToClient);
                 playerInput.OldEquipment.netIdentity.RemoveClientAuthority();
-                playerInput.PickedUp.SwapTo(this, playerInput.OldEquipment, new[]{1, 3});
+                int[] path = {0};
+                if (playerInput.PickUpType == 0){
+                    path = new[]{1, 3};
+                }
+                playerInput.PickedUp.SwapTo(this, playerInput.OldEquipment, path);
 
                 PlayerPickUpEquipmentClientRpc(playerInput.PickedUp, playerInput.OldEquipment, playerInput.PickUpType);
             }
@@ -72,14 +76,16 @@ public partial class Player : Character{
     [ClientRpc]
     private void PlayerPickUpEquipmentClientRpc(Equipment newEquipment, Equipment oldEquipment, int pickedUpType){
         if (!hasAuthority){
-            Debug.Log(newEquipment);
-            newEquipment.SwapTo(this, oldEquipment, new[]{1, 3});
+            int[] path = {0};
             
             if (pickedUpType == 0){
                 primaryWeapon.StopReloading();
                 FinishReload();
-                SetArmType(primaryWeapon.armType);
+                SetArmType(((BasicWeapon) newEquipment).armType);
+
+                path = new[]{1, 3};
             }
+            newEquipment.SwapTo(this, oldEquipment, path);
         }
     }
 

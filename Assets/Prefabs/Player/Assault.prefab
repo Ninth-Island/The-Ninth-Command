@@ -6677,7 +6677,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 016a0954b11005a43a43f5b474a78c24, type: 3}
     - {fileID: 8300000, guid: 0debc73afcebac14290edb67cd8867aa, type: 3}
     - {fileID: 8300000, guid: b6ba2071480997b4e87eff20bd0794d1, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 1
     priority: 128

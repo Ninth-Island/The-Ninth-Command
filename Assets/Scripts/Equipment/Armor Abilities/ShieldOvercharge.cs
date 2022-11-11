@@ -15,7 +15,8 @@ public class ShieldOvercharge : ArmorAbility
         if (currentAbilityCharge >= maxCharge){
             active = true;
             if (isServer){
-                CreateFieldClientRpc(wielder.transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
+                CreateFieldClientRpc(wielder.transform, fieldOffset, fieldScale, (float) maxCharge / (chargeDrainPerFrame * 50));
+                Debug.Log((float) maxCharge / (chargeDrainPerFrame * 50));
             }
 
         }

@@ -91,8 +91,9 @@ public class CustomNetworkManager : NetworkManager{
         player.armorAbility = aa;
         player.InitializeEquipmentOnClient(pW, sW, aa);
         
-        pW.StartCoroutine(pW.ServerInitializeWeapon(true, player, new []{1, 3}));
-        sW.StartCoroutine(sW.ServerInitializeWeapon(false, player, new []{1, 3}));
+        pW.StartCoroutine(pW.ServerInitializeEquipment(true, player, new []{1, 3}));
+        sW.StartCoroutine(sW.ServerInitializeEquipment(false, player, new []{1, 3}));
+        aa.StartCoroutine(aa.ServerInitializeEquipment(false, player, new []{0}));
         aa.netIdentity.AssignClientAuthority(player.connectionToClient);
         aa.HideOnStart();
 

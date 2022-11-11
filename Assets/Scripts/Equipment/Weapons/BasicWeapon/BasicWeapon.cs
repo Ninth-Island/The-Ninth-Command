@@ -74,28 +74,24 @@ public class BasicWeapon : Weapon{
 
 
     [Server]
-    public IEnumerator ServerInitializeWeapon(bool isThePrimaryWeapon, Player player, int[] path){
+    public override IEnumerator ServerInitializeEquipment(bool isThePrimaryWeapon, Player player, int[] path){
         wielder = player;
         netIdentity.AssignClientAuthority(player.connectionToClient);
         ClientSetWielder(player);
 
         yield return new WaitUntil(() => player.characterClientReady);
         CancelPickup(player, path);
-        ClientInitializeWeapon(isThePrimaryWeapon, player, path);
+        ClientInitializeEquipment(isThePrimaryWeapon, player, path);
     }
 
     [ClientRpc]
-    private void ClientInitializeWeapon(bool isThePrimaryWeapon, Player player, int[] path){
-        CancelPickup(player, path);
+    protected override void ClientInitializeEquipment(bool isThePrimaryWeapon, Player player, int[] path){
+        base.ClientInitializeEquipment(isThePrimaryWeapon, player, path);
         if (!isThePrimaryWeapon){
             activelyWielded = false;
             spriteRenderer.enabled = false;
         }
-    }
-
-    [ClientRpc]
-    private void ClientSetWielder(Player player){
-        wielder = player;
+        
     }
 
 

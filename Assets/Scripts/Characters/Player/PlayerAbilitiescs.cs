@@ -49,7 +49,7 @@ public partial class Player : Character{
         }
         
         if (Input.GetKeyUp(KeyCode.LeftControl)){         
-            if (isClientOnly) armorAbility.ArmorAbilityReleased();
+            armorAbility.ArmorAbilityReleased(); // this can't be client only cuz there isn't dedicated server code for it
             _currentInput.AbilityPressed = false;
         }
 
