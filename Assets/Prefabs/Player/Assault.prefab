@@ -412,7 +412,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.3339286, y: 1}
+    m_SensorSize: {x: 0.7636081, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6274,6 +6274,8 @@ MonoBehaviour:
   AudioManager: {fileID: 1723963982361676133}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
+  virtualPlayer: {fileID: 0}
+  teamIndex: 0
   primaryWeapon: {fileID: 0}
   primaryWeaponPrefab: {fileID: 272140532128219954, guid: 5182bae11f7ee56488b75156107145e0,
     type: 3}
@@ -6290,24 +6292,12 @@ MonoBehaviour:
   maxShield: 0
   feetCollider: {fileID: 3757039344167629853}
   animator: {fileID: 3757039344788581447}
+  fallingKnocked: 0
   characterClientReady: 0
-  virtualPlayer: {fileID: 0}
-  teamIndex: 0
-  armorAbility: 0
-  maxCharge: 150
-  chargeRate: 1
-  chargeDrainPerFrame: 0
-  dashVelocity: 70
-  dashParticles: {fileID: 4871316015169746979, guid: eb7ab4c57399ed640a006b07e36704f7,
+  armorAbility: {fileID: 0}
+  defaultAbility: {fileID: -5922117739796507804, guid: 08cc0b92089b4b746ba8d2b2b9ccb75a,
     type: 3}
-  overChargePerFrame: 0
-  distanceOfCharge: 0
-  teamChargePerFrame: 0
-  fieldPrefab: {fileID: 0}
-  fieldScale: 0
-  fieldOffset: {x: 0, y: 0}
-  cloakedMoveSpeed: 0
-  jetPower: 0
+  _isArmorAbilitying: 0
   timeTillShieldRecharge: 200
   shieldRechargeRate: 4
   armTypes:
@@ -6422,7 +6412,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 1ae9ab65b9334f4459f55568fb35d0d5, type: 3}
     - {fileID: 8300000, guid: 5a9e25f3b0c52134dbb734c7970e775b, type: 3}
     - {fileID: 8300000, guid: 4e1585af89752d148b6e2f0e0dc75d17, type: 3}
-    volume: 0.3
+    volume: 0.6
     pitch: 1
     spacialBlend: 1
     priority: 0
@@ -6687,7 +6677,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 016a0954b11005a43a43f5b474a78c24, type: 3}
     - {fileID: 8300000, guid: 0debc73afcebac14290edb67cd8867aa, type: 3}
     - {fileID: 8300000, guid: b6ba2071480997b4e87eff20bd0794d1, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 1
     priority: 128
@@ -6741,6 +6731,15 @@ MonoBehaviour:
   - name: Shield Break
     clipsList:
     - {fileID: 8300000, guid: 2ba75d078dbfd4042b233cb9717990d5, type: 3}
+    volume: 1
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: Dash
+    clipsList:
+    - {fileID: 8300000, guid: 92cb2f705fd2b0f4caad2fea017b32cd, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 1

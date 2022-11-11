@@ -209,12 +209,12 @@ MonoBehaviour:
   activelyWielded: 0
   shotDelay: 0
   salvoDelay: 1
-  shotsPerSalvo: 20
-  instability: 0.1
-  projectileTemplate: {fileID: 5359207005571212211, guid: 2aff23bcecfd01c41b133666a820be2b,
+  shotsPerSalvo: 1
+  instability: 0
+  projectileTemplate: {fileID: 5302949600237173417, guid: 5240b0e55a5a555458b023c777db3408,
     type: 3}
-  projectileDamage: 1
-  projectileSpeed: 400
+  projectileDamage: 10000
+  projectileSpeed: 100000
   piercing: 1
   chargePerFrame: 2.4
   cooldownSpeed: 1

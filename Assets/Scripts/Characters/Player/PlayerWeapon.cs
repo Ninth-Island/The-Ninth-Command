@@ -116,7 +116,10 @@ public partial class Player : Character{
             pickupText.SetText(nearestObject.name);
 
             if (nearestObject.CompareTag("Weapon")){
-                WeaponPickup(nearestObject);
+                ClientEquipmentPickup(nearestObject, 0);
+            }
+            if (nearestObject.CompareTag("Armor Ability")){
+                ClientEquipmentPickup(nearestObject, 1);
             }
 
             if (nearestObject.CompareTag("Vehicle")){
@@ -125,30 +128,50 @@ public partial class Player : Character{
         }
     }
 
-
     [Client]
-    private void WeaponPickup(GameObject nearestObject){
-
+    private void ClientEquipmentPickup(GameObject nearestObject, int equipmentType){
         if (Vector2.Distance(transform.position, nearestObject.transform.position) < 14){
             pickupText.SetText("(G) " + nearestObject.name);
             if (Input.GetKeyDown(KeyCode.G)){
-                
-                BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
-                _currentInput.PickedUp = newWeapon;
-                weaponImage.sprite = newWeapon.spriteRenderer.sprite;
-                _currentInput.OldWeapon = primaryWeapon;
-                
-                primaryWeapon.StopReloading();
-                FinishReload();
+                Equipment newEquipment;
+                Equipment oldEquipment;
+                int[] path ={0};
+                if (equipmentType == 0){
+                    BasicWeapon newWeapon = nearestObject.GetComponent<BasicWeapon>();
+                    weaponImage.sprite = newWeapon.spriteRenderer.sprite;
 
-                newWeapon.SwapTo(this, primaryWeapon, new []{1, 3});
-                SetArmType(primaryWeapon.armType);
-                HUDPickupWeapon(primaryWeapon);
+                    oldEquipment = primaryWeapon;
+                    primaryWeapon.StopReloading();
+                    FinishReload();
+
+                    newEquipment = newWeapon;
+                    
+                    SetArmType(newWeapon.armType);
+                    HUDPickupWeapon(newWeapon);
+
+                    path = new[]{1, 3};
+
+                }
+                else{
+                    ArmorAbility newAbility = nearestObject.GetComponent<ArmorAbility>();
+                    abilityImage.sprite = newAbility.spriteRenderer.sprite;
+
+                    oldEquipment = armorAbility;
+                    _currentInput.PickUpType = 1;
+
+                    newEquipment = newAbility;
+
+                }
+
+                _currentInput.OldEquipment = oldEquipment;
+                _currentInput.PickedUp = newEquipment;
+
+                newEquipment.SwapTo(this, oldEquipment, path);
             }
         }
-    
     }
     
+
     #endregion
 
     #region HUD stuff
@@ -197,7 +220,7 @@ public partial class Player : Character{
 
     private float GetBarrelToMouseRotation(){
 
-        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _armOverrideSprinting){
+        if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _isSprinting){
             return GetPlayerToMouseRotation();
         }
         
@@ -219,7 +242,7 @@ public partial class Player : Character{
             primaryWeapon.Reload();
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && !_armOverrideSprinting){
+        if (Input.GetKey(KeyCode.Mouse0) && !_isSprinting){
             _attemptingToFire = true;
             _firingAngle = _lastArmAngle * Mathf.Deg2Rad;
 
@@ -241,10 +264,14 @@ public partial class Player : Character{
     
 
     [ClientRpc]
-    public void InitializeWeaponsOnClient(BasicWeapon pW, BasicWeapon sW){ // this is mostly for an edge case error
+    public void InitializeEquipmentOnClient(BasicWeapon pW, BasicWeapon sW, ArmorAbility aa){ // this is mostly for an edge case error
         primaryWeapon = pW;
         secondaryWeapon = sW;
+        armorAbility = aa;
         primaryWeapon.activelyWielded = true;
+        aa.wielder = this;
+
+        weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
     }
 }
 

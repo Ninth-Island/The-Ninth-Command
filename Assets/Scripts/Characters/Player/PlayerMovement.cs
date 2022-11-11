@@ -87,20 +87,18 @@ public partial class Player : Character{
     // these are called by server for validation and by client to look good. Nothing special happening here
 
     private void Move(float input){
-        if (input != 0 && !InputsFrozen && !FallingKnocked){
+        if (input != 0 && !InputsFrozen && !fallingKnocked){
             if (_isCrouching){
                 body.velocity = new Vector2(moveSpeed / 2 * input, body.velocity.y);
                 SortSound(2);
             }
             else{
                 if (_isSprinting){
-                    _armOverrideSprinting = true;
                     _attemptingToFire = false;
                     _firingAngle = 0;
                     body.velocity = new Vector2(moveSpeed * sprintAmplifier * input, body.velocity.y);
                 }
                 else{
-                    _armOverrideSprinting = false;
                     body.velocity = new Vector2(moveSpeed * input, body.velocity.y);
                 }
             }
@@ -127,7 +125,7 @@ public partial class Player : Character{
     }
 
     private void RotateArm(float rotation){
-        if (_armOverrideReloading == false && _armOverrideSprinting == false){
+        if (!_armOverrideReloading && !_isSprinting){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
         }
@@ -142,19 +140,16 @@ public partial class Player : Character{
 
         helmet.transform.rotation = Quaternion.Euler(0, 0, rotation);
         helmet.transform.localScale = new Vector3(1, 1);
+        
 
-        if (isServer && hasAuthority){
-        }
-
-
-        if (rotation > 90 && rotation < 270/* && (transform.position - _cursorControl.GetMousePosition()).magnitude > 13f*/){
+        if (rotation > 90 && rotation < 270){
             arm.transform.localScale = new Vector3(-1, -1);
             helmet.transform.localScale = new Vector3(-1, -1);
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
             _direction = -1;
         }
         else{
-            transform.localScale= new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y);
+            transform.localScale = new Vector3( Mathf.Abs(transform.localScale.x), transform.localScale.y);
             _direction = 1;
         }
     }

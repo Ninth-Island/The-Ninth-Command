@@ -17,6 +17,27 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: newObjectSource
+      value: 
+      objectReference: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
+        type: 3}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].name
+      value: Energy Field
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].clipsList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f9f4644d868687e40a8c21db75a985f7, type: 3}
     - target: {fileID: 3757039344788581440, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: m_RootOrder
@@ -105,9 +126,10 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
-      propertyPath: armorAbility
-      value: 2
-      objectReference: {fileID: 0}
+      propertyPath: defaultAbility
+      value: 
+      objectReference: {fileID: 1233282515981557922, guid: 3370ca87095d60f4583caea9fb191030,
+        type: 3}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: distanceOfCharge

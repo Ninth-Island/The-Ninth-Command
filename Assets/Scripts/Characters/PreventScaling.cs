@@ -8,7 +8,7 @@ public class PreventScaling : MonoBehaviour
     // Update is called once per frame
     void Update(){
         if (transform.lossyScale.x < 0){
-            transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 1);
         }
         
     }

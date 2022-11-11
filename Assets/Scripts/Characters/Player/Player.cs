@@ -15,8 +15,6 @@ public partial class Player : Character{
 * ================================================================================================================
 */
     [Header("Player")]
-    public VirtualPlayer virtualPlayer;
-    public int teamIndex;
     private ModeManager _modeManager;
     
     [Client]
@@ -70,6 +68,8 @@ public partial class Player : Character{
             _currentInput.CrouchInput = _isCrouching;
             _currentInput.SprintInput = _isSprinting;
             _currentInput.RequestNumber = _inputRequestCounter;
+            
+
             ClientSendServerInputs();
         }
     }

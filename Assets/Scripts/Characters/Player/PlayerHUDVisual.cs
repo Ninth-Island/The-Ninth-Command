@@ -16,7 +16,7 @@ public partial class Player : Character{
     [Header("HUD")] [SerializeField] protected Canvas hud;
     [SerializeField] private TMP_Text pingDisplay;
 
-    [SerializeField] private GameObject floatingCanvas;
+    public GameObject floatingCanvas;
     [SerializeField] private Slider healthSlider;
     [SerializeField] private Slider shieldSlider;
     [SerializeField] private TextMeshProUGUI healthText;
@@ -53,7 +53,6 @@ public partial class Player : Character{
     public SpriteRenderer visorRenderer;
 
     private bool _armOverrideReloading;
-    private bool _armOverrideSprinting;
     //HUD
     private float _fadeTimer;
     private float fadeDelay = 50;
@@ -70,7 +69,7 @@ public partial class Player : Character{
             _virtualCamera.Priority = 10;
         }
     }
-    
+
     [Client]
     private void ClientHUDVisualStart(){
 
@@ -93,11 +92,10 @@ public partial class Player : Character{
             pickupText.SetText("");
         }
 
-        Transform p = transform.GetChild(1);
-
+        
     }
 
-    
+
     private void ClientHUDUpdate(){ // every frame
         pingDisplay.text = Math.Round(NetworkTime.rtt * 1000) + " ms";
         if (_fadeTimer > 0){

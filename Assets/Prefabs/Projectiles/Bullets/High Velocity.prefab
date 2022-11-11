@@ -239,6 +239,7 @@ MonoBehaviour:
   lifetime: 10
   damage: 0
   initialAngle: 0
+  firer: {fileID: 0}
   deadBullet: {fileID: 5374961542717239271, guid: 79aab1a39232f6a41bf1aa608a6b1c71,
     type: 3}
 --- !u!114 &6790947048901290198
@@ -278,7 +279,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2b386db8ed1c7eb4ead4d70ed482dcd1, type: 3}
     - {fileID: 8300000, guid: c5e606a1bfaea604db78a94c9fd8417e, type: 3}
     - {fileID: 8300000, guid: 6eeeae31bb4c44047bafdb07a2faa995, type: 3}
-    volume: 1
+    volume: 0.5
     pitch: 1
     spacialBlend: 1
     priority: 128
@@ -301,3 +302,4 @@ MonoBehaviour:
   newObjectSource: {fileID: 6619274261247756565, guid: b0f6a44459c69574287925c67314489e,
     type: 3}
   source: {fileID: 0}
+  isPlayingCharging: 0

@@ -77,7 +77,7 @@ public class AudioManager : MonoBehaviour{
     }
 
     
-    public void PlayNewSource(int index){ // creates a new audio source to avoid interference with main one
+    public void PlayNewSource(int index, float time){ // creates a new audio source to avoid interference with main one
         AudioSource newSource = Instantiate(newObjectSource, transform.position, Quaternion.identity).GetComponent<AudioSource>();
         newSource.clip = sounds[index].clipsList[Random.Range(0, sounds[index].clipsList.Length)];
         Sound sound = sounds[index];
@@ -86,9 +86,14 @@ public class AudioManager : MonoBehaviour{
         newSource.pitch = sound.pitch;
         newSource.priority = sound.priority;
         newSource.spatialBlend = sound.spacialBlend;
+        newSource.loop = sound.loop;
         newSource.Play();
 
-        Destroy(newSource.gameObject, newSource.clip.length);
+        if (time <= 0){
+            time = newSource.clip.length;
+        }
+        
+        Destroy(newSource.gameObject, time);
     }
 
     [Client]

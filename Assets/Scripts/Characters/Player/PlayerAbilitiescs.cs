@@ -14,39 +14,13 @@ public partial class Player : Character{
 
     [Header("Abilities")] 
     
-    [SerializeField] private int armorAbility;
-    [SerializeField] private int maxCharge;
-    [SerializeField] private int chargeRate;
-    [SerializeField] private int chargeDrainPerFrame;
+    public ArmorAbility armorAbility;
+    public ArmorAbility defaultAbility;
+    [HideInInspector] public bool _isArmorAbilitying; // for prolonged ones
+    [HideInInspector] private bool _isModAbilitying;
     
-    [Header("Assault - Dash")]
-    [SerializeField] private float dashVelocity;
-    [SerializeField] private GameObject dashParticles;
 
-    [Header("Heavy - Shield Overcharge")] 
-    [SerializeField] private int overChargePerFrame;
 
-    [Header("Operator - Team Shield")] 
-    [SerializeField] private float distanceOfCharge;
-    [SerializeField] private int teamChargePerFrame;
-    [SerializeField] private GameObject fieldPrefab;
-    [SerializeField] private float fieldScale;
-    [SerializeField] private Vector2 fieldOffset;
-
-    [Header("Pathfinder - Cloak")] 
-    [SerializeField] private float cloakedMoveSpeed;
-
-    [Header("Sharpshooter - Jetpack")] 
-    [SerializeField] private int jetPower;
-    [SerializeField] private float maximumRise;
-
-    private bool _isArmorAbilitying; // for prolonged ones
-    private bool _isModAbilitying;
-    
-    private bool _armorAbilityActive; // for one shots that have duration
-    private bool _modAbilityActive;
-
-    private int _currentAbilityCharge = 0;
 
 
         /*
@@ -64,29 +38,25 @@ public partial class Player : Character{
         
         if (Input.GetKeyDown(KeyCode.LeftControl)){
             float angle = GetBarrelToMouseRotation();
-            if (isClientOnly){
-                ArmorAbilityInstant(angle);
-            }
+            if (isClientOnly) armorAbility.ArmorAbilityInstant(angle);
+            
             _currentInput.AbilityInput = true;
             _currentInput.Angle = angle;
         }
 
         if (Input.GetKey(KeyCode.LeftControl)){         
             _currentInput.AbilityPressed = true;
-
         }
         
         if (Input.GetKeyUp(KeyCode.LeftControl)){         
+            armorAbility.ArmorAbilityReleased(); // this can't be client only cuz there isn't dedicated server code for it
             _currentInput.AbilityPressed = false;
-
         }
 
 
-        if (isClientOnly && Input.GetKeyDown(KeyCode.Mouse5)){
-            if (isClientOnly){
-                ModAbilityInstant();
-                _currentInput.ModInput = true;
-            }
+        if (Input.GetKeyDown(KeyCode.Mouse5)){
+            if (isClientOnly) ModAbilityInstant();
+            _currentInput.ModInput = true;
         }
 
         if (Input.GetKey(KeyCode.Mouse5)){
@@ -96,141 +66,10 @@ public partial class Player : Character{
         if (Input.GetKeyUp(KeyCode.Mouse5)){
             _currentInput.ModPressed = false;
         }
-        abilityChargeSlider.value = (float) _currentAbilityCharge / maxCharge;
-    }
-
-
- 
-    private void AbilitiesFixedUpdate(){
-        if (armorAbility != 4){
-            if (_armorAbilityActive){
-                if (armorAbility == 1){
-                    OverchargeShield();
-                }
-                else if (armorAbility == 2){
-                    OverchargeTeam();
-                }
-
-                else if (armorAbility == 3){
-                    Cloak();
-                }
-
-                _currentAbilityCharge -= chargeDrainPerFrame;
-
-                if (_currentAbilityCharge <= 0){
-                    _armorAbilityActive = false;
-                }
-            }
-            else{
-                _currentAbilityCharge = Mathf.Clamp(_currentAbilityCharge + chargeRate, 0, maxCharge);
-            }
-        }
-        else{
-            _currentAbilityCharge = Mathf.Clamp(_currentAbilityCharge + chargeRate, 0, maxCharge);
-        }
+        abilityChargeSlider.value = (float) armorAbility.currentAbilityCharge / armorAbility.maxCharge;
     }
     
-
-    private void Dash(float angle){
-        Destroy(Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
-        angle *= Mathf.Deg2Rad;
-        body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * dashVelocity;
-        FallingKnocked = true;
-    }
-
-    private void OverchargeShield(){
-        shield = Mathf.Clamp(shield += overChargePerFrame, 0, maxShield);
-        if (isServer){
-            UpdateHealthClientRpc(health, shield, true, false);
-        }
-    }
-
-    private void OverchargeTeam(){
-        foreach (TeammateHUDElements element in virtualPlayer.Team){
-            Player p = element.VirtualPlayer.gamePlayer;
-            if (Vector2.Distance(p.transform.position, transform.position) < distanceOfCharge){
-                p.shield = Mathf.Clamp(p.shield += teamChargePerFrame, 0, p.maxShield);
-                if (isServer){
-                    p.UpdateHealthClientRpc(p.health, p.shield, true, false);
-                }
-            }
-        }
-    }
-
-    private void Cloak(){
-        float a = 1 - ((float) _currentAbilityCharge / maxCharge);
-        
-        SetCamoColor(bodyRenderer, a);
-        SetCamoColor(armRenderer, a);
-        SetCamoColor(helmetRenderer, a);
-        SetCamoColor(visorRenderer, a);
-        SetCamoColor(primaryWeapon.spriteRenderer, a);
-    }
-
-    private void SetCamoColor(SpriteRenderer sR, float a){
-        Color color = sR.color;
-        color = new Color(color.r, color.g, color.b, a);
-        sR.color = color;
-    }
-
-    private void Jetpack(){
-        body.velocity = new Vector2(body.velocity.x, Mathf.Clamp(body.velocity.y + jetPower, -maximumRise, maximumRise));
-    }
-
-   
-
-    [ClientRpc]
-    private void CreateFieldClientRpc(Transform p, Vector2 offset, float scale, float time){
-        GameObject field = Instantiate(fieldPrefab, p);
-        field.transform.localPosition = offset;
-        field.transform.localScale = new Vector3(scale, scale);
-        Destroy(field, time);
-    }
-
-    private void ArmorAbilityInstant(float angle){
-        if (_currentAbilityCharge >= maxCharge){
-            if (armorAbility == 0){ // dash
-                Dash(angle);
-                _currentAbilityCharge = 0;
-
-            }
-            else{
-                _armorAbilityActive = true;
-                if (armorAbility == 1 || armorAbility == 2){
-                    if (isServer){
-                        CreateFieldClientRpc(transform, fieldOffset, fieldScale, (float) maxCharge / chargeDrainPerFrame / 50);
-                    }
-                }
-                else if (armorAbility == 3){
-                    StartCoroutine(ResetCloak());
-                }
-            }
-        }
-    }
-
-    private IEnumerator ResetCloak(){
-        float tempSpeed = moveSpeed;
-        moveSpeed = cloakedMoveSpeed;
-        floatingCanvas.SetActive(false);
-        yield return new WaitForSeconds((float) maxCharge / chargeDrainPerFrame / 50);
-        SetCamoColor(bodyRenderer, 1);
-        SetCamoColor(armRenderer, 1);
-        SetCamoColor(helmetRenderer, 1);
-        SetCamoColor(visorRenderer, 1);
-        SetCamoColor(primaryWeapon.spriteRenderer, 1);
-        moveSpeed = tempSpeed;
-
-        floatingCanvas.SetActive(true);
-    }
-
-    private void ArmorAbilityLong(){
-        if (_isArmorAbilitying && _currentAbilityCharge > 0){
-            _currentAbilityCharge -= chargeDrainPerFrame;
-            if (armorAbility == 4){ //jetpack
-                Jetpack();
-            }
-        }
-    }
+    
     
     private void ModAbilityInstant(){
         Debug.Log("instant mod ability");
@@ -244,16 +83,15 @@ public partial class Player : Character{
 
     private void ClientPlayerAbilitiesFixedUpdate(){
         if (isClientOnly){
-            ArmorAbilityLong();
+            armorAbility.ArmorAbilityFixedUpdate();
             ModAbilityLong();
-            AbilitiesFixedUpdate();
         }
     }
 
     private void ServerPlayerAbilitiesFixedUpdate(){
-        ArmorAbilityLong();
+        armorAbility.ArmorAbilityFixedUpdate();
         ModAbilityLong();
-        AbilitiesFixedUpdate();}
+    }
 
 
 }

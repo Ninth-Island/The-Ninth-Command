@@ -183,16 +183,16 @@ MonoBehaviour:
   firingPoint: {fileID: 6520547883633214285}
   activelyWielded: 1
   shotDelay: 0
-  salvoDelay: 10
+  salvoDelay: 2
   shotsPerSalvo: 1
   instability: 0.01
   projectileTemplate: {fileID: -3131308856314885559, guid: 2d6844bcd20bf80458578a988d600cb6,
     type: 3}
   projectileDamage: -10
-  projectileSpeed: 50
+  projectileSpeed: 500
   piercing: 0
-  percentagePerShot: 1
-  heatPerShot: 12
+  percentagePerShot: 0.2
+  heatPerShot: 2.5
   coolDown: 0.8
   _energy: 100
   _heat: 0
@@ -214,18 +214,18 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ed9a44e5bf37df540a1e1eea33ddd14a, type: 3}
     - {fileID: 8300000, guid: 76304c9e93d7906428aa3921fd80beea, type: 3}
     - {fileID: 8300000, guid: cae156d6f441ff14cafa8ca889029e07, type: 3}
-    volume: 0.15
+    volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
   - name: Overheat
     clipsList:
     - {fileID: 8300000, guid: d83e5353d31d9bc479a193dca27b31b6, type: 3}
-    volume: 0.15
+    volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 3
     loop: 0
@@ -234,18 +234,18 @@ MonoBehaviour:
     - {fileID: 8300000, guid: cdc81a2a7679bb84f93ea7c17ad32861, type: 3}
     - {fileID: 8300000, guid: 0f975cdfb795a3d4b96011e220345bdf, type: 3}
     - {fileID: 8300000, guid: dcc29739070dcd04ab19388a00e318f7, type: 3}
-    volume: 0.15
+    volume: 0.4
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0
     loop: 0
   - name: DryFire
     clipsList:
     - {fileID: 8300000, guid: cb55a263a371ff346b652c22b82ec39f, type: 3}
-    volume: 0.05
+    volume: 0.2
     pitch: 1
-    spacialBlend: 0
+    spacialBlend: 1
     priority: 0
     waitTillNext: 0.4
     loop: 0
