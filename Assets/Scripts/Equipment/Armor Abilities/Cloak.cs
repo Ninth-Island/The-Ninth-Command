@@ -41,7 +41,7 @@ public class Cloak : ArmorAbility
         color = new Color(color.r, color.g, color.b, a);
         sR.color = color;
     }
-    
+
     private IEnumerator ResetCloak(){
         float tempSpeed = wielder.moveSpeed;
         wielder.moveSpeed = cloakedMoveSpeed;
@@ -49,8 +49,9 @@ public class Cloak : ArmorAbility
         if (isServer){
             PlaySound(0);
         }
+
         if (hasAuthority){
-            AudioManager.PlaySound(0);
+            audioManager.PlaySound(0);
         }
 
         yield return new WaitForSeconds((float) maxCharge / chargeDrainPerFrame / 50);
@@ -62,9 +63,11 @@ public class Cloak : ArmorAbility
         wielder.moveSpeed = tempSpeed;
 
         wielder.floatingCanvas.SetActive(true);
-        ResetCloakClientRpc(tempSpeed);
+        if (isServer){
+            ResetCloakClientRpc(tempSpeed);
+        }
     }
-    
+
     [ClientRpc]
     private void ResetCloakClientRpc(float tempSpeed){
         SetCamoColor(wielder.bodyRenderer, 1);

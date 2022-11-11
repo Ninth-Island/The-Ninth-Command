@@ -76,7 +76,7 @@ public class ArmorAbility : Equipment{
 
     protected void PlaySound(int index){
         if (hasAuthority){
-            AudioManager.PlaySound(index);
+            audioManager.PlaySound(index);
         }
         if (isServer){
             PlaySoundClientRpc(index);
@@ -85,7 +85,7 @@ public class ArmorAbility : Equipment{
 
     private void PlaySoundClientRpc(int index){
         if (!hasAuthority){
-            AudioManager.PlaySound(index);
+            audioManager.PlaySound(index);
         }
     }
 

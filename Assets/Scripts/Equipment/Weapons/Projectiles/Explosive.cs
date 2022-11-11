@@ -123,11 +123,11 @@ public class Explosive : Projectile{
             }
             if (other.rigidbody && other.rigidbody.sharedMaterial){
                 if (other.rigidbody.sharedMaterial.name == "Metal"){
-                    AudioManager.PlayNewSource(1, -1);
+                    audioManager.PlayNewSource(1, -1);
                 }
                 else if (other.rigidbody.sharedMaterial.name == "Snow" || other.rigidbody.sharedMaterial.name == "Rock" ||
                          other.rigidbody.sharedMaterial.name == "Grass"){
-                    AudioManager.PlayNewSource(2, -1);
+                    audioManager.PlayNewSource(2, -1);
                 }
             }
             if (impactGrenade){

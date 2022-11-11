@@ -37,6 +37,6 @@ public class ShieldOvercharge : ArmorAbility
         field.transform.localScale = new Vector3(scale, scale);
         Destroy(field, time);
         
-        AudioManager.PlayNewSource(0, time);
+        audioManager.PlayNewSource(0, time);
     }
 }

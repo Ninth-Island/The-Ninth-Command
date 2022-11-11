@@ -71,7 +71,7 @@ public class Character : CustomObject{
     [Client]
     protected void SortSound(int type){
 
-        if (AudioManager){
+        if (audioManager){
             PhysicsMaterial2D materialTouching = GetMaterialTouching();
 
             if (materialTouching != null){
@@ -84,7 +84,7 @@ public class Character : CustomObject{
                 }
 
                 soundIndex += type;
-                AudioManager.PlaySound(soundIndex);
+                audioManager.PlaySound(soundIndex);
             }
         }
     }
@@ -207,7 +207,7 @@ public class Character : CustomObject{
 
 
     [Server]
-    protected virtual void Hit(Player player, int damage, Vector3 position, float angle){
+    public virtual void Hit(Player player, int damage, Vector3 position, float angle){
     }
 
 

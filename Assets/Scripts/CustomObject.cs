@@ -13,7 +13,7 @@ public class CustomObject : NetworkBehaviour{
     public Rigidbody2D body;
     public Collider2D Collider;
     public SpriteRenderer spriteRenderer;
-    [SerializeField] protected AudioManager AudioManager;
+    public AudioManager audioManager;
 
     public Transform parent;
     public Vector2 localPos;
@@ -24,7 +24,7 @@ public class CustomObject : NetworkBehaviour{
     protected virtual void Start(){
         body = GetComponent<Rigidbody2D>();
         Collider = GetComponent<Collider2D>();
-        AudioManager = GetComponent<AudioManager>();
+        audioManager = GetComponent<AudioManager>();
     
     }
     

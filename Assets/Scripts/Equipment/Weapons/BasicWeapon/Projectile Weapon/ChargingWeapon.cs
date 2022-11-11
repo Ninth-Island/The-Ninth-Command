@@ -43,19 +43,19 @@ public class ChargingWeapon : ProjectileWeapon
         if (energy > 0){
             if (heat < 100 && !coolingDown){
                 heat += chargePerFrame;
-                AudioManager.PlayChargingNoise(4, heat / 100f);
+                audioManager.PlayChargingNoise(4, heat / 100f);
 
 
                 _hasReleased = false;
                 if (heat >= 100){
-                    AudioManager.source.Stop();
-                    AudioManager.isPlayingCharging = false;
+                    audioManager.source.Stop();
+                    audioManager.isPlayingCharging = false;
                     base.HandleFiring(angle);
                 }    
             }
         }
         else{
-            AudioManager.PlayRepeating(3); // dryfire
+            audioManager.PlayRepeating(3); // dryfire
         }
     }
 
@@ -71,8 +71,8 @@ public class ChargingWeapon : ProjectileWeapon
 
         
         if (isServer && !coolingDown && !_hasReleased && Input.GetKeyUp(KeyCode.Mouse0)){
-            AudioManager.source.Stop();
-            AudioManager.PlaySound(5);
+            audioManager.source.Stop();
+            audioManager.PlaySound(5);
             _hasReleased = true;
         }
     }
@@ -115,7 +115,7 @@ public class ChargingWeapon : ProjectileWeapon
         if (heat >= 100){
             coolingDown = true;
             wielder.Reload();
-            StartCoroutine(AudioManager.PlaySoundDelayed(1, 1f));
+            StartCoroutine(audioManager.PlaySoundDelayed(1, 1f));
         }
     }
     

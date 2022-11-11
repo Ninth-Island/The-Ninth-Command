@@ -85,6 +85,7 @@ public partial class Player : Character{
 
         secondaryWeapon.activelyWielded = false;
         secondaryWeapon.spriteRenderer.enabled = false;
+        secondaryWeapon.PutAway();
 
         _swappedWeapon = true;
         Invoke(nameof(ResetSwappedWeapon), 0.25f);

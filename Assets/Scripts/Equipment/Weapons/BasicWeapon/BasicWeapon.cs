@@ -17,7 +17,7 @@ public class BasicWeapon : Weapon{
 
     public virtual void Ready(){
         activelyWielded = true;
-        AudioManager.PlaySound(2);
+        audioManager.PlaySound(2);
     }
 
     protected override void Pickup(Player player, int[] path){
@@ -36,7 +36,7 @@ public class BasicWeapon : Weapon{
 
     
     protected virtual void HandleMagazineDecrement(){
-        AudioManager.PlaySound(0);
+        audioManager.PlaySound(0);
     }
 
 
@@ -58,7 +58,7 @@ public class BasicWeapon : Weapon{
 
 
     public virtual void Reload(){
-        AudioManager.PlaySound(1);
+        audioManager.PlaySound(1);
     }
 
 
@@ -100,6 +100,10 @@ public class BasicWeapon : Weapon{
         wielder = null;
         activelyWielded = false;
         spriteRenderer.enabled = true;
+    }
+
+    public virtual void PutAway(){
+        
     }
 
 }

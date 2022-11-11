@@ -27,7 +27,6 @@ public partial class Player : Character{
     protected override void OnCollisionEnter2D(Collision2D other){
         base.OnCollisionEnter2D(other);
         CheckSoundsOnCollision(other);
-        
 
         if (isServer){
             Projectile projectile = other.gameObject.GetComponent<Projectile>();
@@ -38,7 +37,7 @@ public partial class Player : Character{
     }
     
     [Server]
-    protected override void Hit(Player killer, int damage, Vector3 position, float angle){
+    public override void Hit(Player killer, int damage, Vector3 position, float angle){
         bool shieldBreak = false;
         if (damage < 0){
             shield -= damage;
@@ -86,11 +85,11 @@ public partial class Player : Character{
         damageNumber.shield = shieldEnough;
         if (shieldEnough){
             Instantiate(shieldDamageSparks, position, Quaternion.Euler(0, 0, angle + 180));
-            AudioManager.PlaySound(20);
+            audioManager.PlaySound(20);
         }
         else{
             Destroy(Instantiate(armorDamageSparks, position, Quaternion.Euler(0, 0, angle + 180)), 3f);
-            AudioManager.PlaySound(21);
+            audioManager.PlaySound(21);
 
         }
     }
@@ -118,7 +117,7 @@ public partial class Player : Character{
         }
 
         if (shieldBreak){
-            AudioManager.PlaySound(26);
+            audioManager.PlaySound(26);
         }
     }
 
@@ -126,33 +125,33 @@ public partial class Player : Character{
     private void ManageHealthShieldSfx(bool shieldRegening){
         
         if (!shieldRegening){
-            AudioManager.isPlayingCharging = false;
+            audioManager.isPlayingCharging = false;
             
             if (shield < maxShield / 3){ // warning beeping
-                AudioManager.PlayLooping(23);
+                audioManager.PlayLooping(23);
                 _stoppedAudio = false;
             }
             else{ // not warning, not beeping, not pounding, not regening.
                 if (!_stoppedAudio){
                     _stoppedAudio = true;
-                    AudioManager.source.Stop();
+                    audioManager.source.Stop();
                 }
             }
 
             if (shield <= 0){ 
                 _stoppedAudio = false;
                 if (health < maxHealth / 3 && health > 0){ // heart pounding
-                    AudioManager.PlayLooping(25);
+                    audioManager.PlayLooping(25);
 
                 }
                 else{// really warning beeping
-                    AudioManager.PlayLooping(24);
+                    audioManager.PlayLooping(24);
                 }
             }
 
         }
         else{ // shield regen
-            AudioManager.PlayChargingNoise(22, (float)shield / maxShield);
+            audioManager.PlayChargingNoise(22, (float)shield / maxShield);
             _stoppedAudio = false;
         }
     }
@@ -174,7 +173,7 @@ public partial class Player : Character{
     [ClientRpc]
     private void DieClientRpc(){
         Die();
-        AudioManager.source.Stop();
+        audioManager.source.Stop();
     }
 
     //both

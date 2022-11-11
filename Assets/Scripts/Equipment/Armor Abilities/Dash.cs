@@ -13,7 +13,7 @@ public class Dash : ArmorAbility
         wielder.fallingKnocked = true;
         if (hasAuthority){
             Destroy(Instantiate(dashParticles, wielder.transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
-            AudioManager.PlaySound(0);
+            audioManager.PlaySound(0);
         }
         if (isServer){
             CreateDashParticlesClientRpc(angle);
@@ -29,7 +29,7 @@ public class Dash : ArmorAbility
         if (!hasAuthority){
             Destroy(
                 Instantiate(dashParticles, transform.position + new Vector3(-0.37f, 2.05f), Quaternion.Euler(0, 0, angle)), 0.2f);
-            AudioManager.PlaySound(0);
+            audioManager.PlaySound(0);
         }
     }
 }
