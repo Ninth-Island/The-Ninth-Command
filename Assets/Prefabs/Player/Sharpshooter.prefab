@@ -10,22 +10,27 @@ PrefabInstance:
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.size
-      value: 30
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[27].name
-      value: Jetpack in
+      value: Jetpack Out
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[28].name
-      value: Jetpack Loop
+      value: Jetpack Out
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[29].name
       value: Jetpack Out
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].pitch
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
@@ -35,6 +40,11 @@ PrefabInstance:
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[29].pitch
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].volume
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
@@ -49,6 +59,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: sounds.Array.data[27].priority
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: sounds.Array.data[28].priority
       value: 128
       objectReference: {fileID: 0}
@@ -59,12 +74,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: sounds.Array.data[27].spacialBlend
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: sounds.Array.data[28].spacialBlend
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[29].spacialBlend
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
+      propertyPath: sounds.Array.data[27].clipsList.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
@@ -81,12 +106,12 @@ PrefabInstance:
         type: 3}
       propertyPath: sounds.Array.data[27].clipsList.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: e16a00d37c8fb134c9d4199d22c49271, type: 3}
+      objectReference: {fileID: 8300000, guid: a1cc48579338d7a41ac2d93de0032218, type: 3}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[28].clipsList.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 7c97f8ef14ae4d54e8d4a22a6d58c295, type: 3}
+      objectReference: {fileID: 8300000, guid: a1cc48579338d7a41ac2d93de0032218, type: 3}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.data[29].clipsList.Array.data[0]

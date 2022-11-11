@@ -13,11 +13,13 @@ public class MeleeHitBox : MonoBehaviour{
         if (!parent.isServer){
             if (other.rigidbody && other.rigidbody.sharedMaterial){
                 if (other.rigidbody.sharedMaterial.name == "Metal"){
-                    parent.audioManager.PlayNewSource(3, -1);
+                    parent.audioManager.PlaySound(4);
                 }
 
                 if (hit){
-                    parent.audioManager.PlayNewSource(4, -1);
+                    parent.audioManager.PlaySound(3);
+                    gameObject.SetActive(false);
+                    Debug.Log("player");
                 }
             }
         }
@@ -25,6 +27,7 @@ public class MeleeHitBox : MonoBehaviour{
         else{
             if (hit){
                 hit.Hit(parent.wielder, parent.damage, parent.transform.position, 0);
+                gameObject.SetActive(false);
             }
         }
     }

@@ -128,7 +128,7 @@ public partial class Player : Character{
             audioManager.isPlayingCharging = false;
             
             if (shield < maxShield / 3){ // warning beeping
-                audioManager.PlayLooping(23);
+                audioManager.PlaySound(23);
                 _stoppedAudio = false;
             }
             else{ // not warning, not beeping, not pounding, not regening.
@@ -141,11 +141,11 @@ public partial class Player : Character{
             if (shield <= 0){ 
                 _stoppedAudio = false;
                 if (health < maxHealth / 3 && health > 0){ // heart pounding
-                    audioManager.PlayLooping(25);
+                    audioManager.PlaySound(25);
 
                 }
                 else{// really warning beeping
-                    audioManager.PlayLooping(24);
+                    audioManager.PlaySound(24);
                 }
             }
 

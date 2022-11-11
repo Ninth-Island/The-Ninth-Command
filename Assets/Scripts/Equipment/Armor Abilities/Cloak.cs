@@ -46,12 +46,9 @@ public class Cloak : ArmorAbility
         float tempSpeed = wielder.moveSpeed;
         wielder.moveSpeed = cloakedMoveSpeed;
         wielder.floatingCanvas.SetActive(false);
-        if (isServer){
-            PlaySound(0);
-        }
 
         if (hasAuthority){
-            audioManager.PlaySound(0);
+            source.Play();
         }
 
         yield return new WaitForSeconds((float) maxCharge / chargeDrainPerFrame / 50);

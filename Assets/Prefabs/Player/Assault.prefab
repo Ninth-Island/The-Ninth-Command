@@ -6271,7 +6271,7 @@ MonoBehaviour:
   body: {fileID: 3757039344788581442}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 3208046358155570110}
-  AudioManager: {fileID: 1723963982361676133}
+  audioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   virtualPlayer: {fileID: 0}
@@ -6704,7 +6704,7 @@ MonoBehaviour:
   - name: shield low
     clipsList:
     - {fileID: 8300000, guid: b64c6183d00227f419d951c5a521553c, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -6713,7 +6713,7 @@ MonoBehaviour:
   - name: shield depleted
     clipsList:
     - {fileID: 8300000, guid: 351928c87503c6f4297b361fd7436395, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -6722,7 +6722,7 @@ MonoBehaviour:
   - name: health low (heartbeat)
     clipsList:
     - {fileID: 8300000, guid: f296a99532670f24aa53e230a2201c37, type: 3}
-    volume: 0.2
+    volume: 0.4
     pitch: 1
     spacialBlend: 0
     priority: 128
@@ -6731,15 +6731,6 @@ MonoBehaviour:
   - name: Shield Break
     clipsList:
     - {fileID: 8300000, guid: 2ba75d078dbfd4042b233cb9717990d5, type: 3}
-    volume: 1
-    pitch: 1
-    spacialBlend: 1
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-  - name: Dash
-    clipsList:
-    - {fileID: 8300000, guid: 92cb2f705fd2b0f4caad2fea017b32cd, type: 3}
     volume: 1
     pitch: 1
     spacialBlend: 1

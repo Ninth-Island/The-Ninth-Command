@@ -4973,6 +4973,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1864086410138110621, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
     - {fileID: 5559020643151988897, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
+    - {fileID: 4369925418963565907, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
 --- !u!1 &1436069388145084008 stripped
 GameObject:
@@ -4980,6 +4981,49 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7114715959901064584}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-3891608445011858605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436069388145084008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: 
+    clipsList:
+    - {fileID: 8300000, guid: e16a00d37c8fb134c9d4199d22c49271, type: 3}
+    volume: 0.5
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: 
+    clipsList:
+    - {fileID: 8300000, guid: 7c97f8ef14ae4d54e8d4a22a6d58c295, type: 3}
+    volume: 0.5
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  - name: 
+    clipsList:
+    - {fileID: 8300000, guid: a1cc48579338d7a41ac2d93de0032218, type: 3}
+    volume: 0.5
+    pitch: 1
+    spacialBlend: 1
+    priority: 128
+    waitTillNext: 0
+    loop: 0
+  newObjectSource: {fileID: 0}
+  source: {fileID: 0}
+  isPlayingCharging: 0
 --- !u!114 &4854727584179910632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4997,7 +5041,7 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 1436069388145084013}
-  AudioManager: {fileID: 0}
+  audioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
@@ -5009,6 +5053,7 @@ MonoBehaviour:
   previewIcon: {fileID: 2437176426752762422}
   currentAbilityCharge: 0
   active: 0
+  source: {fileID: 0}
   jetPower: 2
   maximumRise: 35
   jetpack: {fileID: 4076776924592148313}

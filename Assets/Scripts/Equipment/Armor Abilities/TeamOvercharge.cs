@@ -44,6 +44,12 @@ public class TeamOvercharge : ArmorAbility
         field.transform.localScale = new Vector3(scale, scale);
         Destroy(field, time);
         
-        audioManager.PlayNewSource(0, time);
+        source.Play();
+        StartCoroutine(StopSound(time));
+    }
+
+    private IEnumerator StopSound(float time){
+        yield return new WaitForSeconds(time);
+        source.Stop();
     }
 }

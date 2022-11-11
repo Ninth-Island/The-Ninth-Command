@@ -110,7 +110,6 @@ public partial class Player : Character{
         // if its too far away (simulation lost track then dead reckon it
         // the simulation breaks down at high velocities which occasionally occur
         if (Vector3.Distance(transform.position, position) > 2 + 0.32f * body.velocity.magnitude){
-            Debug.Log(Vector2.Distance(transform.position, position));
             transform.position = position;
         }
 

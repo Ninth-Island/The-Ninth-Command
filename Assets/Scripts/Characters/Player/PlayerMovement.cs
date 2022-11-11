@@ -13,8 +13,6 @@ public partial class Player : Character{
     private int _direction;
 
     private bool _hardLanding; // used for sound
-    public int leftArmRotation = -150;
-    public int rightArmRotation = -30;
 
 
     [Client] // handles key presses like jumping and animations
@@ -133,9 +131,9 @@ public partial class Player : Character{
             arm.transform.localScale = new Vector3(1, 1);
         }
         else{
-            arm.transform.rotation = Quaternion.Euler(0, 0, rightArmRotation); // -30
+            arm.transform.rotation = Quaternion.Euler(0, 0, -30); // -30
             if (Mathf.Sign(transform.localScale.x) < 0){
-                arm.transform.rotation = Quaternion.Euler(0, 0, leftArmRotation); // -150
+                arm.transform.rotation = Quaternion.Euler(0, 0, -150); // -150
     
             }
             arm.transform.localScale = new Vector3(1, 1);

@@ -178,7 +178,6 @@ MonoBehaviour:
   damage: 500
   velocityMultiplier: 70
   maxFrames: 150
-  swingRotation: {x: 0, y: 0}
   energy: 100
   energyPerSwing: 5
   hitBox: {fileID: 7354778404447915661}
@@ -204,8 +203,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 2e95d073909befd479dba5c6da64ab64, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
-    priority: 0
+    spacialBlend: 1
+    priority: 128
     waitTillNext: 0
     loop: 0
   - name: Hum Loop
@@ -213,8 +212,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d0fa806f7b6e4c44e8e539cc83772cab, type: 3}
     volume: 1
     pitch: 1
-    spacialBlend: 0
-    priority: 0
+    spacialBlend: 1
+    priority: 128
     waitTillNext: 0
     loop: 1
   - name: Ready
@@ -222,8 +221,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: ea21c9b568139714db5c5d1f5bcab6af, type: 3}
     volume: 0.4
     pitch: 1
-    spacialBlend: 0
-    priority: 0
+    spacialBlend: 1
+    priority: 128
     waitTillNext: 0
     loop: 0
   - name: Impact Character
@@ -239,10 +238,10 @@ MonoBehaviour:
     - {fileID: 8300000, guid: b1e6013bdec7efc43af71852fec61414, type: 3}
     - {fileID: 8300000, guid: 04f6074f7a849b24caff84febe33be75, type: 3}
     - {fileID: 8300000, guid: 88cf53c7a4ae1c9439670e437aa44165, type: 3}
-    volume: 0.4
+    volume: 1
     pitch: 1
-    spacialBlend: 0
-    priority: 0
+    spacialBlend: 1
+    priority: 128
     waitTillNext: 0
     loop: 0
   - name: Impact Wall
@@ -252,10 +251,10 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 887b81880fc6ce3499a8aaa27565aa30, type: 3}
     - {fileID: 8300000, guid: f3adc91b8b4e3d54787006801ad618ec, type: 3}
     - {fileID: 8300000, guid: 2a8d95331258f39419f4f5a03e91a6a3, type: 3}
-    volume: 0.4
+    volume: 1
     pitch: 1
-    spacialBlend: 0
-    priority: 0
+    spacialBlend: 1
+    priority: 128
     waitTillNext: 0
     loop: 0
   newObjectSource: {fileID: 0}
@@ -271,11 +270,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d0fa806f7b6e4c44e8e539cc83772cab, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5239,7 +5238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3445024517000183502
 Transform:
   m_ObjectHideFlags: 0

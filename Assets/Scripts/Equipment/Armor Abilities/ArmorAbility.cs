@@ -14,6 +14,8 @@ public class ArmorAbility : Equipment{
 
     [HideInInspector] public int currentAbilityCharge = 0;
     [HideInInspector] public bool active;
+
+    [SerializeField] protected AudioSource source;
     
     protected override void Pickup(Player player, int[] path){
         base.Pickup(player, path);
