@@ -98,6 +98,12 @@ PrefabInstance:
     - {fileID: 5559020643151988897, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
     - {fileID: 4369925418963565907, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
+--- !u!82 &2114996422500317261 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 492353542676315271, guid: 358c9033f288287428b8f2b067ff1497,
+    type: 3}
+  m_PrefabInstance: {fileID: 1985184712456013002}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4525467814761857869 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2684563168610617223, guid: 358c9033f288287428b8f2b067ff1497,
@@ -144,14 +150,13 @@ MonoBehaviour:
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
   networkTransform: {fileID: 4525467814761857869}
-  abilityIndex: 0
   maxCharge: 150
   chargeRate: 1
   chargeDrainPerFrame: 0
   previewIcon: {fileID: 6404912028548557684}
   currentAbilityCharge: 0
   active: 0
-  source: {fileID: 0}
+  source: {fileID: 2114996422500317261}
   dashVelocity: 70
   dashParticles: {fileID: 4871316015169746979, guid: eb7ab4c57399ed640a006b07e36704f7,
     type: 3}

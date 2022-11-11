@@ -236,7 +236,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -394,11 +394,10 @@ MonoBehaviour:
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
   networkTransform: {fileID: 2684563168610617223}
-  abilityIndex: 0
   maxCharge: 0
   chargeRate: 0
   chargeDrainPerFrame: 0
   previewIcon: {fileID: 4858851235026530238}
   currentAbilityCharge: 0
   active: 0
-  source: {fileID: 0}
+  source: {fileID: 492353542676315271}

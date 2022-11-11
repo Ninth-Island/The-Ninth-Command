@@ -59,14 +59,14 @@ public partial class Player : Character{
     private float fadeSpeed = 0.01f;
 
     private Camera _mainCamera;
-    private CinemachineVirtualCamera _virtualCamera;
+    public CinemachineVirtualCamera virtualCamera;
 
 
     protected override void Start(){
         base.Start();
-        _virtualCamera = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        virtualCamera = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
         if (hasAuthority){
-            _virtualCamera.Priority = 10;
+            virtualCamera.Priority = 10;
         }
     }
 

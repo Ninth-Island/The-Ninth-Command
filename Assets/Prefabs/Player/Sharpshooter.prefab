@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1023890998, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}
+      propertyPath: m_Lens.m_SensorSize.x
+      value: 1.9140188
+      objectReference: {fileID: 0}
+    - target: {fileID: 1023890998, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 1723963982361676133, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
       propertyPath: sounds.Array.size

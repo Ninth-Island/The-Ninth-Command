@@ -16,7 +16,6 @@ public class Jetpack : ArmorAbility
         audioManager.source.Stop();
         jetpack.Stop();
         audioManager.PlaySound(2);
-        Debug.Log(2);
         _finishedStartNoise = false;
 
         CmdPlaySoundOnClients(0, 2);
@@ -28,7 +27,7 @@ public class Jetpack : ArmorAbility
         audioManager.PlaySound(0);
         _finishedStartNoise = false;
         StartCoroutine(SetNextJetpackNoise());
-        CmdPlaySoundOnClients(1, 0);
+        if (isServer) CmdPlaySoundOnClients(1, 0);
     }
 
     public override void ArmorAbilityFixedUpdate(){

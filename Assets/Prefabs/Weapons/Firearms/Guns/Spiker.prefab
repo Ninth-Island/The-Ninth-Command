@@ -171,7 +171,7 @@ MonoBehaviour:
   body: {fileID: 2203350304549672336}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 2203350304549672339}
-  AudioManager: {fileID: 8614085602533373021}
+  audioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 1.932, y: 0.22}
   wielder: {fileID: 0}
@@ -180,6 +180,11 @@ MonoBehaviour:
   cursorType: 9
   firingPoint: {fileID: 0}
   activelyWielded: 0
+  weaponMod: {fileID: 1256038031410700099, guid: 8ac7b1d3b09777a43a02f62c921d4ffe,
+    type: 3}
+  zoomIncrements: 0
+  totalZoom: 0
+  zoomPerIncrement: 0
   shotDelay: 0
   salvoDelay: 2
   shotsPerSalvo: 1

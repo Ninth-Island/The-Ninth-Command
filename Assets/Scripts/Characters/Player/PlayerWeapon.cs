@@ -24,7 +24,7 @@ public partial class Player : Character{
     
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
     
-    
+
     #region Firing
 
     
@@ -219,7 +219,7 @@ public partial class Player : Character{
         return ang;
     }
 
-    private float GetBarrelToMouseRotation(){
+    public float GetBarrelToMouseRotation(){
 
         if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _isSprinting){
             return GetPlayerToMouseRotation();
@@ -252,6 +252,10 @@ public partial class Player : Character{
             _attemptingToFire = false;
             _firingAngle = 0;
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !_isSprinting){
+            primaryWeapon.Zoom();
+        }
         
         ClientCheckSwap();
         CheckForPickup();
@@ -265,13 +269,14 @@ public partial class Player : Character{
     
 
     [ClientRpc]
-    public void InitializeEquipmentOnClient(BasicWeapon pW, BasicWeapon sW, ArmorAbility aa){ // this is mostly for an edge case error
+    public void InitializeEquipmentOnClient(BasicWeapon pW, BasicWeapon sW, ArmorAbility aa, WeaponMod wm){ // this is mostly for an edge case error
         primaryWeapon = pW;
         secondaryWeapon = sW;
         armorAbility = aa;
         primaryWeapon.activelyWielded = true;
         aa.wielder = this;
-
+        primaryWeapon.weaponMod = wm;
+        wm.WeaponAttachedTo = primaryWeapon;
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
     }
 }

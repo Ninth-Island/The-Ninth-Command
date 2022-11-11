@@ -6297,6 +6297,8 @@ MonoBehaviour:
   armorAbility: {fileID: 0}
   defaultAbility: {fileID: -5922117739796507804, guid: 08cc0b92089b4b746ba8d2b2b9ccb75a,
     type: 3}
+  startingModPrefab: {fileID: 1256038031410700099, guid: 8ac7b1d3b09777a43a02f62c921d4ffe,
+    type: 3}
   _isArmorAbilitying: 0
   timeTillShieldRecharge: 200
   shieldRechargeRate: 4
@@ -6341,6 +6343,7 @@ MonoBehaviour:
   armRenderer: {fileID: 8082989807932529177}
   helmetRenderer: {fileID: 3208046357686723684}
   visorRenderer: {fileID: 3208046357128779472}
+  virtualCamera: {fileID: 0}
   sprintAmplifier: 1.5
   secondaryWeapon: {fileID: 0}
   secondaryWeaponPrefab: {fileID: 8529665086193386107, guid: 39f0ac7b484275441b2c1bb13454c675,

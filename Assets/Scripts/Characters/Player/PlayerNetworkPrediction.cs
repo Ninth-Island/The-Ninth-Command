@@ -44,13 +44,12 @@ public partial class Player : Character{
         }
 
         if (playerInput.ModInput){
-            ModAbilityInstant();
+            primaryWeapon.weaponMod.WeaponModInstant();
         }
 
         if (playerInput.SwapWeapon){
             PlayerSwapWeapon();
             PlayerSwapWeaponClientRpc();
-            
         }
 
         if (playerInput.PickedUp){
@@ -181,13 +180,13 @@ public partial class Player : Character{
         if (playerInput.ReloadInput){
             primaryWeapon.Reload();
         }
-
+        
         if (playerInput.AbilityInput){
             armorAbility.ArmorAbilityInstant(playerInput.Angle);
         }
 
         if (playerInput.ModInput){
-            ModAbilityInstant();
+            primaryWeapon.weaponMod.WeaponModInstant();
         }
     }
     
@@ -223,6 +222,7 @@ public partial class Player : Character{
         public bool ReloadInput;
 
         public bool SwapWeapon;
+        
 
         public Equipment PickedUp; // new weapon trying to pick up
         public Equipment OldEquipment; // if for some reason it fails need to go back to old one

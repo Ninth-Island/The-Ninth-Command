@@ -2,23 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponMod : MonoBehaviour{
+public class WeaponMod : CustomObject{
 
-    [SerializeField] protected bool forcedOn = false;
-    
-    protected ProjectileWeapon WeaponAttachedTo;
-    protected AudioManager AudioManager;
+    public BasicWeapon WeaponAttachedTo;
+    protected bool Active;
 
+    protected virtual void ModActiveFixedUpdate(){
+        
+    }
     
-    protected virtual void Start(){
-        //WeaponAttachedTo = transform.parent.GetComponent<ProjectileWeapon>();
-        AudioManager = GetComponent<AudioManager>();
+    public virtual void WeaponModFixedUpdate(){
+        if (Active){
+            ModActiveFixedUpdate();
+        }
+    }
+
+    public virtual void WeaponModInstant(){
         
     }
 
-    protected /*override*/virtual void Update(){
+    public virtual void WeaponModRelease(){
         
     }
+
 
     
 }

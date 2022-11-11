@@ -121,6 +121,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &3046091325800407804 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 492353542676315271, guid: 358c9033f288287428b8f2b067ff1497,
+    type: 3}
+  m_PrefabInstance: {fileID: 3211298652544507515}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6755872349672494491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8165445071144471520, guid: 358c9033f288287428b8f2b067ff1497,
@@ -149,14 +155,13 @@ MonoBehaviour:
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
   networkTransform: {fileID: 707532323456358908}
-  abilityIndex: 2
   maxCharge: 1250
   chargeRate: 1
   chargeDrainPerFrame: 3
   previewIcon: {fileID: 8070107932448158149}
   currentAbilityCharge: 0
   active: 0
-  source: {fileID: 0}
+  source: {fileID: 3046091325800407804}
   distanceOfCharge: 25
   teamChargePerFrame: 10
   fieldPrefab: {fileID: 3110500547035796, guid: 31ac1184afb394645af397b2cc83b49a,

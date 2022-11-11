@@ -95,6 +95,7 @@ public partial class Player : Character{
             }
             else{
                 if (_isSprinting){
+                    primaryWeapon.ResetZoom();
                     _attemptingToFire = false;
                     _firingAngle = 0;
                     body.velocity = new Vector2(moveSpeed * sprintAmplifier * input, body.velocity.y);
