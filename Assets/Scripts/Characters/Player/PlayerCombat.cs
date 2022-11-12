@@ -8,7 +8,7 @@ public partial class Player : Character{
     [Header("Combat")]
     [SerializeField] private int timeTillShieldRecharge;
     [SerializeField] private int shieldRechargeRate;
-    public bool dead;
+    private bool _dead;
     
     
     private int _timeLeftTillShieldRecharge;
@@ -178,7 +178,7 @@ public partial class Player : Character{
 
     //both
     private void Die(){
-        dead = true;
+        _dead = true;
         
         primaryWeapon.StopReloading();
         primaryWeapon.Drop();
@@ -189,7 +189,7 @@ public partial class Player : Character{
         armorAbility.StopAllCoroutines();
         armorAbility.Drop();
         gameObject.layer = LayerMask.NameToLayer("Dead Player");
-        feetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
+        FeetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
     }
 
     [Command]

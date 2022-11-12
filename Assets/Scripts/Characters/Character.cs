@@ -38,7 +38,7 @@ public class Character : CustomObject{
 
     [HideInInspector] public int maxHealth; // for healthbar and respawns
     [HideInInspector] public int maxShield; // for shieldBar
-    public BoxCollider2D feetCollider; // for ground checks
+    [SerializeField] protected BoxCollider2D FeetCollider; // for ground checks
     
     [SerializeField] protected Animator animator;
     
@@ -91,13 +91,13 @@ public class Character : CustomObject{
 
     [Client]
     private PhysicsMaterial2D GetMaterialTouching(){
-        if (feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform"))){
+        if (FeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Platform"))){
             Collider2D[] output = new Collider2D[1];
             
             ContactFilter2D filter = new ContactFilter2D();
             filter.SetLayerMask(LayerMask.GetMask("Ground", "Platform"));
             
-            feetCollider.OverlapCollider(filter, output);
+            FeetCollider.OverlapCollider(filter, output);
             if (output[0] && output[0].attachedRigidbody && output[0].attachedRigidbody.sharedMaterial){
                 return output[0].attachedRigidbody.sharedMaterial;
             }
@@ -175,7 +175,7 @@ public class Character : CustomObject{
             Airborne = true;
             foreach (RaycastHit2D result in resultsLeft){
                 if (result && result.collider.gameObject != gameObject &&
-                    result.collider.gameObject != feetCollider.gameObject){
+                    result.collider.gameObject != FeetCollider.gameObject){
                     Airborne = false;
                     if (body.velocity.y < 1f){
                         body.velocity *= .9f;
@@ -186,7 +186,7 @@ public class Character : CustomObject{
             if (Airborne){
                 foreach (RaycastHit2D result in resultsRight){
                     if (result && result.collider.gameObject != gameObject &&
-                        result.collider.gameObject != feetCollider.gameObject){
+                        result.collider.gameObject != FeetCollider.gameObject){
                         Airborne = false;
     
                         if (body.velocity.y < 1f){
@@ -227,7 +227,7 @@ public class Character : CustomObject{
     
     public void SetLayer(int layer){
         gameObject.layer = layer;
-        feetCollider.gameObject.layer = layer;
+        FeetCollider.gameObject.layer = layer;
     }
 
 

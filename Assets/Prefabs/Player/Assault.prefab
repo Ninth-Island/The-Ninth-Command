@@ -6290,7 +6290,7 @@ MonoBehaviour:
   - {fileID: 6200000, guid: 721799b3543ddcd43a5eba3b5613cd36, type: 2}
   maxHealth: 0
   maxShield: 0
-  feetCollider: {fileID: 3757039344167629853}
+  FeetCollider: {fileID: 3757039344167629853}
   animator: {fileID: 3757039344788581447}
   fallingKnocked: 0
   characterClientReady: 0

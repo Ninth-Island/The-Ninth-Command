@@ -34,7 +34,7 @@ public partial class Player : Character{
 
     [Client]
     protected override void ClientUpdate(){
-        if (!dead){
+        if (!_dead){
             base.ClientUpdate();
 
             _lastArmAngle = GetBarrelToMouseRotation();
@@ -56,7 +56,7 @@ public partial class Player : Character{
     
     [Client]
     protected override void ClientFixedUpdate(){
-        if (!dead){
+        if (!_dead){
             base.ClientFixedUpdate();
 
             _lastArmAngle = GetBarrelToMouseRotation();
@@ -78,7 +78,7 @@ public partial class Player : Character{
     
     [Server]
     protected override void ServerFixedUpdate(){
-        if (!dead){
+        if (!_dead){
             base.ServerFixedUpdate();
             ServerPlayerNetworkedMovementFixedUpdate();
             ServerPlayerCombatFixedUpdate();

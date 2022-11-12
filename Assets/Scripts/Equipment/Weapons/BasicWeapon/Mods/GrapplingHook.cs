@@ -5,30 +5,35 @@ using UnityEngine;
 public class GrapplingHook : WeaponMod{
     [SerializeField] private Hook hookPrefab;
     [SerializeField] private float fireVelocity;
-    [SerializeField] private GameObject grappledTo;
-    [SerializeField] private float moveToMultiplier;
     [SerializeField] private float maximumVelocity;
     
-    public int state; // 0 withdrawn, 1 in air, 2 attached, 3 is retrieving;
+    public int state; // 0 withdrawn, 1 in air, 2 is attached, 3 is retrieving;
     private Hook _hook;
+    private Player _player;
+    
     protected override void OverrideInstant(){
+
         if (state == 0){
             float angle = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
             _hook.gameObject.SetActive(true);
-            _hook.gameObject.layer = WeaponAttachedTo.wielder.gameObject.layer - 4;
-            _hook.transform.position = transform.position + transform.right * 3;
+            _hook.gameObject.layer = _player.gameObject.layer - 4;
+            _hook.transform.position = transform.position;
             _hook.body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * fireVelocity;
             state = 1;
         }
 
-        else if (state == 2){
+        else if (_hook.locked && state is 1 or 3){ // being sent out or retrieving so recall it
+            ResetHook();
+        }        
+        
+        else if (state == 1 && !_hook.locked){ // airborne and unlocked, lock
+            _hook.locked = true;
+        }
+        else if (state == 2){ // attached so recall it
             _hook.Disengage();
             state = 3;
         }
 
-        else if (state is 1 or 3){
-            ResetHook();
-        }
     }
 
     private void ResetHook(){
@@ -41,18 +46,25 @@ public class GrapplingHook : WeaponMod{
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
-        if (state == 3 && Vector2.Distance(_hook.transform.position, transform.position) < 3){
-            ResetHook();
-        }
 
-        if (state == 2){
+        if (state == 1 && Vector2.Distance(transform.position, _hook.transform.position) > 100){
+            _hook.Disengage();
+            state = 3;
+        }
+        
+        if (state == 2){ // attached and met with player
+            if (_player.body.velocity.magnitude > maximumVelocity){
+                _player.body.velocity = _player.body.velocity.normalized * maximumVelocity;
+            }
+            
             if (Vector2.Distance(_hook.transform.position, transform.position) < 3){
                 ResetHook();
-                WeaponAttachedTo.wielder.body.velocity = new Vector2(0, 50);
+                _player.body.velocity = new Vector2(0, 50);
             }
-            if (WeaponAttachedTo.body.velocity.magnitude > maximumVelocity){
-                WeaponAttachedTo.body.velocity = WeaponAttachedTo.body.velocity.normalized * maximumVelocity;
-            }
+        }
+
+        if (state == 3 && Vector2.Distance(_hook.transform.position, transform.position) < 3){ // reeling in, done reeling
+            ResetHook();
         }
     }
 
@@ -61,6 +73,8 @@ public class GrapplingHook : WeaponMod{
         _hook = Instantiate(hookPrefab);
         _hook.SetFirer(this);
         _hook.gameObject.SetActive(false);
+        _player = WeaponAttachedTo.wielder;
+        Collider2D c = _hook.GetComponent<Collider2D>();
     }
 
 }
