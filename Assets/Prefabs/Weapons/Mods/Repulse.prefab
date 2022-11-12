@@ -58,6 +58,10 @@ MonoBehaviour:
   audioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
+  maxCharge: 250
+  chargeRate: 1
+  chargeDrainPerFrame: 0
+  currentAbilityCharge: 0
   WeaponAttachedTo: {fileID: 0}
   velocity: 100
   particles: {fileID: 4620545236704175522}

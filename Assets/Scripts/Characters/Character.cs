@@ -98,7 +98,7 @@ public class Character : CustomObject{
             filter.SetLayerMask(LayerMask.GetMask("Ground", "Platform"));
             
             feetCollider.OverlapCollider(filter, output);
-            if (output[0] != null){
+            if (output[0] && output[0].attachedRigidbody && output[0].attachedRigidbody.sharedMaterial){
                 return output[0].attachedRigidbody.sharedMaterial;
             }
         }

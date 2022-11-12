@@ -10,8 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1531607718789705484}
   - component: {fileID: 5562803721871559341}
+  - component: {fileID: -7216889107686234663}
   - component: {fileID: 2492923907915423799}
-  m_Layer: 13
+  - component: {fileID: -3711108717417081040}
+  - component: {fileID: 8696970622866091933}
+  m_Layer: 11
   m_Name: Barrel Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +89,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7216889107686234663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169187686084840574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a952f555c0a9e634fb3a758240b3fbc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  body: {fileID: 0}
+  Collider: {fileID: 8696970622866091933}
+  spriteRenderer: {fileID: 5562803721871559341}
+  audioManager: {fileID: 0}
+  parent: {fileID: 0}
+  localPos: {x: 0, y: 0}
+  maxCharge: 500
+  chargeRate: 50
+  chargeDrainPerFrame: 2
+  currentAbilityCharge: 0
+  WeaponAttachedTo: {fileID: 0}
+  particles: {fileID: 1973478344644926874}
 --- !u!82 &2492923907915423799
 AudioSource:
   m_ObjectHideFlags: 0
@@ -182,6 +211,39 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-3711108717417081040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169187686084840574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 56c2fe81d899beb46a3cec750dc73482
+  hasSpawned: 0
+--- !u!70 &8696970622866091933
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3169187686084840574}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.09876393, y: -0.044219494}
+  m_Size: {x: 1.0306268, y: 4.4038315}
+  m_Direction: 0
 --- !u!1 &3587814605444383627
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +255,7 @@ GameObject:
   - component: {fileID: 6562954081757842022}
   - component: {fileID: 2338880709407409968}
   - component: {fileID: 1973478344644926874}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

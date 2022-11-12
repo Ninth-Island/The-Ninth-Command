@@ -145,6 +145,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: startingModPrefab
+      value: 
+      objectReference: {fileID: 3524952461939446922, guid: 3a97638e04f6ed3488e2129be8b0a14a,
+        type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: teamChargePerFrame
       value: 10
       objectReference: {fileID: 0}
