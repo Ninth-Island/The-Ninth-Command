@@ -93,9 +93,8 @@ public class CustomNetworkManager : NetworkManager{
         player.secondaryWeapon = sW;
         player.armorAbility = aa;
         player.primaryWeapon.weaponMod = wm;
-        wm.WeaponAttachedTo = player.primaryWeapon;
-        wm.parent = pW.transform;
-        player.InitializeEquipmentOnClient(pW, sW, aa, wm);
+        player.InitializeEquipmentOnClient(pW, sW, aa);
+        wm.ServerAssignToWeapon(pW);
         
         pW.StartCoroutine(pW.ServerInitializeEquipment(true, player, new []{1, 3}));
         sW.StartCoroutine(sW.ServerInitializeEquipment(false, player, new []{1, 3}));

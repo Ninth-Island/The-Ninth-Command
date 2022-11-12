@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
 public class WeaponMod : CustomObject{
@@ -23,6 +24,23 @@ public class WeaponMod : CustomObject{
 
     public virtual void WeaponModRelease(){
         
+    }
+
+    [Server]
+    public void ServerAssignToWeapon(BasicWeapon weapon){
+        AssignToWeaponClientRpc(weapon);
+        AssignWeapon(weapon);
+    }
+    
+    [ClientRpc]
+    private void AssignToWeaponClientRpc(BasicWeapon weapon){
+        AssignWeapon(weapon);}
+
+    private void AssignWeapon(BasicWeapon weapon){
+        weapon.weaponMod = this;
+        WeaponAttachedTo = weapon;
+        parent = weapon.transform;
+
     }
 
 

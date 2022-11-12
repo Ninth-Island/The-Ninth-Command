@@ -23,14 +23,14 @@ public class BasicWeapon : Weapon{
 
 
     public int zoomIncrements;
-    [FormerlySerializedAs("zoomPerIncrement")] [SerializeField] private float totalZoom;
+    [FormerlySerializedAs("zoomPerIncrement")] public float totalZoom;
 
     [SerializeField] private Transform lookAt;
     [HideInInspector] public float zoomPerIncrement;
     private CursorControl _cursorControl;
 
     [SerializeField] private int zoomInStartIndex;
-    private int _currentIncrement;
+    public int currentIncrement;
 
     private Camera _mainCam;
     
@@ -82,9 +82,9 @@ public class BasicWeapon : Weapon{
         if (activelyWielded){
             RefreshText();
 
-            if (_currentIncrement > 0){
+            if (currentIncrement > 0){
                 lookAt.position = _mainCam.ScreenToWorldPoint(Input.mousePosition);
-                float maxZoom = zoomPerIncrement * _currentIncrement;
+                float maxZoom = zoomPerIncrement * currentIncrement;
                 Vector2 position = wielder.transform.position;
                 lookAt.position = new Vector3(Mathf.Clamp(lookAt.position.x, position.x - maxZoom, position.x + maxZoom), Mathf.Clamp(lookAt.position.y, position.y - maxZoom, position.y + maxZoom));
             }
@@ -145,9 +145,9 @@ public class BasicWeapon : Weapon{
 
     public void Zoom(){
         if (zoomIncrements > 0){
-            _currentIncrement++;
+            currentIncrement++;
 
-            if (_currentIncrement > zoomIncrements){
+            if (currentIncrement > zoomIncrements){
                 ResetZoom();
             }
             else{
@@ -158,8 +158,8 @@ public class BasicWeapon : Weapon{
     }
 
     public void ResetZoom(){
-        if (zoomIncrements > 0 && _currentIncrement > 0){
-            _currentIncrement = 0;
+        if (zoomIncrements > 0 && currentIncrement > 0){
+            currentIncrement = 0;
             _cursorControl.ResetCamera();
             audioManager.PlaySound(zoomInStartIndex + 1);
         }

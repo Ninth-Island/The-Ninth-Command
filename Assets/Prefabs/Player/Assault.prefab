@@ -6297,7 +6297,7 @@ MonoBehaviour:
   armorAbility: {fileID: 0}
   defaultAbility: {fileID: -5922117739796507804, guid: 08cc0b92089b4b746ba8d2b2b9ccb75a,
     type: 3}
-  startingModPrefab: {fileID: 1256038031410700099, guid: 8ac7b1d3b09777a43a02f62c921d4ffe,
+  startingModPrefab: {fileID: 6984457187487644954, guid: de242b2d13d83ea43826c7a6b19b9e63,
     type: 3}
   _isArmorAbilitying: 0
   timeTillShieldRecharge: 200

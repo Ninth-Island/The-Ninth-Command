@@ -243,6 +243,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
         type: 3}
+      propertyPath: startingModPrefab
+      value: 
+      objectReference: {fileID: 2259981960893027435, guid: 021898f4662a0c547adb8dd0fe6851b5,
+        type: 3}
+    - target: {fileID: 3757039344788581443, guid: 75c82abd1998fe8449bac6b6751fb637,
+        type: 3}
       propertyPath: shieldRechargeRate
       value: 2
       objectReference: {fileID: 0}

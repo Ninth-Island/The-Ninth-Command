@@ -269,14 +269,12 @@ public partial class Player : Character{
     
 
     [ClientRpc]
-    public void InitializeEquipmentOnClient(BasicWeapon pW, BasicWeapon sW, ArmorAbility aa, WeaponMod wm){ // this is mostly for an edge case error
+    public void InitializeEquipmentOnClient(BasicWeapon pW, BasicWeapon sW, ArmorAbility aa){ // this is mostly for an edge case error
         primaryWeapon = pW;
         secondaryWeapon = sW;
         armorAbility = aa;
         primaryWeapon.activelyWielded = true;
         aa.wielder = this;
-        primaryWeapon.weaponMod = wm;
-        wm.WeaponAttachedTo = primaryWeapon;
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
     }
 }
