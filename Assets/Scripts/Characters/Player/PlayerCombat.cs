@@ -8,7 +8,7 @@ public partial class Player : Character{
     [Header("Combat")]
     [SerializeField] private int timeTillShieldRecharge;
     [SerializeField] private int shieldRechargeRate;
-    private bool _dead;
+    public bool dead;
     
     
     private int _timeLeftTillShieldRecharge;
@@ -178,7 +178,7 @@ public partial class Player : Character{
 
     //both
     private void Die(){
-        _dead = true;
+        dead = true;
         
         primaryWeapon.StopReloading();
         primaryWeapon.Drop();

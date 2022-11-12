@@ -38,7 +38,7 @@ public class Character : CustomObject{
 
     [HideInInspector] public int maxHealth; // for healthbar and respawns
     [HideInInspector] public int maxShield; // for shieldBar
-    [SerializeField] protected BoxCollider2D feetCollider; // for ground checks
+    public BoxCollider2D feetCollider; // for ground checks
     
     [SerializeField] protected Animator animator;
     
