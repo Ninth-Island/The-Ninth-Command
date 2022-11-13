@@ -96,11 +96,10 @@ GameObject:
   - component: {fileID: 8165445071144471525}
   - component: {fileID: 492353542676315269}
   - component: {fileID: 8165445071144471526}
-  - component: {fileID: 6443376113692937935}
   - component: {fileID: 492353542676315271}
   - component: {fileID: 8092386675953988467}
   - component: {fileID: 2684563168610617223}
-  - component: {fileID: 5559020643151988897}
+  - component: {fileID: 4369925418963565907}
   m_Layer: 13
   m_Name: Default
   m_TagString: Armor Ability
@@ -226,30 +225,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6443376113692937935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8165445071144471520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: 
-    clipsList: []
-    volume: 1
-    pitch: 1
-    spacialBlend: 1
-    priority: 128
-    waitTillNext: 0
-    loop: 0
-  newObjectSource: {fileID: 0}
-  source: {fileID: 0}
-  isPlayingCharging: 0
 --- !u!82 &492353542676315271
 AudioSource:
   m_ObjectHideFlags: 0
@@ -261,14 +236,14 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 0
+  Priority: 128
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -306,7 +281,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -397,7 +372,7 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
---- !u!114 &5559020643151988897
+--- !u!114 &4369925418963565907
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -406,7 +381,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8165445071144471520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 832f5b8644ecf2540b952e7213ee14ec, type: 3}
+  m_Script: {fileID: 11500000, guid: dc4d0f8cc66314448b5cdb18bdc6457d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
@@ -414,15 +389,15 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 8165445071144471525}
-  AudioManager: {fileID: 0}
+  audioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
   networkTransform: {fileID: 2684563168610617223}
-  abilityIndex: 0
   maxCharge: 0
   chargeRate: 0
   chargeDrainPerFrame: 0
   previewIcon: {fileID: 4858851235026530238}
   currentAbilityCharge: 0
   active: 0
+  source: {fileID: 492353542676315271}

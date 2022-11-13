@@ -11,33 +11,20 @@ public class CursorControl : MonoBehaviour{
 
     private Camera _mainCam;
     private Player _player;
-    private CinemachineVirtualCamera _vc;
     
 
     private void Awake(){
         _mainCam = Camera.main;
-        _vc = transform.parent.transform.GetChild(3).GetComponent<CinemachineVirtualCamera>();
 
         _player = transform.parent.GetComponent<Player>();
-
-
-
     }
 
-    public void CameraFollow(float multiplier, float zoomRange){
-        Vector2 playerPos = _player.transform.position;
-        zoomRange *= multiplier;
-        float x = Mathf.Clamp(GetMousePosition().x, playerPos.x - zoomRange, playerPos.x + zoomRange);
-        float y = Mathf.Clamp(GetMousePosition().y, playerPos.y - zoomRange, playerPos.y + zoomRange);
-        Vector2 pos = new Vector2(x, y);
-        transform.position = pos;
-        _vc.Follow = transform;
-
+    public void CameraFollow(Transform t){
+        _player.virtualCamera.Follow = t;
     }
 
     public void ResetCamera(){
-        _vc.Follow = _player.transform;
-        _vc.transform.position = _player.transform.position;
+        _player.virtualCamera.Follow = _player.transform;
     }
 
     public void SetCursorType(int type){ ;

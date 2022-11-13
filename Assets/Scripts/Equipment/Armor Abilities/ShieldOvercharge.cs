@@ -16,7 +16,6 @@ public class ShieldOvercharge : ArmorAbility
             active = true;
             if (isServer){
                 CreateFieldClientRpc(wielder.transform, fieldOffset, fieldScale, (float) maxCharge / (chargeDrainPerFrame * 50));
-                Debug.Log((float) maxCharge / (chargeDrainPerFrame * 50));
             }
 
         }
@@ -37,6 +36,12 @@ public class ShieldOvercharge : ArmorAbility
         field.transform.localScale = new Vector3(scale, scale);
         Destroy(field, time);
         
-        AudioManager.PlayNewSource(0, time);
+        source.Play();
+        StartCoroutine(StopSound(time));
+    }
+
+    private IEnumerator StopSound(float time){
+        yield return new WaitForSeconds(time);
+        source.Stop();
     }
 }

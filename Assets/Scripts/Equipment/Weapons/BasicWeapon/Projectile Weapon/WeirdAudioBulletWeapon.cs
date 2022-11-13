@@ -6,6 +6,6 @@ public class WeirdAudioBulletWeapon : BulletWeapon
 {
     protected override void HandleMagazineDecrement(){
         bulletsLeft--;
-        AudioManager.PlayRepeating(0);
+        audioManager.PlayRepeating(0);
     }
 }

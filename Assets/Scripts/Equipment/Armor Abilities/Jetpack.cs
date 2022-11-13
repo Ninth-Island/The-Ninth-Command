@@ -13,22 +13,21 @@ public class Jetpack : ArmorAbility
     private bool _finishedStartNoise;
 
     public override void ArmorAbilityReleased(){
-        AudioManager.source.Stop();
+        audioManager.source.Stop();
         jetpack.Stop();
-        AudioManager.PlaySound(2);
-        Debug.Log(2);
+        audioManager.PlaySound(2);
         _finishedStartNoise = false;
 
         CmdPlaySoundOnClients(0, 2);
     }
 
     public override void ArmorAbilityInstant(float angle){
-        AudioManager.source.Stop();
+        audioManager.source.Stop();
         jetpack.Play();
-        AudioManager.PlaySound(0);
+        audioManager.PlaySound(0);
         _finishedStartNoise = false;
         StartCoroutine(SetNextJetpackNoise());
-        CmdPlaySoundOnClients(1, 0);
+        if (isServer) CmdPlaySoundOnClients(1, 0);
     }
 
     public override void ArmorAbilityFixedUpdate(){
@@ -41,7 +40,7 @@ public class Jetpack : ArmorAbility
 
     protected override void AbilityActiveFixedUpdate(){
         if (_finishedStartNoise){
-            AudioManager.PlayLooping(1);
+            audioManager.PlayLooping(1);
             PlaySoundClientRpc(2, 1);
         }
 
@@ -64,23 +63,23 @@ public class Jetpack : ArmorAbility
     private void PlaySoundClientRpc(int type, int index){
         if (!hasAuthority){
             if (type == 0){
-                AudioManager.PlaySound(index);
-                AudioManager.source.Stop();
+                audioManager.PlaySound(index);
+                audioManager.source.Stop();
                 jetpack.Stop();
-                AudioManager.PlaySound(2);
+                audioManager.PlaySound(2);
                 _finishedStartNoise = false;
             }
 
             if (type == 1){
-                AudioManager.source.Stop();
+                audioManager.source.Stop();
                 jetpack.Play();
-                AudioManager.PlaySound(0);
+                audioManager.PlaySound(0);
                 _finishedStartNoise = false;
                 StartCoroutine(SetNextJetpackNoise());
             }
 
             if (type == 2){
-                AudioManager.PlayLooping(index);
+                audioManager.PlayLooping(index);
             }
         }
     }

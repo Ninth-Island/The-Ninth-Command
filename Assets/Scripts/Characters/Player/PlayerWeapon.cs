@@ -24,7 +24,7 @@ public partial class Player : Character{
     
     private float _lastArmAngle; // client only so barrel to mouse isn't constantly recalculated
     
-    
+
     #region Firing
 
     
@@ -85,6 +85,7 @@ public partial class Player : Character{
 
         secondaryWeapon.activelyWielded = false;
         secondaryWeapon.spriteRenderer.enabled = false;
+        secondaryWeapon.PutAway();
 
         _swappedWeapon = true;
         Invoke(nameof(ResetSwappedWeapon), 0.25f);
@@ -149,7 +150,7 @@ public partial class Player : Character{
                     SetArmType(newWeapon.armType);
                     HUDPickupWeapon(newWeapon);
 
-                    path = new[]{1, 3};
+                    path = new[]{0, 3};
 
                 }
                 else{
@@ -218,7 +219,7 @@ public partial class Player : Character{
         return ang;
     }
 
-    private float GetBarrelToMouseRotation(){
+    public float GetBarrelToMouseRotation(){
 
         if ((transform.position - _cursorControl.GetMousePosition()).magnitude < 14 || _armOverrideReloading || _isSprinting){
             return GetPlayerToMouseRotation();
@@ -251,6 +252,10 @@ public partial class Player : Character{
             _attemptingToFire = false;
             _firingAngle = 0;
         }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && !_isSprinting){
+            primaryWeapon.Zoom();
+        }
         
         ClientCheckSwap();
         CheckForPickup();
@@ -259,7 +264,7 @@ public partial class Player : Character{
 
     [Client]
     private void ClientWeaponControlStart(){
-        _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
+        _cursorControl = transform.GetChild(1).GetComponent<CursorControl>();
     }
     
 
@@ -270,7 +275,6 @@ public partial class Player : Character{
         armorAbility = aa;
         primaryWeapon.activelyWielded = true;
         aa.wielder = this;
-
         weaponImage.sprite = primaryWeapon.spriteRenderer.sprite;
     }
 }

@@ -61,7 +61,7 @@ public class CustomNetworkManager : NetworkManager{
             connectionToClient.identity.GetComponent<VirtualPlayer>().Respawn();
         }
 
-        yield return new WaitForSeconds(Time.fixedDeltaTime);
+        yield return new WaitForSeconds(2);
         FindObjectOfType<ModeManager>().AllPlayersReady();
         allPlayersReady = true;
     }
@@ -74,25 +74,30 @@ public class CustomNetworkManager : NetworkManager{
         BasicWeapon pW = Instantiate(player.primaryWeaponPrefab);
         BasicWeapon sW = Instantiate(player.secondaryWeaponPrefab);
         ArmorAbility aa = Instantiate(player.defaultAbility);
+        WeaponMod wm = Instantiate(player.startingModPrefab);
 
         // cuts "(clone)" off the end
         pW.name = pW.name.Remove(pW.name.Length - 7);
         sW.name = sW.name.Remove(sW.name.Length - 7);
         aa.name = aa.name.Remove(aa.name.Length - 7);
-
+        wm.name = wm.name.Remove(wm.name.Length - 7);
+        
         NetworkServer.Spawn(player.gameObject, connectionToClient);
         NetworkServer.Spawn(pW.gameObject, connectionToClient);
         NetworkServer.Spawn(sW.gameObject, connectionToClient);
         NetworkServer.Spawn(aa.gameObject, connectionToClient);
+        NetworkServer.Spawn(wm.gameObject, connectionToClient);
 
 
         player.primaryWeapon = pW;
         player.secondaryWeapon = sW;
         player.armorAbility = aa;
+        player.primaryWeapon.weaponMod = wm;
         player.InitializeEquipmentOnClient(pW, sW, aa);
-        
-        pW.StartCoroutine(pW.ServerInitializeEquipment(true, player, new []{1, 3}));
-        sW.StartCoroutine(sW.ServerInitializeEquipment(false, player, new []{1, 3}));
+        wm.ServerAssignToWeapon(pW);
+
+        pW.StartCoroutine(pW.ServerInitializeEquipment(true, player, new []{0, 3}));
+        sW.StartCoroutine(sW.ServerInitializeEquipment(false, player, new []{0, 3}));
         aa.StartCoroutine(aa.ServerInitializeEquipment(false, player, new []{0}));
         aa.netIdentity.AssignClientAuthority(player.connectionToClient);
         aa.HideOnStart();

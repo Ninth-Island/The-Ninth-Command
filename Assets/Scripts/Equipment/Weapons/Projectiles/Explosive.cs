@@ -121,15 +121,7 @@ public class Explosive : Projectile{
                 body.velocity = new Vector2(0, 0);
                 body.simulated = false;
             }
-            if (other.rigidbody && other.rigidbody.sharedMaterial){
-                if (other.rigidbody.sharedMaterial.name == "Metal"){
-                    AudioManager.PlayNewSource(1, -1);
-                }
-                else if (other.rigidbody.sharedMaterial.name == "Snow" || other.rigidbody.sharedMaterial.name == "Rock" ||
-                         other.rigidbody.sharedMaterial.name == "Grass"){
-                    AudioManager.PlayNewSource(2, -1);
-                }
-            }
+            
             if (impactGrenade){
                 Explode();
             }

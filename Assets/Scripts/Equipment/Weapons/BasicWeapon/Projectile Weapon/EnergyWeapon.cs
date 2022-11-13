@@ -36,7 +36,7 @@ public class EnergyWeapon : ProjectileWeapon{
                 base.HandleFiring(angle);
             }
             else{
-                AudioManager.PlayRepeating(3); // dryfire
+                audioManager.PlayRepeating(3); // dryfire
             }
         }
     }
@@ -54,7 +54,7 @@ public class EnergyWeapon : ProjectileWeapon{
             _heat = 0;
 
             _isCooling = false;
-            AudioManager.PlaySound(2);
+            audioManager.PlaySound(2);
             wielder.FinishReload();
         }
         
@@ -73,8 +73,8 @@ public class EnergyWeapon : ProjectileWeapon{
             _isCooling = true;
             wielder.Reload();
             
-            AudioManager.source.Stop();
-            AudioManager.source.pitch = 1;
+            audioManager.source.Stop();
+            audioManager.source.pitch = 1;
             base.Reload();
         }
     }
@@ -89,15 +89,15 @@ public class EnergyWeapon : ProjectileWeapon{
     protected override void HandleMagazineDecrement(){
         base.HandleMagazineDecrement();
         
-        AudioManager.source.pitch = 1 + (_heat / 75);
+        audioManager.source.pitch = 1 + (_heat / 75);
         _energy -= percentagePerShot;
         _heat += heatPerShot;
 
         if (_heat >= 100){
             _heat = 99.9f;
-            AudioManager.source.Stop();
-            AudioManager.source.pitch = 1;
-            AudioManager.PlaySound(1);
+            audioManager.source.Stop();
+            audioManager.source.pitch = 1;
+            audioManager.PlaySound(1);
             _isCooling = true;
         }
     }

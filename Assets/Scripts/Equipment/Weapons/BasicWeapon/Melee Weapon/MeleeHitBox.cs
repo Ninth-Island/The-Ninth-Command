@@ -4,21 +4,32 @@ using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
 
-public class MeleeHitBox : MonoBehaviour
-{
-    private void Start(){
-        gameObject.SetActive(false);
-    }
+public class MeleeHitBox : MonoBehaviour{
+    
+    [SerializeField] private MeleeWeapon parent;
 
-    public void SetLayer(int layer){
-        gameObject.layer = layer;
-    }
+    private void OnCollisionEnter2D(Collision2D other){
+        Player hit = other.gameObject.GetComponent<Player>();
+        if (!parent.isServer){
+            if (other.rigidbody && other.rigidbody.sharedMaterial){
+                if (other.rigidbody.sharedMaterial.name == "Metal"){
+                    parent.audioManager.PlaySound(4);
+                }
 
-    private void OnTriggerStay2D(Collider2D other){
-        Debug.Log(other.gameObject);
-    }
+                if (hit){
+                    parent.audioManager.PlaySound(3);
+                    gameObject.SetActive(false);
+                    Debug.Log("player");
+                }
+            }
+        }
 
-    private void OnTriggerEnter2D(Collider2D other){
-        OnTriggerStay2D(other);
+        else{
+            if (hit){
+                hit.Hit(parent.wielder, parent.damage, parent.transform.position, 0);
+                gameObject.SetActive(false);
+            }
+        }
     }
+    
 }

@@ -7,6 +7,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 492353542676315271, guid: 358c9033f288287428b8f2b067ff1497,
+        type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: ebc56e2ab1c97064dad13b307897d422, type: 3}
     - target: {fileID: 4858851235026530238, guid: 358c9033f288287428b8f2b067ff1497,
         type: 3}
       propertyPath: m_Sprite
@@ -96,7 +101,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1864086410138110621, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
     - {fileID: 5559020643151988897, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
+    - {fileID: 6443376113692937935, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
+    - {fileID: 4369925418963565907, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
+--- !u!82 &2062144532249272897 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 492353542676315271, guid: 358c9033f288287428b8f2b067ff1497,
+    type: 3}
+  m_PrefabInstance: {fileID: 1894614076883672774}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4542582316152199489 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2684563168610617223, guid: 358c9033f288287428b8f2b067ff1497,
@@ -144,16 +157,16 @@ MonoBehaviour:
   body: {fileID: 0}
   Collider: {fileID: 0}
   spriteRenderer: {fileID: 7717613339749963043}
-  AudioManager: {fileID: 0}
+  audioManager: {fileID: 0}
   parent: {fileID: 0}
   localPos: {x: 0, y: 0}
   wielder: {fileID: 0}
   networkTransform: {fileID: 4542582316152199489}
-  abilityIndex: 3
   maxCharge: 150
   chargeRate: 1
   chargeDrainPerFrame: 1
   previewIcon: {fileID: 6423573439719829880}
   currentAbilityCharge: 0
   active: 0
+  source: {fileID: 2062144532249272897}
   cloakedMoveSpeed: 30

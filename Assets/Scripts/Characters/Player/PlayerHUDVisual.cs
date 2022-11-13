@@ -52,21 +52,21 @@ public partial class Player : Character{
     public SpriteRenderer helmetRenderer;
     public SpriteRenderer visorRenderer;
 
-    private bool _armOverrideReloading;
+    [SyncVar] private bool _armOverrideReloading;
     //HUD
     private float _fadeTimer;
     private float fadeDelay = 50;
     private float fadeSpeed = 0.01f;
 
     private Camera _mainCamera;
-    private CinemachineVirtualCamera _virtualCamera;
+    public CinemachineVirtualCamera virtualCamera;
 
 
     protected override void Start(){
         base.Start();
-        _virtualCamera = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        virtualCamera = transform.GetChild(2).GetComponent<CinemachineVirtualCamera>();
         if (hasAuthority){
-            _virtualCamera.Priority = 10;
+            virtualCamera.Priority = 10;
         }
     }
 

@@ -13,7 +13,6 @@ public partial class Player : Character{
     private int _direction;
 
     private bool _hardLanding; // used for sound
-    
 
 
     [Client] // handles key presses like jumping and animations
@@ -29,6 +28,8 @@ public partial class Player : Character{
 
             if (Input.GetKeyDown(KeyCode.S)){
                 _isCrouching = !_isCrouching;
+
+                
                 ClientSetAnimatedBoolOnAll(_aNames.crouching, _isCrouching);
             }
 
@@ -94,6 +95,7 @@ public partial class Player : Character{
             }
             else{
                 if (_isSprinting){
+                    primaryWeapon.ResetZoom();
                     _attemptingToFire = false;
                     _firingAngle = 0;
                     body.velocity = new Vector2(moveSpeed * sprintAmplifier * input, body.velocity.y);
@@ -125,14 +127,14 @@ public partial class Player : Character{
     }
 
     private void RotateArm(float rotation){
-        if (!_armOverrideReloading && !_isSprinting){
+        if (!_armOverrideReloading){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
         }
         else{
-            arm.transform.localRotation = Quaternion.Euler(0, 0, -30);
+            arm.transform.rotation = Quaternion.Euler(0, 0, -30); // -30
             if (Mathf.Sign(transform.localScale.x) < 0){
-                arm.transform.rotation = Quaternion.Euler(0, 0, -150);
+                arm.transform.rotation = Quaternion.Euler(0, 0, -150); // -150
     
             }
             arm.transform.localScale = new Vector3(1, 1);

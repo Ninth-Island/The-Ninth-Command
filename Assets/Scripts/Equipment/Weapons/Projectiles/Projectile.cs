@@ -51,11 +51,11 @@ public class Projectile : CustomObject{
         gameObject.SetActive(false);
         if (other.rigidbody && other.rigidbody.sharedMaterial){
             if (other.rigidbody.sharedMaterial.name == "Metal"){
-                AudioManager.PlayNewSource(0, -1);
+                audioManager.PlayNewSource(0, -1);
             }
             else if (other.rigidbody.sharedMaterial.name == "Snow" || other.rigidbody.sharedMaterial.name == "Rock" ||
                      other.rigidbody.sharedMaterial.name == "Grass"){
-                AudioManager.PlayNewSource(1, -1);
+                audioManager.PlayNewSource(1, -1);
             }
         }
 

@@ -38,7 +38,7 @@ public class BulletWeapon : ProjectileWeapon{
             }
         }
         else{
-            AudioManager.PlayRepeating(3); // dryfire
+            audioManager.PlayRepeating(3); // dryfire
         }
     }
     
@@ -57,7 +57,7 @@ public class BulletWeapon : ProjectileWeapon{
 
 
         yield return new WaitForSeconds(reloadTime);
-        AudioManager.PlaySound(2);
+        audioManager.PlaySound(2);
         
         
         bulletsLeft = magazineSize;

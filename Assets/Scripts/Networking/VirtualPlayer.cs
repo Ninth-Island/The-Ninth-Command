@@ -24,7 +24,6 @@ public class VirtualPlayer : NetworkBehaviour{
     private CustomNetworkManager _networkManager;
     public List<TeammateHUDElements> Team = new List<TeammateHUDElements>();
 
-    private Material _outline;
 
     public string username;
     public Color[] colors;
@@ -233,15 +232,13 @@ public class VirtualPlayer : NetworkBehaviour{
 
         gameObject.name = setUsername;
         player.gameObject.name = setUsername;
-        Image bg = player.transform.GetChild(6).GetChild(0).GetComponent<Image>();
+        Image bg = player.transform.GetChild(4).GetChild(0).GetComponent<Image>();
         TextMeshProUGUI floatingName = bg.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         floatingName.text = setUsername;
 
 
-        _outline = noTeamMaterial;
         if (setTeamIndex > 6){
             player.SetLayer(LayerMask.NameToLayer("Team 2"));
-            _outline = redTeamMaterial;
             if (hasAuthority){
                 floatingName.color = Color.magenta;
             }
@@ -251,7 +248,6 @@ public class VirtualPlayer : NetworkBehaviour{
         }
         else if (setTeamIndex > 0){
             player.SetLayer(LayerMask.NameToLayer("Team 1"));
-            _outline = blueTeamMaterial;
             if (hasAuthority){
                 floatingName.color = Color.green;
             }

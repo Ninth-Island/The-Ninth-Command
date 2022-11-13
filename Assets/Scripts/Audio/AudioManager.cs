@@ -27,7 +27,6 @@ public class AudioManager : MonoBehaviour{
     [Client]
     public void PlaySound(int index){
         Sound sound = sounds[index];
-        SetSourceProperties(sound);
         source.PlayOneShot(sound.clipsList[Random.Range(0, sound.clipsList.Length)], sound.volume);
     }
 
@@ -45,7 +44,8 @@ public class AudioManager : MonoBehaviour{
         
         if (source.time >= sound.waitTillNext || !source.isPlaying){
             source.clip = sound.clipsList[Random.Range(0, sound.clipsList.Length)];
-            SetSourceProperties(sound);
+            source.volume = sound.volume;
+
             source.time = 0;
             source.Play();
         }
@@ -57,7 +57,8 @@ public class AudioManager : MonoBehaviour{
         if (!isPlayingCharging || !source.isPlaying){ // if anything on source
             isPlayingCharging = true;
             source.Stop();
-            SetSourceProperties(sound);
+            source.volume = sound.volume;
+
             source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
             source.timeSamples = (int)(source.clip.samples * Mathf.Clamp(time, 0, 0.99f));
             source.Play();
@@ -67,9 +68,10 @@ public class AudioManager : MonoBehaviour{
     [Client]
     public void PlayLooping(int index){
         Sound sound = sounds[index];
-        SetSourceProperties(sound);
+        
         if (!source.isPlaying || source.clip != sound.clipsList[0]){
-            SetSourceProperties(sound);
+            source.volume = sound.volume;
+
             source.clip = sound.clipsList[Random.Range(0, sounds[index].clipsList.Length)];
             source.time = 0f;
             source.Play();
@@ -94,14 +96,6 @@ public class AudioManager : MonoBehaviour{
         }
         
         Destroy(newSource.gameObject, time);
-    }
-
-    [Client]
-    private void SetSourceProperties(Sound sound){
-        source.volume = sound.volume;
-        source.pitch = sound.pitch;
-        source.priority = sound.priority;
-        source.spatialBlend = sound.spacialBlend;
     }
 
 }

@@ -16,6 +16,7 @@ public partial class Player : Character{
     
     public ArmorAbility armorAbility;
     public ArmorAbility defaultAbility;
+    public WeaponMod startingModPrefab;
     [HideInInspector] public bool _isArmorAbilitying; // for prolonged ones
     [HideInInspector] private bool _isModAbilitying;
     
@@ -54,43 +55,37 @@ public partial class Player : Character{
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse5)){
-            if (isClientOnly) ModAbilityInstant();
+        if (Input.GetKeyDown(KeyCode.Mouse4)){
+            if (isClientOnly && primaryWeapon.weaponMod){
+                primaryWeapon.weaponMod.WeaponModInstant();
+            }
             _currentInput.ModInput = true;
         }
 
-        if (Input.GetKey(KeyCode.Mouse5)){
+        if (Input.GetKey(KeyCode.Mouse4)){
             _currentInput.ModPressed = true;
         }
         
-        if (Input.GetKeyUp(KeyCode.Mouse5)){
+        if (Input.GetKeyUp(KeyCode.Mouse4) &&primaryWeapon.weaponMod){
+            primaryWeapon.weaponMod.WeaponModRelease();
             _currentInput.ModPressed = false;
         }
         abilityChargeSlider.value = (float) armorAbility.currentAbilityCharge / armorAbility.maxCharge;
     }
     
     
-    
-    private void ModAbilityInstant(){
-        Debug.Log("instant mod ability");
-    }
-
-    private void ModAbilityLong(){
-        if (_isModAbilitying){
-            Debug.Log("continous mod");
-        }
-    }
 
     private void ClientPlayerAbilitiesFixedUpdate(){
         if (isClientOnly){
             armorAbility.ArmorAbilityFixedUpdate();
-            ModAbilityLong();
+            if (primaryWeapon.weaponMod) primaryWeapon.weaponMod.WeaponModFixedUpdate();
+            
         }
     }
 
     private void ServerPlayerAbilitiesFixedUpdate(){
         armorAbility.ArmorAbilityFixedUpdate();
-        ModAbilityLong();
+        if (primaryWeapon.weaponMod) primaryWeapon.weaponMod.WeaponModFixedUpdate();
     }
 
 

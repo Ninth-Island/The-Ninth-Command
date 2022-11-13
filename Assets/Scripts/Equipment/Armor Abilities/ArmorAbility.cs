@@ -6,7 +6,6 @@ using UnityEngine;
 public class ArmorAbility : Equipment{
     
     [Header("Armor Ability")]
-    public int abilityIndex;
     public int maxCharge;
     public int chargeRate;
     public int chargeDrainPerFrame;
@@ -14,6 +13,8 @@ public class ArmorAbility : Equipment{
 
     [HideInInspector] public int currentAbilityCharge = 0;
     [HideInInspector] public bool active;
+
+    [SerializeField] protected AudioSource source;
     
     protected override void Pickup(Player player, int[] path){
         base.Pickup(player, path);
@@ -57,35 +58,14 @@ public class ArmorAbility : Equipment{
         }
     }
 
-
-    [Server]
-    public IEnumerator ServerInitializeArmorAbility(Player player, int[] path){
-        wielder = player;
-        netIdentity.AssignClientAuthority(player.connectionToClient);
-        ClientSetWielder(player);
-
-        yield return new WaitUntil(() => player.characterClientReady);
-        CancelPickup(player, path);
-        ClientInitializeEquipment(false, player, path);
-    }
-
     protected override void ClientInitializeEquipment(bool isThePrimaryWeapon, Player player, int[] path){
         base.ClientInitializeEquipment(isThePrimaryWeapon, player, path);
         spriteRenderer.enabled = false;
     }
 
-    protected void PlaySound(int index){
-        if (hasAuthority){
-            AudioManager.PlaySound(index);
-        }
-        if (isServer){
-            PlaySoundClientRpc(index);
-        }
-    }
-
     private void PlaySoundClientRpc(int index){
         if (!hasAuthority){
-            AudioManager.PlaySound(index);
+            audioManager.PlaySound(index);
         }
     }
 

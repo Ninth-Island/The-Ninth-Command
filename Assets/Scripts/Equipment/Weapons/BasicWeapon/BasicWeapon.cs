@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using Mirror;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BasicWeapon : Weapon{
 
@@ -13,16 +15,42 @@ public class BasicWeapon : Weapon{
     
     public Transform firingPoint;
     public bool activelyWielded = false;
+    public WeaponMod weaponMod;
+
+
     
+    [Header("Scope")]
+
+
+    public int zoomIncrements;
+    [FormerlySerializedAs("zoomPerIncrement")] public float totalZoom;
+
+    [SerializeField] private Transform lookAt;
+    [HideInInspector] public float zoomPerIncrement;
+    private CursorControl _cursorControl;
+
+    [SerializeField] private int zoomInStartIndex;
+    public int currentIncrement;
+
+    private Camera _mainCam;
+    
+    
+    public override void OnStartClient(){
+        base.OnStartClient();
+        zoomPerIncrement = totalZoom / zoomIncrements;
+        _mainCam = Camera.main;
+        
+    }
 
     public virtual void Ready(){
         activelyWielded = true;
-        AudioManager.PlaySound(2);
+        audioManager.PlaySound(2);
     }
 
     protected override void Pickup(Player player, int[] path){
         base.Pickup(player, path);
         Ready();
+        _cursorControl = player.transform.GetChild(1).GetComponent<CursorControl>();
     }
 
     [Command]
@@ -36,12 +64,13 @@ public class BasicWeapon : Weapon{
 
     
     protected virtual void HandleMagazineDecrement(){
-        AudioManager.PlaySound(0);
+        audioManager.PlaySound(0);
     }
 
 
     public virtual void StopReloading(){
         StopAllCoroutines();
+        ResetZoom();
     }
 
     protected virtual void RefreshText(){
@@ -53,12 +82,20 @@ public class BasicWeapon : Weapon{
         base.ClientUpdate();
         if (activelyWielded){
             RefreshText();
+
+            if (currentIncrement > 0){
+                lookAt.position = _mainCam.ScreenToWorldPoint(Input.mousePosition);
+                float maxZoom = zoomPerIncrement * currentIncrement;
+                Vector2 position = wielder.transform.position;
+                lookAt.position = new Vector3(Mathf.Clamp(lookAt.position.x, position.x - maxZoom, position.x + maxZoom), Mathf.Clamp(lookAt.position.y, position.y - maxZoom, position.y + maxZoom));
+            }
         }
     }
 
 
     public virtual void Reload(){
-        AudioManager.PlaySound(1);
+        audioManager.PlaySound(1);
+        ResetZoom();
     }
 
 
@@ -100,7 +137,35 @@ public class BasicWeapon : Weapon{
         wielder = null;
         activelyWielded = false;
         spriteRenderer.enabled = true;
+        ResetZoom();
     }
+
+    public virtual void PutAway(){
+        ResetZoom();
+    }
+
+    public void Zoom(){
+        if (zoomIncrements > 0){
+            currentIncrement++;
+
+            if (currentIncrement > zoomIncrements){
+                ResetZoom();
+            }
+            else{
+                _cursorControl.CameraFollow(lookAt);
+                audioManager.PlaySound(zoomInStartIndex);
+            }
+        }
+    }
+
+    public void ResetZoom(){
+        if (zoomIncrements > 0 && currentIncrement > 0){
+            currentIncrement = 0;
+            _cursorControl.ResetCamera();
+            audioManager.PlaySound(zoomInStartIndex + 1);
+        }
+    }
+
 
 }
 
