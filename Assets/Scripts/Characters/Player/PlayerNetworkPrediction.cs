@@ -43,7 +43,7 @@ public partial class Player : Character{
             armorAbility.ArmorAbilityInstant(playerInput.Angle);
         }
 
-        if (playerInput.ModInput){
+        if (playerInput.ModInput && primaryWeapon.weaponMod){
             primaryWeapon.weaponMod.WeaponModInstant();
         }
 
@@ -185,7 +185,7 @@ public partial class Player : Character{
             armorAbility.ArmorAbilityInstant(playerInput.Angle);
         }
 
-        if (playerInput.ModInput){
+        if (playerInput.ModInput && primaryWeapon.weaponMod){
             primaryWeapon.weaponMod.WeaponModInstant();
         }
     }

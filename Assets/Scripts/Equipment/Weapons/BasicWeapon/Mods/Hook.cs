@@ -13,6 +13,8 @@ public class Hook : MonoBehaviour{
     public bool locked;
 
     public float saveMovementSpeed;
+    
+    
     private void OnCollisionEnter2D(Collision2D col){
 
         if (_firer.state == 1){

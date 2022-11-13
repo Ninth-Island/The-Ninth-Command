@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8029821780861405343}
   - component: {fileID: 3499055300011938176}
-  - component: {fileID: 1082541672422344723}
   - component: {fileID: 5431902755575538573}
   - component: {fileID: 6320330960573486878}
   - component: {fileID: 7792789883980919747}
@@ -59,6 +58,7 @@ MonoBehaviour:
   maxCharge: 0
   chargeRate: 0
   chargeDrainPerFrame: 0
+  source: {fileID: 5431902755575538573}
   currentAbilityCharge: 0
   WeaponAttachedTo: {fileID: 0}
   hookPrefab: {fileID: 1762649770935901868, guid: d0e2bb38b45f2c84caa46ef73ca7708d,
@@ -66,40 +66,6 @@ MonoBehaviour:
   fireVelocity: 70
   maximumVelocity: 30
   state: 0
---- !u!114 &1082541672422344723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307336815688567874}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b682391531258b41ac0e05527ed7d71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sounds:
-  - name: Zoom In
-    clipsList:
-    - {fileID: 8300000, guid: dd03a370f0170a4499293d75f0d0a1a3, type: 3}
-    volume: 0.1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0.5
-    loop: 0
-  - name: Zoom Out
-    clipsList:
-    - {fileID: 8300000, guid: 21fd01b4201db5445b8e75ac7d2a3650, type: 3}
-    volume: 0.1
-    pitch: 1
-    spacialBlend: 0
-    priority: 0
-    waitTillNext: 0.5
-    loop: 0
-  newObjectSource: {fileID: 0}
-  source: {fileID: 0}
-  isPlayingCharging: 0
 --- !u!82 &5431902755575538573
 AudioSource:
   m_ObjectHideFlags: 0
@@ -110,7 +76,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d5ec268dc1272774cb7e2e44713cc3ba, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -123,7 +89,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -132,7 +98,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 1.1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -140,7 +106,7 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.4656372
       value: 0
       inSlope: 0
       outSlope: 0

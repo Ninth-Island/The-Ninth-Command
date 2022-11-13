@@ -10,33 +10,13 @@ public class Repulse : WeaponMod{
     [SerializeField] private PolygonCollider2D hitbox;
     
     protected override void OverrideInstant(){
-        On();
-        if (isServer){
-           ServerRunOnClients(); 
-        }
-    }
-
-    private void On(){
         hitbox.enabled = true;
         particles.Play();
         StartCoroutine(ResetHitbox());
         Active = false;
-        currentAbilityCharge = 0;
+        currentAbilityCharge = 0;    }
 
-    }
 
-    [Server]
-    private void ServerRunOnClients(){
-        ClientsRunClientRpc();
-    }
-
-    [ClientRpc]
-    private void ClientsRunClientRpc(){
-        if (!hasAuthority){
-            On();
-        }
-    }
-    
     private IEnumerator ResetHitbox(){
         yield return new WaitForSeconds(1);
         hitbox.enabled = false;

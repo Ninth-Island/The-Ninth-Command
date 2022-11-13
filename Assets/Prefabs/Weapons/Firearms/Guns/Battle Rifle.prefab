@@ -223,13 +223,13 @@ MonoBehaviour:
   cursorType: 1
   firingPoint: {fileID: 2845809631481835918}
   activelyWielded: 0
-  weaponMod: {fileID: 1256038031410700099, guid: 8ac7b1d3b09777a43a02f62c921d4ffe,
-    type: 3}
+  weaponMod: {fileID: 0}
   zoomIncrements: 2
   totalZoom: 50
   lookAt: {fileID: 7834559202079043702}
   zoomPerIncrement: 50
   zoomInStartIndex: 4
+  currentIncrement: 0
   shotDelay: 3
   salvoDelay: 30
   shotsPerSalvo: 3

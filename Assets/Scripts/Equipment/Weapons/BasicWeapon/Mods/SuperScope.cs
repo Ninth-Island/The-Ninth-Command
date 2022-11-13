@@ -45,6 +45,6 @@ public class SuperScope : WeaponMod{
     }
 
     public override void WeaponModFixedUpdate(){
-        
+        // no touchy, this servers a purpose being empty
     }
 }

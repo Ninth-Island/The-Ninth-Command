@@ -39,6 +39,7 @@ public class BasicWeapon : Weapon{
         base.OnStartClient();
         zoomPerIncrement = totalZoom / zoomIncrements;
         _mainCam = Camera.main;
+        
     }
 
     public virtual void Ready(){

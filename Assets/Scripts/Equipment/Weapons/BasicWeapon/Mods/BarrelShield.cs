@@ -7,53 +7,28 @@ public class BarrelShield : WeaponMod{
 
     [SerializeField] private ParticleSystem particles;
     protected override void OverrideInstant(){
-        On();
-        if (isServer){
-            ServerRunOnClients(true);
-        }
-    }
-
-    protected override void OutOfCharge(){
-        Off();
-        if (isServer){
-            ServerRunOnClients(false);
-        }
-    }
-
-    [Server]
-    private void ServerRunOnClients(bool on){
-        RunOnClientRpc(on);
-    }
-
-    [ClientRpc]
-    private void RunOnClientRpc(bool on){
-        if (!hasAuthority){
-            if (on){
-                On();
-            }
-            else{
-                Off();
-            }
-        }
-    }
-    
-    protected override void Start(){
-        base.Start();
-        Off();
-    }
-
-    private void On(){
         spriteRenderer.enabled = true;
         particles.Play();
         Collider.enabled = true;
         parent = WeaponAttachedTo.firingPoint;
+        localPos = new Vector2(-1, 0);
     }
 
-    private void Off(){
+    protected override void OutOfCharge(){
         spriteRenderer.enabled = false;
         particles.Stop();
-        Collider.enabled = false;
+        Collider.enabled = false;;
     }
+
+ 
+    
+    protected override void Start(){
+        base.Start();
+        spriteRenderer.enabled = false;
+        particles.Stop();
+        Collider.enabled = false;;
+    }
+
 }
 
 //https://www.youtube.com/watch?v=dnNCVcVS6uw&ab_channel=1MinuteUnity

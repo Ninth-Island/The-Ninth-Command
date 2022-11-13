@@ -12,21 +12,8 @@ public class HealingRay : WeaponMod{
     [SerializeField] private float amount;
     private bool _toggle;
     private int _framesToSwitch;
-    public override void WeaponModInstant(){
-        if (Active){
-            Active = false;
-            OutOfCharge();
-        }
-        else{
-            if (currentAbilityCharge > 0){
-                Active = true;
-            }
-        }
-        
-        
-    }
 
-    private void On(){
+    protected override void ModActiveFixedUpdate(){
         RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right* 3, transform.right, 600,
             LayerMask.GetMask("Team 1", "Team 2", "Team 3", "Team 4", "Ground"));
 
@@ -70,31 +57,13 @@ public class HealingRay : WeaponMod{
             _toggle = !_toggle;
         }
     }
-    
-    protected override void ModActiveFixedUpdate(){
-        On();
-        if (isServer){
-            ServerRunOnClients();
-        }
-    }
 
     protected override void OutOfCharge(){
         foreach (LineRenderer line in lines){
             line.enabled = false;
         }
     }
-
-    [Server]
-    private void ServerRunOnClients(){
-        RunOnClientsRpc();
-    }
-
-    [ClientRpc]
-    private void RunOnClientsRpc(){
-        if (!hasAuthority){
-            On();
-        }
-    }
+    
     protected override void Start(){
         base.Start();
 

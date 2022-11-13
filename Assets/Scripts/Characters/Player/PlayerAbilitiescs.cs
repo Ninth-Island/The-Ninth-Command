@@ -56,7 +56,9 @@ public partial class Player : Character{
 
 
         if (Input.GetKeyDown(KeyCode.Mouse4)){
-            if (isClientOnly) primaryWeapon.weaponMod.WeaponModInstant();
+            if (isClientOnly && primaryWeapon.weaponMod){
+                primaryWeapon.weaponMod.WeaponModInstant();
+            }
             _currentInput.ModInput = true;
         }
 
@@ -64,7 +66,7 @@ public partial class Player : Character{
             _currentInput.ModPressed = true;
         }
         
-        if (Input.GetKeyUp(KeyCode.Mouse4)){
+        if (Input.GetKeyUp(KeyCode.Mouse4) &&primaryWeapon.weaponMod){
             primaryWeapon.weaponMod.WeaponModRelease();
             _currentInput.ModPressed = false;
         }
@@ -76,13 +78,14 @@ public partial class Player : Character{
     private void ClientPlayerAbilitiesFixedUpdate(){
         if (isClientOnly){
             armorAbility.ArmorAbilityFixedUpdate();
-            primaryWeapon.weaponMod.WeaponModFixedUpdate();
+            if (primaryWeapon.weaponMod) primaryWeapon.weaponMod.WeaponModFixedUpdate();
+            
         }
     }
 
     private void ServerPlayerAbilitiesFixedUpdate(){
         armorAbility.ArmorAbilityFixedUpdate();
-        primaryWeapon.weaponMod.WeaponModFixedUpdate();
+        if (primaryWeapon.weaponMod) primaryWeapon.weaponMod.WeaponModFixedUpdate();
     }
 
 

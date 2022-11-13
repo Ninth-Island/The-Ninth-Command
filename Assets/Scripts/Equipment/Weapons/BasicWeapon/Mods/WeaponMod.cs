@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
@@ -9,22 +10,33 @@ public class WeaponMod : CustomObject{
     public int maxCharge;
     public int chargeRate;
     public int chargeDrainPerFrame;
+    [SerializeField] private AudioSource source;
     [HideInInspector] public int currentAbilityCharge = 0;
 
     public BasicWeapon WeaponAttachedTo;
     protected bool Active;
 
-    protected virtual void ModActiveFixedUpdate(){
+    protected override void Start(){
+        base.Start();
+        Actions = new Action[4];
+        Actions[0] = ModActiveFixedUpdate;
+        Actions[1] = OutOfCharge;
+        Actions[2] = OverrideInstant;
+        Actions[3] = PlaySound;
+    }
+
+
+    protected virtual void ModActiveFixedUpdate(){ // this gets run on client and server once per frame each if active
 
     }
 
     public virtual void WeaponModFixedUpdate(){
         if (Active){
-            ModActiveFixedUpdate();
+            RunOnBoth(0);
             currentAbilityCharge -= chargeDrainPerFrame;
             if (currentAbilityCharge <= 0){
                 Active = false;
-                OutOfCharge();
+                RunOnBoth(1);
             }
         }
         else{
@@ -32,10 +44,12 @@ public class WeaponMod : CustomObject{
         }
     }
 
-    public virtual void WeaponModInstant(){
+    public void WeaponModInstant(){
+        Debug.Log("instant");
         if (currentAbilityCharge >= maxCharge){
             Active = true;
-            OverrideInstant();
+            RunOnBoth(2);
+            RunOnBoth(3);
         }
     }
 
@@ -43,7 +57,7 @@ public class WeaponMod : CustomObject{
         
     }
 
-    protected virtual void OverrideInstant(){
+    protected virtual void OverrideInstant(){ // this gets run on client and server once each if enough energy
         
     }
 
@@ -68,6 +82,13 @@ public class WeaponMod : CustomObject{
 
     }
 
+    private void PlaySound(){
+        source.Stop();
+        source.Play();
+    }
 
-    
+
+
+
+
 }

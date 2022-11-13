@@ -6192,7 +6192,7 @@ PrefabInstance:
     - target: {fileID: -7010870354856890697, guid: 3430303231618d04287b1091953faffa,
         type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 57
+      value: 58
       objectReference: {fileID: 0}
     - target: {fileID: -7010870354856890697, guid: 3430303231618d04287b1091953faffa,
         type: 3}

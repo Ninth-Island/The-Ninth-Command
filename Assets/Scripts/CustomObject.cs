@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
+using Telepathy;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
@@ -19,6 +20,8 @@ public class CustomObject : NetworkBehaviour{
     public Vector2 localPos;
 
     private float _angle;
+
+    protected Action[] Actions;
 
 
     protected virtual void Start(){
@@ -96,6 +99,19 @@ public class CustomObject : NetworkBehaviour{
     protected IEnumerator ServerDestroy(GameObject obj, float time){
         yield return new WaitForSeconds(time);
         NetworkServer.Destroy(obj);
+    }
+
+
+    protected void RunOnBoth(int actionIndex){
+        Actions[actionIndex].Invoke();
+        if (isServer){
+            ClientRpc(actionIndex);
+        }
+    }
+
+    [ClientRpc]
+    private void ClientRpc(int actionIndex){
+        if (!hasAuthority) Actions[actionIndex].Invoke();
     }
   
 
