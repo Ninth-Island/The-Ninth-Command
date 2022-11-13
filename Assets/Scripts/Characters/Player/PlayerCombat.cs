@@ -38,6 +38,8 @@ public partial class Player : Character{
     
     [Server]
     public override void Hit(Player killer, int damage, Vector3 position, float angle){
+        if (damage == 0)return;
+        
         bool shieldBreak = false;
         if (damage < 0){
             shield -= damage;
@@ -189,7 +191,6 @@ public partial class Player : Character{
         armorAbility.StopAllCoroutines();
         armorAbility.Drop();
         gameObject.layer = LayerMask.NameToLayer("Dead Player");
-        FeetCollider.gameObject.layer = LayerMask.NameToLayer("Dead Player");
     }
 
     [Command]

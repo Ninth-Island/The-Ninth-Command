@@ -61,7 +61,7 @@ public class CustomNetworkManager : NetworkManager{
             connectionToClient.identity.GetComponent<VirtualPlayer>().Respawn();
         }
 
-        yield return new WaitForSeconds(Time.fixedDeltaTime);
+        yield return new WaitForSeconds(2);
         FindObjectOfType<ModeManager>().AllPlayersReady();
         allPlayersReady = true;
     }
@@ -96,8 +96,8 @@ public class CustomNetworkManager : NetworkManager{
         player.InitializeEquipmentOnClient(pW, sW, aa);
         wm.ServerAssignToWeapon(pW);
 
-        pW.StartCoroutine(pW.ServerInitializeEquipment(true, player, new []{1, 3}));
-        sW.StartCoroutine(sW.ServerInitializeEquipment(false, player, new []{1, 3}));
+        pW.StartCoroutine(pW.ServerInitializeEquipment(true, player, new []{0, 3}));
+        sW.StartCoroutine(sW.ServerInitializeEquipment(false, player, new []{0, 3}));
         aa.StartCoroutine(aa.ServerInitializeEquipment(false, player, new []{0}));
         aa.netIdentity.AssignClientAuthority(player.connectionToClient);
         aa.HideOnStart();

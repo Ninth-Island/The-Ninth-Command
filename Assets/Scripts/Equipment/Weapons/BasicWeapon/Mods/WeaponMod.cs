@@ -45,7 +45,6 @@ public class WeaponMod : CustomObject{
     }
 
     public void WeaponModInstant(){
-        Debug.Log("instant");
         if (currentAbilityCharge >= maxCharge){
             Active = true;
             RunOnBoth(2);

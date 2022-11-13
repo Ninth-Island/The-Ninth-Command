@@ -12,7 +12,7 @@ public class SuperScope : WeaponMod{
     [SerializeField] private Transform endpoint;
 
     private Camera _mainCam;
-    
+    private int _framesTillClickAgain;
     protected override void Start(){
         base.Start();
         WeaponAttachedTo.zoomIncrements = zoomIncrementsOverride;
@@ -23,7 +23,10 @@ public class SuperScope : WeaponMod{
     }
 
     protected override void OverrideInstant(){
-        _lineRenderer.enabled = !_lineRenderer.enabled;
+        if (_framesTillClickAgain <= 0){
+            _lineRenderer.enabled = !_lineRenderer.enabled;
+            _framesTillClickAgain = 12;
+        }
     }
 
     protected override void Update(){
@@ -46,5 +49,6 @@ public class SuperScope : WeaponMod{
 
     public override void WeaponModFixedUpdate(){
         // no touchy, this servers a purpose being empty
+        _framesTillClickAgain--;
     }
 }

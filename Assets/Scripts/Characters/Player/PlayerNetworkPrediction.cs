@@ -59,14 +59,14 @@ public partial class Player : Character{
                 playerInput.OldEquipment.netIdentity.RemoveClientAuthority();
                 int[] path = {0};
                 if (playerInput.PickUpType == 0){
-                    path = new[]{1, 3};
+                    path = new[]{0, 3};
                 }
                 playerInput.PickedUp.SwapTo(this, playerInput.OldEquipment, path);
 
                 PlayerPickUpEquipmentClientRpc(playerInput.PickedUp, playerInput.OldEquipment, playerInput.PickUpType);
             }
             else{
-                playerInput.OldEquipment.CancelPickup(this, new[]{1, 3});
+                playerInput.OldEquipment.CancelPickup(this, new[]{0, 3});
             }
         
         }
@@ -82,7 +82,7 @@ public partial class Player : Character{
                 FinishReload();
                 SetArmType(((BasicWeapon) newEquipment).armType);
 
-                path = new[]{1, 3};
+                path = new[]{0, 3};
             }
             newEquipment.SwapTo(this, oldEquipment, path);
         }
@@ -98,13 +98,13 @@ public partial class Player : Character{
     // shorthand since all arguments are same. Sends all current information after physics solve it to all clients
     [Server]
     private void ServerOverrideActualValuesForClients(){
-        SetClientValuesRpc(transform.position, transform.rotation, transform.localScale, _lastInput.ArmRotationInput, body.velocity, armorAbility.currentAbilityCharge, _lastInput.RequestNumber);
+        SetClientValuesRpc(transform.position, transform.rotation, _lastInput.ArmRotationInput, body.velocity, _isSprinting, armorAbility.currentAbilityCharge, _lastInput.RequestNumber);
     }
 
     
     // the clients receive the information and update themselves accordingly
     [ClientRpc]
-    private void SetClientValuesRpc(Vector3 position, Quaternion rotation, Vector3 scale, float armRotation, Vector2 velocity, int currentAbilityCharge, int requestCounter){
+    private void SetClientValuesRpc(Vector3 position, Quaternion rotation, float armRotation, Vector2 velocity, bool isSprinting, int currentAbilityCharge, int requestCounter){
 
         // if its too far away (simulation lost track then dead reckon it
         // the simulation breaks down at high velocities which occasionally occur
@@ -112,6 +112,9 @@ public partial class Player : Character{
             transform.position = position;
         }
 
+        /*if (!hasAuthority){
+            _isSprinting = isSprinting;
+        }*/
         transform.rotation = rotation;
         RotateArm(armRotation); // fancier way of doing scale
         body.velocity = velocity;

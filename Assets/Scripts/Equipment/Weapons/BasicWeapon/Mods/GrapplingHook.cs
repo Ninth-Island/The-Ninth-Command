@@ -9,31 +9,34 @@ public class GrapplingHook : WeaponMod{
     
     public int state; // 0 withdrawn, 1 in air, 2 is attached, 3 is retrieving;
     private Hook _hook;
-    private Player _player;
+    private Player _player;    
+    private int _framesTillClickAgain;
+
     
     protected override void OverrideInstant(){
+        if (_framesTillClickAgain <= 0){
+            _framesTillClickAgain = 12;
+            if (state == 0){
+                float angle = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+                _hook.gameObject.SetActive(true);
+                _hook.gameObject.layer = _player.gameObject.layer - 4;
+                _hook.transform.position = transform.position;
+                _hook.body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * fireVelocity;
+                state = 1;
+            }
 
-        if (state == 0){
-            float angle = transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-            _hook.gameObject.SetActive(true);
-            _hook.gameObject.layer = _player.gameObject.layer - 4;
-            _hook.transform.position = transform.position;
-            _hook.body.velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * fireVelocity;
-            state = 1;
-        }
+            else if (_hook.locked && state is 1 or 3){ // being sent out or retrieving so recall it
+                ResetHook();
+            }
 
-        else if (_hook.locked && state is 1 or 3){ // being sent out or retrieving so recall it
-            ResetHook();
-        }        
-        
-        else if (state == 1 && !_hook.locked){ // airborne and unlocked, lock
-            _hook.locked = true;
+            else if (state == 1 && !_hook.locked){ // airborne and unlocked, lock
+                _hook.locked = true;
+            }
+            else if (state == 2){ // attached so recall it
+                _hook.Disengage();
+                state = 3;
+            }
         }
-        else if (state == 2){ // attached so recall it
-            _hook.Disengage();
-            state = 3;
-        }
-
     }
 
     private void ResetHook(){
@@ -46,7 +49,7 @@ public class GrapplingHook : WeaponMod{
 
     protected override void FixedUpdate(){
         base.FixedUpdate();
-
+        _framesTillClickAgain--;
         if (state == 1 && Vector2.Distance(transform.position, _hook.transform.position) > 100){
             _hook.Disengage();
             state = 3;

@@ -13,7 +13,7 @@ public class Commands : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.I)){
-            Time.timeScale = 4;
+            Time.timeScale *= 4;
         }
     }
 }

@@ -50,7 +50,7 @@ public class BasicWeapon : Weapon{
     protected override void Pickup(Player player, int[] path){
         base.Pickup(player, path);
         Ready();
-        _cursorControl = player.transform.GetChild(3).GetComponent<CursorControl>();
+        _cursorControl = player.transform.GetChild(1).GetComponent<CursorControl>();
     }
 
     [Command]

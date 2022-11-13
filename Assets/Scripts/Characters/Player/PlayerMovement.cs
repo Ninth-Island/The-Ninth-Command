@@ -127,7 +127,7 @@ public partial class Player : Character{
     }
 
     private void RotateArm(float rotation){
-        if (!_armOverrideReloading && !_isSprinting){
+        if (!_armOverrideReloading){
             arm.transform.rotation = Quaternion.Euler(0, 0, rotation);
             arm.transform.localScale = new Vector3(1, 1);
         }

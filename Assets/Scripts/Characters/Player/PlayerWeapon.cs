@@ -150,7 +150,7 @@ public partial class Player : Character{
                     SetArmType(newWeapon.armType);
                     HUDPickupWeapon(newWeapon);
 
-                    path = new[]{1, 3};
+                    path = new[]{0, 3};
 
                 }
                 else{
@@ -264,7 +264,7 @@ public partial class Player : Character{
 
     [Client]
     private void ClientWeaponControlStart(){
-        _cursorControl = transform.GetChild(3).GetComponent<CursorControl>();
+        _cursorControl = transform.GetChild(1).GetComponent<CursorControl>();
     }
     
 

@@ -52,7 +52,7 @@ public partial class Player : Character{
     public SpriteRenderer helmetRenderer;
     public SpriteRenderer visorRenderer;
 
-    private bool _armOverrideReloading;
+    [SyncVar] private bool _armOverrideReloading;
     //HUD
     private float _fadeTimer;
     private float fadeDelay = 50;
@@ -64,7 +64,7 @@ public partial class Player : Character{
 
     protected override void Start(){
         base.Start();
-        virtualCamera = transform.GetChild(4).GetComponent<CinemachineVirtualCamera>();
+        virtualCamera = transform.GetChild(2).GetComponent<CinemachineVirtualCamera>();
         if (hasAuthority){
             virtualCamera.Priority = 10;
         }
