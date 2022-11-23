@@ -26,7 +26,7 @@ public class CustomNetworkManager : NetworkManager{
     public override void OnServerAddPlayer(NetworkConnectionToClient conn){
         base.OnServerAddPlayer(conn);
         string sceneName = SceneManager.GetActiveScene().name;
-        
+        Debug.Log(sceneName);
         // if in the lobby, spawn a lobby character
         if (sceneName == "Lobby"){
             LobbyPlayer lobbyPlayer = Instantiate(lobbyPlayerPrefab, new Vector3(10000, 10000, 0), Quaternion.identity, FindObjectOfType<Canvas>().transform).GetComponent<LobbyPlayer>();
@@ -136,7 +136,4 @@ public class CustomNetworkManager : NetworkManager{
     public void NetworkManagerSetTeamIndex(NetworkConnectionToClient connectionToClient, int teamIndex){
         TeamIndices[connectionToClient] = teamIndex;
     }
-    
-    
-
 }

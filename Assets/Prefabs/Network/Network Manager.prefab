@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1652111373552010658}
   - component: {fileID: -7010870354856890697}
   - component: {fileID: 3031169701325222882}
-  - component: {fileID: 1265421806}
   m_Layer: 0
   m_Name: Network Manager
   m_TagString: Untagged
@@ -84,8 +83,10 @@ MonoBehaviour:
   - {fileID: 2121412993837453779, guid: 437307c02a382654280a2fbb6e29d28d, type: 3}
   - {fileID: 7220625419050319213, guid: 10088a89e838baf4d822fda5e60b5453, type: 3}
   - {fileID: 8546548626594045350, guid: ed1810f6f09d7a347baa4a37385093f1, type: 3}
+  - {fileID: 4057086638289053943, guid: 7118adeca38e5974ea557ac518d35b79, type: 3}
   - {fileID: 4057086638289053943, guid: 04ad472fce1b74f46bd06435b409aac2, type: 3}
-  - {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}
+  - {fileID: 1496579141962401941, guid: 3467a872d08d2d047860df431af5f1b9, type: 3}
+  - {fileID: 272140532128219913, guid: aeba401409e210447be75da4483a26be, type: 3}
   - {fileID: 5345319634674317825, guid: 203d132244d00ae489e3c060dad9bbad, type: 3}
   - {fileID: 5374961542717239271, guid: 2aff23bcecfd01c41b133666a820be2b, type: 3}
   - {fileID: 5374961542717239271, guid: 923d37021f28fd641968c6f282acd0ce, type: 3}
@@ -99,6 +100,25 @@ MonoBehaviour:
   - {fileID: 5345319634674317825, guid: a5e346698f139244bae37bc256db2ada, type: 3}
   - {fileID: 5345319634674317825, guid: 2adc6301e3659ab4cace4d850949fdac, type: 3}
   - {fileID: 5345319634674317825, guid: 65a6ce50721afb1468cbad81e10bea87, type: 3}
+  - {fileID: 5345319634674317825, guid: 2d6844bcd20bf80458578a988d600cb6, type: 3}
+  - {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637, type: 3}
+  - {fileID: 1159809310353494809, guid: e669cd9e63d516d4ea308052a1dd9e2a, type: 3}
+  - {fileID: 4188153754483526395, guid: 127427234d8057945ab5a61883bb3ec2, type: 3}
+  - {fileID: 5774716353924859426, guid: a1435836371682948ba752abae1ad162, type: 3}
+  - {fileID: 1936347390239665945, guid: 34d7c8a81a601f54786052209689ac95, type: 3}
+  - {fileID: 8165445071144471520, guid: 358c9033f288287428b8f2b067ff1497, type: 3}
+  - {fileID: 7700513239389294378, guid: 08cc0b92089b4b746ba8d2b2b9ccb75a, type: 3}
+  - {fileID: 6976198174827132709, guid: aff11a6dd0d2eb14f9892655c3d6f182, type: 3}
+  - {fileID: 6755872349672494491, guid: 3370ca87095d60f4583caea9fb191030, type: 3}
+  - {fileID: 7717613339749963046, guid: 09c2369a8ce84c54c91d2674f29ba480, type: 3}
+  - {fileID: 1436069388145084008, guid: e7aa80cdde9601e46b973514af69d683, type: 3}
+  - {fileID: 723640877219158670, guid: 8ac7b1d3b09777a43a02f62c921d4ffe, type: 3}
+  - {fileID: 1307336815688567874, guid: de242b2d13d83ea43826c7a6b19b9e63, type: 3}
+  - {fileID: 3169187686084840574, guid: 56c2fe81d899beb46a3cec750dc73482, type: 3}
+  - {fileID: 1307336815688567874, guid: 3a97638e04f6ed3488e2129be8b0a14a, type: 3}
+  - {fileID: 1307336815688567874, guid: 5314d1b53f827444dbd8cc2a0df5c3cf, type: 3}
+  - {fileID: 1307336815688567874, guid: 021898f4662a0c547adb8dd0fe6851b5, type: 3}
+  - {fileID: 0}
   lobbyPlayerPrefab: {fileID: 1701726687958807885, guid: 6c1e23be0b171e6439237a954765832b,
     type: 3}
   gamePlayerPrefab: {fileID: 3757039344788581446, guid: 75c82abd1998fe8449bac6b6751fb637,
@@ -133,25 +153,6 @@ MonoBehaviour:
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
---- !u!114 &1265421806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1652111373552010671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96b149f511061407fb54895c057b7736, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wrap: {fileID: 3031169701325222882}
-  latencySpikeMultiplier: 1
-  latencySpikeSpeedMultiplier: 2
-  reliableLatency: 1
-  unreliableLoss: 0
-  unreliableLatency: 0
-  unreliableScramble: 0
 --- !u!1001 &6269608958674507674
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,6 +163,14 @@ PrefabInstance:
     - target: {fileID: 132536, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_Name
       value: IngameDebugConsole
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414302, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+      propertyPath: m_Size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11414302, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+      propertyPath: m_Value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11452418, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: captureLogTimestamps
@@ -177,7 +186,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 22400762, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 22426080, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
       propertyPath: m_AnchorMax.x

@@ -57055,10 +57055,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 710222585207898984, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4499204349179261701, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
         type: 3}
       propertyPath: m_Name
       value: ModeManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7381229975736006871, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678152061848231953, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
+        type: 3}
+      propertyPath: timeLeft
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 8797730648896006403, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
         type: 3}

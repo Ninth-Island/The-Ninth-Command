@@ -25,13 +25,10 @@ public class GrapplingHook : WeaponMod{
                 state = 1;
             }
 
-            else if (_hook.locked && state is 1 or 3){ // being sent out or retrieving so recall it
+            else if (state is 1 or 3){ // being sent out or retrieving so recall it
                 ResetHook();
             }
-
-            else if (state == 1 && !_hook.locked){ // airborne and unlocked, lock
-                _hook.locked = true;
-            }
+            
             else if (state == 2){ // attached so recall it
                 _hook.Disengage();
                 state = 3;

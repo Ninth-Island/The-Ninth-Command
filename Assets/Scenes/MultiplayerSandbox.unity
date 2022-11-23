@@ -1072,7 +1072,12 @@ PrefabInstance:
     - target: {fileID: 7678152061848231953, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
         type: 3}
       propertyPath: maxScore
-      value: 50
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7678152061848231953, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
+        type: 3}
+      propertyPath: timeLeft
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 8797730648896006403, guid: 8e4d3ad7b8cf6d44d949a0042864f514,
         type: 3}
