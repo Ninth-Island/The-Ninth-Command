@@ -260,7 +260,7 @@ public class VirtualPlayer : NetworkBehaviour{
         player.HUDPickupWeapon(player.primaryWeapon);
         player.weaponImage.sprite = player.primaryWeapon.spriteRenderer.sprite;
         Transform sprites = gamePlayer.transform.GetChild(1);
-
+        
         player.bodyRenderer.color = setColors[3]; // body
         player.armRenderer.color = setColors[2]; // arms armed
         player.helmetRenderer.color = setColors[1]; // helmet

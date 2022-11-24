@@ -10,7 +10,6 @@ public class Hook : MonoBehaviour{
     private Player _player;
     [SerializeField] private LineRenderer lineRenderer;
 
-    public bool locked;
 
     public float saveMovementSpeed;
     
@@ -25,12 +24,9 @@ public class Hook : MonoBehaviour{
 
             springJoint.enabled = true;
             springJoint.connectedBody = _player.body;
-            if (locked){
-                springJoint.distance = Vector2.Distance(transform.position, _player.transform.position);
-            }
-            else{
-                springJoint.distance = 0;    
-            }
+            
+            springJoint.distance = 0;    
+            
             saveMovementSpeed = _player.moveSpeed;
             _player.moveSpeed = 0;
         }
@@ -47,7 +43,6 @@ public class Hook : MonoBehaviour{
     public void ResetHook(){
         _player.moveSpeed = saveMovementSpeed;
         springJoint.enabled = false;
-        locked = false;
     }
 
     private void FixedUpdate(){
