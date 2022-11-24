@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3079159524513522883}
   - component: {fileID: 3079159524513522882}
-  - component: {fileID: 3079159524513522881}
-  - component: {fileID: 513830963617736397}
   m_Layer: 17
   m_Name: Tent
   m_TagString: Untagged
@@ -87,62 +85,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3079159524513522881
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3079159524513522887}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 01c9ac2c2a68ec5469f41f40987b1703, type: 2}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!60 &513830963617736397
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3079159524513522887}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 25, y: 12.5}
-    newSize: {x: 25, y: 12.5}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 6.2027197, y: 2.5219789}
-      - {x: 2.7567983, y: 3.8327796}
-      - {x: -2.954457, y: 3.7584596}
-      - {x: -6.1537776, y: 2.6385198}
-      - {x: -7.937615, y: 1.0793039}
-      - {x: -10.008459, y: -2.1351204}
-      - {x: -10.008459, y: -3.7212996}
-      - {x: 9.920619, y: -3.7770395}
-      - {x: 9.864879, y: -2.0388212}
-      - {x: 8.160499, y: 0.67061925}
-    - - {x: -3.375, y: -3}
-      - {x: 3.5, y: -3.25}
-      - {x: -3.625, y: -3.25}
