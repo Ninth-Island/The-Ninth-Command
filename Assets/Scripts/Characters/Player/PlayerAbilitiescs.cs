@@ -55,18 +55,18 @@ public partial class Player : Character{
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Mouse4)){
+        if (Input.GetKeyDown(KeyCode.G)){
             if (isClientOnly && primaryWeapon.weaponMod){
                 primaryWeapon.weaponMod.WeaponModInstant();
             }
             _currentInput.ModInput = true;
         }
 
-        if (Input.GetKey(KeyCode.Mouse4)){
+        if (Input.GetKey(KeyCode.G)){
             _currentInput.ModPressed = true;
         }
         
-        if (Input.GetKeyUp(KeyCode.Mouse4) &&primaryWeapon.weaponMod){
+        if (Input.GetKeyUp(KeyCode.G) &&primaryWeapon.weaponMod){
             primaryWeapon.weaponMod.WeaponModRelease();
             _currentInput.ModPressed = false;
         }

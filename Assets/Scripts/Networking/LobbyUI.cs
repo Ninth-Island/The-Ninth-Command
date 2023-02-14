@@ -153,6 +153,7 @@ public class LobbyUI : MonoBehaviour{
                 button.transform.GetChild(0).GetComponent<TMP_Text>().text = "Ready";
             }
             else{
+                Debug.Log(_mapChoice);
                 _networkManager.ServerChangeScene(mapNames[_mapChoice]);
             }
         }

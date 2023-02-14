@@ -127,8 +127,15 @@ public partial class Player : Character{
     private void ManageHealthShieldSfx(bool shieldRegening){
         
         if (!shieldRegening){
-            audioManager.isPlayingCharging = false;
-            
+            // so for some reason this was null for one day and caused the client to crash on deaths, but it stopped happening so *Shrugs*
+            //Debug.Log(audioManager);
+            try{
+                audioManager.isPlayingCharging = false;
+
+            }
+            catch{
+                
+            }
             if (shield < maxShield / 3){ // warning beeping
                 audioManager.PlaySound(23);
                 _stoppedAudio = false;

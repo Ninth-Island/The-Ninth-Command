@@ -15999,10 +15999,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 4c7a7e8eb5885694ba26cecfd8d2214d, type: 3}
   - {fileID: 21300000, guid: 1dd0b81cfbf8611418a6bf81c970b07d, type: 3}
   - {fileID: 21300000, guid: 496539cd5407a8e43b3652697f88b561, type: 3}
+  - {fileID: 21300000, guid: e81805a8c507c9f408ced5ad8661c09a, type: 3}
   mapNames:
-  - Map1
+  - Tower
   - MultiplayerSandbox
   - Towers and Pits
+  - Strongholds
   mapPreview: {fileID: 6788305270097585921}
 --- !u!82 &1460033405
 AudioSource:

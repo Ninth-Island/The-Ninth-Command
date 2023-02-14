@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Towers and Pits.unity
     guid: 3bebd670dbf12494b8363b70f9155030
+  - enabled: 1
+    path: Assets/Scenes/Strongholds.unity
+    guid: 6adc5a61913c69e46b775e9e4f1f7e38
   m_configObjects: {}

@@ -4274,7 +4274,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: 127.1.0.1
+  m_Text: "50.39.110.87\r"
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -6151,6 +6151,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7010870354856890697, guid: 3430303231618d04287b1091953faffa,
         type: 3}
+      propertyPath: transport
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -7010870354856890697, guid: 3430303231618d04287b1091953faffa,
+        type: 3}
       propertyPath: spawnPrefabs.Array.size
       value: 61
       objectReference: {fileID: 0}
@@ -6424,6 +6429,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Network Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 3031169701325222882, guid: 3430303231618d04287b1091953faffa,
+        type: 3}
+      propertyPath: Timeout
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 6060756851077496690, guid: 3430303231618d04287b1091953faffa,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -6554,6 +6564,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6269608958687749754, guid: 3430303231618d04287b1091953faffa,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6269608958687750818, guid: 3430303231618d04287b1091953faffa,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -6640,6 +6655,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6269608958687827542, guid: 3430303231618d04287b1091953faffa,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6269608958687926624, guid: 3430303231618d04287b1091953faffa,
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0

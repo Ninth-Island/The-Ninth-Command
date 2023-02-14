@@ -33,7 +33,9 @@ public class CustomNetworkManager : NetworkManager{
             conn.identity.GetComponent<VirtualPlayer>().SetLobbyPlayer(lobbyPlayer);
 
             NetworkServer.Spawn(lobbyPlayer.gameObject, conn);
-
+            
+            
+            
             //default colors
             _colors.Add(conn, new[]{new Color(1, 0.5716f, 0, 1), new Color(0, 0.7961729f, 1, 1), new Color(0, 0.7961729f, 1, 1), new Color(0, 0.7961729f, 1, 1)});
             
@@ -119,7 +121,6 @@ public class CustomNetworkManager : NetworkManager{
                 _blueSpawnCounter = 0;
             }
         }
-        Debug.Log(_colors[connectionToClient]);
         connectionToClient.identity.GetComponent<VirtualPlayer>().SetupPlayer(player, Usernames[connectionToClient], _colors[connectionToClient], teamIndex);
 
     }
